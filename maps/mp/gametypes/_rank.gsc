@@ -389,13 +389,22 @@ getPrestigeLevel()
 	return self maps\mp\gametypes\_persistence::statGet( "plevel" );
 }
 
-prestigeUp() 
-{	
-	if(!isPlayer(self))return;
+canPrestigeUp()
+{
+	if(!isPlayer(self))return false;
 	
 	if (self.pers["prestige"] == level.maxPrestige )
-		return;
+		return false;
+	
 	if (self getRank() < level.maxRank)
+		return false;
+	
+	return true;
+}
+
+prestigeUp() 
+{	
+	if(!self canPrestigeUp())
 		return;
 	
 	self.pers["prestige"]+=int(self.pers["rankxp"]/(getRankInfoMaxXp(level.maxRank)-10));
