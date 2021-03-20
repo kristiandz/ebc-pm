@@ -5,32 +5,32 @@ init()
 	//       | NAME | INDEX | COLOR |  ALPHA | SHADER | W | H | ALIGNY | Y
 	height = 203;
 	//----------------------DEFAULT-------------------------
-	addDesign("default",0,(0.3, 0.3, 0.3),0.6,"white",250,38,"middle",height);
-	addDesign("default",1,(1, 0, 0),0.8,"nightvision_overlay_goggles",250,38,"middle",height);
+	addDesign("Default",0,(0.3, 0.3, 0.3),0.6,"white",250,38,"middle",height);
+	addDesign("Default",1,(1, 0, 0),0.8,"nightvision_overlay_goggles",250,38,"middle",height);
 	//-----------------------BLUE--------------------------
-	addDesign("blue",0,(0, 0, 1),0.6,"white",250,38,"middle",height);
-	addDesign("blue",1,(0, 0, 1),0.8,"nightvision_overlay_goggles",250,38,"middle",height);
+	addDesign("Blue",0,(0, 0, 1),0.6,"white",250,38,"middle",height);
+	addDesign("Blue",1,(0, 0, 1),0.8,"nightvision_overlay_goggles",250,38,"middle",height);
 	//-----------------------RED--------------------------
-	addDesign("red",0,(1, 0, 0),0.6,"white",250,38,"middle",height);
-	addDesign("red",1,(1, 0, 0),0.8,"nightvision_overlay_goggles",250,38,"middle",height);
+	addDesign("Red",0,(1, 0, 0),0.6,"white",250,38,"middle",height);
+	addDesign("Red",1,(1, 0, 0),0.8,"nightvision_overlay_goggles",250,38,"middle",height);
 	//-----------------------GREEN--------------------------
-	addDesign("green",0,(0, 1, 0),0.6,"white",250,38,"middle",height);
-	addDesign("green",1,(0, 1, 0),0.8,"nightvision_overlay_goggles",250,38,"middle",height);
+	addDesign("Green",0,(0, 1, 0),0.6,"white",250,38,"middle",height);
+	addDesign("Green",1,(0, 1, 0),0.8,"nightvision_overlay_goggles",250,38,"middle",height);
 	//-----------------------YELLOW--------------------------
-	addDesign("yellow",0,(1, 1, 0),0.6,"white",250,38,"middle",height);
-	addDesign("yellow",1,(1, 1, 0),0.8,"nightvision_overlay_goggles",250,38,"middle",height);
+	addDesign("Yellow",0,(1, 1, 0),0.6,"white",250,38,"middle",height);
+	addDesign("Yellow",1,(1, 1, 0),0.8,"nightvision_overlay_goggles",250,38,"middle",height);
 	//-----------------------Member--------------------------
-	addDesign("member",0,(1, 1, 1),0.6,"playercard_emblem_4",255,46,"middle",height);
-	addDesign("member",1,(1, 1, 1),0.6,"playercard_emblem_4",253,44,"middle",height);
+	addDesign("Member",0,(1, 1, 1),0.6,"playercard_emblem_4",255,46,"middle",height);
+	addDesign("Member",1,(1, 1, 1),0.6,"playercard_emblem_4",253,44,"middle",height);
 	//------------------------VIP 1--------------------------
-	addDesign("vip1",0,(1,1,1),0.5,"playercard_emblem_1",255,46,"middle",height);
-    addDesign("vip1",1,(1,1,1),0.5,"playercard_emblem_1",253,43,"middle",height);
+	addDesign("VIP1",0,(1,1,1),0.5,"playercard_emblem_1",255,46,"middle",height);
+    addDesign("VIP1",1,(1,1,1),0.5,"playercard_emblem_1",253,43,"middle",height);
 	//------------------------VIP 2--------------------------
-	addDesign("vip2",0,(1,1,1),0.5,"playercard_emblem_2",250,40,"middle",height);
-    addDesign("vip2",1,(1,1,1),0.5,"playercard_emblem_2",250,40,"middle",height);
+	addDesign("VIP2",0,(1,1,1),0.5,"playercard_emblem_2",250,40,"middle",height);
+    addDesign("VIP2",1,(1,1,1),0.5,"playercard_emblem_2",250,40,"middle",height);
 	//------------------------VIP 3--------------------------
-	addDesign("vip3",0,(1,0.5,0.5),0.5,"playercard_emblem_3",250,40,"middle",height);
-    addDesign("vip3",1,(0.5,0.5,0.5),0.5,"playercard_emblem_3",250,40,"middle",height);
+	addDesign("VIP3",0,(1,0.5,0.5),0.5,"playercard_emblem_3",250,40,"middle",height);
+    addDesign("VIP3",1,(0.5,0.5,0.5),0.5,"playercard_emblem_3",250,40,"middle",height);
 	
 	shaders = strTok("ui_sliderbutt_1;ui_slider2;nightvision_overlay_goggles;killiconmelee;killiconsuicide;death_car;hud_us_stungrenade;hud_icon_benelli_m4;hud_us_grenade;hud_icon_c4;weapon_ak47;weapon_aks74u;weapon_barrett50cal;weapon_benelli_m4;weapon_c4;weapon_colt_45;weapon_colt_45_silencer;weapon_concgrenade;weapon_desert_eagle;weapon_desert_eagle_gold;weapon_dragunovsvd;weapon_flashbang;hud_us_grenade;weapon_g3;weapon_g36c;weapon_m14;weapon_m14_scoped;weapon_m16a4;weapon_m249saw;weapon_m40a3;weapon_m4carbine;weapon_m60e4;weapon_m9beretta;weapon_m9beretta_silencer;weapon_mini_uzi;weapon_mp44;weapon_mp5;weapon_p90;weapon_remington700;weapon_rpd;weapon_rpg7;weapon_skorpion;weapon_smokegrenade;weapon_usp_45;weapon_usp_45_silencer;weapon_winchester1200",";");
 	for(i=0;i<shaders.size;i++) PreCacheShader(shaders[i]);
@@ -110,7 +110,7 @@ getDesign(index)
  		return level.designs["default"][index];
 }
 
-setDesign(theme) 
+setDesign(theme,cancel) 
 {
 	self notify("new_emblem");
 	self.pers["design"] = theme;	
@@ -120,6 +120,7 @@ setDesign(theme)
 				self.killcard[i] Destroy();
 	self.iswaitingforcard = undefined;
 	self.cardinuse = undefined;
+	if(isDefined(cancel))return;
 	self thread KillCard(self,"ak74u_mp","ak74u_mp");
 }
 
@@ -162,12 +163,12 @@ KillCard(from,weap,alternatewep)
 	if(!isDefined(alternatewep)) alternatewep = "Define Weapon";
 	shader[2] setWeaponIcon(weap,alternatewep);
 	shader[2].x = 80;
-	shader[2].y = 199;	
+	shader[2].y = 204;	
 	shader[2].alignX = "center";
 	shader[2].alignY = "middle";
 	shader[3] setValue(self getKillStat(from GetEntityNumber()));
 	shader[3].x = -7;
-	shader[3].y = 187;	
+	shader[3].y = 191;	
 	shader[3].alignX = "right";
 	shader[3].font = "objective";
 	shader[3].fontscale = 2;	
@@ -176,7 +177,7 @@ KillCard(from,weap,alternatewep)
 	shader[4].label = &"-&&1";
 	shader[4] setValue(from getKillStat(self GetEntityNumber()));
 	shader[4].x = -6.6;
-	shader[4].y = 187;	
+	shader[4].y = 191;	
 	shader[4].alignX = "left";
 	shader[4].font = "objective";
 	shader[4].fontscale = 2;
@@ -185,14 +186,14 @@ KillCard(from,weap,alternatewep)
 	shader[5].label = &"K/D Ratio: ^1&&1";
 	shader[5].alignX = "left";
 	shader[5].x = -115;
-	shader[5].y = 182;
+	shader[5].y = 186;
 	if(from.pers[ "deaths" ])
 		shader[5] setValue(int( from.pers[ "kills" ] / from.pers[ "deaths" ] * 100 ) / 100);
 	else 
 		shader[5] setValue(from.pers[ "kills" ]);
 	shader[6].label = &"Killstreak: ^1&&1";
 	shader[6].x = -115;
-	shader[6].y = 197;
+	shader[6].y = 203;
 	shader[6].alignX = "left";
 	shader[6] setValue(from GetStat(2304));
 
