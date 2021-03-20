@@ -7,7 +7,7 @@
 #define COL_2( itemIndex )         ((itemIndex - 1 - ((itemIndex - 1) % MAXNUM_2)) / MAXNUM_2)
 #define ROW_2( itemIndex )         ((itemIndex - 1) % MAXNUM_2)
 
-#define BUTTON(itemNum,textArg,responseArg,onFocusArg) \		
+#define BUTTON(itemNum,textArg,responseArg,onFocusArg) \
 		itemDef \
 		{ \
 			type 				ITEM_TYPE_BUTTON \
@@ -21,7 +21,8 @@
 			exp					text(textArg) \
 			textfont			UI_FONT_NORMAL \
 			textscale			0.25 \
-			textalign			ITEM_ALIGN_CENTER \
+			textalign			ITEM_ALIGN_LEFT \
+			textalignx			9 \
 			textaligny			15 \
 			mouseEnter 			{ play "mouse_over"; \
 			} \
@@ -31,7 +32,7 @@
 			}  \
 		}
 		
-#define BUTTON2(itemNum,textArg,responseArg,onFocusArg) \		
+#define BUTTON2(itemNum,textArg,responseArg,onFocusArg) \
 		itemDef \
 		{ \
 			type 				ITEM_TYPE_BUTTON \
@@ -45,7 +46,8 @@
 			exp					text(textArg) \
 			textfont			UI_FONT_NORMAL \
 			textscale			0.25 \
-			textalign			ITEM_ALIGN_CENTER \
+			textalign			ITEM_ALIGN_LEFT \
+			textalignx			9 \
 			textaligny			15 \
 			mouseEnter 			{ play "mouse_over"; \
 			} \
@@ -55,7 +57,7 @@
 			}  \
 		}
 		
-#define PLAYERITEM(itemNum,responseArg) \		
+#define PLAYERITEM(itemNum,responseArg) \
 		itemDef \
 		{ \
 			type 				ITEM_TYPE_BUTTON \

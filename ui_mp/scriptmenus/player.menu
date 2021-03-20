@@ -27,7 +27,8 @@
 		exp					text(textArg) \
 		textfont			UI_FONT_NORMAL \
 		textscale			0.25 \
-		textalign			ITEM_ALIGN_CENTER \
+		textalign			ITEM_ALIGN_LEFT \
+		textalignx			9 \
 		textaligny			15 \
 		mouseEnter 			{ play "mouse_over"; \
 		setLocalVarString ui_hintstring "^8>>^7"onFocusArg \
@@ -52,7 +53,8 @@
 		exp					text(textArg) \
 		textfont			UI_FONT_NORMAL \
 		textscale			0.25 \
-		textalign			ITEM_ALIGN_CENTER \
+		textalign			ITEM_ALIGN_LEFT \
+		textalignx			9 \
 		textaligny			15 \
 		mouseEnter 			{ play "mouse_over"; \
 		setLocalVarString ui_hintstring "^8>>^7"onFocusArg \
@@ -77,7 +79,8 @@
 		exp					text(textArg) \
 		textfont			UI_FONT_NORMAL \
 		textscale			0.25 \
-		textalign			ITEM_ALIGN_CENTER \
+		textalign			ITEM_ALIGN_LEFT \
+		textalignx			9 \
 		textaligny			15 \
 		mouseEnter 			{ play "mouse_over"; \
 		setLocalVarString ui_hintstring "^8>>^7"onFocusArg \
@@ -102,7 +105,8 @@
 		exp					text(textArg) \
 		textfont			UI_FONT_NORMAL \
 		textscale			0.25 \
-		textalign			ITEM_ALIGN_CENTER \
+		textalign			ITEM_ALIGN_LEFT \
+		textalignx			9 \
 		textaligny			15 \
 		mouseEnter 			{ play "mouse_over"; \
 		setLocalVarString ui_hintstring "^8>>^7"onFocusArg \
