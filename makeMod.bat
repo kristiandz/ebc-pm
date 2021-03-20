@@ -18,7 +18,6 @@ echo    2. Build IWD File
 echo    3. Start Game
 echo    4. Dedicated Server
 echo    5. Asset Manager
-echo    6. RGB Converter
 echo.
 echo    0. Exit
 echo.
@@ -35,16 +34,15 @@ if "%make_option%"=="2" goto build_iwd
 if "%make_option%"=="3" goto STARTGAME
 if "%make_option%"=="4" goto dedicated
 if "%make_option%"=="5" goto STARTASSET
-if "%make_option%"=="6" goto STARTRGB
 if "%make_option%"=="0" goto FINAL
 goto :MAKEOPTIONS
 
 :dedicated
 echo %date% - %time% Dedicated Mode >> LOG.TXT
 cd ..\..\ 
-START iw3mp.exe +set dedicated 2 +set fs_game mods/%modname% +devmap mp_shipment +set net_port 28960
+START cod4x18_dedrun.exe +set dedicated 2 +set fs_game mods/%modname% +set net_port 28960 +exec server.cfg +set sv_cheats 1 +set developer 1 +set r_xassetnum "xmodel=1200"﻿ +map_rotate
 TIMEOUT /T 2 > NUL
-START iw3mp.exe +set fs_game mods/%modname% +connect 127.0.0.1:21337
+START iw3mp.exe +set fs_game mods/%modname% +connect 127.0.0.1:28960
 cd %COMPILEDIR%
 goto :MAKEOPTIONS
 
@@ -100,7 +98,6 @@ xcopy rumble ..\..\raw\rumble /SYI > NUL
 xcopy animtrees ..\..\raw\animtrees /SYI > NUL
 
 echo    Copying source code...
-xcopy hunnia ..\..\raw\hunnia /SYI > NUL
 xcopy maps ..\..\raw\maps /SYI > NUL
 xcopy promod ..\..\raw\promod /SYI > NUL
 
