@@ -1,13 +1,12 @@
 #include "ui/menudef.h"
 #include "ui_mp/menustyle.inc"
 #include "ui/choices_setup_common.menu"
-#include "ui_mp/dr_common.inc"	
-
+#include "ui_mp/spray_common.inc"	
 
 menuDef
 	{
 		name			"sprays"
-		rect			10 10 640 480
+		rect			10 30 640 480
 		focuscolor		COLOR_FOCUSED
 		style			WINDOW_STYLE_EMPTY
 		blurWorld		3
@@ -26,21 +25,21 @@ menuDef
 		itemDef
 		{
 			style			WINDOW_STYLE_FILLED
-			rect			-350 -210 700 415 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			-340 -210 660 370 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			backcolor		0 0 0 0.7
 			visible			1
 		}
 		itemDef
 		{
 			style			WINDOW_STYLE_FILLED
-			rect			-350 -210 700 35 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			-340 -210 660 25 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			backcolor		0 0 0 0.6
 			visible			1
 		}
 		itemDef
 		{
 			visible			1
-			origin		    20 55
+			origin		    -5 50
 			forecolor		0.95 0.95 0.95 1
 			exp				text( "Select the spray you want by pressing on the icon. You need to meet the required prestige to unlock the icon.")
 			textfont		UI_FONT_NORMAL
@@ -50,7 +49,7 @@ menuDef
 		}
 		itemDef 
 		{
-			rect			620 32 32 32
+			rect			593 27 32 32
 			style			WINDOW_STYLE_SHADER
 			exp				material( tablelookup( "mp/rankIconTable.csv", 0, stat(252), stat(2326)+1 ) )
 			visible			1
@@ -60,7 +59,7 @@ menuDef
 		itemDef
 		{
 			visible			1
-			origin			616 55
+			origin			593 50
 			forecolor		0.95 0.95 0.95 1
 			exp				text( "Prestige: ")
 			textfont		UI_FONT_NORMAL
@@ -69,71 +68,69 @@ menuDef
 			decoration
 		}
 		
-		DR_SPRAY( 0, 0, 1 ) 
-		DR_SPRAY( 1, 0, 2 )
-		DR_SPRAY( 2, 0, 3 )
-		DR_SPRAY( 3, 0, 4 )
-        DR_SPRAY( 4, 0, 5 )
-		DR_SPRAY( 5, 0, 6 )
-		DR_SPRAY( 6, 0, 7 )
-        DR_SPRAY( 7, 0, 8 ) 
-		DR_SPRAY( 8, 0, 9 )
-		DR_SPRAY( 9, 0, 10 )
-		DR_SPRAY( 0, 1, 11 )
-        DR_SPRAY( 1, 1, 12 )
-		DR_SPRAY( 2, 1, 13 )
-		DR_SPRAY( 3, 1, 14 )
-		DR_SPRAY( 4, 1, 15 ) 
-		DR_SPRAY( 5, 1, 16 )
-		DR_SPRAY( 6, 1, 17 )
-		DR_SPRAY( 7, 1, 18 )
-		DR_SPRAY( 8, 1, 19 )		
-		DR_SPRAY( 9, 1, 20 )
-		DR_SPRAY( 0, 2, 21 )		
-		DR_SPRAY( 1, 2, 22 ) 
-		DR_SPRAY( 2, 2, 23 )
-		DR_SPRAY( 3, 2, 24 )
-		DR_SPRAY( 4, 2, 25 )
-        DR_SPRAY( 5, 2, 26 )
-		DR_SPRAY( 6, 2, 27 )
-        DR_SPRAY( 7, 2, 28 )
-		DR_SPRAY( 8, 2, 29 )
-		DR_SPRAY( 9, 2, 30 )
+		SPRAY( 0, 0, 1 ) 
+		SPRAY( 1, 0, 2 )
+		SPRAY( 2, 0, 3 )
+		SPRAY( 3, 0, 4 )
+        SPRAY( 4, 0, 5 )
+		SPRAY( 5, 0, 6 )
+		SPRAY( 6, 0, 7 )
+        SPRAY( 7, 0, 8 ) 
+		SPRAY( 8, 0, 9 )
+		SPRAY( 9, 0, 10 )
+		SPRAY( 0, 1, 11 )
+        SPRAY( 1, 1, 12 )
+		SPRAY( 2, 1, 13 )
+		SPRAY( 3, 1, 14 )
+		SPRAY( 4, 1, 15 ) 
+		SPRAY( 5, 1, 16 )
+		SPRAY( 6, 1, 17 )
+		SPRAY( 7, 1, 18 )
+		SPRAY( 8, 1, 19 )		
+		SPRAY( 9, 1, 20 )
+		SPRAY( 0, 2, 21 )		
+		SPRAY( 1, 2, 22 ) 
+		SPRAY( 2, 2, 23 )
+		SPRAY( 3, 2, 24 )
+		SPRAY( 4, 2, 25 )
+        SPRAY( 5, 2, 26 )
+		SPRAY( 6, 2, 27 )
+        SPRAY( 7, 2, 28 )
+		SPRAY( 8, 2, 29 )
+		SPRAY( 9, 2, 30 )
 		
-		DR_CHARACTER( 0, 0, 41 ) 
-		DR_CHARACTER( 1, 0, 42 )
-		DR_CHARACTER( 2, 0, 43 )
-		DR_CHARACTER( 3, 0, 44 )
-        DR_CHARACTER( 4, 0, 45 )
-		DR_CHARACTER( 5, 0, 46 )
-		DR_CHARACTER( 6, 0, 47 )
-        DR_CHARACTER( 7, 0, 48 ) 
-		DR_CHARACTER( 8, 0, 49 )
-		DR_CHARACTER( 9, 0, 50 )		
-		DR_CHARACTER( 0, 1, 51 )
-		DR_CHARACTER( 1, 1, 52 )
-		DR_CHARACTER( 2, 1, 53 )
-		DR_CHARACTER( 3, 1, 54 )
-		DR_CHARACTER( 4, 1, 55 )
-		DR_CHARACTER( 5, 1, 56 )
-		DR_CHARACTER( 6, 1, 57 )
-		DR_CHARACTER( 7, 1, 58 )
-		DR_CHARACTER( 8, 1, 59 )
-		DR_CHARACTER( 9, 1, 60 )		
-		
-
+		CHARACTER( 0, 0, 41 ) 
+		CHARACTER( 1, 0, 42 )
+		CHARACTER( 2, 0, 43 )
+		CHARACTER( 3, 0, 44 )
+        CHARACTER( 4, 0, 45 )
+		CHARACTER( 5, 0, 46 )
+		CHARACTER( 6, 0, 47 )
+        CHARACTER( 7, 0, 48 ) 
+		CHARACTER( 8, 0, 49 )
+		CHARACTER( 9, 0, 50 )		
+		CHARACTER( 0, 1, 51 )
+		CHARACTER( 1, 1, 52 )
+		CHARACTER( 2, 1, 53 )
+		CHARACTER( 3, 1, 54 )
+		CHARACTER( 4, 1, 55 )
+		CHARACTER( 5, 1, 56 )
+		CHARACTER( 6, 1, 57 )
+		CHARACTER( 7, 1, 58 )
+		CHARACTER( 8, 1, 59 )
+		CHARACTER( 9, 1, 60 )		
 		
 		itemDef 
 		{
 			style			WINDOW_STYLE_FILLED
-			rect			-350 -30 700 30 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			-340 -40 660 25 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			backcolor		0 0 0 0.6
  			visible			1	
 		}
 		itemDef
 		{
 			visible			1
-			origin		    320 232
+			origin		    240 219
 			forecolor		0.95 0.95 0.95 1 
 			exp				text( "Select the skin you want by pressing on the icon. You need to meet the required prestige to unlock the icon.")
 			textfont		UI_FONT_NORMAL
@@ -143,8 +140,16 @@ menuDef
 		}
 		itemDef
 		{
+			rect 			-340 88 660 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			style			WINDOW_STYLE_FILLED
+			backcolor		0 0 0 0.4
 			visible			1
-			origin		    65 350
+			decoration
+		}
+		itemDef
+		{
+			visible			1
+			origin		    65 343
 			forecolor		0.95 0.95 0.95 1 
 			exp				text( "Selected Spray:^8 " + (Stat(979)+1))
 			textfont		UI_FONT_NORMAL
@@ -155,7 +160,7 @@ menuDef
 		itemDef
 		{
 			visible			1
-			origin		    495 350
+			origin		    495 343
 			forecolor		0.95 0.95 0.95 1 
 			exp				text( "Selected Skin:^8 " + Stat(980))
 			textfont		UI_FONT_NORMAL
@@ -165,7 +170,7 @@ menuDef
 		}
 		itemDef
 		{
-			rect 			-350 115.5 700 0.5 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect 			-340 105.5 660 0.5 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			style			WINDOW_STYLE_FILLED
 			backcolor		0.9 0.4 0.2 0.8
 			visible			1
@@ -173,7 +178,7 @@ menuDef
 		}
 		itemDef
 		{
-			rect 			-350 116 700 37 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect 			-340 106 660 37 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			style			WINDOW_STYLE_FILLED
 			backcolor		0 0 0 0.7
 			visible			1
@@ -182,9 +187,9 @@ menuDef
 		itemDef
 		{
 			visible			1
-			origin		    317 374
+			origin		    317 365
 			forecolor		0.95 0.95 0.95 1 
-			exp				text( "Welcome to the winter seaon. You can see your previous prestige on the bottom. If your prestige was higher then 20\n                                       you are eliglible for season awards. Check your awards in the VIP menu!")
+			exp				text( "Welcome to the summer season. If your prestige was higher than 20, you are eligible for season awards.\n                      Check your awards in the VIP menu! Summer season lasts untill 1.11.2021")
 			textfont		UI_FONT_NORMAL
 			textalign		ITEM_ALIGN_CENTER
 			textscale		0.3
@@ -192,7 +197,7 @@ menuDef
 		}
 		itemDef
 		{
-			rect 			-350 153 700 0.5 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect 			-340 143 660 0.5 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			style			WINDOW_STYLE_FILLED
 			backcolor		0.9 0.4 0.2 0.8
 			visible			1
@@ -200,59 +205,48 @@ menuDef
 		}
 		itemDef
 		{
-			visible			1
-			origin		    335 410
-			forecolor		0.95 0.95 0.95 1 
-			exp				text( "Winter season lasts six months, untill 1.5.2021.")
-			textfont		UI_FONT_NORMAL
-			textalign		ITEM_ALIGN_CENTER
-			textscale		0.3
-			decoration
-		}
-		itemDef
-		{
-			rect 			-350 184 700 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect 			-340 143.5 660 17 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			style			WINDOW_STYLE_FILLED
-			backcolor		0 0 0 0.7
+			backcolor		0 0 0 0.4
 			visible			1
 			decoration
 		}
 		itemdef
 		{
-			rect			28 440 0 0
+			rect			28 399 0 0
 			forecolor		1 1 1 1
 			textfont		UI_FONT_NORMAL
-			textscale		0.29
-			exp text        ("Summer Season Prestige:^8 "+ stat(3251))     
+			textscale		0.28
+			exp text        ("Winter Season Prestige:^8 "+ stat(3251))     
 			visible         1
 			decoration
 		}
 		itemdef
 		{
-			rect			220 440 0 0
+			rect			220 399 0 0
 			forecolor		1 1 1 1
 			textfont		UI_FONT_NORMAL
-			textscale		0.29
+			textscale		0.28
 			exp text        ("Reward Tier:^8 "+ stat(3252))     
 			visible         1
 			decoration
 		}
 		itemdef
 		{
-			rect			370 440 0 0
+			rect			370 399 0 0
 			forecolor		1 1 1 1
 			textfont		UI_FONT_NORMAL
-			textscale		0.29
+			textscale		0.28
 			exp text        ("Current Prestige:^8 "+ stat(2326))     
 			visible         1
 			decoration
 		}
 		itemdef
 		{
-			rect			525 440 0 0
+			rect			525 399 0 0
 			forecolor		1 1 1 1
 			textfont		UI_FONT_NORMAL
-			textscale		0.29
+			textscale		0.28
 			exp text        ("Current Rank:^8 "+int(tablelookup("mp/ranktable.csv",0,stat(252),14)))     
 			visible         1
 			decoration

@@ -2,15 +2,15 @@
 #define SPRAY_TABLE "mp/sprayTable.csv"
 #define CHAR_TABLE "mp/characterTable.csv"
 
-#ifndef DR_BUTTON_ALIGN
-#define DR_BUTTON_ALIGN HORIZONTAL_ALIGN_FULLSCREEN VERTICAL_ALIGN_FULLSCREEN
+#ifndef BUTTON_ALIGN
+#define BUTTON_ALIGN HORIZONTAL_ALIGN_FULLSCREEN VERTICAL_ALIGN_FULLSCREEN
 #endif
 
-#define DR_SPRAY( row, column, itemID ) \
+#define SPRAY( row, column, itemID ) \
 itemDef \
 { \
-	rect			70 70 45 35 DR_BUTTON_ALIGN \
-	origin			(50*row) (45*column) \
+	rect			70 59 44 34 BUTTON_ALIGN \
+	origin			(48*row) (45*column) \
 	style			WINDOW_STYLE_SHADER \
 	exp				material( tableLookup(SPRAY_TABLE, 0, itemID, 3) ) \
 	visible			1 \
@@ -20,8 +20,8 @@ itemDef \
 } \
 itemDef \
 { \
-	rect			70 70 45 35 DR_BUTTON_ALIGN \
-	origin			(50*row) (45*column) \
+	rect			70 59 44 34 BUTTON_ALIGN \
+	origin			(48*row) (45*column) \
 	style			WINDOW_STYLE_SHADER \
 	background		"black" \
 	forecolor		0 0 0 0.8 \
@@ -31,22 +31,22 @@ itemDef \
 itemDef \
 { \
 	visible		when( plevel < tableLookup(SPRAY_TABLE, 0, itemID, 2) ) \
-	rect		70 70 0 0 DR_BUTTON_ALIGN \
-	origin		(50*row) (45*column) \
-	textalignx	25 \
-	textaligny	45 \
+	rect		70 59 0 0 BUTTON_ALIGN \
+	origin		(48*row) (45*column) \
+	textalignx	24 \
+	textaligny	44 \
 	forecolor	1 1 1 0.8 \
 	exp			text( "^1Prestige:" + (tableLookup(SPRAY_TABLE, 0, itemID, 2) )-1) \
 	textfont	UI_FONT_NORMAL \
 	textalign	ITEM_ALIGN_CENTER \
-	textscale	0.2 \
+	textscale	0.19 \
 	decoration \
 } \
 itemDef \
 { \
 	style		WINDOW_STYLE_FILLED \
-	rect		70 70 45 35 DR_BUTTON_ALIGN \
-	origin		(50*row) (45*column) \
+	rect		70 59 44 34 BUTTON_ALIGN \
+	origin		(48*row) (45*column) \
 	forecolor	1 1 1 0.8 \
 	type		ITEM_TYPE_BUTTON \
 	exp			text( " " ) \
@@ -68,11 +68,11 @@ itemDef \
 	} \
 } 
 
-#define DR_CHARACTER( row, column, itemID ) \
+#define CHARACTER( row, column, itemID ) \
 itemDef \
 { \
-	rect			70 245 45 35 DR_BUTTON_ALIGN \
-	origin			(50*row) (45*column) \
+	rect			70 230 44 34 BUTTON_ALIGN \
+	origin			(48*row) (45*column) \
 	style			WINDOW_STYLE_SHADER \
 	exp				material( tableLookup(CHAR_TABLE,0,(itemID-40),3) ) \
 	visible			1 \
@@ -82,8 +82,8 @@ itemDef \
 } \
 itemDef \
 { \
-	rect			70 245 45 35 DR_BUTTON_ALIGN \
-	origin			(50*row) (45*column) \
+	rect			70 230 44 34 BUTTON_ALIGN \
+	origin			(48*row) (45*column) \
 	style			WINDOW_STYLE_SHADER \
 	background		"black" \
 	forecolor		0 0 0 0.8 \
@@ -93,22 +93,22 @@ itemDef \
 itemDef \
 { \
 	visible		when( plevel < tableLookup(CHAR_TABLE, 0 , (itemID-40), 2) ) \
-	rect		70 245 0 0 DR_BUTTON_ALIGN \
-	origin		(50*row) (45*column) \
-	textalignx	25 \
-	textaligny	45 \
+	rect		70 230 0 0 BUTTON_ALIGN \
+	origin		(48*row) (45*column) \
+	textalignx	24 \
+	textaligny	44 \
 	forecolor	1 1 1 0.8 \
 	exp			text( "^1Prestige:" + (tableLookup(CHAR_TABLE, 0, (itemID-40), 2) )-1) \
 	textfont	UI_FONT_NORMAL \
 	textalign	ITEM_ALIGN_CENTER \
-	textscale	0.2 \
+	textscale	0.19 \
 	decoration \
 } \
 itemDef \
 { \
 	style		WINDOW_STYLE_FILLED \
-	rect		70 245 45 35 DR_BUTTON_ALIGN \
-	origin		(50*row) (45*column) \
+	rect		70 230 44 34 BUTTON_ALIGN \
+	origin		(48*row) (45*column) \
 	forecolor	1 1 1 0.8 \
 	type		ITEM_TYPE_BUTTON \
 	exp			text( "  " ) \
