@@ -222,12 +222,19 @@ resetEverything()
 
 prfix()
 {
+	self endon("disconnect");
+	
 	self.pers["rank"] = 0;
 	self.pers["rankxp"] = 0;
 	
 	self setRank( self.pers["rank"], self.pers["prestige"] );
 	self setStat( 2350, self.pers["rank"] );
 	self setStat( 2301, self.pers["rankxp"] );
+	for( stat = 190; stat < 280; stat++ )
+	{
+		self setStat( stat, 0 );
+		wait 0.05;
+	}
 }
 
 updateRankScoreHUD( amount )
@@ -389,13 +396,22 @@ getPrestigeLevel()
 	return self maps\mp\gametypes\_persistence::statGet( "plevel" );
 }
 
-prestigeUp() 
-{	
-	if(!isPlayer(self))return;
+canPrestigeUp()
+{
+	if(!isPlayer(self))return false;
 	
 	if (self.pers["prestige"] == level.maxPrestige )
-		return;
+		return false;
+	
 	if (self getRank() < level.maxRank)
+		return false;
+	
+	return true;
+}
+
+prestigeUp() 
+{	
+	if(!self canPrestigeUp())
 		return;
 	
 	self.pers["prestige"]+=int(self.pers["rankxp"]/(getRankInfoMaxXp(level.maxRank)-10));

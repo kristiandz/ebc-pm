@@ -82,14 +82,22 @@ onMenuResponse()
 		{	
 			self closeMenu();
 			self closeInGameMenu();
-			
 			if(!self maps\mp\gametypes\_rank::canPrestigeUp())
 				continue;
+
+			guid = self.guid; // Just in case if the client disconnects that we can update the database
+			temp = self getStat(2326) + 1; //
 			
 			if(self GetStat(2326) < 29 && isDefined(self) )
 			{
+				scripts\sql::db_connect("ebc_b3_pm");
 				self maps\mp\gametypes\_rank::prestigeUp();
 				wait 0.1;
+					
+				q_str = "UPDATE player_core SET prestige = " + temp + ", backup_pr  = " + temp + " WHERE guid LIKE " + guid;
+				SQL_Query(q_str);
+				SQL_Close();
+				thread scripts\utility\common::log("prestige_log_winter", self.name + " (" + guid + ") " + "entered prestige: " + temp );
 			}
 			else 
 			{
