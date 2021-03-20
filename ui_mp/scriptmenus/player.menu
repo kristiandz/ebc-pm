@@ -1,112 +1,142 @@
 #include "ui/menudef.h"
 
-#define CJ_MAXNUM 3
-#define CJ_COL( itemIndex )         ((itemIndex - 1 - ((itemIndex - 1) % CJ_MAXNUM)) / CJ_MAXNUM)
-#define CJ_ROW( itemIndex )         ((itemIndex - 1) % CJ_MAXNUM)
-#define CJ_MAXNUM2 1
-#define CJ_COL2( itemIndex )         ((itemIndex - 1 - ((itemIndex - 1) % CJ_MAXNUM2)) / CJ_MAXNUM2)
-#define CJ_ROW2( itemIndex )         ((itemIndex - 1) % CJ_MAXNUM2)
-#define CJ_MAXNUM3 3
-#define CJ_COL3( itemIndex )         ((itemIndex - 1 - ((itemIndex - 1) % CJ_MAXNUM3)) / CJ_MAXNUM3)
-#define CJ_ROW3( itemIndex )         ((itemIndex - 1) % CJ_MAXNUM3)
+#define MAXNUM 3
+#define COL( itemIndex )         ((itemIndex - 1 - ((itemIndex - 1) % MAXNUM)) / MAXNUM)
+#define ROW( itemIndex )         ((itemIndex - 1) % MAXNUM)
+#define MAXNUM2 1
+#define COL2( itemIndex )         ((itemIndex - 1 - ((itemIndex - 1) % MAXNUM2)) / MAXNUM2)
+#define ROW2( itemIndex )         ((itemIndex - 1) % MAXNUM2)
+#define MAXNUM3 3
+#define COL3( itemIndex )         ((itemIndex - 1 - ((itemIndex - 1) % MAXNUM3)) / MAXNUM3)
+#define ROW3( itemIndex )         ((itemIndex - 1) % MAXNUM3)
+#define MAXNUM4 2
+#define COL4( itemIndex )         ((itemIndex - 1 - ((itemIndex - 1) % MAXNUM4)) / MAXNUM4)
+#define ROW4( itemIndex )         ((itemIndex - 1) % MAXNUM4)
 
-#define CJ_BUTTON(itemNum,textArg,responseArg,onFocusArg) \		
-		itemDef \
-		{ \
-			type 				ITEM_TYPE_BUTTON \
-			style				WINDOW_STYLE_FILLED \
-			rect				(-65 + CJ_COL( itemNum ) * 95) (70 + CJ_ROW( itemNum )*26) 90 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
-			forecolor			1 1 1 1 \
-			border				1 \
-			bordercolor			0 0 0 0.15 \
-			backcolor			0.2 0.2 0.2 0.75 \
-			visible				1 \
-			exp					text(textArg) \
-			textfont			UI_FONT_NORMAL \
-			textscale			0.25 \
-			textalign			ITEM_ALIGN_CENTER \
-			textaligny			15 \
-			mouseEnter 			{ play "mouse_over"; \
-			setLocalVarString ui_cj_hintstring "^8>>^7"onFocusArg \
-			} \
-			mouseExit 			{ setLocalVarString ui_cj_hintstring "^8>>^7" } \
-			action 				{ play "mouse_click"; \
-			scriptMenuResponse  responseArg;  \
-			}  \
-		}
-#define CJ_BUTTON_2(itemNum,textArg,responseArg,onFocusArg) \
-		itemDef \
-		{ \
-			type 				ITEM_TYPE_BUTTON \
-			style				WINDOW_STYLE_FILLED \
-			rect				(-65 + CJ_COL2( itemNum ) * 95) (193 + CJ_ROW2( itemNum )*26) 90 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
-			forecolor			1 1 1 1 \
-			border				1 \
-			bordercolor			0 0 0 0.15 \
-			backcolor			0.2 0.2 0.2 0.75 \
-			visible				1 \
-			exp					text(textArg) \
-			textfont			UI_FONT_NORMAL \
-			textscale			0.25 \
-			textalign			ITEM_ALIGN_CENTER \
-			textaligny			15 \
-			mouseEnter 			{ play "mouse_over"; \
-			setLocalVarString ui_cj_hintstring "^8>>^7"onFocusArg \
-			} \
-			mouseExit 			{ setLocalVarString ui_cj_hintstring "^8>>^7" } \
-			action 				{ play "mouse_click"; \
-			scriptMenuResponse responseArg;  \
-			}  \
-		}
-#define CJ_BUTTON_3(itemNum,textArg,responseArg,onFocusArg) \
-		itemDef \
-		{ \
-			type 				ITEM_TYPE_BUTTON \
-			style				WINDOW_STYLE_FILLED \
-			rect				(-65 + CJ_COL3( itemNum ) * 95) (270 + CJ_ROW3( itemNum )*26) 90 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
-			forecolor			1 1 1 1 \
-			border				1 \
-			bordercolor			0 0 0 0.15 \
-			backcolor			0.2 0.2 0.2 0.75 \
-			visible				1 \
-			exp					text(textArg) \
-			textfont			UI_FONT_NORMAL \
-			textscale			0.25 \
-			textalign			ITEM_ALIGN_CENTER \
-			textaligny			15 \
-			mouseEnter 			{ play "mouse_over"; \
-			setLocalVarString ui_cj_hintstring "^8>>^7"onFocusArg \
-			} \
-			mouseExit 			{ setLocalVarString ui_cj_hintstring "^8>>^7" } \
-			action 				{ play "mouse_click"; \
-			scriptMenuResponse responseArg;  \
-			}  \
-		}
+#define BUTTON(itemNum,textArg,responseArg,onFocusArg) \
+	itemDef \
+	{ \
+		type 				ITEM_TYPE_BUTTON \
+		style				WINDOW_STYLE_FILLED \
+		rect				(-65 + COL( itemNum ) * 97) (48 + ROW( itemNum )*26) 90 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+		forecolor			1 1 1 1 \
+		border				1 \
+		bordercolor			0 0 0 0.15 \
+		backcolor			0.2 0.2 0.2 0.75 \
+		visible				1 \
+		exp					text(textArg) \
+		textfont			UI_FONT_NORMAL \
+		textscale			0.25 \
+		textalign			ITEM_ALIGN_CENTER \
+		textaligny			15 \
+		mouseEnter 			{ play "mouse_over"; \
+		setLocalVarString ui_hintstring "^8>>^7"onFocusArg \
+		} \
+		mouseExit 			{ setLocalVarString ui_hintstring "^8>>^7" } \
+		action 				{ play "mouse_click"; \
+		scriptMenuResponse  responseArg;  \
+		}  \
+	}
+	
+#define BUTTON_2(itemNum,textArg,responseArg,onFocusArg) \
+	itemDef \
+	{ \
+		type 				ITEM_TYPE_BUTTON \
+		style				WINDOW_STYLE_FILLED \
+		rect				(-65 + COL2( itemNum ) * 97) (157 + ROW2( itemNum )*26) 90 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+		forecolor			1 1 1 1 \
+		border				1 \
+		bordercolor			0 0 0 0.15 \
+		backcolor			0.2 0.2 0.2 0.75 \
+		visible				1 \
+		exp					text(textArg) \
+		textfont			UI_FONT_NORMAL \
+		textscale			0.25 \
+		textalign			ITEM_ALIGN_CENTER \
+		textaligny			15 \
+		mouseEnter 			{ play "mouse_over"; \
+		setLocalVarString ui_hintstring "^8>>^7"onFocusArg \
+		} \
+		mouseExit 			{ setLocalVarString ui_hintstring "^8>>^7" } \
+		action 				{ play "mouse_click"; \
+		scriptMenuResponse responseArg;  \
+		}  \
+	}
+	
+#define BUTTON_3(itemNum,textArg,responseArg,onFocusArg) \
+	itemDef \
+	{ \
+		type 				ITEM_TYPE_BUTTON \
+		style				WINDOW_STYLE_FILLED \
+		rect				(-65 + COL3( itemNum ) * 97) (216 + ROW3( itemNum )*26) 90 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+		forecolor			1 1 1 1 \
+		border				1 \
+		bordercolor			0 0 0 0.15 \
+		backcolor			0.2 0.2 0.2 0.75 \
+		visible				1 \
+		exp					text(textArg) \
+		textfont			UI_FONT_NORMAL \
+		textscale			0.25 \
+		textalign			ITEM_ALIGN_CENTER \
+		textaligny			15 \
+		mouseEnter 			{ play "mouse_over"; \
+		setLocalVarString ui_hintstring "^8>>^7"onFocusArg \
+		} \
+		mouseExit 			{ setLocalVarString ui_hintstring "^8>>^7" } \
+		action 				{ play "mouse_click"; \
+		scriptMenuResponse responseArg;  \
+		}  \
+	}
+
+#define BUTTON_4(itemNum,textArg,responseArg,onFocusArg) \
+	itemDef \
+	{ \
+		type 				ITEM_TYPE_BUTTON \
+		style				WINDOW_STYLE_FILLED \
+		rect				(-65 + COL4( itemNum ) * 97) (328 + ROW4( itemNum )*26) 90 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+		forecolor			1 1 1 1 \
+		border				1 \
+		bordercolor			0 0 0 0.15 \
+		backcolor			0.2 0.2 0.2 0.75 \
+		visible				1 \
+		exp					text(textArg) \
+		textfont			UI_FONT_NORMAL \
+		textscale			0.25 \
+		textalign			ITEM_ALIGN_CENTER \
+		textaligny			15 \
+		mouseEnter 			{ play "mouse_over"; \
+		setLocalVarString ui_hintstring "^8>>^7"onFocusArg \
+		} \
+		mouseExit 			{ setLocalVarString ui_hintstring "^8>>^7" } \
+		action 				{ play "mouse_click"; \
+		scriptMenuResponse responseArg;  \
+		}  \
+	}
 		
 	menuDef 
 	{
 		name 			"player"
-		rect			-120 -200 640 1280 
+		rect			-120 -215 640 1280 
 		focuscolor		COLOR_FOCUSED
 		style			WINDOW_STYLE_EMPTY
 		blurWorld		3
 		visible			1		
 		onOpen
 		{
-			setLocalVarString ui_cj_hintstring "^1>>^7";
+			setLocalVarString ui_hintstring "^1>>^7";
 		}
 
 		itemDef
 		{
 			style			WINDOW_STYLE_FILLED
-			rect			-80 20 325 385 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			-80 20 325 402 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			backcolor		0 0 0 0.7
 			visible			1
 		}
 		itemDef
 		{
 			style			WINDOW_STYLE_FILLED
-			rect			-80 20 325 37 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			-80 20 325 21 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			backcolor		0 0 0 0.65
 			visible			1
 		}
@@ -115,7 +145,7 @@
 		{
 			rect			-65 23 300 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
-			exp text		("Genre Selection:\nPress the button to toggle the music you want to listen.")
+			exp text		("Press the button to toggle the music you want to listen.")
 			textfont		UI_FONT_NORMAL
 			textscale		0.3
 			textalign		ITEM_ALIGN_LEFT
@@ -123,48 +153,71 @@
 			visible			1
 			decoration
 		}
+		
 		itemDef 
 		{
 			style			WINDOW_STYLE_FILLED
-			rect			-80 155 325 25 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			-80 129 325 21 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			backcolor		0 0 0 0.65
  			visible			1	
 		}
 		itemDef
 		{
-			rect			-65 160 300 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			-65 132 300 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Press the button to change the fullbright.")
 			textfont		UI_FONT_NORMAL
-			textscale		0.3
+			textscale		0.28
 			textalign		ITEM_ALIGN_LEFT
 			textaligny		15
 			visible			1
 			decoration
 		}
+		
 		itemDef 
 		{
 			style			WINDOW_STYLE_FILLED
-			rect			-80 230 325 25 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			-80 187 325 21 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			backcolor		0 0 0 0.65
  			visible			1	
 		}
 		itemDef
 		{
-			rect			-65 235 300 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			-65 190 300 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Press the button to change the FoV.")
 			textfont		UI_FONT_NORMAL
-			textscale		0.3
+			textscale		0.28
 			textalign		ITEM_ALIGN_LEFT
 			textaligny		15
 			visible			1
 			decoration
 		}
+		
+		itemDef 
+		{
+			style			WINDOW_STYLE_FILLED
+			rect			-80 299 325 21 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			backcolor		0 0 0 0.65
+ 			visible			1	
+		}
+		itemDef
+		{
+			rect			-65 301 300 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			forecolor		1 1 1 1
+			exp text		("Press the button to change your killcard.")
+			textfont		UI_FONT_NORMAL
+			textscale		0.28
+			textalign		ITEM_ALIGN_LEFT
+			textaligny		15
+			visible			1
+			decoration
+		}
+		
 		itemDef 
 		{ 
 			type 			ITEM_TYPE_BUTTON 
-			rect		    -65 380 50 10 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER 
+			rect		    -65 390 50 10 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER 
 			forecolor		1 1 1 1 
 			text			"Close" 
 			textfont		UI_FONT_NORMAL 
@@ -175,40 +228,47 @@
 			action 			{ play "mouse_click"; scriptMenuResponse playermenuclose; close player; } 
 			visible			1
 		}	
-		
-		CJ_BUTTON(1,"Hardbass",hardbass,"Enable / Disable ^8Hardbass^7 Playlist.")
-		CJ_BUTTON(2,"EDM",edm,"Enable / Disable ^8EDM^7 Playlist.")
-		CJ_BUTTON(3,"Rock",rock,"Enable / Disable ^8Rock^7 Playlist.")
-		CJ_BUTTON(4,"Pop",pop,"Enable / Disable ^8Pop^7 Playlist.")
-		CJ_BUTTON(5,"Troll",troll,"Enable / Disable ^8Troll^7 Playlist.")
 		/////
-		CJ_BUTTON(6,"Balkan",balkan,"Enable / Disable ^8Balkan^7 Playlist.")
-		CJ_BUTTON(7,"Trap",trap,"Enable / Disable ^8Trap^7 Playlist.")
-		CJ_BUTTON(8,"Rave",rave,"Enable / Disable ^8Rave^7 Playlist.")
-		CJ_BUTTON(9,"Music On/Off",musicoff,"Enable / Disable ^8All Music")
+		BUTTON(1,"Hardbass",hardbass,"Enable / Disable ^8Hardbass^7 Playlist.")
+		BUTTON(2,"EDM",edm,"Enable / Disable ^8EDM^7 Playlist.")
+		BUTTON(3,"Rock",rock,"Enable / Disable ^8Rock^7 Playlist.")
+		BUTTON(4,"Pop",pop,"Enable / Disable ^8Pop^7 Playlist.")
+		BUTTON(5,"Troll",troll,"Enable / Disable ^8Troll^7 Playlist.")
+		/////
+		BUTTON(6,"Balkan",balkan,"Enable / Disable ^8Balkan^7 Playlist.")
+		BUTTON(7,"Trap",trap,"Enable / Disable ^8Trap^7 Playlist.")
+		BUTTON(8,"Rave",rave,"Enable / Disable ^8Rave^7 Playlist.")
+		BUTTON(9,"Music On/Off",musicoff,"Enable / Disable ^8All Music")
         /////
-		CJ_BUTTON_2(1,"FPS On",fpson,"Enable ^8FPS");
-		CJ_BUTTON_2(2,"FPS Off",fpsoff,"Disable ^8FPS");
+		BUTTON_2(1,"FPS On",fpson,"Enable ^8FPS");
+		BUTTON_2(2,"FPS Off",fpsoff,"Disable ^8FPS");
 		/////
-		CJ_BUTTON_3(1,"FOV 1.0",fov1,"Set ^81.0^7 Field of View");
-		CJ_BUTTON_3(4,"FOV 1.1",fov2,"Set ^81.1^7 Field of View");
-		CJ_BUTTON_3(7,"FOV 1.15",fov3,"Set ^81.15^7 Field of View");
-		CJ_BUTTON_3(2,"FOV 1.2",fov4,"Set ^81.2^7 Field of View");
-		CJ_BUTTON_3(5,"FOV 1.25",fov5,"Set ^81.25^7 Field of View");
-		CJ_BUTTON_3(8,"FOV 1.3",fov6,"Set ^81.3^7 Field of View");
-		CJ_BUTTON_3(3,"FOV 1.35",fov7,"Set ^81.35^7 Field of View");
-		CJ_BUTTON_3(6,"FOV 1.4",fov8,"Set ^81.4^7 Field of View");
-		CJ_BUTTON_3(9,"FOV 1.45",fov9,"Set ^81.45^7 Field of View");			
-		
+		BUTTON_3(1,"FOV 1.0",fov1,"Set ^81.0^7 Field of View");
+		BUTTON_3(4,"FOV 1.1",fov2,"Set ^81.1^7 Field of View");
+		BUTTON_3(7,"FOV 1.15",fov3,"Set ^81.15^7 Field of View");
+		BUTTON_3(2,"FOV 1.2",fov4,"Set ^81.2^7 Field of View");
+		BUTTON_3(5,"FOV 1.25",fov5,"Set ^81.25^7 Field of View");
+		BUTTON_3(8,"FOV 1.3",fov6,"Set ^81.3^7 Field of View");
+		BUTTON_3(3,"FOV 1.35",fov7,"Set ^81.35^7 Field of View");
+		BUTTON_3(6,"FOV 1.4",fov8,"Set ^81.4^7 Field of View");
+		BUTTON_3(9,"FOV 1.45",fov9,"Set ^81.45^7 Field of View");			
+		/////
+		BUTTON_4(1,"Default",kc_default,"Set the default killcard");
+		BUTTON_4(2,"Blue",kc_blue,"Set the blue killcard");
+		BUTTON_4(3,"Red",kc_red,"Set the red killcard");
+		BUTTON_4(4,"Green",kc_green,"Set the green killcard");
+		BUTTON_4(5,"Yellow",kc_yellow,"Set the yellow killcard");
+		BUTTON_4(6,"Member",kc_member,"Set the member killcard");
+		/////
 		itemDef
 		{
 			type 			ITEM_TYPE_BUTTON
 			style			WINDOW_STYLE_FILLED
-			rect			-65 355 185 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			-10 390 185 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			background		"gradient_fadein"
 			border			1
 			bordercolor		0.2 0.2 0.2 0.75
-			exp				text(localVarString("ui_cj_hintstring"))
+			exp				text(localVarString("ui_hintstring"))
 			textfont		UI_FONT_NORMAL
 			textscale		0.19
 			textalign		ITEM_ALIGN_LEFT
@@ -220,31 +280,31 @@
 		itemDef
 		{
 			style			WINDOW_STYLE_FILLED
-			rect			270 20 95 385 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			273 20 95 402 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			backcolor		0 0 0 0.7
 			visible			1
 		}
 		itemDef
 		{
 			style			WINDOW_STYLE_FILLED
-			rect			270 20 95 36 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			273 20 95 22 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			backcolor		0 0 0 0.65
 			visible			1
 		}
 		itemDef
 		{
-			rect			288 23 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			283 23 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
-			exp text		("Active\nselection:" )
+			exp text		("Active selection:" )
 			textfont		UI_FONT_NORMAL
-			textscale		0.3
+			textscale		0.28
 			textaligny		15
 			visible			1
 		}
 		/////////////////////////////////////////////////////////////////////////////////
 		itemDef
 		{
-			rect			288 60 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 45 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Hardbass: \n^2Enabled" )
 			textfont		UI_FONT_NORMAL
@@ -256,7 +316,7 @@
 		}		
 		itemDef
 		{
-			rect			288 60 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 45 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Hardbass: \n^1Disabled" )
 			textfont		UI_FONT_NORMAL
@@ -269,7 +329,7 @@
 		/////////////////////////////////////////////////////////////////////////////////
 		itemDef
 		{
-			rect			288 90 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 75 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("EDM: \n^2Enabled" )
 			textfont		UI_FONT_NORMAL
@@ -281,7 +341,7 @@
 		}
 		itemDef
 		{
-			rect			288 90 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 75 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("EDM: \n^1Disabled" )
 			textfont		UI_FONT_NORMAL
@@ -294,7 +354,7 @@
 		/////////////////////////////////////////////////////////////////////////////////
 		itemDef
 		{
-			rect			288 120 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 105 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Rock: \n^2Enabled" )
 			textfont		UI_FONT_NORMAL
@@ -306,7 +366,7 @@
 		}
 		itemDef
 		{
-			rect			288 120 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 105 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Rock: \n^1Disabled" )
 			textfont		UI_FONT_NORMAL
@@ -319,7 +379,7 @@
 		/////////////////////////////////////////////////////////////////////////////////
 		itemDef
 		{
-			rect			288 150 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 135 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Pop: \n^2Enabled" )
 			textfont		UI_FONT_NORMAL
@@ -331,7 +391,7 @@
 		}
 		itemDef
 		{
-			rect			288 150 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 135 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Pop: \n^1Disabled" )
 			textfont		UI_FONT_NORMAL
@@ -344,7 +404,7 @@
 		/////////////////////////////////////////////////////////////////////////////////
 		itemDef
 		{
-			rect			288 180 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 165 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Troll: \n^2Enabled")
 			textfont		UI_FONT_NORMAL
@@ -356,7 +416,7 @@
 		}
 		itemDef
 		{
-			rect			288 180 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 165 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Troll: \n^1Disabled")
 			textfont		UI_FONT_NORMAL
@@ -369,7 +429,7 @@
 		/////////////////////////////////////////////////////////////////////////////////
 		itemDef
 		{
-			rect			288 210 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 195 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Balkan: \n^2Enabled" )
 			textfont		UI_FONT_NORMAL
@@ -381,7 +441,7 @@
 		}
 		itemDef
 		{
-			rect			288 210 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 195 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Balkan: \n^1Disabled" )
 			textfont		UI_FONT_NORMAL
@@ -394,7 +454,7 @@
 		/////////////////////////////////////////////////////////////////////////////////
 		itemDef
 		{
-			rect			288 240 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 225 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Trap: \n^2Enabled" )
 			textfont		UI_FONT_NORMAL
@@ -406,7 +466,7 @@
 		}
 		itemDef
 		{
-			rect			288 240 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 225 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Trap: \n^1Disabled" )
 			textfont		UI_FONT_NORMAL
@@ -419,7 +479,7 @@
 		/////////////////////////////////////////////////////////////////////////////////
 		itemDef
 		{
-			rect			288 270 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 255 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Rave : \n^2Enabled" )
 			textfont		UI_FONT_NORMAL
@@ -431,7 +491,7 @@
 		}
 		itemDef
 		{
-			rect			288 270 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 255 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Rave : \n^1Disabled" )
 			textfont		UI_FONT_NORMAL
@@ -444,7 +504,7 @@
 		/////////////////////////////////////////////////////////////////////////////////
 		itemDef
 		{
-			rect			288 304 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 290 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Music On/Off: \n^2Music On" )
 			textfont		UI_FONT_NORMAL
@@ -456,7 +516,7 @@
 		}
 		itemDef
 		{
-			rect			288 304 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 288 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Music On/Off: \n^1Music Off" )
 			textfont		UI_FONT_NORMAL
@@ -469,7 +529,7 @@
 		/////////////////////////////////////////////////////////////////////////////////		
 		itemDef
 		{
-			rect			288 340 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 323 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Current FOV: \n^8" + dvarString("cg_fovscale") )
 			textfont		UI_FONT_NORMAL
@@ -482,7 +542,7 @@
 		/////////////////////////////////////////////////////////////////////////////////
 	    itemDef
 		{
-			rect			288 370 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 353 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Fullbright: \n^8Enabled" )
 			textfont		UI_FONT_NORMAL
@@ -494,7 +554,7 @@
 		}
 	    itemDef
 		{
-			rect			288 370 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 353 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Fullbright: \n^8Disabled" )
 			textfont		UI_FONT_NORMAL
@@ -502,6 +562,19 @@
 			textalign		ITEM_ALIGN_LEFT
 			textaligny		15
 			visible			when(dvarString("r_fullbright")==0)
+			decoration
+		}
+		//////////////////////////////////////////////////////////////////////////////////
+		itemDef
+		{
+			rect			288 386 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			forecolor		1 1 1 1
+			exp text		("Killcard: \n^8" + dvarString("ui_killcard") )
+			textfont		UI_FONT_NORMAL
+			textscale		0.30
+			textalign		ITEM_ALIGN_LEFT
+			textaligny		15
+			visible			1
 			decoration
 		}
 	}

@@ -2,6 +2,11 @@ player(response)
 {
 	self endon ( "disconnect" );
 	
+	if(!isDefined(self.pers["design"]))
+		self.pers["design"] = "Default";
+	
+	self setClientDvar("ui_killcard", self.pers["design"] );
+	
 	switch(response)
 	{
 		// GENRE SELECTION
@@ -160,29 +165,35 @@ player(response)
 			break;
 				
 		// EMBLEMS
-		case "emblem_default":
-			self duffman\killcard::setDesign("default");
+		case "kc_default":
+			self duffman\killcard::setDesign("Default",1);
+			self setClientDvar("ui_killcard",self.pers["design"]);
 			break;
 			
-		case "emblem_blue":
-			self duffman\killcard::setDesign("blue");
+		case "kc_blue":
+			self duffman\killcard::setDesign("Blue",1);
+			self setClientDvar("ui_killcard",self.pers["design"]);
 			break;
 			
-		case "emblem_red":
-			self duffman\killcard::setDesign("red");
+		case "kc_red":
+			self duffman\killcard::setDesign("Red",1);
+			self setClientDvar("ui_killcard",self.pers["design"]);
 			break;
 			
-		case "emblem_green":
-			self duffman\killcard::setDesign("green");
+		case "kc_green":
+			self duffman\killcard::setDesign("Green",1);
+			self setClientDvar("ui_killcard",self.pers["design"]);
 			break;
 			
-		case "emblem_yellow":
-			self duffman\killcard::setDesign("yellow");
+		case "kc_yellow":
+			self duffman\killcard::setDesign("Yellow",1);
+			self setClientDvar("ui_killcard",self.pers["design"]);
 			break;
 			
-		case "emblem_member":
+		case "kc_member":
 			//TODO: Status check
-			self duffman\killcard::setDesign("member");
+			self duffman\killcard::setDesign("Member",1);
+			self setClientDvar("ui_killcard",self.pers["design"]);
 			break;
 	}
 }
