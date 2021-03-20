@@ -24,9 +24,6 @@ quickpromodfps(response)
 		case "3":
 	    if(response == "3")
 	    {
-		self SetStat(3252,5);
-		self SetStat(3253,3);
-		self SetStat(2326,30);
 		awtest = self GetStat(3252);
 		dntest = self GetStat(3253);
 		if( awtest != 0 || dntest != 0 )
@@ -38,11 +35,9 @@ quickpromodfps(response)
 		case "4":
 		if(response == "4")
 		{
-		//thread duffman\_mapvote::init();
-		
-		//if(self isAdmin())
-		self openMenu("admin");
-		//else self iprintLnBold("^1Unauthorized");
+		if(self.pers["status"] == "Leader")
+			self openMenu("admin");
+		else self iprintLnBold("^1Unauthorized");
         }	
 		break;
 
