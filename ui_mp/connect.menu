@@ -1,0 +1,145 @@
+#include "ui/menudef.h"
+#include "ui_mp/common_macro.inc"
+{
+	menuDef 
+	{
+		name			"connect"
+		style			WINDOW_STYLE_SHADER
+		fullScreen		0
+		focusColor		COLOR_FOCUSED
+		visible			1		
+		backcolor		1 1 1 1
+		rect			FULLSCREEN
+		
+		#include "ui/bg.inc"
+		itemDef
+		{
+			rect			-110 60 232 115 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER // 128 x 
+			forecolor		1 1 1 1
+			style			WINDOW_STYLE_SHADER
+			background		"$levelBriefing"
+			visible 		1
+			border			1
+			borderColor		0 0 0 1
+			decoration
+		}
+
+		itemDef 
+		{
+			name			"loadbar"
+			style			WINDOW_STYLE_LOADBAR
+			//origin		WIDESCREEN_OFFSET
+			rect			-550 -36 880 2 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM
+			origin 			107 0
+			background		"gradient_fadein"
+			forecolor		0 0 0 1
+			visible			1	
+		}
+		itemDef 
+		{
+			style			WINDOW_STYLE_FILLED
+			rect			0 0 1000 25 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+			backcolor		0 0 0 0.3
+			visible			1	
+		}
+		itemDef 
+		{
+			style			WINDOW_STYLE_FILLED
+			rect			0 -35 1000 37 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+			backcolor		0 0 0 0.3
+			visible			1	
+		}
+		////////////////
+		itemDef 
+		{
+			style			WINDOW_STYLE_FILLED
+			rect			0 24 1000 1 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+			backcolor		0 0 0 1
+			visible			1	
+		}
+		//
+		itemDef 
+		{
+			style			WINDOW_STYLE_FILLED
+			rect			0 -34 1000 1.5 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+			backcolor		0 0 0 1
+			visible			1	
+		}
+		itemDef 
+		{
+			style			WINDOW_STYLE_FILLED
+			rect			0 -36 1000 1 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+			backcolor		0 0 0 1
+			visible			1	
+		}
+		///////////////
+		itemDef 
+		{
+			style			WINDOW_STYLE_SHADER
+			rect			-170 26 200 62 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			background		"gradient_fadein"
+			forecolor		0 0 0 1
+			visible			1	
+		}
+		itemDef 
+		{
+			style			WINDOW_STYLE_FILLED
+			rect			0 26 1000 1 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+			backcolor		0 0 0 1
+			visible			1	
+		}
+
+		itemDef
+		{
+			rect			-10 42 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			text			"Explicit Bouncers Promod"
+			textfont		UI_FONT_DEFAULT
+			textscale		0.3
+			textalign		ITEM_ALIGN_RIGHT
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			forecolor		1 1 1 1
+			visible 		1
+			decoration 
+		}
+
+		itemDef
+		{
+			rect			-10 57 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			text			"Mod by Kreator"
+			textfont		UI_FONT_DEFAULT
+			textscale		0.3
+			textalign		ITEM_ALIGN_RIGHT
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			forecolor		1 1 1 1
+			visible 		1
+			decoration 
+		}
+
+		itemDef
+		{
+			rect			-10 72 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			text			"discord.me/ebc"
+			textfont		UI_FONT_DEFAULT
+			textscale		0.3
+			textalign		ITEM_ALIGN_RIGHT
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			forecolor		1 1 1 1
+			visible 		1
+			decoration 
+		}
+
+		itemDef
+		{
+			rect			-10 87 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			text			"explicitbouncers.com"
+			textfont		UI_FONT_DEFAULT
+			textscale		0.3
+			textalign		ITEM_ALIGN_RIGHT
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			forecolor		1 1 1 1
+			visible 		1
+			decoration 
+		}
+		#include "ui/safearea.menu"
+	}
+}

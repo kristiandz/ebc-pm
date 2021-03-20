@@ -1,0 +1,259 @@
+#include "ui/menudef.h"
+
+#define MAXNUM 7
+#define MAXNUM_2 4
+#define COL( itemIndex )         ((itemIndex - 1 - ((itemIndex - 1) % MAXNUM)) / MAXNUM)
+#define ROW( itemIndex )         ((itemIndex - 1) % MAXNUM)
+#define COL_2( itemIndex )         ((itemIndex - 1 - ((itemIndex - 1) % MAXNUM_2)) / MAXNUM_2)
+#define ROW_2( itemIndex )         ((itemIndex - 1) % MAXNUM_2)
+
+#define BUTTON(itemNum,textArg,responseArg,onFocusArg) \		
+		itemDef \
+		{ \
+			type 				ITEM_TYPE_BUTTON \
+			style				WINDOW_STYLE_FILLED \
+			rect				(-35 + COL( itemNum ) * 93) (46 + ROW( itemNum )*25) 85 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+			forecolor			1 1 1 1 \
+			border				1 \
+			bordercolor			0 0 0 0.3 \
+			backcolor			0.3 0.3 0.3 0.75 \
+			visible				1 \
+			exp					text(textArg) \
+			textfont			UI_FONT_NORMAL \
+			textscale			0.25 \
+			textalign			ITEM_ALIGN_CENTER \
+			textaligny			15 \
+			mouseEnter 			{ play "mouse_over"; \
+			} \
+			mouseExit 			{ } \
+			action 				{ play "mouse_click"; \
+			scriptMenuResponse responseArg;  \
+			}  \
+		}
+		
+#define BUTTON2(itemNum,textArg,responseArg,onFocusArg) \		
+		itemDef \
+		{ \
+			type 				ITEM_TYPE_BUTTON \
+			style				WINDOW_STYLE_FILLED \
+			rect				(-35 + COL_2( itemNum ) * 93) (258 + ROW_2( itemNum )*23) 85 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+			forecolor			1 1 1 1 \
+			border				1 \
+			bordercolor			0 0 0 0.3 \
+			backcolor			0.3 0.3 0.3 0.75 \
+			visible				1 \
+			exp					text(textArg) \
+			textfont			UI_FONT_NORMAL \
+			textscale			0.25 \
+			textalign			ITEM_ALIGN_CENTER \
+			textaligny			15 \
+			mouseEnter 			{ play "mouse_over"; \
+			} \
+			mouseExit 			{ } \
+			action 				{ play "mouse_click"; \
+			scriptMenuResponse responseArg;  \
+			}  \
+		}
+		
+#define PLAYERITEM(itemNum,responseArg) \		
+		itemDef \
+		{ \
+			type 				ITEM_TYPE_BUTTON \
+			style				WINDOW_STYLE_FILLED \
+			rect				265 (47+(itemNum*10)) 100 10 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+			exp					text("ID "+ itemNum + ": " + dvarString("ui_player" + itemNum)) \
+			textfont			UI_FONT_NORMAL \
+			textscale			0.25 \
+			textaligny			10 \
+			mouseEnter 			{ play "mouse_over";} \
+			action 				{ play "mouse_click";responseArg;} \
+			visible 			when(dvarString("ui_player" + itemNum) != "") \
+		}	
+		
+{
+	menuDef 
+	{
+		name 			"admin"
+		rect			-150 -200 400 400 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+		focuscolor		COLOR_FOCUSED
+		style			WINDOW_STYLE_EMPTY
+	    blurWorld		2.0
+		visible			1
+		onOpen
+		{
+		}
+		//
+		itemDef
+		{
+			style			WINDOW_STYLE_SHADER
+			rect			-50 40 300 340 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			background		"white"
+			forecolor       0 0 0 0.7
+			visible			1
+		}
+		itemDef
+		{
+			style			WINDOW_STYLE_SHADER
+			rect			-50 20 300 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			background		"white"
+			forecolor       0 0 0 0.9
+			visible			1
+		}
+		itemDef
+		{
+			rect			-40 23 300 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			forecolor		1 1 1 1
+			exp text		("Choose an action for the selected player from the list")
+			textfont		UI_FONT_NORMAL
+			textscale		0.3
+			textalign		ITEM_ALIGN_LEFT
+			textaligny		15
+			visible			1
+			decoration
+		}
+		BUTTON(1,"TeleGun",atele,"Give player a teleport gun.") 		
+		BUTTON(2,"Toggle Pickup",apickup,"Toggle pickup players.") 	
+		BUTTON(3,"Teleport to You",atphere,"Teleport a player to your current location.") 	
+		BUTTON(4,"Teleport to Player",atpto,"Teleport to a player's current location.")
+		BUTTON(5,"Toggle Godmode",agod,"Toggle godmode for player.") 		
+		BUTTON(6,"Toggle Invisible",ainvis,"Toggle Invisibility") 		
+		BUTTON(7,"Tog. Freeze All",afr_all,"Toggle freeze all players.") 		
+		BUTTON(8,"Rocket Nuke",arocket,"Give rocket nuke shot for player.") 
+		BUTTON(9,"Nova Nade",anova,"Give nova nade for player.") 				
+		BUTTON(10,"Nuke Bullets",anukeb,"Activate nuke bullets for player.") 		
+		BUTTON(11,"Jetpack",ajetpack,"Give jetpack for a player.")
+		BUTTON(12,"Death Machine",adeath,"Machine gun with infinite ammo.") 		
+		BUTTON(13,"Give Ammo",ammo,"Refill a player's currently equipped weapon to max ammo.") 	
+		BUTTON(14,"Toggle Target",atarget,"Toggle target mark on a player") 	
+		BUTTON(15,"^1Kill Player",akill,"Kills an unpromoted player.")
+		BUTTON(16,"^1Kick Player",akick,"Kicks an unpromoted player with temp ban.") 		
+		BUTTON(17,"^1Force to Spec",aspec,"Forces an unpromoted player to spectator.") 	
+		BUTTON(18,"^1Take Weapon",arob,"Removes a player's current weapon.") 	
+		BUTTON(19,"^1Toggle Freeze",afreeze,"Freezes a non admin player in place until unfrozen.")
+		BUTTON(20,"^1Flash Player",aflash,"Creates a flashbang effect on a non admin player.") 	
+		BUTTON(21,"^1Toggle flag",aflag,"Toggle a flag for suspicious players")
+		//
+		itemDef
+		{
+			style			WINDOW_STYLE_SHADER
+			rect			-50 230 300 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			background		"white"
+			forecolor       0 0 0 0.75
+			visible			1
+		}
+		itemDef
+		{
+			rect			-40 232 300 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			forecolor		1 1 1 1
+			exp text		("Only mode toggle")
+			textfont		UI_FONT_NORMAL
+			textscale		0.3
+			textalign		ITEM_ALIGN_LEFT
+			textaligny		15
+			visible			1
+			decoration
+		}
+		BUTTON2(1,"Nades only",aonly_nades,"Nades only mode.") 		
+		BUTTON2(2,"Sniper only",aonly_sniper,"Sniper only mode.") 	
+		BUTTON2(3,"Deagle only",aonly_deagle,"Deagle only mode.") 	
+		BUTTON2(4,"Knife only",aonly_knife,"Knife only mode.")
+		BUTTON2(9,"Shotgun only",aonly_shotgun,"Shotgun only mode.") 		
+		BUTTON2(6,"RPG only",aonly_rpg,"RPG only mode.") 		
+		BUTTON2(7,"RPD only",aonly_rpd,"RPD only mode.") 		
+		BUTTON2(8,"Pistol only",aonly_pistol,"Pistol only mode.") 
+		BUTTON2(11,"^1Reset mode",aonly_reset,"Resets only mode.") 				
+		BUTTON2(10,"Soviet only",aonly_soviet,"Soviet only mode.") 		
+		BUTTON2(5,"Cancer only",aonly_cancer,"Cancer only mode.") 
+		//
+		itemDef 
+		{ 
+			type 			ITEM_TYPE_BUTTON 
+			rect			-30 358 50 10 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER 
+			forecolor		1 1 1 1 
+			text			"Close" 
+			textfont		UI_FONT_NORMAL 
+			textscale		0.3
+			textalign		ITEM_ALIGN_LEFT 
+			textaligny		15 
+			mouseEnter 		{ play "mouse_over"; } 
+			action 			{ play "mouse_click"; scriptMenuResponse adminmenuclose; close admin; } 
+			visible			when(!dvarInt("ui_give_menu"))
+		}	
+		
+
+		
+		itemDef
+		{
+			style			WINDOW_STYLE_SHADER
+			rect			260 40 100 340 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			forecolor		0 0 0 0.7
+			background		"white"
+			visible			1
+		}
+		itemDef
+		{
+			style			WINDOW_STYLE_SHADER
+			rect			260 20 100 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			forecolor		0 0 0 0.9
+			background		"white"
+			visible			1
+		}
+		itemDef
+		{
+			rect			270 22 300 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			forecolor		1 1 1 1
+			exp text		("Player list")
+			textfont		UI_FONT_NORMAL
+			textscale		0.3
+			textalign		ITEM_ALIGN_LEFT
+			textaligny		15
+			visible			1
+			decoration
+		}
+		itemDef
+		{
+			rect			35 358 300 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			forecolor		1 1 1 1
+			exp text		("ID NUMBER: " + dvarint("ui_selected_id"))
+			textfont		UI_FONT_NORMAL
+			textscale		0.3
+			textalign		ITEM_ALIGN_RIGHT
+			textaligny		15
+			visible			1
+			decoration
+		}
+     #define IDEG(itemNum) PLAYERITEM(itemNum, scriptmenuresponse player##itemNum)
+
+		IDEG(0)
+		IDEG(1)
+		IDEG(2)
+		IDEG(3)
+		IDEG(4)		
+		IDEG(5)
+		IDEG(6)		
+		IDEG(7)
+		IDEG(8)		
+		IDEG(9)
+		IDEG(10)		
+		IDEG(11)
+		IDEG(12)		
+		IDEG(13)
+		IDEG(14)		
+		IDEG(15)
+		IDEG(16)		
+		IDEG(17)
+		IDEG(18)		
+		IDEG(19)
+		IDEG(20)		
+		IDEG(21)
+		IDEG(22)		
+		IDEG(23)
+		IDEG(24)		
+		IDEG(25)
+		IDEG(26)		
+		IDEG(27)
+		IDEG(28)		
+		IDEG(29)
+		IDEG(30)		
+	}
+}

@@ -1,0 +1,214 @@
+#include "ui/menudef.h"
+#include "ui_mp/common_macro.inc"
+
+#define CHOICE_GROUP			"quickcommands"
+
+#include "ui_mp/menustyle.inc"
+#include "ui/choices_setup_common.menu"
+
+#undef CHOICE_SIZE_X
+#define CHOICE_SIZE_X			186
+
+#define ORIGIN_QUICKMESSAGEWINDOW		0 16
+
+{
+    menuDef
+    {
+        name                      "quickcommands"
+        rect                      -5 290 300 300 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+        style                     WINDOW_STYLE_FILLED
+        borderSize                1
+        foreColor                 1 1 1 1
+		popup                     
+        visible 				  0    
+        onOpen                    { setDvar cl_bypassMouseInput 1 ;  }
+        onClose                   { setDvar cl_bypassMouseInput 0  }
+        onESC                     { play mouse_click ; close self ;  }
+
+		itemDef
+        {
+            rect                      10 10 130 174 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+            style                     WINDOW_STYLE_FILLED
+            backcolor                 0 0 0 0.5
+            visible 				  1                              
+        }
+		itemDef
+        {
+            rect                      10 10 130 20 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+            style                     WINDOW_STYLE_FILLED
+            backcolor                 0 0 0 0.5
+            visible 				  1                              
+        }
+		itemDef
+        {
+            rect            		  34 19 0 0
+            foreColor                 1 1 1 1
+            textFont                  UI_FONT_NORMAL
+            textAlignY                8
+            textScale                 0.32
+            textStyle                 ITEM_TEXTSTYLE_SHADOWED
+            text                      "Quick commands"
+            visible 				  1                              
+        }
+		
+		itemDef
+		{
+			name			"window"
+			group			ingamebox
+			visible			1
+			rect			16 22 0 0
+			origin			ORIGIN_QUICKMESSAGEWINDOW
+			forecolor		1 1 1 1
+			textfont		UI_FONT_NORMAL
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textscale		TEXTSIZE_SMALL
+			textaligny		8
+			textScale       0.32
+			text			"@QUICKMESSAGE_1_FOLLOW_ME"
+			decoration
+		}
+		execKey "1" { scriptMenuResponse "1"; close quickcommands; }
+	
+		itemDef
+		{
+			name			"window"
+			group			ingamebox
+			visible			1
+			rect			16 38 0 0
+			origin			ORIGIN_QUICKMESSAGEWINDOW
+			forecolor		1 1 1 1
+			textfont		UI_FONT_NORMAL
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textscale		TEXTSIZE_SMALL
+			textaligny		8
+			textScale       0.32
+			text			"@QUICKMESSAGE_2_MOVE_IN"
+			decoration
+		}
+		execKey "2" { scriptMenuResponse "2"; close quickcommands }
+	
+		itemDef
+		{
+			name			"window"
+			group			ingamebox
+			visible			1
+			rect			16 54 0 0
+			origin			ORIGIN_QUICKMESSAGEWINDOW
+			forecolor		1 1 1 1
+			textfont		UI_FONT_NORMAL
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textscale		TEXTSIZE_SMALL
+			textaligny		8
+			textScale       0.32
+			text			"@QUICKMESSAGE_3_FALL_BACK"
+			decoration
+		}
+		execKey "3" { scriptMenuResponse "3"; close quickcommands }
+	
+		itemDef
+		{
+			name			"window"
+			group			ingamebox
+			visible			1
+			rect			16 68 0 0
+			origin			ORIGIN_QUICKMESSAGEWINDOW
+			forecolor		1 1 1 1
+			textfont		UI_FONT_NORMAL
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textscale		TEXTSIZE_SMALL
+			textaligny		8
+			textScale       0.32
+			text			"@QUICKMESSAGE_4_SUPPRESSING_FIRE"
+			decoration
+		}
+		execKey "4" { scriptMenuResponse "4"; close quickcommands }
+	
+		itemDef
+		{
+			name			"window"
+			group			ingamebox
+			visible			1
+			rect			16 86 0 0
+			origin			ORIGIN_QUICKMESSAGEWINDOW
+			forecolor		1 1 1 1
+			textfont		UI_FONT_NORMAL
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textscale		TEXTSIZE_SMALL
+			textaligny		8
+			textScale       0.32
+			text			"@QUICKMESSAGE_5_ATTACK_LEFT_FLANK"
+			decoration
+		}
+		execKey "5" { scriptMenuResponse "5"; close quickcommands }
+	
+		itemDef
+		{
+			name			"window"
+			group			ingamebox
+			visible			1
+			rect			16 102 0 0
+			origin			ORIGIN_QUICKMESSAGEWINDOW
+			forecolor		1 1 1 1
+			textfont		UI_FONT_NORMAL
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textscale		TEXTSIZE_SMALL
+			textaligny		8
+			textScale       0.32
+			text			"@QUICKMESSAGE_6_ATTACK_RIGHT_FLANK"
+			decoration
+		}
+		execKey "6" { scriptMenuResponse "6"; close quickcommands }
+
+		itemDef
+		{
+			name			"window"
+			group			ingamebox
+			visible			1
+			rect			16 118 0 0
+			origin			ORIGIN_QUICKMESSAGEWINDOW
+			forecolor		1 1 1 1
+			textfont		UI_FONT_NORMAL
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textscale		TEXTSIZE_SMALL
+			textaligny		8
+			textScale       0.32
+			text			"@QUICKMESSAGE_7_HOLD_THIS_POSITION"
+			decoration
+		}
+		execKey "7" { scriptMenuResponse "7"; close quickcommands }
+	
+		itemDef
+		{
+			name			"window"
+			group			ingamebox
+			visible			1
+			rect			16 134 0 0
+			origin			ORIGIN_QUICKMESSAGEWINDOW
+			forecolor		1 1 1 1
+			textfont		UI_FONT_NORMAL
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textscale		TEXTSIZE_SMALL
+			textaligny		8
+			textScale       0.32
+			text			"@QUICKMESSAGE_8_REGROUP"
+			decoration
+		}
+		execKey "8" { scriptMenuResponse "8"; close quickcommands }
+	
+		itemDef
+		{
+			name			"window"
+			visible			1
+			rect			16 155 0 0
+			origin			ORIGIN_QUICKMESSAGEWINDOW
+			forecolor		1 1 1 1
+			textfont		UI_FONT_NORMAL
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textscale		TEXTSIZE_SMALL
+			textaligny		8
+			textScale       0.33
+			text			"@QUICKMESSAGE_ESC_EXIT"
+			decoration
+		}
+	}
+}

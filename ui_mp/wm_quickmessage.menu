@@ -1,0 +1,172 @@
+#include "ui/menudef.h"
+#include "ui_mp/common_macro.inc"
+
+#define CHOICE_GROUP            "quickmessage"
+
+#include "ui_mp/menustyle.inc"
+#include "ui/choices_setup_common.menu"
+
+#undef CHOICE_SIZE_X
+#define CHOICE_SIZE_X           186
+
+#define ORIGIN_QUICKMESSAGEWINDOW       0 16
+
+{
+    menuDef
+    {
+        name                      "quickmessage"
+        rect                      -5 320 300 300 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+        style                     WINDOW_STYLE_FILLED
+        borderSize                1
+        foreColor                 1 1 1 1
+		popup                     
+        visible 				  0    
+        onOpen                    { setDvar cl_bypassMouseInput 1 ;  }
+        onClose                   { setDvar cl_bypassMouseInput 0  }
+        onESC                     { play mouse_click ; close self ;  }
+
+		itemDef
+        {
+            rect                      10 10 130 145 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+            style                     WINDOW_STYLE_FILLED
+            backcolor                 0 0 0 0.5
+            visible 				  1                              
+        }
+		itemDef
+        {
+            rect                      10 10 130 20 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+            style                     WINDOW_STYLE_FILLED
+            backcolor                 0 0 0 0.5
+            visible 				  1                              
+        }
+		itemDef
+        {
+            rect            		  34 19 0 0
+            foreColor                 1 1 1 1
+            textFont                  UI_FONT_NORMAL
+            textAlignY                8
+            textScale                 0.32
+            textStyle                 ITEM_TEXTSTYLE_SHADOWED
+            text                      "Quick messages"
+            visible 1                              
+        }
+
+        itemDef
+        {
+            name            "window"
+            visible         1
+            rect            16 23 0 0
+            origin          ORIGIN_QUICKMESSAGEWINDOW
+            forecolor       1 1 1 1
+            textfont        UI_FONT_NORMAL
+            textstyle       ITEM_TEXTSTYLE_SHADOWED
+            textscale       TEXTSIZE_SMALL
+            textaligny      8
+			textScale       0.32
+            text            "@QUICKMESSAGE_1_COMMANDS"
+            decoration
+        }
+        execKey "1" { close quickmessage; open quickcommands }
+
+        itemDef
+        {
+            name            "window"
+            visible         1
+            rect            16 39 0 0
+            origin          ORIGIN_QUICKMESSAGEWINDOW
+            forecolor       1 1 1 1
+            textfont        UI_FONT_NORMAL
+            textstyle       ITEM_TEXTSTYLE_SHADOWED
+            textscale       TEXTSIZE_SMALL
+            textaligny      8
+			textScale       0.32
+            text            "@QUICKMESSAGE_2_STATEMENTS"
+            decoration
+        }
+        execKey "2" { close quickmessage; open quickstatements }
+
+        itemDef
+        {
+            name            "window"
+            visible         1
+            rect            16 55 0 0
+            origin          ORIGIN_QUICKMESSAGEWINDOW
+            forecolor       1 1 1 1
+            textfont        UI_FONT_NORMAL
+            textstyle       ITEM_TEXTSTYLE_SHADOWED
+            textscale       TEXTSIZE_SMALL
+            textaligny      8
+			textScale       0.32
+            text            "@QUICKMESSAGE_3_RESPONSES"
+            decoration
+        }
+        execKey "3" { close quickmessage; open quickresponses }
+
+        itemDef
+        {
+            name            "window"
+            visible         1
+            rect            16 71 0 0
+            origin          ORIGIN_QUICKMESSAGEWINDOW
+            forecolor       1 1 1 1
+            textfont        UI_FONT_NORMAL
+            textstyle       ITEM_TEXTSTYLE_SHADOWED
+            textscale       TEXTSIZE_SMALL
+            textaligny      8
+			textScale       0.32
+            text            "4. Promod Controls"
+            decoration
+        }
+        execKey "4" { close quickmessage; open quickpromod }
+
+        itemDef
+        {
+            name            "window"
+            visible         1
+            rect            16 87 0 0
+            origin          ORIGIN_QUICKMESSAGEWINDOW
+            forecolor       1 1 1 1
+            textfont        UI_FONT_NORMAL
+            textstyle       ITEM_TEXTSTYLE_SHADOWED
+            textscale       TEXTSIZE_SMALL
+            textaligny      8
+			textScale       0.32
+            text            "5. Promod Graphics"
+            decoration
+        }
+        execKey "5" { close quickmessage; open quickpromodgfx }
+		
+		itemDef
+        {
+            name            "window"
+            visible         1
+            rect            16 103 0 0
+            origin          ORIGIN_QUICKMESSAGEWINDOW
+            forecolor       0.6 0.6 0.65 1
+            textfont        UI_FONT_NORMAL
+            textstyle       ITEM_TEXTSTYLE_SHADOWED
+            textscale       TEXTSIZE_SMALL
+            textaligny      8
+			textScale       0.32
+            text            "6. Menus"
+            decoration
+        }
+        execKey "6" { close quickmessage; open quickpromodfps }
+
+        itemDef
+        {
+            name            "window"
+            visible         1
+            rect            16 125 0 0
+            origin          ORIGIN_QUICKMESSAGEWINDOW
+            forecolor       1 1 1 1
+            textfont        UI_FONT_NORMAL
+            textstyle       ITEM_TEXTSTYLE_SHADOWED
+            textscale       TEXTSIZE_SMALL
+            textaligny      8
+			textScale       0.33
+            text            "@QUICKMESSAGE_ESC_EXIT"
+            decoration
+        }
+    }
+}

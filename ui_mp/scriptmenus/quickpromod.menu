@@ -1,0 +1,159 @@
+#include "ui/menudef.h"
+#include "ui_mp/common_macro.inc"
+
+#include "ui_mp/menustyle.inc"
+#include "ui/choices_setup_common.menu"
+
+#undef CHOICE_SIZE_X
+#define CHOICE_SIZE_X 186
+
+#define ORIGIN_QUICKMESSAGEWINDOW 0 16
+
+{
+    menuDef
+    {
+        name                      "quickpromod"
+        rect                      -5 320 300 300 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+        style                     WINDOW_STYLE_FILLED
+        borderSize                1
+        foreColor                 1 1 1 1
+		popup                     
+        visible 				  0    
+        onOpen                    { setDvar cl_bypassMouseInput 1 ;  }
+        onClose                   { setDvar cl_bypassMouseInput 0  }
+        onESC                     { play mouse_click ; close self ;  }
+
+		itemDef
+        {
+            rect                      10 10 130 145 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+            style                     WINDOW_STYLE_FILLED
+            backcolor                 0 0 0 0.5
+            visible 				  1                              
+        }
+		itemDef
+        {
+            rect                      10 10 130 20 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+            style                     WINDOW_STYLE_FILLED
+            backcolor                 0 0 0 0.5
+            visible 				  1                              
+        }
+		itemDef
+        {
+            rect            		  34 19 0 0
+            foreColor                 1 1 1 1
+            textFont                  UI_FONT_NORMAL
+            textAlignY                8
+            textScale                 0.32
+            textStyle                 ITEM_TEXTSTYLE_SHADOWED
+            text                      "Promod Controls"
+            visible 1                              
+        }
+
+		itemDef
+		{
+			name			"window"
+			group			ingamebox
+			rect			16 25 0 0
+			origin			ORIGIN_QUICKMESSAGEWINDOW
+			forecolor		1 1 1 1
+			textfont		UI_FONT_NORMAL
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textscale		TEXTSIZE_SMALL
+			textaligny		8
+			textScale       0.32
+			text			"1. Version Info"
+			visible			1
+			decoration
+		}
+		execKey "1" { scriptMenuResponse "1"; close quickpromod }
+
+		itemDef
+		{
+			name			"window"
+			group			ingamebox
+			rect			16 41 0 0   
+			origin			ORIGIN_QUICKMESSAGEWINDOW
+			forecolor		1 1 1 1
+			textfont		UI_FONT_NORMAL
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textscale		TEXTSIZE_SMALL
+			textaligny		8
+			textScale       0.32
+			text			"2. Drop Bomb"
+			visible			1
+			decoration
+		}
+		execKey "2" { scriptMenuResponse "2"; close quickpromod }
+
+		itemDef
+		{
+			name			"window"
+			group			ingamebox
+			rect			16 57 0 0
+			origin			ORIGIN_QUICKMESSAGEWINDOW
+			forecolor		1 1 1 1
+			textfont		UI_FONT_NORMAL
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textscale		TEXTSIZE_SMALL
+			textaligny		8
+			textScale       0.32
+			text			"3. Suicide"
+			visible			1
+			decoration
+		}
+		execKey "3" { scriptMenuResponse "3"; close quickpromod }
+
+		itemDef
+		{
+			name			"window"
+			group			ingamebox
+			rect			16 73 0 0
+			origin			ORIGIN_QUICKMESSAGEWINDOW
+			forecolor		1 1 1 1
+			textfont		UI_FONT_NORMAL
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textscale		TEXTSIZE_SMALL
+			textaligny		8
+			textScale       0.32
+			text			"4. Spectate Team"
+			visible			1
+			decoration
+		}
+		execKey "4" { scriptMenuResponse "killspec"; close quickpromod }
+
+		itemDef
+		{
+			name			"window"
+			group			ingamebox
+			rect			16 95 0 0
+			origin			ORIGIN_QUICKMESSAGEWINDOW
+			forecolor		1 1 1 1
+			textfont		UI_FONT_NORMAL
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textscale		TEXTSIZE_SMALL
+			textaligny		8
+			textScale       0.32
+			text			"5. Statistics"
+			visible			1
+			decoration
+		}
+		execKey "5" { scriptMenuResponse "4"; close quickpromod }
+
+		itemDef
+		{
+			name			"window"
+			group			ingamebox
+			rect			16 125 0 0
+			origin			ORIGIN_QUICKMESSAGEWINDOW
+			forecolor		1 1 1 1
+			textfont		UI_FONT_NORMAL
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textscale		TEXTSIZE_SMALL
+			textaligny		8
+			textScale       0.33
+			text			"Esc. Exit"
+			visible			1
+			decoration
+		}
+	}
+}

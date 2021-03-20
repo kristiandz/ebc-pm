@@ -1,0 +1,38 @@
+VERSION             "1"
+CONFIG              "C:\trees\cod3\cod3\bin\StringEd.cfg"
+FILENOTES    
+
+REFERENCE PL_KILL_CONFIRMED
+LANG_ENGLISH "Kill Confirmed"
+
+REFERENCE KILL_CONFIRMED
+LANG_ENGLISH "Kill Confirmed"
+
+REFERENCE KILL_CONFIRMED_P
+LANG_ENGLISH "Kill Confirmed!"
+
+REFERENCE KILL_DENIED
+LANG_ENGLISH "Kill Denied!"
+
+REFERENCE GOTTAGS
+LANG_ENGLISH "Got Your Tags!"
+
+REFERENCE OBJECTIVES_KC
+LANG_ENGLISH "Confirm kills by collecting dogtags."
+
+REFERENCE OBJECTIVES_KC_SCORE
+LANG_ENGLISH "Confirm kills by collecting dogtags. First team with &&1 points wins."
+
+REFERENCE OBJECTIVES_KC_HINT
+LANG_ENGLISH "Confirm kills by collecting dogtags."
+
+REFERENCE SR
+LANG_ENGLISH "Search and Rescue"
+
+REFERENCE KC
+LANG_ENGLISH "Kill Confirmed"
+
+REFERENCE CRNK
+LANG_ENGLISH "Cranked"
+
+ENDMARKER

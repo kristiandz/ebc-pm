@@ -1,0 +1,11 @@
+{	
+	//loadMenu { "ui/options_game_pc.menu" }
+	//loadMenu { "ui/options_graphics_pc.menu" }
+	//loadMenu { "ui/options_look_pc.menu" }
+	//loadMenu { "ui/options_misc_pc.menu" }
+	//loadMenu { "ui/options_move_pc.menu" }
+	//loadMenu { "ui/options_shoot_pc.menu" }
+	//loadMenu { "ui/options_sound_pc.menu" }
+        //loadMenu { "ui_mp/options_voice.menu" }
+	
+}
