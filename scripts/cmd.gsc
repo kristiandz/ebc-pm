@@ -163,7 +163,7 @@ adminCommands( cmd, pickingType )
 		if( isDefined( player ) && isDefined( cmd[2] ))
 		{
 			temp = caller getstat(3251);
-			player iPrintlnBold("^1" + caller.name + "'s^7 summer prestige level was: ^1" + int(temp)); 
+			player iPrintlnBold("^1" + caller.name + "'s^7 previous season prestige level was: ^1" + int(temp)); 
 		}
 		break;
 	 
@@ -182,7 +182,7 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 			for ( i = 0; i < players.size; i++ )
 			{
-				if(!players[i] isReallyAlive() && player.pers["team"] != "spectator" )
+				if(!players[i] isReallyAlive() && player.pers["team"] == "axis" || player.pers["team"] == "allies" )
 				{
 				players[i] thread maps\mp\gametypes\_globallogic::closeMenus();
 				players[i] thread maps\mp\gametypes\_globallogic::spawnPlayer();	
@@ -450,9 +450,9 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
 		{
-		store = player thread scripts\utility\common::GetCvar("backup-pr");
+		//store = player thread scripts\utility\common::GetCvar("backup-pr");
 		wait 1;
-		iprintln( "Stored prestige is^1 " + int(store));
+		//iprintln( "Stored prestige is^1 " + int(store));
 		}
 		break;
 	
@@ -479,8 +479,9 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
 		{
-		player thread scripts\utility\common::setCvar("status","VIP1");
+		//player thread scripts\utility\common::setCvar("status","VIP1");
 		player SetStat(3253,1);
+		player.pers["status"] = "VIP1";
 		player iprintlnBold("^1Owner promoted you to VIP:Tier 1");
 		// cur = getRealTime();
 		// date = TimeToString(cur, 1, "%c");
@@ -492,8 +493,9 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
 		{
-		player thread scripts\utility\common::setCvar("status","VIP2");
+		//player thread scripts\utility\common::setCvar("status","VIP2");
 		player SetStat(3253,2);
+		player.pers["status"] = "VIP2";
 		player iprintlnBold("^1Owner promoted you to VIP:Tier 2");
 		// cur = getRealTime();
 		// date = TimeToString(cur, 1, "%c");
@@ -505,8 +507,9 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
 		{
-		player thread scripts\utility\common::setCvar("status","VIP3");
+		//player thread scripts\utility\common::setCvar("status","VIP3");
 		player SetStat(3253,3);
+		player.pers["status"] = "VIP3";
 		player iprintlnBold("^1Owner promoted you to VIP:Tier 3");
 		//cur = getRealTime();
 		// date = TimeToString(cur, 1, "%c");

@@ -163,7 +163,7 @@ adminCommands( cmd, pickingType )
 		if( isDefined( player ) && isDefined( cmd[2] ))
 		{
 			temp = caller getstat(3251);
-			player iPrintlnBold("^1" + caller.name + "'s^7 summer prestige level was: ^1" + int(temp)); 
+			player iPrintlnBold("^1" + caller.name + "'s^7 previous season prestige level was: ^1" + int(temp)); 
 		}
 		break;
 		
@@ -181,7 +181,7 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 			for ( i = 0; i < players.size; i++ )
 			{
-				if(!players[i] isReallyAlive() && player.pers["team"] != "spectator" )
+				if(!players[i] isReallyAlive() && player.pers["team"] == "axis" || player.pers["team"] == "allies" )
 				{
 				players[i] thread maps\mp\gametypes\_globallogic::closeMenus();
 				players[i] thread maps\mp\gametypes\_globallogic::spawnPlayer();	
@@ -449,9 +449,12 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
 		{
-		store = player thread scripts\utility\common::GetCvar("backup-pr");
-		wait 1;
-		iprintln( "Stored prestige is^1 " + int(store));
+			scripts\sql::db_connect("ebc_b3_pm");
+			q_str = "SELECT prestige, backup_pr FROM player_core WHERE guid LIKE " + player GetGuid();
+			SQL_Query(q_str);
+			row = SQL_FetchRow();
+			if(isDefined(row)) iprintln( "Stored prestige:^1 " + row[0] + "^7 Backup prestige: ^1" + row[1] );
+			SQL_Close();
 		}
 		break;
 	
@@ -477,9 +480,10 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
 		{
-		player thread scripts\utility\common::setCvar("status","VIP1");
+		player thread scripts\sql::db_setVip("ebc_b3_pm","VIP1",1);
 		player SetStat(3253,1);
-		player iprintlnBold("^1Owner promoted you to VIP:Tier 1");
+		player.pers["status"] = "VIP1";
+		player iprintlnBold("^1Leader promoted you to VIP:Tier 1");
 		cur = getRealTime();
 		date = TimeToString(cur, 1, "%c");
 		thread scripts\utility\common::log("vip_log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 1 @ " + date );
@@ -490,9 +494,10 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
 		{
-		player thread scripts\utility\common::setCvar("status","VIP2");
+		player thread scripts\sql::db_setVip("ebc_b3_pm","VIP2",2);
 		player SetStat(3253,2);
-		player iprintlnBold("^1Owner promoted you to VIP:Tier 2");
+		player.pers["status"] = "VIP2";
+		player iprintlnBold("^1Leader promoted you to VIP:Tier 2");
 		cur = getRealTime();
 		date = TimeToString(cur, 1, "%c");
 		thread scripts\utility\common::log("vip_log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 2 @ " + date );
@@ -503,9 +508,10 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
 		{
-		player thread scripts\utility\common::setCvar("status","VIP3");
+		player thread scripts\sql::db_setVip("ebc_pm_b3","VIP3",3);
 		player SetStat(3253,3);
-		player iprintlnBold("^1Owner promoted you to VIP:Tier 3");
+		player.pers["status"] = "VIP3";
+		player iprintlnBold("^1Leader promoted you to VIP:Tier 3");
 		cur = getRealTime();
 		date = TimeToString(cur, 1, "%c");
 		thread scripts\utility\common::log("vip_log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 3 @ " + date );
@@ -515,310 +521,189 @@ adminCommands( cmd, pickingType )
 		
 	case "pr0":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player ))
-		{
-		player maps\mp\gametypes\_persistence::statSet( "plevel", 0 );
-		wait .1;
-		temp = player GetStat(2326);
-		player thread scripts\utility\common::SetCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 0 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",0); }
 	    break;
 		
 	case "pr1":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player ))
-		{
-		player maps\mp\gametypes\_persistence::statSet( "plevel", 1 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 1 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",1); }
 	    break;	
 		
 	case "pr2":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player ))
-		{
-		player maps\mp\gametypes\_persistence::statSet( "plevel", 2 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 2 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",2); }
 	    break;
 	 
 	case "pr3":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player ))
-		{
-		player maps\mp\gametypes\_persistence::statSet( "plevel", 3 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 3 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",3); }
 		break;
 	 
 	case "pr4":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player ))
-		{
-		player maps\mp\gametypes\_persistence::statSet( "plevel", 4 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 4 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",4); }
 		break;
 			
 	case "pr5":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player ))
-		{
-		player maps\mp\gametypes\_persistence::statSet( "plevel", 5 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 5 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",5); }
 		break;
 	
 	case "pr6":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player ))
-		{
-		player maps\mp\gametypes\_persistence::statSet( "plevel", 6 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 6 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",6); }
 		break;
 	
 	case "pr7":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 7 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 7 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",7); }
 		break;
 	
 	case "pr8":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 8 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 8 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",8); }
 		break;
 	
 	case "pr9":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 9 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 9 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",9); }
 		break;
 	
 	case "pr10":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 10 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 10 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",10); }
 		break;
 	
 	case "pr11":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 11 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 11 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",11); }
 		break;
 	
 	case "pr12":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 12 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 12 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",12); }
 		break;
 	
 	case "pr13":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 13 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 13 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",13); }
 		break;
 	
 	case "pr14":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 14 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 14 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",14); }
 		break;
 		
 	case "pr15":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 15 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 15 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",15); }
 		break;
 		
 	case "pr16":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 16 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 16 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",16); }
 		break;
 		
 	case "pr17":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 17 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 17 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",17); }
 		break;
 		
 	case "pr18":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 18 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 18 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",18); }
 		break;
 		
 	case "pr19":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 19 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 19 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",19); }
 		break;
 		
 	case "pr20":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 20 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 20 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",20); }
 		break;
 		
 	case "pr21":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 21 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 21 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",21); }
 		break;
 		
 	case "pr22":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 22 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 22 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",22); }
 		break;
 		
 	case "pr23":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 23 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 23 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",23); }
 		break;
 		
 	case "pr24":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 24 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 24 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",24); }
 		break;
 		
 	case "pr25":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 25 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 25 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",25); }
 		break;
 		
 	case "pr26":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 26 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 26 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",26); }
 		break;
 		
 	case "pr27":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 27 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 27 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",27); }
 		break;
 		
 	case "pr28":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 28 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )) {player maps\mp\gametypes\_persistence::statSet( "plevel", 28 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",28); }
 		break;
 		
 	case "pr29":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 29 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 29 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",29); }
 		break;
 		
 	case "pr30":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player )){player maps\mp\gametypes\_persistence::statSet( "plevel", 30 );
-		wait .1;
-		temp = player getStat(2326);
-		player thread scripts\utility\common::setCvar("prestige",int(temp));
-		}
+		if( isDefined( player )){ player maps\mp\gametypes\_persistence::statSet( "plevel", 30 );
+			player thread scripts\sql::db_setPrestige("ebc_b3_pm",30); }
 		break;
-		
-	case "emblem":
-		player = getPlayer( arg1, pickingType );
-	    tekst = cmd[2];
-		if( isDefined( player ) && isDefined(tekst))
-		{
-		if(tekst.size > 3 && tekst.size < 37 )
-		{
-		player thread scripts\utility\common::setCvar("emblem",tekst);
-		player iprintlnBold("You have change your emblem to:\n "+tekst+ "\nYour new emblem will be applied next map");
-		}
-		else player iPrintlnBold("Emblem text needs to be bigger then 3 characters and smaller then 37");
-		}
-	break;
 	
 	case "spect":
 	    player = getPlayer(arg1,pickingType);
@@ -867,6 +752,7 @@ adminCommands( cmd, pickingType )
 			player scripts\utility\common::clientCmd( "wait 300; disconnect; wait 300; connect 145.239.150.240:28950" );
 		}
 		break;
+		
 	case "mixmod":
 	    player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
@@ -874,6 +760,7 @@ adminCommands( cmd, pickingType )
 		player scripts\utility\common::clientCmd( "wait 300; disconnect; wait 300; connect explicitbouncers.com:28951" );
 		}
 		break;
+		
 	case "codjumper":
 	    player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
