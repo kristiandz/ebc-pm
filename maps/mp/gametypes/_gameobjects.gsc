@@ -278,8 +278,8 @@ giveObject(object)
 	self thread trackCarrier();
 	if(isDefined(object.carryIcon))
 	{
-		self.carryIcon=createIcon(object.carryIcon,50,50);
-		self.carryIcon setPoint("CENTER","CENTER",223,167);
+		self.carryIcon=createIcon(object.carryIcon,45,45);
+		self.carryIcon setPoint("CENTER","CENTER",203,197);
 	}
 	if(isDefined(level.scorebot)&&level.scorebot)level thread maps\mp\gametypes\_globallogic::updateTeamStatus();
 }
