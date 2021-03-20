@@ -103,8 +103,12 @@ init()
 	if(level.hardcoreMode)setDvar("scr_player_maxhealth",30);
 	else setDvar("scr_player_maxhealth",100);
 	
+	thread admin_list(); // Test performance first
+	thread list_cleaner();
+	
 	thread buildSprayInfo();
 	thread buildCharacterInfo();
+	
 	scripts\_dvar::setupDvars();
 	thread scripts\general::init();
 }
@@ -2085,7 +2089,7 @@ Callback_PlayerConnect()
 
 	self.pickup = false;
 	self setStat(1124,0);
-	self.prestige = self GetStat(2326); // --- Check this
+	self.prestige = self GetStat(2326);
 	self thread shootCounter();
 	self.guid = self getGuid();
 	self.cur_kill_streak = self GetStat(2304);
@@ -2162,155 +2166,147 @@ Callback_PlayerConnect()
 	}
 	if(!isDefined(self.pers["verified"]))
 	{
-		self thread resetdone();
-		self thread newseason();
-		self thread prcheck();
-		/*
-		SQL_Connect("127.0.1",3306,"test","yeetusdeletus");
-		SQL_SelectDB("test_db");
-		q_str = "SELECT guid FROM player_core WHERE guid LIKE " + self.guid;
-		SQL_Query(q_str);
-		row = SQL_FetchRow();
-		if(!isDefined(row))
+		scripts\sql::db_connect("ebc_b3_pm");
+		q_str = "SELECT guid, prestige, backup_pr, season, status, style, award_tier, donation_tier FROM player_core WHERE guid LIKE " + self.guid;
+		SQL_Query(q_str); 
+		row = SQL_AffectedRows();
+		if(row == 0)
 		{
-			q_str = "INSERT INTO player_core (guid, prestige) VALUES " + self.guid + " " + self.prestige;
+			name = GetSubStr(self.name, 0, 25);
+			atier = self GetStat(3252);
+			dtier = self GetStat(3253);
+			backup_pr = self GetCvar("backup-pr"); if(!isDefined(backup_pr) || backup_pr == "")	backup_pr = 0;
+			season = "winter"; // remove after summer		
+			q_str = "INSERT INTO player_core (guid,name,prestige,backup_pr,season,award_tier,donation_tier) VALUES ("+self.guid+",\""+name+"\","+self.prestige+","+backup_pr+",\""+season +"\","+atier+","+dtier+")"; // level.season here
 			SQL_Query(q_str);
 		}
 		else
 		{
-			q_str = "UPDATE player_core SET prestige = " + self.prestige + " WHERE guid = " + self.guid;
-			SQL_Query(q_str);
+			row = SQL_FetchRow();
+			self thread prcheck(row[1], row[2]);
+			self thread newseason(row[3]);
+			self.pers["status"] = row[4];
+			self.pers["design"] = row[5];
+			self SetStat(3252, int(row[6]) );
+			self SetStat(3253, int(row[7]) );
 		}
 		SQL_Close();
-		*/
 		self.pers["verified"] = true;
 	}
 }
 
-newseason()
+checkSeason()
+{
+	season = undefined;
+	cur = getRealTime();
+	month = TimeToString(cur, 1, "%m");
+	if(int(month) >= 5 && int(month) <= 11)
+		season = "summer";
+	else
+		season = "winter";
+	return season;
+}
+
+newseason(pl_season)
 {
 	self endon("disconnect");
-    wait 5;
-	waittillframeend;
+	self waittill("spawned");
+	cp = self GetStat(2326); // Current prestige
+	pp = self GetStat(3250); // Local check for previous season
 	
-	cp = self GetStat(2326);
-	pp = self GetStat(3250);
-		
-	resetdone = self GetCvar("seasonreset:"); 
-	if( cp != 0 && ( resetdone !="" || int(resetdone) == 0 || int(resetdone) == 1) && pp != 2 )
+	if( cp != 0 && pl_season != level.season && pp != 0 )
 	{
-		self SetCvar("winterprestige:",int(cp));
-		self SetCvar("prestige",0);
-		self SetCvar("backup-pr",0); //For now
-		self SetCvar("seasonreset:",2);
-		self SetStat( 3251 , int(cp));
-		self SetStat( 3250 , 2 );
+		award_tier = self award_check(cp);
+		scripts\sql::db_connect("ebc_b3_pm");
+		q_str = "UPDATE player_core SET season = \"" + level.season + "\", prestige = 0, backup_pr = 0, "+pl_season+"prestige = " + cp + ", award_tier = " + award_tier + " WHERE guid LIKE "+self.guid;
+		SQL_Query(q_str);
+		SQL_Close();
+		self SetStat( 3250, 1);
+		self SetStat( 3251, int(cp));
 		self maps\mp\gametypes\_rank::resetEverything();
-		self thread awardset();
-		self iprintlnBold("This is your first visit in the new season.\n^4 Welcome to the summer season!");
+		self iprintlnBold("This is your first visit in the new season.\n^1 Welcome to the " + level.season + " season!");
 		wait 4;
-		self iprintlnBold("Your winter prestige was: " + int(cp) + ".\n Everyone is starting from prestige zero again." );
+		self iprintlnBold("Your previous seaon prestige was: " + int(cp) + ".\n Everyone is starting from zero again." );
+		wait 4;
+		self iprintlnBold("You have been awarded with season award tier:^1 " + award_tier );
 	}
-	else if ( cp == 0 && ( resetdone !="" || int(resetdone) == 0 ) && int(pp) == 0 )
+	else if ( cp == 0 && /*pl_season == level.season &&*/ int(pp) == 0 )
 	{
-		self SetCvar("prestige",0);
-		self SetStat( 3251 , 0 );
-		self SetCvar("seasonreset:",2);
-		self SetStat( 3250 , 2 ); // Prvi put
+		scripts\sql::db_connect("ebc_b3_pm");
+		q_str = "UPDATE player_core SET season=\""+level.season+"\",prestige=0 WHERE guid LIKE "+self.guid;
+		SQL_Query(q_str);
+		SQL_Close();
+		self SetStat( 3250 , 1 );
+		self SetStat( 3252 , 0 );
 		self maps\mp\gametypes\_rank::resetEverything();
-		self iprintlnBold("This is your first visit to Explicit Bouncers Promod.\n^4 Welcome to the summer season!");
-		wait 4;
-		self iprintlnBold("If this is not your first visit and you had prestige in the previous season.\n Please contact admins to set your summer season tier!" );
+		self iprintlnBold("This is your first visit to Explicit Bouncers Promod.\n^1 Welcome to the " + level.season + " season!");
+		wait 3;
+		self iprintlnBold("If this is not your first visit and you had prestige, please contact admins.");
 	}
-	self notify("seasoncheck-over");
+	else if ( cp != 0 && pl_season != level.season)
+	{
+		scripts\sql::db_connect("ebc_b3_pm");
+		q_str = "UPDATE player_core SET season=\""+level.season+"\",prestige=0 WHERE guid LIKE "+self.guid;
+		SQL_Query(q_str);
+		SQL_Close();
+		self SetStat( 3250 , 1 );
+		self SetStat( 3252 , 0 );
+		self maps\mp\gametypes\_rank::resetEverything();
+		self iprintlnBold("This is your first visit in the new season.\n^1 Welcome to the " + level.season + " season!");
+		wait 2;
+		self iprintlnBold("Everyone is starting from zero in new season");
+	}
 }
 
-resetdone()
+award_check(prestige)
+{
+	if(int(prestige) >= 20 && int(prestige) <= 25 )
+		self SetStat(3252, 1 );
+	else if(int(prestige) == 26 )
+		self SetStat(3252, 2 );
+	else if(int(prestige) == 27 )
+		self SetStat(3252, 2 );
+	else if(int(prestige) == 28 )
+		self SetStat(3252, 3 );
+	else if(int(prestige) == 29 )
+		self SetStat(3252, 4 );
+	else if(int(prestige) == 30 )
+		self SetStat(3252, 5 );
+	else if(int(prestige) < 20 )
+		self SetStat(3252, 0 );
+	return self GetStat(3252);
+}
+
+prcheck(storedpr,backup)
 {
 	self endon("disconnect");
-	self waittill("seasoncheck-over");
-
-	rd = self GetCvar("seasonreset:");
-	pp = self GetStat(3250);
-	if( int(pp) == 2 && (rd == "" || int(rd) == 0 || int(rd) == 1 ))
-	{
-	self SetCvar("seasonreset:",2);
-	}
-}
-
-awardset()
-{
-    self endon("disconnect");
-	sprestige = self GetStat(3251);
-	if(int(sprestige) >= 20 && int(sprestige) <= 25 )
-	{
-		self SetStat(3252,int(1));
-	}
-	else if(int(sprestige) == 26 )
-	{
-		self SetStat(3252,int(2));
-	}
-	else if(int(sprestige) == 27 )
-	{
-		self SetStat(3252,int(2));
-	}
-	else if(int(sprestige) == 28 )
-	{
-		self SetStat(3252,int(3));
-	}
-	else if(int(sprestige) == 29 )
-	{
-		self SetStat(3252,int(4));
-	}
-	else if(int(sprestige) == 30 )
-	{
-		self SetStat(3252,int(5));
-	}
-	wait 8;
-	awardtier = self GetStat(3252);
-	self iprintlnBold("You have been awarded with season award tier:^1 " + int(awardtier) );
-}
-
-prcheck()
-{
-	self endon("disconnect");
-	wait 4;
-	self waittill("seasoncheck-over");
 	waittillframeend;
-	if(isDefined(self))
+	prestige = self GetStat(2326);
+	cur = getRealTime();
+	date = TimeToString(cur, 1, "%c");
+		
+	if( int(storedpr) != 0 && int(prestige) != int(storedpr) )
 	{
-		waittillframeend;
-		prestige = self GetStat(2326);
-		storedpr = self GetCvar("prestige");
-		backup = self GetCvar("backup-pr");
-		
-		guid = self GetGuid();
-		
-		cur = getRealTime();
-		date = TimeToString(cur, 1, "%c");
-		
-		if(isDefined(storedpr) && storedpr != "" )
-		{
-			if(int(prestige) != int(storedpr) )
-			{
-				self SetStat(2326,int(storedpr));
-				thread scripts\utility\common::log("prcheck", self.name + " (" + guid + ") " + "auto restored prestige @" + date + " | Login Prestige: " + prestige + " | Stored Prestige: " + storedpr + " | Backup Prestige: " + backup);
-				wait 2;
-				self iprintlnBold("^1Your prestige was restored!");
-
-			}
-		}
-		else if(!isDefined(storedpr) || storedpr == "" && prestige > 0 )
-		{
-			self SetStat(2326,0);
-			thread scripts\utility\common::log("prcheck", self.name + " (" + guid + ") " + "was reseted @ " + date + " | Login Prestige: " + prestige);
-			wait 2;
-			self iprintlnBold("^1You have changed your guid, your prestige is set to 0 for now.");
-			wait 3;
-			self iprintlnBold("Screenshot this and send to our discord if this is a mistake");
-			wait 1;
-			self iprintlnBold("Current prestige: " + prestige + "   GUID: " + guid );
-		}
+		self SetStat(2326,int(storedpr));
+		wait 1;
+		self iprintlnBold("^1Your prestige was restored!");
+		thread scripts\utility\common::log("prcheck", self.name + " (" + self getGuid() + ") " + "auto restored 1@ " + date + " | Login Prestige: " + prestige + " | Stored Prestige: " + storedpr);
+	}
+	else if( int(storedpr) == 0 && prestige > 0 )
+	{
+		self SetStat(2326,0);
+		self iprintlnBold("^1Your prestige was reseted!");
+		thread scripts\utility\common::log("prcheck", self.name + " (" + self getGuid() + ") " + "was reseted 2@ " + date + " | Login Prestige: " + prestige + " | Backup Prestige: " + backup );
+	}
+	else if( int(storedpr) == 0 && int(backup) == 0 && prestige > 0 )
+	{
+		self SetStat(2326,0);
+		self iprintlnBold("^1You have changed your guid or profile, your prestige is set to 0 for now.");
+		wait 2;
+		self iprintlnBold("Screenshot this and send to our discord if this is a mistake");
+		wait 1;
+		self iprintlnBold("Date: " + date + " | GUID: " + self GetGuid() );
+		thread scripts\utility\common::log("prcheck", self.name + " (" + self getGuid() + ") " + "was reseted 3@ " + date + " | Login Prestige: " + prestige );
 	}
 }
 
@@ -3040,5 +3036,40 @@ antirapid()
 
 		AmmoStock = self GetWeaponAmmoStock( weap );
 		self setWeaponAmmoStock( weap,( AmmoStock + AmmoClip ) );
+	}
+}
+
+admin_list()
+{
+	while(true)
+	{
+	players = getAllPlayers();
+	for(i=0;i<players.size;i++) 
+	{
+		for(j=0;j<players.size;j++)
+		{
+		if(players[i] GetStat(2717) == 0) players[i] setClientDvar("ui_player"+j, players[j].name );
+		else players[i] setClientDvar("ui_player"+j, "^1"+players[j].name+"^7 !" );
+		wait 0.1;
+		}
+	}
+	wait 1.5;
+	}
+}
+
+list_cleaner()
+{
+	while(true)
+	{
+		players = getAllPlayers();
+		for(i=0;i<players.size;i++)
+		{
+			for(j=0;j<30;j++)
+			{
+			if(!isDefined(players[j])){players[i] setClientDvar("ui_player"+j,"");}
+			wait 0.1;
+			}
+		}
+	wait 1.5;
 	}
 }
