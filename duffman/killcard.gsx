@@ -113,6 +113,10 @@ getDesign(index)
 setDesign(theme) 
 {
 	self notify("new_emblem");
+	scripts\sql::db_connect("ebc_b3_pm");
+	q_str = "UPDATE player_core SET style= \"" + theme + "\" WHERE guid LIKE "+self GetGuid();
+	SQL_Query(q_str);
+	SQL_Close();
 	self.pers["design"] = theme;	
 	if(isDefined(self.killcard))
 		for(i=0;i<self.killcard.size;i++)
@@ -162,12 +166,12 @@ KillCard(from,weap,alternatewep)
 	if(!isDefined(alternatewep)) alternatewep = "Define Weapon";
 	shader[2] setWeaponIcon(weap,alternatewep);
 	shader[2].x = 80;
-	shader[2].y = 199;	
+	shader[2].y = 204;	
 	shader[2].alignX = "center";
 	shader[2].alignY = "middle";
 	shader[3] setValue(self getKillStat(from GetEntityNumber()));
 	shader[3].x = -7;
-	shader[3].y = 187;	
+	shader[3].y = 190;	
 	shader[3].alignX = "right";
 	shader[3].font = "objective";
 	shader[3].fontscale = 2;	
@@ -176,7 +180,7 @@ KillCard(from,weap,alternatewep)
 	shader[4].label = &"-&&1";
 	shader[4] setValue(from getKillStat(self GetEntityNumber()));
 	shader[4].x = -6.6;
-	shader[4].y = 187;	
+	shader[4].y = 190;	
 	shader[4].alignX = "left";
 	shader[4].font = "objective";
 	shader[4].fontscale = 2;
@@ -185,21 +189,21 @@ KillCard(from,weap,alternatewep)
 	shader[5].label = &"K/D Ratio: ^1&&1";
 	shader[5].alignX = "left";
 	shader[5].x = -115;
-	shader[5].y = 182;
+	shader[5].y = 187;
 	if(from.pers[ "deaths" ])
 		shader[5] setValue(int( from.pers[ "kills" ] / from.pers[ "deaths" ] * 100 ) / 100);
 	else 
 		shader[5] setValue(from.pers[ "kills" ]);
 	shader[6].label = &"Killstreak: ^1&&1";
 	shader[6].x = -115;
-	shader[6].y = 197;
+	shader[6].y = 202;
 	shader[6].alignX = "left";
 	shader[6] setValue(from GetStat(2304));
 
 	for(i=0;i<shader.size;i++) 
 	{
 		old = shader[i].y;
-		shader[i].y = 300;
+		shader[i].y = 304;
 		shader[i] MoveOverTime(.3);
 		shader[i].y = old;
 	}
@@ -209,7 +213,7 @@ KillCard(from,weap,alternatewep)
 	for(i=0;i<shader.size;i++) 
 	{
 		shader[i] MoveOverTime(.3);
-		shader[i].y = 300;
+		shader[i].y = 304;
 	}
 	wait .5;
 	for(i=0;i<shader.size;i++) 
@@ -220,7 +224,7 @@ KillCard(from,weap,alternatewep)
 
 setWeaponIcon(wep,alternate) 
 {
-	x = 80;
+	x = 75;
 	y = 35;
 	s = "white";
 	wep = strTok(wep,"_")[0];
@@ -259,8 +263,8 @@ setWeaponIcon(wep,alternate)
 		case"frag": s = "hud_us_grenade"; x = 40; y = 40; break; 
 		case"stun": s = "hud_us_stungrenade"; x = 40; break;
 		case"flash": s = "weapon_concgrenade"; x = 40; break;
-		case"knife": s = "killiconmelee"; x = 43; break;
-		default: s = "killiconsuicide"; x = 40; y = 40; break;
+		case"knife": s = "killiconmelee"; x = 33; y = 33; break;
+		default: s = "killiconsuicide"; x = 36; y = 36; break;
 	}
 	self setShader(s,int(x),int(y));
 }
