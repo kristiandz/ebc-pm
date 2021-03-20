@@ -281,18 +281,6 @@ player(response)
 			client takeAllWeapons();
 		break;
 		
-		case "apromote":
-			client SetRank(253,0);
-			client SetStat(252,253);
-			client iprintln("You have been promoted!");
-		break;
-		
-		case "ademote":
-			client SetRank(0,0);
-			client iprintln("You have been demoted!");
-			client scripts\flags::showFlag();
-		break;
-		
 		case "ammo":	
 			currentWeapon = client getCurrentWeapon();
 			if ( currentWeapon != "none" )
