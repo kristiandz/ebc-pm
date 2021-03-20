@@ -961,21 +961,6 @@ adminCommands( cmd, pickingType )
 	}
 }
 
-partymode()
-{
-	level endon("stopparty");
-	players = getAllPlayers();
-	for(k=0;k<players.size;k++) players[k] setClientDvar("r_fog", 1);
-	for(;;wait .5)
-	SetExpFog(256, 900, RandomFloat(1), RandomFloat(1), RandomFloat(1), 0.1); 
-	
-}
-partystop()
-{
-	level notify ("stopparty");
-	players = getAllPlayers();
-	for(k=0;k<players.size;k++) players[k] setClientDvar("r_fog", 0);
-}
 wtf()
 {
 	self endon( "disconnect" );
@@ -988,18 +973,22 @@ wtf()
 	playFx( level.fx["bombexplosion"], self.origin );
 	self suicide();
 }
+
 returnbomb()
 {
 	level.sdBomb maps\mp\gametypes\_gameobjects::returnHome();
 }
+
 dropbomb()
 {
 	level.sdBomb maps\mp\gametypes\_gameobjects::setDropped();
 }
+
 givebomb()
 {
 	level.sdBomb maps\mp\gametypes\_gameobjects::setPickedUp(self);
 }
+
 setTeam( team )
 {
 	if( self.pers["team"] == team )

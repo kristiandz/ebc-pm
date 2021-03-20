@@ -1134,6 +1134,13 @@ partymode()
 		SetExpFog(256, 900, RandomFloat(1), RandomFloat(1), RandomFloat(1), 0.1); 
 }
 
+partystop()
+{
+	level notify ("stopparty");
+	players = getAllPlayers();
+	for(k=0;k<players.size;k++) players[k] setClientDvar("r_fog", 0);
+}
+
 RoundDown(float) 
 {
 	return int(float) - (int(float) > float);
