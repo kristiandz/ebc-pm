@@ -3,3 +3,6 @@ cod4x18_dedrun.lnk
 LOG.TXT
 *.iwd
 *.log
+missingasset.csv
+qconsole.log.old
+q3config_server.cfg
