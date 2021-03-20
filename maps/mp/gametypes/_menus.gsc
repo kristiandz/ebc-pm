@@ -77,7 +77,7 @@ onMenuResponse()
 			self maps\mp\gametypes\_promod::processLoadoutResponse( response );
 			continue;
 		}
-		
+		///////////////////////////////////////////////////////////////////////////
 		if (response == "prestige") 
 		{	
 			self closeMenu();
@@ -95,65 +95,6 @@ onMenuResponse()
 			{
 				self iprintLnBold("^1You have reached the max regular prestige!\n^7To enter prestige 30 you have to complete a trial.");
 				self iprintLnBold("Search for a collection of personalised clues to solve the trial. Good Luck!");
-			}
-		}
-		///////////////////////////////////////////////////////////////////////////
-		if( menu == "sprays" && ( int(response) <= 35 ) )
-		{
-			spray = int(response)-1;
-			if( self maps\mp\gametypes\_rank::isSprayUnlocked( spray ) )
-			{
-				self setStat( 979, spray );
-				self setClientDvar( "drui_spray", spray );
-			}
-		}	
-		if( menu == "sprays" && (int(response) > 35 ) )
-		{
-			character = int(response)-41;
-			if( self maps\mp\gametypes\_rank::isCharacterUnlocked( character ) )
-			{
-				self setStat( 980, character );
-				self setClientDvar( "drui_character", character );
-				self iprintln("You have selected skin: ^1"+character);
-			}
-		}
-		///////////////////////////////////////////////////////////////////////////
-		if( menu == "vip" && (int(response) < 6) )
-		{
-			spray = int(response);
-			if( self maps\mp\gametypes\_rank::isASprayUnlocked( spray ) )
-			{
-				spray = (spray+29);
-				self setStat( 979, spray );
-				self setClientDvar( "drui_spray", spray );
-			}
-		}
-		else if( menu == "vip" && ( int(response) > 5 && int(response) < 9) )
-		{
-			spray = int(response)-5;
-			if( self maps\mp\gametypes\_rank::isDSprayUnlocked( spray ) )
-			{
-				spray = (spray+34);
-				self setStat( 979, spray );
-				self setClientDvar( "drui_spray", spray );
-			}
-		}		
-		else if( menu == "vip" && (int(response) > 9 && int(response) < 13) )
-		{
-			character = int(response)-9;
-			if( self maps\mp\gametypes\_rank::isDCharacterUnlocked( character ) )
-			{
-				self setStat( 980, (character+19) );
-				self setClientDvar( "drui_character", character );
-			}
-		}
-		else if( menu == "vip" && (int(response) > 12) )
-		{
-			character = int(response)-10;
-			if( self maps\mp\gametypes\_rank::isACharacterUnlocked( character ) )
-			{
-				self setStat( 980, (character+20) );
-				self setClientDvar( "drui_character", character );
 			}
 		}
 		///////////////////////////////////////////////////////////////////////////
@@ -176,6 +117,7 @@ onMenuResponse()
 			temp = player GetStat(int(am));
 			self iprintLnBold("Stat: " + am + " for player " + player.name + "is: " + temp);
 		}
+		///////////////////////////////////////////////////////////////////////////
 		if( isDev() && isSubStr(response,"statset:"))
 		{
 			at = strTok(response,":")[1];
@@ -185,7 +127,7 @@ onMenuResponse()
 			player SetStat(int(am),int(stat));
 			self iprintLnBold("Stat: " + am + " for player " + player.name + "is set to: " + stat);
 		}
-		
+		///////////////////////////////////////////////////////////////////////////
 		switch( response )
 		{
 			case "back":
@@ -264,7 +206,7 @@ onMenuResponse()
 					continue;
 				}
 
-				if ( scripts\menus\_quickmessages_menu_response::chooseClassName( response ) == "" || !self maps\mp\gametypes\_promod::verifyClassChoice( self.pers["team"], response ) )
+				if ( scripts\menus\quickmessages_menu_response::chooseClassName( response ) == "" || !self maps\mp\gametypes\_promod::verifyClassChoice( self.pers["team"], response ) )
 					continue;
 
 				self maps\mp\gametypes\_promod::setClassChoice( response );
@@ -280,27 +222,35 @@ onMenuResponse()
 			case "quickcommands":
 			case "quickstatements":
 			case "quickresponses":
-				scripts\menus\_quickmessages_menu_response::doQuickMessage( menu, int(response)-1 );
+				scripts\menus\quickmessages_menu_response::doQuickMessage( menu, int(response)-1 );
 				continue;
 
 			case "quickpromod":
-				scripts\menus\_quickmessages_menu_response::quickpromod( response );
+				scripts\menus\quickmessages_menu_response::quickpromod( response );
 				continue;
 
 			case "quickpromodgfx":
-				scripts\menus\_quickmessages_menu_response::quickpromodgfx( response );
+				scripts\menus\quickmessages_menu_response::quickpromodgfx( response );
 				continue;
 							
 			case "quickpromodfps":
-				scripts\menus\_quickpromodfps_menu_response::quickpromodfps( response );
+				scripts\menus\quickpromodfps_menu_response::quickpromodfps( response );
 				continue;
 				
 			case "player":
-				scripts\menus\_player_menu_response::player( response );
+				scripts\menus\player_menu_response::player( response );
+				continue;
+			
+			case "sprays":
+				scripts\menus\sprays_menu_response::player( response );
+				continue;
+				
+			case "vip":
+				scripts\menus\vip_menu_response::player( response );
 				continue;
 				
 			case "admin":
-				scripts\menus\_admin_menu_response::player( response );
+				scripts\menus\admin_menu_response::player( response );
 				continue;
 		}
 		
