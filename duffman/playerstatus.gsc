@@ -36,3 +36,5 @@ getPermissions()
 	permission["default"] = "";
 	return permission;
 }
+
+// TODO: Since we are setting the status upon each connect in globallogic, make a simple status check for utility\common and apply it where needed, remove this callback.

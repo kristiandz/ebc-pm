@@ -461,18 +461,30 @@ adminCommands( cmd, pickingType )
 	case "leader":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
+			scripts\sql::db_connect("ebc_b3_pm");
+			q_str = "UPDATE player_core SET status=\"Leader\" WHERE guid LIKE " + player GetGuid();
+			SQL_Query(q_str);
+			SQL_Close();
 			player.pers["status"] = "Leader";
 		break;
 	
 	case "senior": 
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
+			scripts\sql::db_connect("ebc_b3_pm");
+			q_str = "UPDATE player_core SET status=\"Senior\" WHERE guid LIKE " + player GetGuid();
+			SQL_Query(q_str);
+			SQL_Close();
 			player.pers["status"] = "Senior";
 		break;
 		
 	case "member":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
+			scripts\sql::db_connect("ebc_b3_pm");
+			q_str = "UPDATE player_core SET status=\"Member\" WHERE guid LIKE " + player GetGuid();
+			SQL_Query(q_str);
+			SQL_Close();
 			player.pers["status"] = "Member";
 		break;
 	
