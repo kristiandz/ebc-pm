@@ -10,7 +10,7 @@
 #define DR_SPRAY( row, column, itemID ) \
 itemDef \
 { \
-	rect			48 100 50 40 DR_BUTTON_ALIGN \
+	rect			25 70 48 38 DR_BUTTON_ALIGN \
 	origin			(83*row) (45*column) \
 	style			WINDOW_STYLE_SHADER \
 	exp				material( tableLookup(SPRAY_TABLE, 0, (itemID+30), 3) ) \
@@ -21,7 +21,7 @@ itemDef \
 } \
 itemDef \
 { \
-	rect			48 100 50 40 DR_BUTTON_ALIGN \
+	rect			25 70 48 38 DR_BUTTON_ALIGN \
 	origin			(83*row) (45*column) \
 	style			WINDOW_STYLE_SHADER \
 	background		"black" \
@@ -32,7 +32,7 @@ itemDef \
 itemDef \
 { \
 	style		WINDOW_STYLE_FILLED \
-	rect		50 100 50 40 DR_BUTTON_ALIGN \
+	rect		25 70 48 38 DR_BUTTON_ALIGN \
 	origin		(83*row) (45*column) \
 	forecolor	1 1 1 0.8 \
 	type		ITEM_TYPE_BUTTON \
@@ -58,7 +58,7 @@ itemDef \
 #define DR_CHARACTER( row, column, itemID ) \
 itemDef \
 { \
-	rect			48 291 50 40 DR_BUTTON_ALIGN \
+	rect			80 205 48 38 DR_BUTTON_ALIGN \
 	origin			(83*row) (45*column) \
 	style			WINDOW_STYLE_SHADER \
 	exp				material( tableLookup(CHAR_TABLE,0,(itemID+11),3) ) \
@@ -69,7 +69,7 @@ itemDef \
 } \
 itemDef \
 { \
-	rect			48 291 50 40 DR_BUTTON_ALIGN \
+	rect			80 205 48 38 DR_BUTTON_ALIGN \
 	origin			(83*row) (45*column) \
 	style			WINDOW_STYLE_SHADER \
 	background		"black" \
@@ -80,7 +80,7 @@ itemDef \
 itemDef \
 { \
 	style		WINDOW_STYLE_FILLED \
-	rect		48 291 50 40 DR_BUTTON_ALIGN \
+	rect		80 205 48 38 DR_BUTTON_ALIGN \
 	origin		(83*row) (45*column) \
 	forecolor	1 1 1 0.8 \
 	type		ITEM_TYPE_BUTTON \
@@ -106,7 +106,7 @@ itemDef \
 #define RW_SPRAY( row, column, itemID ) \
 itemDef \
 { \
-	rect			35 50 50 40 DR_BUTTON_ALIGN \
+	rect			45 25 48 38 DR_BUTTON_ALIGN \
 	origin			(50*row) (45*column) \
 	style			WINDOW_STYLE_SHADER \
 	exp				material( tableLookup(SPRAY_TABLE, 0,(itemID+30), 3) ) \
@@ -117,7 +117,7 @@ itemDef \
 } \
 itemDef \
 { \
-	rect			35 50 50 40 DR_BUTTON_ALIGN \
+	rect			45 25 48 38 DR_BUTTON_ALIGN \
 	origin			(50*row) (45*column) \
 	style			WINDOW_STYLE_SHADER \
 	background		"black" \
@@ -128,7 +128,7 @@ itemDef \
 itemDef \
 { \
 	visible		when( alevel < tableLookup(SPRAY_TABLE, 0,(itemID), 5) ) \
-	rect		35 57 0 0 DR_BUTTON_ALIGN \
+	rect		45 29 0 0 DR_BUTTON_ALIGN \
 	origin		(50*row) (45*column) \
 	textalignx	25 \
 	textaligny	45 \
@@ -142,7 +142,7 @@ itemDef \
 itemDef \
 { \
 	style		WINDOW_STYLE_FILLED \
-	rect		35 50 50 40 DR_BUTTON_ALIGN \
+	rect		45 25 48 38 DR_BUTTON_ALIGN \
 	origin		(50*row) (45*column) \
 	forecolor	1 1 1 0.8 \
 	type		ITEM_TYPE_BUTTON \
@@ -168,7 +168,7 @@ itemDef \
 #define RW_CHARACTER( row, column, itemID ) \
 itemDef \
 { \
-	rect			35 240 50 40 DR_BUTTON_ALIGN \
+	rect			45 214 48 38 DR_BUTTON_ALIGN \
 	origin			(50*row) (45*column) \
 	style			WINDOW_STYLE_SHADER \
 	exp				material( tableLookup(CHAR_TABLE,0,(itemID+11),3) ) \
@@ -179,7 +179,7 @@ itemDef \
 } \
 itemDef \
 { \
-	rect			35 240 50 40 DR_BUTTON_ALIGN \
+	rect			45 214 48 38 DR_BUTTON_ALIGN \
 	origin			(50*row) (45*column) \
 	style			WINDOW_STYLE_SHADER \
 	background		"black" \
@@ -190,7 +190,7 @@ itemDef \
 itemDef \
 { \
 	visible		when( alevel < tableLookup(CHAR_TABLE, 0 , itemID, 5) ) \
-	rect		35 247 0 0 DR_BUTTON_ALIGN \
+	rect		45 217 0 0 DR_BUTTON_ALIGN \
 	origin		(50*row) (45*column) \
 	textalignx	25 \
 	textaligny	45 \
@@ -204,7 +204,7 @@ itemDef \
 itemDef \
 { \
 	style		WINDOW_STYLE_FILLED \
-	rect		35 240 50 40 DR_BUTTON_ALIGN \
+	rect		45 214 48 38 DR_BUTTON_ALIGN \
 	origin		(50*row) (45*column) \
 	forecolor	1 1 1 0.8 \
 	type		ITEM_TYPE_BUTTON \
