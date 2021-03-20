@@ -51,7 +51,7 @@ ShowKDRatio()
 	
 	self.mc_streak = NewClientHudElem(self);
 	self.mc_streak.x = 110;
-	self.mc_streak.y = -471;
+	self.mc_streak.y = -472;
 	self.mc_streak.horzAlign = "left";
 	self.mc_streak.vertAlign = "bottom";
 	self.mc_streak.alignX = "left";
@@ -62,10 +62,11 @@ ShowKDRatio()
 	self.mc_streak.label = &"^7Killstreak:^8 &&1";
 	self.mc_streak FadeOverTime(0.2);
 	self.mc_streak.alpha = 1;
+	self.mc_streak.archived = false;
 	
 	self.mc_kdratio = NewClientHudElem(self);
 	self.mc_kdratio.x = 110;
-	self.mc_kdratio.y = -459;
+	self.mc_kdratio.y = -460;
 	self.mc_kdratio.horzAlign = "left";
 	self.mc_kdratio.vertAlign = "bottom";
 	self.mc_kdratio.alignX = "left";
@@ -76,12 +77,13 @@ ShowKDRatio()
 	self.mc_kdratio.label = &"K/D Ratio:^8 &&1";
 	self.mc_kdratio FadeOverTime(0.4);
 	self.mc_kdratio.alpha = 1;
+	self.mc_kdratio.archived = false;
 	
 	if(level.gametype == "kc" || level.gametype == "sr" )
 	{
 		self.mc_kc = NewClientHudElem(self);
 		self.mc_kc.x = 110;
-		self.mc_kc.y = -444;
+		self.mc_kc.y = -448;
 		self.mc_kc.horzAlign = "left";
 		self.mc_kc.vertAlign = "bottom";
 		self.mc_kc.alignX = "left";
@@ -94,22 +96,27 @@ ShowKDRatio()
 		self.mc_kc.alpha = 1;
 		self.mc_kc.glowcolor = (0.1, 0.2, 0.7);
 		self.mc_kc.glowalpha = 0.8;
+		self.mc_kc.archived = false;
 		
-		self.mc_rsc = NewClientHudElem(self);
-		self.mc_rsc.x = 110;
-		self.mc_rsc.y = -433;
-		self.mc_rsc.horzAlign = "left";
-		self.mc_rsc.vertAlign = "bottom";
-		self.mc_rsc.alignX = "left";
-		self.mc_rsc.alignY = "middle";
-		self.mc_rsc.alpha = 0;
-		self.mc_rsc.fontScale = 1.4;
-		self.mc_rsc.hidewheninmenu = true;
-		self.mc_rsc.label = &"Rescued tags:^8 &&1";
-		self.mc_rsc FadeOverTime(1);
-		self.mc_rsc.alpha = 1;
-		self.mc_rsc.glowcolor = (0.1, 0.2, 0.7);
-		self.mc_rsc.glowalpha = 0.8;
+		if(level.gametype == "sr")
+		{
+			self.mc_rsc = NewClientHudElem(self);
+			self.mc_rsc.x = 110;
+			self.mc_rsc.y = -436;
+			self.mc_rsc.horzAlign = "left";
+			self.mc_rsc.vertAlign = "bottom";
+			self.mc_rsc.alignX = "left";
+			self.mc_rsc.alignY = "middle";
+			self.mc_rsc.alpha = 0;
+			self.mc_rsc.fontScale = 1.4;
+			self.mc_rsc.hidewheninmenu = true;
+			self.mc_rsc.label = &"Rescued tags:^8 &&1";
+			self.mc_rsc FadeOverTime(1);
+			self.mc_rsc.alpha = 1;
+			self.mc_rsc.glowcolor = (0.1, 0.2, 0.7);
+			self.mc_rsc.glowalpha = 0.8;
+			self.mc_rsc.archived = false;
+		}
 	}
 	
 	color = (0,0,0);
