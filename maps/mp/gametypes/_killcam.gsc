@@ -97,8 +97,8 @@ killcam( attackerNum, killcamentity, sWeapon, predelay, offsetTime, respawn, max
 		self.kc_skiptext.sort = 1;
 		self.kc_skiptext.font = "objective";
 		self.kc_skiptext.foreground = true;
-		self.kc_skiptext.y = 50;
-		self.kc_skiptext.fontscale = 2;
+		self.kc_skiptext.y = 40;
+		self.kc_skiptext.fontscale = 1.4;
 	}
 	if ( respawn )
 		self.kc_skiptext setText(&"PLATFORM_PRESS_TO_RESPAWN");
@@ -109,7 +109,7 @@ killcam( attackerNum, killcamentity, sWeapon, predelay, offsetTime, respawn, max
 
 	if ( !isdefined( self.kc_timer ) )
 	{
-		self.kc_timer = createFontString( "objective", 2 );
+		self.kc_timer = createFontString( "objective", 1.5 );
 		self.kc_timer setPoint( "BOTTOM", undefined, 0, 0 );
 		self.kc_timer.archived = false;
 		self.kc_timer.foreground = true;

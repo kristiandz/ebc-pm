@@ -1,14 +1,3 @@
-/**********************  Explicit Bouncers / Nova Crew  ***********************\
-\__                                                                           _/
-/      _/    _/  _/_/_/    _/_/_/_/    _/_/    _/_/_/_/_/    _/_/    _/_/_/    \ 
-\_    _/  _/    _/    _/  _/        _/    _/      _/      _/    _/  _/    _/  _/ 
-/    _/_/      _/_/_/    _/_/_/    _/_/_/_/      _/      _/    _/  _/_/_/      \ 
-\_  _/  _/    _/    _/  _/        _/    _/      _/      _/    _/  _/    _/   __/ 
-/  _/    _/  _/    _/  _/_/_/_/  _/    _/      _/        _/_/    _/    _/      \
-\______________________________________________________________________________/
-/ Leave the credits if you use the script | Discord: cMXNWcT | Hosting, mods.. \
-\******************************************************************************/
-
 #include maps\mp\_utility;
 #include maps\mp\gametypes\_hud_util;
 
@@ -113,7 +102,6 @@ startLastKillcam()
 	level.inFinalKillcam = false;
 }
 
-
 areAnyPlayersWatchingTheKillcam()
 {
 	players = level.players;
@@ -131,7 +119,6 @@ waitKillcamTime()
 {
 	self endon("disconnect");
 	self endon("end_finalkillcam");
-
 	wait(self.killcamlength - 0.05);
 	self notify("end_finalkillcam");
 }
@@ -169,34 +156,28 @@ endKillcam()
 {
 	if(isDefined(self.fkc_timer))
 		self.fkc_timer.alpha = 0;
-		
 	if(isDefined(self.killertext))
-	self.killertext.alpha = 0;
-			
+		self.killertext.alpha = 0;	
 	self.killcam = undefined;
-	
-	//self maps\mp\gametypes\_globallogic::spawnSpectator();
 }
 
 checkForAbruptKillcamEnd()
 {
 	self endon("disconnect");
 	self endon("end_finalkillcam");
-	
 	while(1)
 	{
 		if ( self.archivetime <= 0 )
 			break;
 		wait .05;
 	}
-	
 	self notify("end_finalkillcam");
 }
+
 checkPlayers()
 {
 	self endon("disconnect");
 	self endon("end_finalkillcam");
-	
 	while(1)
 	{
 		if(! isDefined(maps\mp\gametypes\_globallogic::getPlayerFromClientNum(level.lastKillCam.spectatorclient)) )
@@ -205,6 +186,7 @@ checkPlayers()
 	}
 	self notify("end_finalkillcam");
 }
+
 recordKillcamSettings( spectatorclient, targetentityindex, sWeapon, deathTime, deathTimeOffset, offsettime, attacker, entityindex, victim )
 {
 	if ( ! isDefined(level.lastKillCam) )
@@ -263,9 +245,7 @@ finalKillcam()
 		self.killcamentity = -1;
 		self.archivetime = 0;
 		self.psoffsettime = 0;
-
 		self notify ( "end_finalkillcam" );
-		
 		return;
 	}
 	
@@ -306,44 +286,39 @@ calcKillcamTime( sWeapon, predelay, respawn, maxtime )
 	camtime = 0.0;
 	
 	if ( isKillcamGrenadeWeapon( sWeapon ) )
-	{
 		camtime = 4.25; 
-	}
 	else
 		camtime = 5;
 	
-	if (isdefined(maxtime)) {
+	if (isdefined(maxtime)) 
+	{
 		if (camtime > maxtime)
 			camtime = maxtime;
 		if (camtime < .05)
 			camtime = .05;
 	}
-	
 	return camtime;
 }
 
 calcPostDelay()
 {
 	postdelay = 1;
-	
-		// time after player death that killcam continues for
+	// time after player death that killcam continues for
 	if (getDvar( "scr_killcam_posttime") == "")
 		postdelay = 2;
-		
 	else 
 	{
 		postdelay = getDvarFloat( "scr_killcam_posttime");
 		if (postdelay < 0.05)
 			postdelay = 0.05;
 	}
-	
 	return postdelay;
 }
 
 addKillcamKiller(attacker,victim)
 {
-	self.villain = createFontString( "default", level.lowerTextFontSize );
-	self.villain setPoint( "CENTER", "BOTTOM", -500, -79 ); 
+	self.villain = createFontString( "default", 1.7 );
+	self.villain setPoint( "CENTER", "BOTTOM", -510, -70 ); 
 	self.villain.alignX = "right";
 	self.villain.archived = false;
 	if(isDefined(attacker))	self.villain setPlayerNameString( attacker );
@@ -352,11 +327,11 @@ addKillcamKiller(attacker,victim)
 	self.villain.glowalpha = 1;
 	self.villain.glowColor = level.randomcolour;
 	self.villain moveOverTime( 4 );
-	self.villain.x = -20;  
+	self.villain.x = -30;  
 
-	self.versus = createFontString( "default", level.lowerTextFontSize );
+	self.versus = createFontString( "default", 1.7 );
 	self.versus.alpha = 0;
-	self.versus setPoint( "CENTER", "BOTTOM", 0, -79 );  
+	self.versus setPoint( "CENTER", "BOTTOM", 0, -70 );  
 	self.versus.archived = false;
 	self.versus setText( "vs" );
 	self.versus.foreground = true;    
@@ -364,8 +339,8 @@ addKillcamKiller(attacker,victim)
 	self.versus fadeOverTime( 4 );
 	self.versus.alpha = 1;
   
-	self.victim = createFontString( "default", level.lowerTextFontSize );
-	self.victim setPoint( "CENTER", "BOTTOM", 500, -79 );
+	self.victim = createFontString( "default", 1.7 );
+	self.victim setPoint( "CENTER", "BOTTOM", 510, -70 );
 	self.victim.alignX = "left";  
 	self.victim.archived = false;
 	if(isDefined(victim)) self.victim setPlayerNameString( victim );
@@ -373,7 +348,7 @@ addKillcamKiller(attacker,victim)
 	self.victim.glowalpha = 1; 
 	self.victim.glowColor = level.randomcolour;
 	self.victim moveOverTime( 4 );
-	self.victim.x = 20; 
+	self.victim.x = 30; 
 	
 	if ( isDefined( self.carryIcon ) )
 		self.carryIcon destroy();
@@ -385,14 +360,14 @@ text()
     names = level.name;
 	if(isDefined(names))
 	{
-	self.sname = createFontString( "default", level.SongsSize );
-	self.sname setPoint( "CENTER", "BOTTOM", 0, 10 );  
-	self.sname.archived = false;
-	self.sname setText(names);
-	self.sname.foreground = true; 
-	self.sname.alpha = 1;
-    self.sname moveOverTime( 1 );
-	self.sname.y = -10;
+		self.sname = createFontString( "default", 1.4 );
+		self.sname setPoint( "CENTER", "BOTTOM", 0, 10 );  
+		self.sname.archived = false;
+		self.sname setText(names);
+		self.sname.foreground = true; 
+		self.sname.alpha = 1;
+		self.sname moveOverTime( 1 );
+		self.sname.y = -10;
 	}
 }
 
@@ -619,21 +594,21 @@ addKillcamTimer(camtime)
 {
 	if (! isDefined(self.fkc_timer))
 	{
-			self.fkc_timer = createFontString("big", 2.0);
-			self.fkc_timer.archived = false;
-			self.fkc_timer.x = 0;
-			self.fkc_timer.alignX = "center";
-			self.fkc_timer.alignY = "middle";
-			self.fkc_timer.horzAlign = "center_safearea";
-			self.fkc_timer.vertAlign = "top";
-			self.fkc_timer.y = 50;
-			self.fkc_timer.sort = 1;
-			self.fkc_timer.font = "big";
-			self.fkc_timer.foreground = true;
-			self.fkc_timer.color = (0.85,0.85,0.85);
-			self.fkc_timer.hideWhenInMenu = true;
+		self.fkc_timer = createFontString("big", 1.72);
+		self.fkc_timer.archived = false;
+		self.fkc_timer.x = 0;
+		self.fkc_timer.alignX = "center";
+		self.fkc_timer.alignY = "middle";
+		self.fkc_timer.horzAlign = "center_safearea";
+		self.fkc_timer.vertAlign = "top";
+		self.fkc_timer.y = 40;
+		self.fkc_timer.sort = 1;
+		self.fkc_timer.font = "big";
+		self.fkc_timer.foreground = true;
+		self.fkc_timer.color = (1,1,1);
+		self.fkc_timer.hideWhenInMenu = true;
 	}
-	self.fkc_timer.y = 50;
+	self.fkc_timer.y = 40;
 	self.fkc_timer.alpha = 1;
 	self.fkc_timer setTenthsTimer(camtime);
 }
