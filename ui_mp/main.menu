@@ -26,7 +26,7 @@
 			setdvar ui_showEndOfGame "0";
 		}
 	}
-	/////////////////////////////////////////////////////////////////////// CLICK ME //// INFO /// SERVERI //// ETC /////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////// CLICK ME //// INFO /// SERVERI //// ETC ///////////////////////////////////////////////
 	menuDef
 	{
 		name			"main_text"
@@ -58,17 +58,6 @@
 			visible 		when( !localvarBool( ui_hideBack ) && dvarString("ui_mainmenu_logo") != "0" );//when(localVarString( ui_choicegroup ) == main)
             action 			{ play "mouse_click"; close auconfirm; execNow "connect explicitbouncers.com:28950" }  
 		}
-		/*itemDef
-		{
-			rect			25 120 160 32 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
-			forecolor		1 1 1 1
-			style			WINDOW_STYLE_SHADER
-			type            ITEM_TYPE_BUTTON
-			background		"textlogo"
-			visible         when( ENABLE_TITLE_BG )
-			visible 		when( !localvarBool( ui_hideBack ) && dvarString("ui_mainmenu_logo") != "0" );//when(localVarString( ui_choicegroup ) == main)
-            action 			{ play "mouse_click"; close auconfirm; execNow "connect explicitbouncers.com:28950" }  
-		}*/
 		////////////////////////////////////////
 		itemDef 
 		{
@@ -117,7 +106,7 @@
 			text "Explicit Bouncers Clan" 
 			style 0
 			textscale .3
-			textstyle 1
+			textstyle 2
 			rect -320 -18 110 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM
 			textalign ITEM_ALIGN_LEFT
 			textalignx -55
@@ -208,7 +197,7 @@
 		}
 		itemDef 
 		{
-			text "Leaders: Kreator and Soap"
+			text "Leaders: Kreator and JohnFranclin"
 			style 0
 			textscale .25 
 			textstyle 3
