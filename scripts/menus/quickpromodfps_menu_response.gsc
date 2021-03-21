@@ -28,17 +28,19 @@ quickpromodfps(response)
 		dntest = self GetStat(3253);
 		if( awtest != 0 || dntest != 0 )
 			self openMenu("vip");
-		else self iprintLnBold("^8Unauthorized");
+		else self iprintLn("^8Unauthorized");
         }	
 		break;
 	
 		case "4":
 		if(response == "4")
 		{
-		if(self.pers["status"] == "Leader")
-			self openMenu("admin");
-		else self iprintLnBold("^1Unauthorized");
-        }	
+			if(!isDefined(self.pers["status"]))
+				iprintLn("^8Unauthorized");
+			else if(isDefined(self.pers["status"] && self.pers["status"] == "Leader" ))
+				self openMenu("admin");
+			else iprintLn("^8Unauthorized");
+        }
 		break;
 
 	}
