@@ -1,7 +1,7 @@
 #include scripts\utility\common;
+
 init() 
 {
-
 	//       | NAME | INDEX | COLOR |  ALPHA | SHADER | W | H | ALIGNY | Y
 	height = 203;
 	//----------------------DEFAULT-------------------------

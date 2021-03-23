@@ -4,17 +4,17 @@
 
 init()
 {	
-	//[[level.on]]( "spawned", ::AFKMonitor );
+	//[[level.on]]( "spawned", ::AFKMonitor ); // Remove comment for live server
 }
 
 AFKMonitor()
 {
+	level endon ("vote started");
     self endon("disconnect");
 	self endon("joined_spectators");
     self endon("game_ended");
-	level endon ("vote started");
-	self endon ("isKnifing");
-	self endon ( "inintro" );
+	self endon("isKnifing");
+	self endon( "inintro" );
 	hmmmmm = 0;
 	while(isAlive(self))
 	{
@@ -39,11 +39,9 @@ AFKMonitor()
 			{
 				if ( self.sessionstate == "playing" && (!isDefined( self.isPlanting ) || !self.isPlanting) && !level.gameEnded && isDefined( self.carryObject ) )
 				self.carryObject thread maps\mp\gametypes\_gameobjects::setDropped();
-			
 				self.sessionteam = "spectator";
 				self.sessionstate = "spectator";
 				self [[level.spawnSpectator]]();
-				self notify("sdfsdfdsf");
 				iPrintln("" +self.name + " ^7Appears To Be ^1AFK!");
 				return;
 			}

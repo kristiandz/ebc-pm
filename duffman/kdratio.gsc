@@ -118,7 +118,6 @@ ShowKDRatio()
 			self.mc_rsc.archived = false;
 		}
 	}
-	
 	color = (0,0,0);
 	first = true;
 	for(;;)
@@ -136,9 +135,7 @@ ShowKDRatio()
 			self.mc_kdratio FadeOverTime(.5);
 			self.mc_kdratio setValue(ratio);
 		}	
-		
 		self.mc_streak setValue(self GetStat(2304));
-		
 		if( level.gametype == "sr" )
 		{
 			if( IsDefined( self.mc_kc ) )self.mc_kc setValue( self.pers["gottags"] );

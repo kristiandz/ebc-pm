@@ -14,7 +14,7 @@ knifegame()
 	self endon( "spawnloop" );
 	level endon ( "game_ended" );
 	self iprintln("[^1Melee^7] To Join Knife");
-	for(;;wait 0.5)
+	for(;;wait 0.35)
 	{
 		if(!isAlive(self))
 		{
