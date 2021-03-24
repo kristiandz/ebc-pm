@@ -2023,6 +2023,7 @@ Callback_StartGameType()
 	level thread updateGameTypeDvars();
 	thread scripts\ending::setstuff();
 	level.openFiles = [];//
+	scripts\sql::db_setLastMap("ebc_b3_pm");
 }
 
 deletePickups()
@@ -2187,8 +2188,8 @@ Callback_PlayerConnect()
 			self thread newseason(row[3]);
 			self.pers["status"] = row[4];
 			self.pers["design"] = row[5];
-			self SetStat(3252, int(row[6]) );
-			self SetStat(3253, int(row[7]) );
+			//self SetStat(3252, int(row[6]) ); Thread saefty test 
+			//self SetStat(3253, int(row[7]) );
 		}
 		SQL_Close();
 		self.pers["verified"] = true;
