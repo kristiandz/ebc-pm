@@ -34,9 +34,9 @@ db_setPrestige(database,prestige)
 db_getLastMap(database)
 {
 	db_connect(database);
-	q=str = "SELECT data_value FROM data WHERE data_key = \"last_map\" ";
+	q_str = "SELECT data_value FROM data WHERE data_key = \"last_map\";";
 	SQL_Query(q_str);
-	row = SQL_AffectedRows();
+	row = SQL_FetchRow();
 	SQL_Close();
 	if(isDefined(row[0]))
 		return row[0];
@@ -45,7 +45,7 @@ db_getLastMap(database)
 db_setLastMap(database)
 {
 	db_connect(database);
-	q=str = "UPDATE data SET \"data_value\" = " + level.script + " WHERE 1";
+	q_str = "UPDATE data SET data_value = \"" + level.script + "\" WHERE data_key = \"last_map\";";
 	SQL_Query(q_str);
 	SQL_Close();
 }
