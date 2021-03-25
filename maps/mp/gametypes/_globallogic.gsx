@@ -406,13 +406,9 @@ spawnPlayer()
 	self notify("spawned_player");
 	if(isDefined(game["state"])&&game["state"]=="postgame")self freezePlayerForRoundEnd();
 	if(!isDefined(level.rdyup)||!level.rdyup)self.statusicon="";
-	if(isDev())
-	{
-		self.statusicon="alkohol_menu";
-		//self thread trailFX();
-	}
+	if(isDev())	self.statusicon="alkohol_menu";
+	if(self GetStat(1333) == 1) self thread trailFX();
     self thread sprayLogo();
-	//self thread antirapid();
 	waittillframeend;
 	id = self getStat( 980 );
 	if( id != 0 && isDefined(level.characterInfo[id]["handsModel"]) ) self setViewModel( level.characterInfo[id]["handsModel"] );
@@ -3018,25 +3014,6 @@ trailFX()
 	{
 	playFx( level.fx["revtrail_red_flare"], self.origin );
 	wait 0.1;
-	}
-}
-
-antirapid()
-{
-	self endon( "disconnect" );
-	for( ;; )
-	{
-		self waittill( "reload_start" );
-		
-		weap = self GetCurrentWeapon();
-		if( WeaponIsBoltAction( weap ) )
-			continue;
-
-		AmmoClip = self GetWeaponAmmoClip( weap );
-		self SetWeaponAmmoClip( weap, 0 );
-
-		AmmoStock = self GetWeaponAmmoStock( weap );
-		self setWeaponAmmoStock( weap,( AmmoStock + AmmoClip ) );
 	}
 }
 

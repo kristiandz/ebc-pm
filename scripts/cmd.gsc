@@ -439,6 +439,23 @@ adminCommands( cmd, pickingType )
 		}
 		break;
 		
+	case "trail":
+		player = getPlayer( arg1, pickingType );
+		if( isDefined( player ) )
+		{
+			if(player getStat(1333) == 0)
+			{
+				player setStat(1333,1);
+				player iprintln("^1>^7Trail enabled");
+			}
+			else
+			{				
+				player setStat(1333,0);
+				player iprintln("^1>^7Trail disabled");
+			}
+		}
+		break;
+		
 	case "xp":
 		player = getPlayer( arg1, pickingType );
 		amount = cmd[2];
