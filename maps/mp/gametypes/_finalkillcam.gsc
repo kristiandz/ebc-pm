@@ -377,215 +377,145 @@ getsongname(songnum)
 	if(!isDefined(tekst))return;
 	switch(tekst)
 	{
-		case 1:
-		level.name = "Dj Armani - Doar Cu Teane";
+		case 1:	level.name = "DJ BLYATMAN - MOLOTOV";
 		break;
-		case 2:
-		level.name = "DJ Blyatman & Russian Village Boys - CYKA BLYAT";
+		case 2:	level.name = "DJ BLYATMAN - SUPERFLY";
 		break;
-		case 3:
-		level.name = "Hard Bass School - Gop FM";
+		case 3:	level.name = "DJ BLYATMAN & HBKN - EASTERN BLOC";
 		break;
-		case 4:
-		level.name = "Kadrian - Tancz glupia";
+		case 4:	level.name = "XS Project Zhelezno";
 		break;
-		case 5:
-		level.name = "XS Project - Kolotushki";
+		case 5:	level.name = "XS Project - Molot";
 		break;
-		case 6:
-		level.name = "XS Project - La-la-la";
+		case 6:	level.name = "XS Project - Na Kolbasu";
 		break;
-		case 7:
-		level.name = "XS Project - What U Want";
+		case 7:	level.name = "Steel Deluxe - Gormonalno";
 		break;
-		case 8:
-		level.name = "XS Project - Yaitca";
+		case 8:	level.name = "XS Project - DJ";
 		break;
-		case 9:
-		level.name = "XS Project - Raskolbazz";
+		case 9:	level.name = "XS Project - Marafon";
 		break;
-		case 10:
-		level.name = "XS Project - Zhelezno";
+		case 10: level.name = "XS Project - Novogodnyaya";
 		break;
-		case 11:
-		level.name = "Noisestorm - Crab Rave";
+		case 11: level.name = "Henrikz  Keyb - Give It To Me Video";
 		break;
-		case 12:
-		level.name = "Dillon Francis feat BabyJake - Touch (Jaded Remix)";
+		case 12: level.name = "Reece Low - Break Kronics (DatAss Remix)";
 		break;
-		case 13:
-		level.name = "CLUB SODA, DREAD MC, VIGILAND - IT GETS LIKE THAT";
+		case 13: level.name = "Tchami - Toxic Love";
 		break;
-		case 14:
-		level.name = "DANCE WITH THE DEAD - Only a dream";
+		case 14: level.name = "Bob Marley - Jamming (Tropkillaz Remix)";
 		break;
-		case 15:
-		level.name = "Ofenbach & Quarterhead - Head Shoulders Knees & Toes";
+		case 15: level.name = "DJ Snake - Propaganda (Jauz Remix)";
 		break;
-		case 16:
-		level.name = "Showtek & Dropgun - Island Boy";
+		case 16: level.name = "Major Lazer feat. Alessia Cara - Hell and High Water";
 		break;
-		case 17:
-		level.name = "DJ Snake - Frequency 75";
+		case 17: level.name = "Dubvision - Turn It Around (Gioni Edit)";
 		break;
-		case 18:
-		level.name = "Diplo & SIDEPIECE - On My Mind";
+		case 18: level.name = "Teriyaki Boyz - Tokyo Drift (Callmearco Remix)";
 		break;
-		case 19:
-		level.name = "Guess";
+		case 19: level.name = "Avicii - Without You Audio ft. Sandro Cavazza";
 		break;
-		case 20:
-		level.name = "Vize - Stars";
+		case 20: level.name = "LOW";
 		break;
-		case 21:
-		level.name = "The Crystal Method - Name of The Game";
+		case 21: level.name = "The Doors - LA Woman";
 		break;
-		case 22:
-		level.name = "ZZ Top - Tush";
+		case 22: level.name = "Nightwish - The Kinslayer";
 		break;
-		case 23:
-		level.name = "Kiss - Strutter";	
+		case 23: level.name = "WASP - I wanna be somebody";	
         break;	
-	    case 24:
-		level.name = "Rock'n Me";	
+	    case 24: level.name = "Two Lane Blacktop";	
         break;	
-	    case 25:
-		level.name = "Blondie - One Way Or Another";	
+	    case 25: level.name = "Boston - Rock & Roll Band";	
         break;	
-	    case 26:
-		level.name = "Jax Jones - Like you know me";	
+	    case 26: level.name = "Live It Up - Nicky Jam feat. Will Smith";	
         break;	
-	    case 27:
-		level.name = "Streets Of Siam ";	
+	    case 27: level.name = "Gente de Zona - La Gozadera";	
         break;	
-	    case 28:
-		level.name = "Matthew Wilder - Break My Stride";	
+	    case 28: level.name = "Onetox - Ramukanji";	
         break;	
-	    case 29:
-		level.name = "LAIKIPIA – That Feeling";	
+	    case 29: level.name = "Pit Bull - Oye";	
         break;	
-		case 30:
-		level.name = "Be Yourself!";	
+		case 30: level.name = "Coast Modern - Dive";	
         break;	
-	    case 31:
-		level.name = "Guru - Modern Talking";	
+	    case 31: level.name = "Daddy Yankee + Katy Perry - Con Calma Remix";	
         break;	
-	    case 32:
-		level.name = "I Wanna Dance with Somebody";	
+	    case 32: level.name = "Onetox - Leabana";	
         break;	
-	    case 33:
-		level.name = "Stick Figure - World On Fire";	
+	    case 33: level.name = "Don't You Want Me Baby	";	
         break;	
-	    case 34:
-		level.name = "The Weeknd - In Your Eyes ";	
+	    case 34: level.name = "Pointer sisters - Automatic";	
         break;	
-		case 35:
-		level.name = "Chick Habit";	
+		case 35: level.name = "Thalia, Gente de Zona - Lento";	
         break;	
-		case 36:
-		level.name = "Scooter - How much is the fish";	
+		case 36: level.name = "Hermes House Band - Country Roads Remix";	
         break;
-		case 37:
-		level.name = "NFL Theme Song";	
+		case 37: level.name = "The Beach Boys - Kokomo";	
         break;
-		case 38:
-		level.name = "The A-Team Theme";	
+		case 38: level.name = "Yello - Oh yeah";	
         break;
-		case 39:
-		level.name = "Song for Denise (Maxi Version)";	
+		case 39: level.name = "Mambo number 5 - Lou Bega";	
         break;
-		case 40:
-		level.name = "O-Zone - Dragostea Din Tei";	
+		case 40: level.name = "Mexa mexa";	
         break;
-		case 41:
-		level.name = "Baja Mali Knindza - Poker aparat";	
+		case 41: level.name = "Mile Kitic i Juzni Vetar - Znas li sta o njoj";	
         break;
-		case 42:
-		level.name = "Coby - Devedesete";	
+		case 42: level.name = "Mc Yankoo x DJ Bobby B. x Jacky Jack - GAS";	
         break;
-		case 43:
-		level.name = "Goga Sekulic - Mala je bezobrazna";	
+		case 43: level.name = "CONNECT FEAT. COBY - LOKACIJA";	
         break;
-		case 44:
-		level.name = "Coby x Senidah - 4 Strane Sveta";	
+		case 44: level.name = "CONNECT - PIJANA";	
         break;
-		case 45:
-		level.name = "MC YANKOO - IGRA";	
+		case 45: level.name = "Vuco - Volim Piti";	
         break;
-		case 46:
-		level.name = "Hule 2009 - Stojim na zeleno idem na crveno";	
+		case 46: level.name = "VUK MOB - KLUB ILI KAFANA";	
         break;
-		case 47:
-		level.name = "Sasko - Tri Kile Banane";	
+		case 47: level.name = "Mc Yankoo feat Milica Todorovic - Moje Zlato";	
         break;
-		case 48:
-		level.name = "GAZDA PAJA x MARLON BRUTAL - DIZEL";	
+		case 48: level.name = "CORONA - IZVINI MAMA";	
         break;
-		case 49:
-		level.name = "Edo Maajka - Prži";	
+		case 49: level.name = "Dragana Mirkovic - Tebi ljubav meni bol";	
         break;
-		case 50:
-		level.name = "Rada Manojlovic - Dva Promila";	
+		case 50: level.name = "DJ SNS feat Semko - Djevojka sa Balkana";	
         break;
-		case 51:
-		level.name = "Notorious B.I.G - Kick in the Door";	
+		case 51: level.name = "Lookas - Loko";	
         break;
-		case 52:
-		level.name = "Kreso i Zuvi - Imam zgodnu prijateljicu";	
+		case 52: level.name = "Party Favor - Booty Loose";	
         break;
-		case 53:
-		level.name = "Cheef Keef - Winnin";	
+		case 53: level.name = "The Great Escape - I Cant Resist Nebbra Remix";	
         break;
-		case 54:
-		level.name = "Dilated people - Who's Who";	
+		case 54: level.name = "Grebz - Afterparty";	
         break;
-		case 55:
-		level.name = "Chief Keef - Hate Bein' Sober";	
+		case 55: level.name = "Die Strase lebt";	
         break;
-		case 56:
-		level.name = "Rick Ross  - Hustlin";	
+		case 56: level.name = "Flechette - Bones";	
         break;
-		case 57:
-		level.name = "Vojko - Pasta";	
+		case 57: level.name = "8Ers - Indestructable";	
         break;
-		case 58:
-		level.name = "Young Dro - We in da city";	
+		case 58: level.name = "Onderkoffer x MIME - OMG";	
         break;
-		case 59:
-		level.name = "Skepta - Pure water";	
+		case 59: level.name = "A$AP Mob - Yamborghini High";	
         break;
-		case 60:
-		level.name = "Fired up";	
+		case 60: level.name = "50 Cent - PIMP";	
         break;
-		case 61:
-		level.name = "Sofi Turker - House Arrest";	
+		case 61: level.name = "Mr Puta - Green Stuff (Malua Remix)";	
         break;
-		case 62:
-		level.name = "Abstract & Logic - They Know";	
+		case 62: level.name = "Timmy Trumpet & Sub Zero Project - Project X";	
         break;
-		case 63:
-		level.name = "W&W x Armin van Buuren - Ready To Rave";	
+		case 63: level.name = "World Renowned";	
         break;
-		case 64:
-		level.name = "DBSTF - Darkest Hour";	
+		case 64: level.name = "Alignment - Dark Space";	
         break;
-		case 65:
-		level.name = "Coone x Technotronic - Pump up the jam";	
+		case 65: level.name = "WOW";	
         break;
-		case 66:
-		level.name = "LNY TNZ x Kin Crew - Hold Up";	
+		case 66: level.name = "Maximum Force (Defqon.1 Anthem 2018)";	
         break;
-		case 67:
-		level.name = "Ludi srbi - Tehno krajisnik";	
+		case 67: level.name = "Bansuri";	
         break;
-		case 68:
-		level.name = "Matroda - Deep Inside";	
+		case 68: level.name = "FISHER - You Little Beauty";	
         break;
-		case 69:
-		level.name = "Killrude - I'm Not Running Around";	
+		case 69: level.name = "DJ Isaac & Crystal Lake - Stick Em";	
         break;		
-		case 70:
-		level.name = "Meduza - Lose Control (Ruddek remix)";	
+		case 70: level.name = "J A G E R M E I S T E R";	
         break;		
 	}	
 }
