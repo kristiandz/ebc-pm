@@ -138,7 +138,7 @@
                         {
                                 play "mouse_over";
                         }
-                        action { play "mouse_click"; close auconfirm; execNow "connect explicitbouncers.com:28953" }   
+                        action { play "mouse_click"; close auconfirm; execNow "connect explicitbouncers.com:28955" }   
                 }
                 itemDef
                 {
