@@ -94,11 +94,11 @@
 #endif
 
 #ifndef CHOICE_HEADERCOLOR
-#define CHOICE_HEADERCOLOR		1 0 0 1
+#define CHOICE_HEADERCOLOR		0 0 1 1
 #endif
 
 #ifndef CHOICE_TEXTCOLOR
-#define CHOICE_TEXTCOLOR		1 0 0 1
+#define CHOICE_TEXTCOLOR		0 0 1 1
 #endif
 
 #ifndef CHOICE_TEXTCOLOR_CAPT
@@ -162,14 +162,14 @@
 #endif
 
 #ifndef ALTERNATE_HINT_COLOR
-#define ALTERNATE_HINT_COLOR	1 .8 .8 1
+#define ALTERNATE_HINT_COLOR	.8 .8 1 1
 #endif
 
 #ifndef HIGHLIGHT_COLOR
-#define HIGHLIGHT_COLOR			1 0 0 1
+#define HIGHLIGHT_COLOR			0 0 1 1
 #endif
 #ifndef HIGHLIGHT_BORDER_COLOR
-#define HIGHLIGHT_BORDER_COLOR	1 0 0 1
+#define HIGHLIGHT_BORDER_COLOR	0 0 1 1
 #endif
 
 #ifndef CHOICE_HORIZONTAL_ALIGN
@@ -300,7 +300,7 @@
 			style			WINDOW_STYLE_SHADER \
 			rect			CHOICE_ORIGIN( itemIndex ) (CHOICE_SIZE_X-(CHOICE_SIZE_Y/4)) CHOICE_SIZE_Y CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN \
 			background		HIGHLIGHT_SHADER \
-			forecolor		1 0 0 0.03 \
+			forecolor		0 0 1 0.03 \
 			border			HIGHLIGHT_BORDER \
 			bordersize		2 \
 			bordercolor		borderColorArg \
@@ -312,7 +312,7 @@
 			style			WINDOW_STYLE_SHADER \
 			rect			(CHOICE_X( itemIndex )+(CHOICE_SIZE_X-(CHOICE_SIZE_Y/4))) CHOICE_Y( itemIndex ) (CHOICE_SIZE_Y/4) CHOICE_SIZE_Y CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN \
 			background		HIGHLIGHT_SHADER_ART \
-			forecolor		1 0 0 0.035 \
+			forecolor		0 0 1 0.035 \
 			visible			when( localVarInt( ui_highlight ) == itemIndex && localVarString( ui_choicegroup ) == CHOICE_GROUP ); \
 			decoration \
 		} \
@@ -373,7 +373,7 @@
 			textAlign		CHOICE_TEXTALIGN \
 			textAlignX		0 \
 			textAlignY		-1\
-			forecolor		1 0 0 1 \
+			forecolor		0 0 1 1 \
 			visible			when( localVarInt( ui_highlight ) == itemIndex && localVarString( ui_choicegroup ) == CHOICE_GROUP && vis ); \
 			decoration \
 		} 
@@ -386,7 +386,7 @@
 		{ \
 			type			ITEM_TYPE_TEXT \
 			origin			ORIGIN_TITLE \
-			forecolor		1 0 0 1 \                       //// naslovi ///
+			forecolor		0 0 1 1 \  // Title color
 			exp				text( titleArg ) \
 			textalignx		-34 \
 			textfont		UI_FONT_NORMAL \
@@ -401,8 +401,8 @@
 		itemDef \
 		{ \
 			type			ITEM_TYPE_TEXT \
-			origin			ORIGIN_TITLE \ 
-			forecolor		1 0 0 1 \             ///////////////naslov sa strane glavni u kutu mp menu ///////////////
+			origin			ORIGIN_TITLE \
+			forecolor		0 0 1 1 \ // Mp menu main title
 			exp				text( titleArg ) \
 			textfont		UI_FONT_NORMAL \
 			textscale		TEXTSIZE_TITLE \
@@ -439,7 +439,7 @@
 		rect			(SECTION_X_OFFSET+0) 7 240 0.5 CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN \
 		origin			CHOICE_ORIGIN( itemIndex ) \
 		background		"line_horizontal" \
-		forecolor		1 0 0 1 \
+		forecolor		0 0 1 1 \
 		visible			visArg \
 		decoration \
 	}	 \
@@ -449,7 +449,7 @@
 		rect			(SECTION_X_OFFSET+20) 8 200 10 CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN \
 		origin			CHOICE_ORIGIN( itemIndex ) \
 		background		"line_horizontal" \
-		forecolor		1 0 0 0.4 \            /// linije u menu za mp crvene
+		forecolor		0 0 1 0.4 \ // Mp menu red lines
 		visible			visArg \
 		decoration \
 	} \
@@ -459,7 +459,7 @@
 		rect			(SECTION_X_OFFSET+0) 19 240 0.5 CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN \
 		origin			CHOICE_ORIGIN( itemIndex ) \
 		background		"line_horizontal" \
-		forecolor		1 0 0 0.8 \
+		forecolor		0 0 1 0.8 \
 		visible			visArg \
 		decoration \
 	} \
@@ -468,8 +468,8 @@
 		type			ITEM_TYPE_TEXT \
 		rect			(SECTION_X_OFFSET+0) -1 240 24 CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN \
 		origin			CHOICE_ORIGIN( itemIndex ) \
-		forecolor		1 0 0 1 \
-		exp				text( titleArg );\                //////////////// boja teksta u mp menu
+		forecolor		0 0 1 1 \
+		exp				text( titleArg );\ // mp menu text color
 		textstyle 		ITEM_TEXTSTYLE_SHADOWED \
 		textfont		UI_FONT_NORMAL \
 		textscale		TEXTSIZE_DEFAULT \
@@ -847,7 +847,7 @@
 			textstyle		CHOICE_TEXTSTYLE \
 			textAlign		CHOICE_TEXTALIGN \
 			textAlignX		CHOICE_TEXT_OFFSET_X \
-			forecolor		CHOICE_TEXTCOLOR \              //////////////////////////  TEXT: <---- THIS COLOR in mp menu ///////////
+			forecolor		CHOICE_TEXTCOLOR \ //TEXT: <---- THIS COLOR in mp menu
 			visible			visArg \
 			decoration \
 		}
@@ -862,7 +862,7 @@
 			textscale		CHOICE_TEXTSIZE \
 			textstyle		CHOICE_TEXTSTYLE \
 			textAlign		ITEM_ALIGN_MIDDLE_LEFT \
-			forecolor		1 0 0 1 \
+			forecolor		0 0 1 1 \
 			visible			visArg \
 			decoration \
 		}
@@ -906,7 +906,7 @@
 			textscale		TEXTSIZE_DEFAULT \
 			textstyle		ITEM_TEXTSTYLE_SHADOWED \
 			textAlign		ITEM_ALIGN_MIDDLE_CENTER \
-			forecolor		1 0 0 1 \
+			forecolor		0 0 1 1 \
 			visible			visArg ; \
 			action \
 			{ \
@@ -928,7 +928,7 @@
 			textscale		TEXTSIZE_DEFAULT \
 			textstyle		ITEM_TEXTSTYLE_SHADOWED \
 			textAlign		ITEM_ALIGN_MIDDLE_CENTER \
-			forecolor		1 0 0 1 \
+			forecolor		0 0 1 1 \
 			visible			visArg ; \
 			action \
 			{ \
@@ -965,7 +965,7 @@
 			textstyle		ITEM_TEXTSTYLE_SHADOWED \
 			style			WINDOW_STYLE_FILLED \
 			backcolor		0 0 0 0 \
-			forecolor		1 0 0 1 \
+			forecolor		0 0 1 1 \
 			border			0 \
 			bordercolor		.5 .5 .5 .5 \
 			textscale		TEXTSIZE_SMALL \

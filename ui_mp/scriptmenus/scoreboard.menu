@@ -19,7 +19,7 @@
 			rect			0 3 640 18 HORIZONTAL_ALIGN_FULLSCREEN VERTICAL_ALIGN_TOP \
 			origin			SCOREBAR_OFFSET\
 			background		"line_horizontal_scorebar" \
-			forecolor		1 0.25 0.25 1 \      //// thic line ///////// 0.2 0.4 0.9 1
+			forecolor		0.25 0.25 1 1 \      //// thic line ///////// 0.2 0.4 0.9 1
 			visible			when( team( name ) == "TEAM_ALLIES" && dvarString( "scr_allies" ) == "usmc"  && !isIntermission() ) \
 			decoration \
 		} \
@@ -29,7 +29,7 @@
 			rect			0 3 640 18 HORIZONTAL_ALIGN_FULLSCREEN VERTICAL_ALIGN_TOP \
 			origin			SCOREBAR_OFFSET\
 			background		"line_horizontal_scorebar" \
-			forecolor		1 0.25 0.25 1 \             ///thic line //////////
+			forecolor		0.25 0.25 1 1 \  ///thic line
 			visible			when( team( name ) == "TEAM_AXIS" && dvarString( "scr_axis" ) == "ussr"  && !isIntermission() ) \
 			decoration \
 		} \
@@ -39,7 +39,7 @@
 			rect			0 3 640 18 HORIZONTAL_ALIGN_FULLSCREEN VERTICAL_ALIGN_TOP \
 			origin			SCOREBAR_OFFSET\
 			background		"line_horizontal_scorebar" \
-			forecolor		1 0.25 0.25 1 \ ///////////thicc line //////////////
+			forecolor		0.25 0.25 1 1 \ //thicc line 
 			visible			when( team( name ) == "TEAM_AXIS" && dvarString( "scr_axis" ) == "arab"  && !isIntermission() ) \
 			decoration \
 		} \
@@ -49,7 +49,7 @@
 			rect			0 3 640 18 HORIZONTAL_ALIGN_FULLSCREEN VERTICAL_ALIGN_TOP \
 			origin			SCOREBAR_OFFSET\
 			background		"line_horizontal_scorebar" \
-			forecolor		1 0.25 0.25 1 \
+			forecolor		0.25 0.25 1 1 \
 			visible			when( isIntermission() ) \
 			decoration \
 		} \		

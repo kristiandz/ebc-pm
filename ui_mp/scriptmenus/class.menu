@@ -65,37 +65,45 @@
 		#include "ui_mp/player_info.inc";
 		#define ORIGIN_BANNER		108 48
 
-		itemDef	{
+		itemDef	
+		{
 			style			WINDOW_STYLE_SHADER
 			rect			ORIGIN_BANNER 450 0.5
 			background		"line_horizontal"
 			forecolor		0 0 0 0.85
-			visible			1	decoration	}
-		itemDef	{
+			visible			1	decoration	
+		}
+		itemDef	
+		{
 			style			WINDOW_STYLE_SHADER
 			rect			ORIGIN_BANNER 340 10
 			origin			30 1
 			background		"line_horizontal"
-			forecolor		1 0 0 0.8//OBJECTIVE_COLOR_MARINES
+			forecolor		0.1 0.1 1 0.8 //OBJECTIVE_COLOR_MARINES
 			visible			1
-			decoration	}
-		itemDef	{
+			decoration	
+		}
+		itemDef	
+		{
 			style			WINDOW_STYLE_SHADER
 			rect			ORIGIN_BANNER 400 0.5
 			origin			0 12
 			background		"line_horizontal"
 			forecolor		0 0 0 0.85
-			visible			1	decoration	}
-
-		itemDef	{
+			visible			1	decoration	
+		}
+		itemDef	
+		{
 			rect			-400 64 800 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_TOP
 			textstyle		ITEM_TEXTSTYLE_SHADOWED
 			textscale		TEXTSIZE_TITLE
 			textalign		ITEM_ALIGN_CENTER
-			forecolor		1 0 0 1
+			forecolor		0.1 0.1 1 1
 			exp text 		( gametypename() );
-			visible			1	decoration	}
-		itemDef	{
+			visible			1	decoration	
+		}
+		itemDef	
+		{
 			rect			-250 84 500 60 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_TOP
 			textstyle		ITEM_TEXTSTYLE_SHADOWED
 			textscale		TEXTSIZE_SMALL
@@ -103,7 +111,8 @@
 			forecolor		1 1 1 0.75
 			exp text		( gametypedescription() );
 			autowrapped
-			visible			1	decoration	}
+			visible			1	decoration	
+		}
 
 		CHOICE_MENU_TITLE( "@MENU_OPTIONS_UPPER_CASE" )
 

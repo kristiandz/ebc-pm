@@ -105,7 +105,7 @@
 		border			1 \
 		bordersize		CHOICE_POPUP_BORDER_WIDTH \
 		bordercolor		0 0 0 0.8 \
-		focusColor		1 0 0 1 \
+		focusColor		0 0 1 1 \
    		style			WINDOW_STYLE_FILLED \
 		popup \
 		extraArgs \
@@ -192,7 +192,7 @@
 		{ \
 			style			WINDOW_STYLE_SHADER \
 			rect			-600 -800 2000 2000 0 0 \
-			forecolor		1 0 0 0.5 \
+			forecolor		0 0 1 0.5 \
 			exp				material( "white" ); \
 			visible			when( shadow_visArg ); \
 			decoration \
@@ -232,7 +232,7 @@
 		
 		//PREPROC_TEXT_DRAW( 0 0 10 10, 0 0, text "x", TEXTSIZE_SMALL, 0, 0, ITEM_ALIGN_MIDDLE_LEFT, CHOICE_POPUP_BORDER_COLOR visible when( dvarInt(ui_popup_close_icon) ); )
 
-		//PREPROC_SHADER_DRAW( -4 -4 CHOICE_POPUP_WIDTH CHOICE_POPUP_HEIGHT( itemCount ), 0 0, "white", 1 0 0 0.3, 1, CHOICE_POPUP_BORDER_WIDTH, 1 0 0 0.3 visible when( dvarInt(ui_popup_close_icon) ); )
+		//PREPROC_SHADER_DRAW( -4 -4 CHOICE_POPUP_WIDTH CHOICE_POPUP_HEIGHT( itemCount ), 0 0, "white", 0 0 1 0.3, 1, CHOICE_POPUP_BORDER_WIDTH, 0 0 1 0.3 visible when( dvarInt(ui_popup_close_icon) ); )
 
 #define CENTER_POPUP_SETUP( nameArg, itemCount, onEscArg, shadow_visArg ) \
 		CENTER_POPUP_SETUP_ONOPEN( nameArg, itemCount, onEscArg, focusfirst, shadow_visArg )
@@ -249,7 +249,7 @@
 			backcolor		0 0 0 .5 \
 			bordersize		CHOICE_POPUP_BORDER_WIDTH \
 			bordercolor		CHOICE_POPUP_BORDER_COLOR \
-			focusColor		1 0 0 1 \
+			focusColor		0 0 1 1 \
 	   		style			WINDOW_STYLE_FILLED \
 			popup \
 			extraArgs \
@@ -285,7 +285,7 @@
 	   		fullscreen		0 \
 			rect			(0-(CHOICE_POPUP_WIDTH/2)) (0-(CHOICE_POPUP_HEIGHT( itemCount )/2)) CHOICE_POPUP_WIDTH CHOICE_POPUP_HEIGHT( itemCount ) HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
 			border			1 \
-			backcolor		0.8 0.2 0.2 0.8 \
+			backcolor		0.2 0.2 0.8 0.8 \
 			bordersize		CHOICE_POPUP_BORDER_WIDTH \
 			bordercolor		CHOICE_POPUP_BORDER_COLOR \
 			focusColor		0 0 0 .5 \
@@ -360,7 +360,7 @@
 			style			WINDOW_STYLE_SHADER \
 			rect			0 (CHOICE_POPUP_TITLE_HEIGHT/4) CHOICE_POPUP_WIDTH (CHOICE_POPUP_HEIGHT( itemCount )-(CHOICE_POPUP_TITLE_HEIGHT/4)) HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
 			background		"white" \
-			forecolor		1 0 0 1 \
+			forecolor		0 0 1 1 \
 			visible			1 \
 			decoration \
 		} \
@@ -368,7 +368,7 @@
 		{ \
 			style			WINDOW_STYLE_SHADER \
 			rect			0 0 (CHOICE_POPUP_WIDTH-(CHOICE_POPUP_TITLE_HEIGHT/4)) CHOICE_POPUP_TITLE_HEIGHT HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
-			forecolor		1 0 0 1 \
+			forecolor		0 0 1 1 \
 			exp				material( "black" ); \
 			visible			1 \
 			decoration \
@@ -377,7 +377,7 @@
 		{ \
 			style			WINDOW_STYLE_SHADER \
 			rect			0 0 (CHOICE_POPUP_WIDTH-(CHOICE_POPUP_TITLE_HEIGHT/4)) CHOICE_POPUP_TITLE_HEIGHT HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
-			forecolor		1 0 0 0.4 \
+			forecolor		0 0 1 0.4 \
 			exp				material( "white" ); \
 			visible			1 \
 			decoration \
@@ -386,7 +386,7 @@
 		{ \
 			style			WINDOW_STYLE_SHADER \
 			rect			((CHOICE_POPUP_WIDTH-0)-(CHOICE_POPUP_TITLE_HEIGHT/4)) 0 (CHOICE_POPUP_TITLE_HEIGHT/4) (CHOICE_POPUP_TITLE_HEIGHT) HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
-			forecolor		1 0 0 1 \
+			forecolor		0 0 1 1 \
 			exp				material( "white" ); \
 			visible			1 \
 			decoration \
@@ -395,7 +395,7 @@
 		{ \
 			style			WINDOW_STYLE_SHADER \
 			rect			((CHOICE_POPUP_WIDTH-0)-(CHOICE_POPUP_TITLE_HEIGHT/4)) 0 (CHOICE_POPUP_TITLE_HEIGHT/4) (CHOICE_POPUP_TITLE_HEIGHT) HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
-			forecolor		1 0 0 1 \
+			forecolor		0 0 1 1 \
 			exp				material( "white" ); \
 			visible			1 \
 			decoration \
