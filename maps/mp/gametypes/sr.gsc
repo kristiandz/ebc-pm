@@ -679,8 +679,9 @@ onPickupDogTag( event, splash )
 }
 
 bounce()
-{	
-	self endon("deleted");
+{
+	self endon( "picked_up" );
+	self endon( "timed_out" );
 	while( isDefined(self) )
 	{
 		self rotateYaw( 360, 3, 0.3, 0.3 );
