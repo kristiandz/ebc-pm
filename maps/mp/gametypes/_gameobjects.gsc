@@ -68,52 +68,6 @@ onDisconnect()
 	if(isDefined(self.carryObject))self.carryObject thread setDropped();
 }
 
-createDogTag(ownerTeam, trigger, visuals, offset)
-{
-	useObject = spawnStruct();
-	useObject.type = "useObject";
-	useObject.curOrigin = trigger.origin;
-	useObject.ownerTeam = ownerTeam;
-	useObject.entNum = trigger getEntityNumber();
-	useObject.keyObject = undefined;
-	useObject.triggerType = "proximity";
-	useObject.trigger = trigger;
-	for (i = 0; i < visuals.size; i++)
-	{
-		visuals[i].baseOrigin = visuals[i].origin;
-		visuals[i].baseAngles = visuals[i].angles;
-	}
-	useObject.visuals = visuals;
-	if (!isDefined(offset)) offset = (0, 0, 0);
-	useObject.offset3d = offset;
-	useObject.compassIcons = [];
-	useObject.objIDAllies = getNextObjID();
-	useObject.objIDAxis = getNextObjID();
-	useObject.interactTeam = "none";
-	useObject.worldIcons = [];
-	useObject.visibleTeam = "none";
-	useObject.onUse = undefined;
-	useObject.onCantUse = undefined;
-	useObject.useText = "default";
-	useObject.useTime = 10000;
-	useObject.curProgress = 0;
-	useObject.numTouching["neutral"] = 0;
-	useObject.numTouching["axis"] = 0;
-	useObject.numTouching["allies"] = 0;
-	useObject.numTouching["none"] = 0;
-	useObject.touchList["neutral"] = [];
-	useObject.touchList["axis"] = [];
-	useObject.touchList["allies"] = [];
-	useObject.touchList["none"] = [];
-	useObject.useRate = 0;
-	useObject.claimTeam = "none";
-	useObject.claimPlayer = undefined;
-	useObject.lastClaimTeam = "none";
-	useObject.lastClaimTime = 0;
-	useObject thread useObjectProxThink();
-	return useObject;
-}
-
 createCarryObject(ownerTeam,trigger,visuals,offset)
 {
 	carryObject=spawnStruct();
