@@ -2849,7 +2849,7 @@ cancelKillCamOnUse()
 	self endon("death_delay_finished");
 	self endon("disconnect");
 	level endon("game_ended");
-	for(;;)
+	for(;isDefined(self);)
 	{
 		if(!self UseButtonPressed())
 		{

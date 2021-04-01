@@ -567,6 +567,7 @@ spawnDogTags( attacker )
 
 onUseTag( friendlyTag, enemyTag, trigger )
 { 
+	//self endon("disconnect"); Test the proper entity
 	trigger endon( "timed_out" );
 	friendlyTag endon( "timed_out" );
 	enemyTag endon( "timed_out" );
