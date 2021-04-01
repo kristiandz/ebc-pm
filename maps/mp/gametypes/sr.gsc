@@ -1,6 +1,6 @@
 #include common_scripts\utility;
 #include maps\mp\_utility;
-#include scripts\utility\_utility;
+#include hunnia\_utility;
 #include maps\mp\gametypes\_hud_util;
 
 main()
@@ -512,7 +512,7 @@ intoSpawn(originA, anglesA)
 
 ispawnang(ent)
 {
-	while(isDefined(ent) && isDefined(self))
+	while(isDefined(ent))
 	{
 	self SetPlayerAngles( ent.angles );
 	wait 0.05;
@@ -529,92 +529,96 @@ onPlayerKilled( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHi
 
 spawnDogTags( attacker )
 {
-	if(!isDefined(attacker) || !isDefined(self))return;
-	// ateam = attacker.pers["team"];
-	//if( level.numGametypeReservedObjectives == 15 ) level.numGametypeReservedObjectives = level.numGametypeReservedObjectives-2; // Check Logic
-	if(isDefined(attacker) /*isDefined(ateam)*/&& isDefined(attacker.pers["team"]) && self.pers["team"] != "spectator" && attacker != self)
+	if(isDefined(attacker) && self.pers["team"] != "spectator" && attacker != self) 
 	{
 		if(attacker.pers["team"] != self.pers["team"])
 		{
-			basePosition = playerPhysicsTrace( self.origin, self.origin + ( 0, 0, -99999 ) );
-
-			visuals[0] = spawn( "script_model", basePosition + ( 0, 0, 20 ));
-			visuals[0] setModel( "skull_dogtag" );
-			visuals[1] = spawn( "script_model", basePosition + ( 0, 0, 20 ));
-			visuals[1] setModel( "cross_dogtag" );		
+			basePosition = playerPhysicsTrace( self.origin + ( 0, 0, 10 ), self.origin + ( 0, 0, -99999 ) );
+		
 			trigger = spawn( "trigger_radius", basePosition, 0, 20, 50 );
+			trigger endon( "picked_up" );
+			trigger endon( "timed_out" );
+			trigger.owner = attacker;
+			trigger.team = attacker.pers["team"];
 		
-			level.dogtags[self.guid] = maps\mp\gametypes\_gameobjects::createDogTag( "any", trigger, visuals, (0,0,16) );
-			level.dogtags[self.guid] maps\mp\gametypes\_gameobjects::setUseTime( 0 );
-			level.dogtags[self.guid].onUse = ::onUseDogTag;
-			level.dogtags[self.guid].victim = self;
-			level.dogtags[self.guid].team = self.team;
-				
-			self thread clearOnEvent();
+			friendlyTag = spawn( "script_model", basePosition + ( 0, 0, 20 ) );
+			friendlyTag endon( "picked_up" );
+			friendlyTag endon( "timed_out" );
+			friendlyTag setModel( "cross_dogtag" );
+			friendlyTag.team = self.pers["team"];
+			friendlyTag.owner = self;
 		
-			level.dogtags[self.guid] maps\mp\gametypes\_gameobjects::allowUse( "any" );	
-			level.dogtags[self.guid].visuals[0] thread showToTeam( getOtherTeam( self.pers["team"] ) );
-			level.dogtags[self.guid].visuals[1] thread showToTeam( self.pers["team"] );
-			level.dogtags[self.guid].attacker = attacker;		
-			level.dogtags[self.guid].visuals[0] thread bounce();
-			level.dogtags[self.guid].visuals[1] thread bounce();
+			enemyTag = spawn( "script_model", basePosition + ( 0, 0, 20 ) );
+			enemyTag endon( "picked_up" );
+			enemyTag endon( "timed_out" );
+			enemyTag setModel( "skull_dogtag" );
+			enemyTag.team = attacker.pers["team"];
+			enemyTag.owner = self;
+		
+			self thread onJoinedDisconnect( enemyTag, friendlyTag, trigger );
+			friendlyTag thread bounce();
+			enemyTag thread bounce();
+			friendlyTag thread showTagToTeam();
+			enemyTag thread showTagToTeam();
+			trigger thread onUseTag( friendlyTag, enemyTag, trigger );
 		}
 	}
 }
 
-onUseDogTag( player )
-{
-	for(i = 0; i < self.visuals.size; i++)
+onUseTag( friendlyTag, enemyTag, trigger )
+{ 
+	trigger endon( "timed_out" );
+	friendlyTag endon( "timed_out" );
+	enemyTag endon( "timed_out" );
+	trigger waittill( "trigger", taker );
+	for(;;)
 	{
-		self notify("reset");
-		self.visuals[i] hide();
-		self.visuals[i] notify("reset");
-		self.visuals[i].origin = (0,0,1000);
+		trigger waittill( "trigger", taker );
+		if( !isdefined(taker) || !isAlive(taker) || !isDefined(taker.pers["team"]) )
+			continue;
+		else break;
 	}
-	
-	self.trigger.origin = (0,0,1000);
-	
-	self maps\mp\gametypes\_gameobjects::allowUse( "none" );	
-	
-	if ( player.pers["team"] == self.team )
-	{				
+
+	if( taker.pers["team"] == friendlyTag.team ) 
+	{
+		tagowner = friendlyTag.owner;
 		event = "tags_retrieved";
 		splash = "Rescued";
-		
-		player thread onPickupDogTag( event, splash );	
-		player.pers["rescues"]++;	
-		
-		if ( isDefined( self.victim ) )
-			self clearLowerMessage();
-			self.victim thread maps\mp\gametypes\_globallogic::spawnPlayer();
-			self.victim setweaponammoclip("frag_grenade_mp",0);
-			self.victim setweaponammostock("frag_grenade_mp",0);
-			self.victim setweaponammoclip("flash_grenade_mp",0);
-			self.victim setweaponammostock("flash_grenade_mp",0);			
-			self.victim setweaponammoclip("smoke_grenade_mp",0);
-			self.victim setweaponammostock("smoke_grenade_mp",0);			
-			self.victim iprintLnBold("^1You were rescued!");
-			temp = self.victim GetStat(2801);
-			self.victim SetStat( 2801, int(temp) + 1 );
-			self.victim protection();
-			wait 0.5;
-			self.victim notify("pickup");
+		taker thread onPickupDogTag( event, splash );	
+		taker.pers["rescues"]++;
+		if ( isDefined( tagowner ) )
+		{
+			taker clearLowerMessage();
+			tagowner thread maps\mp\gametypes\_globallogic::spawnPlayer();
+			tagowner setweaponammoclip("frag_grenade_mp",0);
+			tagowner setweaponammostock("frag_grenade_mp",0);
+			tagowner setweaponammoclip("flash_grenade_mp",0);
+			tagowner setweaponammostock("flash_grenade_mp",0);			
+			tagowner setweaponammoclip("smoke_grenade_mp",0);
+			tagowner setweaponammostock("smoke_grenade_mp",0);			
+			tagowner iprintLnBold("^1You were rescued!");
+			temp = tagowner GetStat(2801);
+			tagowner SetStat( 2801, int(temp) + 1 );
+			tagowner protection();
+		}
 	}
-	else
+	if ( taker.pers["team"] == enemyTag.team ) 
 	{
+		tagowner = enemyTag.owner;
 		event = "kill_confirmed";
 		splash = "Enemy eliminated";
-		player.pers["gottags"]++;
-		
-		player thread onPickupDogTag( event, splash );
-		if ( self.attacker != player )
-			self.attacker thread onPickupDogTag( event, splash );
-		if ( isDefined( self.victim ) )
-			self.victim thread underScorePopup( "Eliminated" );
-			self.victim notify("pickup");
+		taker.pers["gottags"]++;
+		taker thread onPickupDogTag( event, splash );
+		if ( isDefined( tagowner ) )
+			tagowner thread underScorePopup( "Eliminated" );
 	}
-	if(isDefined(player)) player playSound( "dogtag_kc_pickup" );
-	self.attacker = undefined;
+	trigger playSound( "dogtag_pick" );
+	trigger notify( "picked_up" );
+	friendlyTag notify( "picked_up" );
+	enemyTag notify( "picked_up" );
+	trigger delete();
+	friendlyTag delete();
+	enemyTag delete ();
 }
 
 waittill_any_or_time(x,y,z,time,r)
@@ -637,41 +641,40 @@ waittill_any_or_time(x,y,z,time,r)
 		wait time;
 }
 
-clearOnEvent()
-{	
-	guid = self.guid;
-	self waittill_any_or_time( "disconnect", "joined_team", "joined_spectators", 20, "pickup");
-	
-	if ( isDefined( level.dogtags[guid] ) )
-	{
-		if(level.numGametypeReservedObjectives > 12) level.numGametypeReservedObjectives = level.numGametypeReservedObjectives-4;
-		else if(level.numGametypeReservedObjectives < 4) level.numGametypeReservedObjectives = level.numGametypeReservedObjectives-1;
-		else level.numGametypeReservedObjectives = level.numGametypeReservedObjectives -2;
-		
-		level.dogtags[guid] maps\mp\gametypes\_gameobjects::allowUse( "none" );			
-		wait( 0.05 );
-		if ( isDefined( level.dogtags[guid] ) )
-		{
-			level.dogtags[guid].trigger delete();
-			for ( i=0; i<level.dogtags[guid].visuals.size; i++ )
-			{
-				level.dogtags[guid].visuals[i] notify("deleted");
-				level.dogtags[guid].visuals[i] delete();
-			}
-			level.dogtags[guid] = undefined;		
-		}	
-	}	
+onJoinedDisconnect( enemyTag, friendlyTag, trigger )
+{
+	self endon( "spawned_player" );
+	self endon( "game_ended" );
+
+	self waittill_any_or_time( "disconnect", "joined_team", "joined_spectators", 22, "pickup");
+
+	trigger notify( "picked_up" );
+	friendlyTag notify( "picked_up" );
+	enemyTag notify( "picked_up" );
+
+	trigger notify( "timed_out" );
+	friendlyTag notify( "timed_out" );
+	enemyTag notify( "timed_out" );
+
+	if( isDefined( trigger ) )
+		trigger delete();
+
+	if( isDefined( friendlyTag ) ) 
+		friendlyTag delete();
+
+	if( isDefined( enemyTag ) )
+		enemyTag delete ();
 }
 
 onPickupDogTag( event, splash )
 {
 	if(isPlayer(self))
 	{
-	self thread underScorePopup(splash);
-	self thread maps\mp\gametypes\_rank::giveRankXP( event );
-	self.pers["score"] += 2;
-	self maps\mp\gametypes\_persistence::statAdd( "score", self.pers["score"] );
-	self.score = self.pers["score"];
+		self thread underScorePopup(splash);
+		self thread maps\mp\gametypes\_rank::giveRankXP( event );
+		self.pers["score"] += 2;
+		self maps\mp\gametypes\_persistence::statAdd( "score", self.pers["score"] );
+		self.score = self.pers["score"];
 	}
 }
 
@@ -681,7 +684,6 @@ bounce()
 	while( isDefined(self) )
 	{
 		self rotateYaw( 360, 3, 0.3, 0.3 );
-
 		self moveZ( 20, 1.5, 0.3, 0.3 );
 		wait 1.5;
 		self moveZ( -20, 1.5, 0.3, 0.3 );
@@ -689,19 +691,16 @@ bounce()
 	}
 }
 
-showToTeam( showForTeam )
+showTagToTeam()
 {
-	self endon("disconnect");
-	self endon("reset");
-	
-	while( isDefined( self ) )
-	{	
+	while( isDefined( self ) ) // use while() in case player changes team
+	{
 		self hide();
-
 		for( i = 0 ; i < level.players.size ; i ++ )
 		{
-			if ( level.players[i].team == showForTeam )
-				self showToPlayer( level.players[i] );
+			player = level.players[i];
+			if ( player.pers["team"] == self.team )
+				self showToPlayer( player );
 		}
 		wait 0.05;
 	}
