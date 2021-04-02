@@ -2077,7 +2077,7 @@ Callback_PlayerConnect()
 	waittillframeend;
 	if(!isDefined(self))return;
 	level notify("connected",self);
-	
+	level notify("refresh_list");
 	self.firstbloodinprogress = false;
 	self.killcount = 0;
 	self.pickup = false;
@@ -2305,6 +2305,7 @@ prcheck(storedpr,backup)
 
 Callback_PlayerDisconnect()
 {
+	level notify("refresh_list");
 	self removePlayerOnDisconnect();
 	[[level.onPlayerDisconnect]]();
 	logPrint("Q;"+self getGuid()+";"+self getEntityNumber()+";"+self.name+"\n");
@@ -3029,7 +3030,7 @@ admin_list()
 				wait 0.1;
 			}
 		}
-		level waittill("connected",player);
+		self waittill("refresh_list");
 	}
 }
 
@@ -3047,7 +3048,7 @@ list_cleaner()
 				wait 0.1;
 			}
 		}
-		level notify("connected",self);
-		level waittill("disconnected",player);
+		level notify("refresh_list");
+		self waittill("refresh_list");
 	}
 }
