@@ -166,7 +166,10 @@ adminCommands( cmd, pickingType )
 			player iPrintlnBold("^1" + caller.name + "'s^7 previous season prestige level was: ^1" + int(temp)); 
 		}
 		break;
-	 
+	
+	case "startmapvote":
+		level thread duffman\mapvote::init();
+		break;	 
 		
 	case "spawn":
 		player = getPlayer( arg1, pickingType );
