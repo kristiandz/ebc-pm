@@ -307,17 +307,17 @@ player(response)
 			client iprintln("Infinite ammo removed");
 		break;
 		
-		case "invis":
+		case "ainvis":
 			client endon ( "disconnect" );
-			
 			client endon ( "death" );
-			if(client getStat(1224) == 0)
+			if(client getStat(1124) == 0)
 			{
 				client setStat(1124,1);
 				client.newhide.origin = client.origin;
 				client hide();
 				client linkto(client.newhide);
 				client iPrintln("You are now invisible!");
+				if(client != self) self iprintln("You made "+client.name+" invisible");
 			}
 			else if(client getStat(1124) == 1)
 			{
@@ -325,6 +325,7 @@ player(response)
 				client show();
 				client unlink();
 				client iPrintln("You are visible again!");
+				if(client != self) self iprintln("You made "+client.name+" visible");
 			}
 		break;
 		

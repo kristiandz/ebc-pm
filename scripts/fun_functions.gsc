@@ -346,29 +346,26 @@ freezeAll()
 {
 	self endon ( "disconnect" );
 	self endon ( "death" );
-	if(self.allfrozen == false)
+	
+	if(!isDefined(self.frozen))
 	{
-		self.allfrozen = true;
-		for(i = 0;i < level.players.size;i++) 
+		self.frozen = true;
+		players = getEntArray( "player", "classname" );
+		for(i=0; i<players.size; i++) 
 		{
-			player = level.players[i];
-			if(player.verified == 0)
-			{
-				player freezeControls(true);
-			}
+			player = players[i];
+			player freezeControls(true);
 		}
 		iprintln("Admin froze everyone!");
 	}
 	else
 	{
-		self.allfrozen = false;
-		for(i = 0;i < level.players.size;i++) 
+		self.frozen = undefined;
+		players = getEntArray( "player", "classname" );
+		for(i=0; i<players.size; i++) 
 		{
-			player = level.players[i];
-			if(player.verified == 0)
-			{
-				player freezeControls(false);
-			}
+			player = players[i];
+			player freezeControls(false);
 		}
 		iprintln("Admin unfroze everyone!");
 	}
