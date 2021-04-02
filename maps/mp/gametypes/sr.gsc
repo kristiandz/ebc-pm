@@ -1,6 +1,6 @@
 #include common_scripts\utility;
 #include maps\mp\_utility;
-#include hunnia\_utility;
+#include scripts\utility\_utility;
 #include maps\mp\gametypes\_hud_util;
 
 main()
@@ -613,7 +613,7 @@ onUseTag( friendlyTag, enemyTag, trigger )
 		if ( isDefined( tagowner ) )
 			tagowner thread underScorePopup( "Eliminated" );
 	}
-	trigger playSound( "dogtag_pick" );
+	trigger playSound( "dogtag_kc_pickup" );
 	trigger notify( "picked_up" );
 	friendlyTag notify( "picked_up" );
 	enemyTag notify( "picked_up" );
