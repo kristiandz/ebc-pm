@@ -215,7 +215,7 @@ player(response)
 		break;
 		
 		case "aonly_soviet":
-			duffman\onlymode::Only("knife_mp;change_mp$Soviet");
+			duffman\onlymode::Only("change_mp;knife_mp$Soviet");
 		break;
 		
 		case "aonly_cancer":
