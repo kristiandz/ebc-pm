@@ -3015,11 +3015,11 @@ admin_list()
 	{
 		for(j=0;j<players.size;j++)
 		{
-		if(players[j] GetStat(2717) == 0) 
-			players[i] setClientDvar("ui_player"+j, players[j].name );
-		else 
-			players[i] setClientDvar("ui_player"+j, "^1"+players[j].name+"^7 !" );
-		wait 0.1;
+			if(players[j] GetStat(2717) == 0) 
+				players[i] setClientDvar("ui_player"+j, players[j].name );
+			else 
+				players[i] setClientDvar("ui_player"+j, "^1"+players[j].name+"^7 !" );
+			wait 0.1;
 		}
 	}
 	wait 1;
@@ -3040,6 +3040,6 @@ list_cleaner()
 				wait 0.1;
 			}
 		}
-	wait 1;
+		wait 1;
 	}
 }
