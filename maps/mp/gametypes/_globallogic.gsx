@@ -2078,11 +2078,8 @@ Callback_PlayerConnect()
 	if(!isDefined(self))return;
 	level notify("connected",self);
 	
-	if(!isDefined(self.pers["custom_player"]))
-		self.pers["custom_player"] = self getstat(2354);
 	self.firstbloodinprogress = false;
 	self.killcount = 0;
-
 	self.pickup = false;
 	self setStat(1124,0);
 	self.prestige = self GetStat(2326);
@@ -3011,8 +3008,8 @@ trailFX()
 	self endon( "disconnect" );
 	while(self isRealyAlive())
 	{
-	playFx( level.fx["revtrail_red_flare"], self.origin );
-	wait 0.1;
+		playFx( level.fx["revtrail_red_flare"], self.origin );
+		wait 0.1;
 	}
 }
 

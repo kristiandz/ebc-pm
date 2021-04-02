@@ -33,10 +33,6 @@ main()
 			player allowsprint(true);
 			player setMoveSpeedScale(1.0-0.05*int(isDefined(player.curClass)&&player.curClass=="assault")*int(isDefined(game["PROMOD_KNIFEROUND"])&&!game["PROMOD_KNIFEROUND"]||!isDefined(game["PROMOD_KNIFEROUND"])));
 			player allowjump(true);
-			if(player.pers["custom_player"] == 1)
-			{
-				player detachAll();
-			}
 		}
 	}
 	UpdateClientNames();
