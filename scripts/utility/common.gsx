@@ -386,13 +386,11 @@ read(logfile)
 	filehandle = FS_FOpen( logfile, "read" );
 	
 	level.openFiles[ filehandle ] = true;
-	iprintln("^1Opening file: " + logfile);
 	string = FS_ReadLine( filehandle );
 	
 	FS_FClose(filehandle);
 	
 	level.openFiles[ filehandle ] = undefined;
-	iprintln("Closing file");
 	if(isDefined(string))
 		return string;
 	
@@ -407,12 +405,10 @@ log(logfile,log,mode)
 		database = FS_FOpen(logfile, "append");
 	else if(mode == "write")
 		database = FS_FOpen(logfile, "write");
-	iprintln("Opening file");
 	level.openFiles[ database ] = true;
 	
 	FS_WriteLine(database, log);
 	FS_FClose(database);
-	iprintln("Closing file");
 	level.openFiles[ database ] = undefined;
 }
 
