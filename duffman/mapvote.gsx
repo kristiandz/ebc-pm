@@ -46,17 +46,17 @@ init()
 	hud[0].color = (0,0,0);
 	hud[0] thread fadeIn(.3);
 	//text
-	hud[1] = addTextHud( level, 0, level.windowheight/-2-3, 1, "center", "bottom", "center", "middle", 1.6, 102 );
+	hud[1] = addTextHud( level, 0, level.windowheight/-2-4, 1, "center", "bottom", "center", "middle", 1.6, 102 );
 	hud[1] setText("Vote for the next map!");
 	hud[1] thread fadeIn(.3);
 	//timer
-	hud[2] = addTextHud( level, level.windowwidth/2-30, level.windowheight/-2-3, 1, "center", "bottom", "center", "middle", 1.6, 102 );
+	hud[2] = addTextHud( level, level.windowwidth/2-32, level.windowheight/-2-3, 1, "center", "bottom", "center", "middle", 1.6, 102 );
 	hud[2] SetTenthsTimer(20);
 	hud[2] thread fadeIn(.3);
 	//top bg
 	hud[3] = addTextHud( level, 0, level.windowheight/-2+3, .8, "center", "bottom", "center", "middle", 1.6, 101 );
 	hud[3].color = (0, 0 ,0);
-	hud[3] SetShader("white",level.windowwidth,30);
+	hud[3] SetShader("white",level.windowwidth,35);
 	hud[3] thread fadeIn(.3);
 	//voting results ... + names
 	map = [];
