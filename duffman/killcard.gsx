@@ -103,11 +103,11 @@ getDesign(index)
 {
  	name = self.pers["design"];
 	if(!isDefined(self.pers["design"]))
-		name = "default";
+		name = "Default";
  	if(isDefined(level.designs[name]) && isDefined(level.designs[name][index]) && isDefined(level.designs[name][index]))
  		return level.designs[name][index];
  	else
- 		return level.designs["default"][index];
+ 		return level.designs["Default"][index];
 }
 
 setDesign(theme,cancel) 
