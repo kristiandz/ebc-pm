@@ -114,10 +114,10 @@ onStartGameType()
 rreset()
 {
 	wait 1;
-    players = hunnia\_utility::getAllPlayers();
+    players = scripts\utility\_utility::getAllPlayers();
     for( i = 0; i < players.size; i++ )
     {
-		players[i] SetStat(1190, 0 ); // Arena Icons
+		players[i] SetStat(1190,0); // Arena Icons
 	}
 }
 
