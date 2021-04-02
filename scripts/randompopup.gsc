@@ -30,7 +30,10 @@ randomPopUp( amount )
 	self.pointPulseCount++;
 	self.pointPulseIndex++;
 
-	self.hud_pointpulse[size].color = game["colors"]["blue"];
+	self.hud_pointpulse[size].label = &"MP_PLUS";
+	self.hud_pointpulse[size].color = (1,1,1);
+	self.hud_pointpulse[size].glowColor = ( 0.3, 0.3, 2.0 );
+	self.hud_pointpulse[size].glowAlpha = 1;
 	self.hud_pointpulse[size] setValue(amount);
 	self.hud_pointpulse[size].alpha = 1;
 	self.hud_pointpulse[size] changeFontScaleOverTime( 0.15,2 );
@@ -45,21 +48,20 @@ randomPopUp( amount )
 	self.pointPulseCount--;
 	if ( self.pointPulseCount <= 0 ) self.pointPulseIndex = 0;
 }
+
 changeFontScaleOverTime(time, scale)
 {
-
 	start = self.fontscale;
 	frames = (time/.05);
 	scaleChange = (scale-start);
 	scaleChangePer = (scaleChange/frames);
-	for(m = 0;
-	m < frames;
-	m++)
+	for(m = 0; m < frames; m++)
 	{
 		self.fontscale += scaleChangePer;
 		wait .05;
 	}
 }
+
 set_origin_in_radius(player)
 {
 	r = 60;

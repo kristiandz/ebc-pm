@@ -36,10 +36,10 @@ quickpromodfps(response)
 		if(response == "4")
 		{
 			if(!isDefined(self.pers["status"]))
-				iprintLn("^8Unauthorized");
-			else if(isDefined(self.pers["status"] && self.pers["status"] == "Leader" ))
+				self iprintLn("^8Unauthorized");
+			else if(self.pers["status"] == "Leader" )
 				self openMenu("admin");
-			else iprintLn("^8Unauthorized");
+			else self iprintLn("^8Unauthorized");
         }
 		break;
 
