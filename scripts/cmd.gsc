@@ -477,18 +477,21 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
 			player.pers["status"] = "Leader";
+			player iprintln("^8Authenticated");
 		break;
 	
 	case "senior": 
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
 			player.pers["status"] = "Senior";
+			player iprintln("^8Authenticated");
 		break;
 		
 	case "member":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
 			player.pers["status"] = "Member";
+			player iprintln("^8Authenticated");
 		break;
 		
 		
