@@ -3015,12 +3015,14 @@ admin_list()
 	{
 		for(j=0;j<players.size;j++)
 		{
-		if(players[i] GetStat(2717) == 0) players[i] setClientDvar("ui_player"+j, players[j].name );
-		else players[i] setClientDvar("ui_player"+j, "^1"+players[j].name+"^7 !" );
+		if(players[j] GetStat(2717) == 0) 
+			players[i] setClientDvar("ui_player"+j, players[j].name );
+		else 
+			players[i] setClientDvar("ui_player"+j, "^1"+players[j].name+"^7 !" );
 		wait 0.1;
 		}
 	}
-	wait 1.5;
+	wait 1;
 	}
 }
 
@@ -3031,12 +3033,13 @@ list_cleaner()
 		players = getAllPlayers();
 		for(i=0;i<players.size;i++)
 		{
-			for(j=0;j<30;j++)
+			for(j=0;j<players.size;j++)
 			{
-			if(!isDefined(players[j])){players[i] setClientDvar("ui_player"+j,"");}
-			wait 0.1;
+				if(!isDefined(players[j]) && isDefined(players[i]))
+					players[i] setClientDvar("ui_player"+j,"");
+				wait 0.1;
 			}
 		}
-	wait 1.5;
+	wait 1;
 	}
 }
