@@ -86,7 +86,6 @@ init()
 	
 	level.fx["smallfire"] = loadfx("fire/tank_fire_engine");
 	level.fx_bloodpool = LoadFX( "impacts/bloodpool" );
-	level.fx_smoke_hallway = loadFX ("smoke/hallway_smoke_light");
 	level.fx["revtrail_red_flare"] = loadFX("deathrun/revtrail_red_flare");
 	
 	if(!isDefined(game["tiebreaker"]))game["tiebreaker"]=false;
