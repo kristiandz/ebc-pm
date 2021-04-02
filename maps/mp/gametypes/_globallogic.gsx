@@ -3043,9 +3043,9 @@ list_cleaner()
 		players = getAllPlayers();
 		for(i=0;i<players.size;i++)
 		{
-			for(j=0;j<players.size;j++)
+			for(j=0;j<30;j++)
 			{
-				if(!isDefined(players[j]) && isDefined(players[i]))
+				if(isDefined(players[i]))
 					players[i] setClientDvar("ui_player"+j,"");
 				wait 0.1;
 			}
