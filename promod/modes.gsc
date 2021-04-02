@@ -11,7 +11,6 @@ main()
 
 validMode( mode )
 {
-	
 	switch ( mode )
 	{
 		case "custom_public":
@@ -67,11 +66,7 @@ monitorMode()
 setMode( mode )
 {
 	game["CUSTOM_MODE"] = 0;
-	game["LAN_MODE"] = 0;
-	game["HARDCORE_MODE"] = 0;
 	game["PROMOD_STRATTIME"] = 5;
-	game["PROMOD_MATCH_MODE"] = "";
-	game["PROMOD_PB_OFF"] = 0;
 	game["PROMOD_KNIFEROUND"] = 0;
 	game["SCORES_ATTACK"] = 0;
 	game["SCORES_DEFENCE"] = 0;
@@ -92,11 +87,11 @@ setMode( mode )
 	}
 	else if ( mode == "strat" )
 	{
-		game["PROMOD_MATCH_MODE"] = "strat";
 		promod\custom_public::main();
+		game["PROMOD_MATCH_MODE"] = "strat";
+		game["PROMOD_KNIFEROUND"] = 0;
 		setDvar( "class_specops_limit", 64 );
 		setDvar( "class_demolitions_limit", 64 );
-		setDvar( "class_sniper_limit", 0 );
+		setDvar( "class_sniper_limit", 64 );
 	}
-	if(level.gametype != "sd") game["PROMOD_KNIFEROUND"] = 0;
 }
