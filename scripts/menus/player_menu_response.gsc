@@ -191,9 +191,14 @@ player(response)
 			break;
 			
 		case "kc_member":
-			//TODO: Status check
-			self duffman\killcard::setDesign("Member",1);
-			self setClientDvar("ui_killcard",self.pers["design"]);
+			if(!isDefined(self.pers["status"]))
+				self iprintLn("^8Unauthorized");
+			else if(self.pers["status"] == "Member" || self.pers["status"] == "Senior" || self.pers["status"] == "Leader")
+			{
+				self duffman\killcard::setDesign("Member",1);
+				self setClientDvar("ui_killcard",self.pers["design"]);
+			}
+			else self iprintLn("^8Unauthorized");
 			break;
 	}
 }
