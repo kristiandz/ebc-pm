@@ -497,7 +497,6 @@ adminCommands( cmd, pickingType )
 			player iprintln("^8Authenticated");
 		break;
 		
-		
 	case "vip1":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
