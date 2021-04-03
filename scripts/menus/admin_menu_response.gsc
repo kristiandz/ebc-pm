@@ -137,49 +137,49 @@ player(response)
 		
 		/////////////////////////////////////////////////////////////////
 		case "atele":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			self notify("old_telegun");
 			client thread telegun();
 		break;
 
 		case "apickup":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			client dopickup();
 		break;
 		
 		case "agod":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			client dogod();
 		break;
 		
 		case "afr_all":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			client freezeAll();
 		break;
 		
 		case "arocket":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			client rocketNuke();
 		break;
 		
 		case "anova":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			client novaNade();
 		break;
 		
 		case "anukeb":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			self notify("old_nbullets");
 			client thread shootNukeBullets();
 		break;
 		
 		case "ajetpack":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			client jetpack();
 		break;
 		
 		case "adeath":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			client toggleDM();
 		break;
 		
@@ -193,69 +193,69 @@ player(response)
 		/////////////////////////////////////////////////////////////////
 		
 		case "aonly_nades":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			duffman\onlymode::Only("frag_grenade_mp;flash_grenade_mp$Nades");
 		break;
 		
 		case "aonly_sniper":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			duffman\onlymode::Only("m40a3_mp;remington700_mp$Sniper");
 		break;
 		
 		case "aonly_deagle":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			duffman\onlymode::Only("deserteaglegold_mp;deserteagle_mp$Deagle");
 		break;
 		
 		case "aonly_knife":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			duffman\onlymode::Only("knife_mp$Knife");
 		break;
 		
 		case "aonly_shotgun":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			duffman\onlymode::Only("m1014_mp;winchester1200_mp$Shotgun");
 		break;
 		
 		case "aonly_rpg":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			duffman\onlymode::Only("rpg_mp$RPG");
 		break;
 		
 		case "aonly_rpd":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			duffman\onlymode::Only("rpd_mp;saw_grip_mp$RPD");
 		break;
 		
 		case "aonly_pistol":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			duffman\onlymode::Only("beretta_mp;usp_mp$Pistol");
 		break;
 		
 		case "aonly_soviet":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			duffman\onlymode::Only("change_mp;knife_mp$Soviet");
 		break;
 		
 		case "aonly_cancer":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			duffman\onlymode::Only("m14_mp;p90_mp$Cancer");
 		break;
 		
 		case "aonly_reset":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			duffman\onlymode::Only("*");
 		break;
 		
 		/////////////////////////////////////////////////////////////////
 		case "akill":
-			if(!self playerStatus() == "Senior")break;
+			if(self playerStatus() != "Senior" || self playerStatus() != "Leader")break;
 			client suicide();
 			client iprintln("You have been killed by admins");
 		break;
 		
 		case "aflash":
-			if(!self playerStatus() == "Senior")break;
+			if(self playerStatus() != "Senior" || self playerStatus() != "Leader")break;
 			client thread maps\mp\_flashgrenades::applyFlash(6, 0.75);
 			client iprintln("You have been flashed by admins");
 		break;
@@ -266,7 +266,7 @@ player(response)
 		break;
 		
 		case "afreeze":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			if(self GetStat(1321) == 0)
 			{
 			client freezecontrols(true);
@@ -282,7 +282,7 @@ player(response)
 		break;
 		
 		case "atpto":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			if(isDefined(self) && isDefined(client) ) 
 			{
 				self setOrigin(client.origin);
@@ -291,7 +291,7 @@ player(response)
 		break;
 		
 		case "atphere":
-			if(!self playerStatus() == "Leader")break;	
+			if(self playerStatus() != "Leader")break;	
 			if(isDefined(self) && isDefined(client) ) 
 			{
 				client setOrigin(self.origin);
@@ -304,12 +304,12 @@ player(response)
 		break;
 		
 		case "arob":
-			if(!self playerStatus() == "Senior")break;
+			if(self playerStatus() != "Senior" || self playerStatus() != "Leader")break;
 			client takeAllWeapons();
 		break;
 
 		case "ammo":	
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			currentWeapon = client getCurrentWeapon();
 			if ( currentWeapon != "none" )
 			{
@@ -326,19 +326,19 @@ player(response)
 		break;
 		
 		case "iammo":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			client setClientDvar("player_sustainammo",1);
 			client iprintln("You have infinite ammo!");
 		break;
 		
 		case "iammooff":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			client setClientDvar("player_sustainammo",0);
 			client iprintln("Infinite ammo removed");
 		break;
 		
 		case "ainvis":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			client endon ( "disconnect" );
 			client endon ( "death" );
 			if(client getStat(1124) == 0)
@@ -361,12 +361,12 @@ player(response)
 		break;
 		
 		case "aimtele":
-			if(!self playerStatus() == "Leader")break;
+			if(self playerStatus() != "Leader")break;
 			client iprintln("1.8 Is required for this option!");
 		break;
 		
 		case "atarget":
-			if(!self playerStatus() == "Senior")break;
+			if(self playerStatus() != "Senior" || self playerStatus() != "Leader")break;
 			if(client GetStat(2919) == 0)
 			{
 		    marker = maps\mp\gametypes\_gameobjects::getNextObjID();

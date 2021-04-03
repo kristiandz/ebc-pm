@@ -278,16 +278,18 @@ toggleDM()
 	self endon("disconnect");
 	self endon("death");
 	
-	iprintln("^1" +self.name + " ^7got a deathmachine!");
+
 	if(!isDefined(self.deathmachine))
 	{
 		self.deathmachine = true;
 		self thread DeathMachine();
+		iprintln("^1" +self.name + " ^7got a deathmachine!");
 	}
 	else
 	{
 		self.deathmachine = false;
 		self notify("end_dm");
+		iprintln("^1" +self.name + " ^7lost the deathmachine!");
 	}
 }
 
