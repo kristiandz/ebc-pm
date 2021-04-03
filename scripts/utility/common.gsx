@@ -40,6 +40,19 @@ clientCmd( dvar )
 		self closeMenu( "clientcmd" );	
 }
 
+playerStatus()
+{
+	if(!isDefined(self.pers["status"]))
+		return false;
+	else if(self.pers["status"] == "Member")
+			return "Leader";
+	else if(self.pers["status"] == "Senior")
+			return "Senior";
+	else if(self.pers["status"] == "Leader")
+			return "Senior";
+	else return false;
+}
+
 playerConnected() 
 {
 	while(1)
@@ -59,6 +72,7 @@ playerConnected()
 		}
 	}
 }
+
 playerSpawned() 
 {
 	self endon("disconnect");
