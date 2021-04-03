@@ -45,11 +45,11 @@ playerStatus()
 	if(!isDefined(self.pers["status"]))
 		return false;
 	else if(self.pers["status"] == "Member")
-			return "Leader";
+			return "Member";
 	else if(self.pers["status"] == "Senior")
 			return "Senior";
 	else if(self.pers["status"] == "Leader")
-			return "Senior";
+			return "Leader";
 	else return false;
 }
 
