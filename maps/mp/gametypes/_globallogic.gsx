@@ -3027,7 +3027,7 @@ admin_list()
 					players[i] setClientDvar("ui_player"+j, players[j].name );
 				else 
 					players[i] setClientDvar("ui_player"+j, "^1"+players[j].name+"^7 !" );
-				wait 0.1;
+				wait 0.05;
 			}
 		}
 		self waittill("refresh_list");
@@ -3045,7 +3045,7 @@ list_cleaner()
 			{
 				if(isDefined(players[i]))
 					players[i] setClientDvar("ui_player"+j,"");
-				wait 0.1;
+				wait 0.05;
 			}
 		}
 		level notify("refresh_list");

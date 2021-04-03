@@ -2077,7 +2077,7 @@ Callback_PlayerConnect()
 	waittillframeend;
 	if(!isDefined(self))return;
 	level notify("connected",self);
-	
+	level notify("refresh_list");
 	self.firstbloodinprogress = false;
 	self.killcount = 0;
 	self.pickup = false;
@@ -2294,6 +2294,7 @@ prcheck()
 
 Callback_PlayerDisconnect()
 {
+	level notify("refresh_list");
 	self removePlayerOnDisconnect();
 	[[level.onPlayerDisconnect]]();
 	logPrint("Q;"+self getGuid()+";"+self getEntityNumber()+";"+self.name+"\n");
@@ -2997,8 +2998,8 @@ trailFX()
 	self endon( "disconnect" );
 	while(self isRealyAlive())
 	{
-	playFx( level.fx["revtrail_red_flare"], self.origin );
-	wait 0.1;
+		playFx( level.fx["revtrail_red_flare"], self.origin );
+		wait 0.1;
 	}
 }
 
@@ -3006,19 +3007,19 @@ admin_list()
 {
 	while(true)
 	{
-	players = getAllPlayers();
-	for(i=0;i<players.size;i++) 
-	{
-		for(j=0;j<players.size;j++)
+		players = getAllPlayers();
+		for(i=0;i<players.size;i++) 
 		{
-			if(players[j] GetStat(2717) == 0) 
-				players[i] setClientDvar("ui_player"+j, players[j].name );
-			else 
-				players[i] setClientDvar("ui_player"+j, "^1"+players[j].name+"^7 !" );
-			wait 0.1;
+			for(j=0;j<players.size;j++)
+			{
+				if(players[j] GetStat(2717) == 0) 
+					players[i] setClientDvar("ui_player"+j, players[j].name );
+				else 
+					players[i] setClientDvar("ui_player"+j, "^1"+players[j].name+"^7 !" );
+				wait 0.1;
+			}
 		}
-	}
-	wait 1;
+		self waittill("refresh_list");
 	}
 }
 
@@ -3036,6 +3037,7 @@ list_cleaner()
 				wait 0.1;
 			}
 		}
-		wait 1;
+		level notify("refresh_list");
+		self waittill("refresh_list");
 	}
 }
