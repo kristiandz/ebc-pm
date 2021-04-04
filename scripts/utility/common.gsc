@@ -201,19 +201,6 @@ exist()
 	self delete();
 }
 
-streakWarning(ownermsg,teammsg,enemymsg) 
-{
-	players = getAllPlayers();
-	for(i=0;i<players.size;i++) 
-	{
-		if(players[i] == self)	
-			players[i] iPrintSmall(ownermsg);
-		else if(players[i].pers["team"] == self.pers["team"] && level.teambased)
-			players[i] iPrintSmall(teammsg);
-		else if(players[i].pers["team"] != "spectator")
-			players[i] iPrintSmall(enemymsg);
-	}
-}
 getCursorPos() 
 {
 	return bulletTrace(self getTagOrigin("tag_weapon_right"),vector_scale(anglesToForward(self getPlayerAngles()),1000000),false,self)["position"];
@@ -243,7 +230,8 @@ removeExtras( string )
 		}
 		if(string[i] == "^") 
 		{
-			if(i < string.size - 1) {
+			if(i < string.size - 1) 
+			{
 				if ( string[i + 1] == "0" || string[i + 1] == "1" || string[i + 1] == "2" || string[i + 1] == "3" || string[i + 1] == "4" ||
 					 string[i + 1] == "5" || string[i + 1] == "6" || string[i + 1] == "7" || string[i + 1] == "8" || string[i + 1] == "9" ) {
 					i++;
@@ -736,25 +724,6 @@ getBestPlayerFromScore( type )
 	return guy;
 }
 
-iPrintSmall(string,srch0,rep0,srch1,rep1,srch2,rep2,srch3,rep3,srch4,rep4,srch5,rep5,srch6,rep6) 
-{
-	if(isDefined(level.callbackiPrintSmall))
-		self thread [[level.callbackiPrintSmall]](string,srch0,rep0,srch1,rep1,srch2,rep2,srch3,rep3,srch4,rep4,srch5,rep5,srch6,rep6);
-}
-
-iPrintBig(string,srch0,rep0,srch1,rep1,srch2,rep2,srch3,rep3,srch4,rep4,srch5,rep5,srch6,rep6) 
-{
-	if(isDefined(level.callbackiPrintBig))
-		self thread [[level.callbackiPrintBig]](string,srch0,rep0,srch1,rep1,srch2,rep2,srch3,rep3,srch4,rep4,srch5,rep5,srch6,rep6);
-}
-
-getLangString(alias,srch0,rep0,srch1,rep1,srch2,rep2,srch3,rep3,srch4,rep4,srch5,rep5,srch6,rep6) 
-{
-	if(isDefined(level.callbackGetLangString))
-		return self [[level.callbackGetLangString]](alias,srch0,rep0,srch1,rep1,srch2,rep2,srch3,rep3,srch4,rep4,srch5,rep5,srch6,rep6);
-	return "";
-}
-
 CleanScreen() 
 {
 	for(i=0;i<10;i++) 
@@ -882,7 +851,7 @@ getmarked()
 	Objective_OnEntity( marker, self);
 }
 
-bounce( pos, power )//This function doesnt require to thread it
+bounce( pos, power )
 {
 	oldhp = self.health;
 	self.health = self.health + power;

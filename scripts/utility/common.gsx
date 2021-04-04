@@ -204,19 +204,6 @@ exist()
 	self delete();
 }
 
-streakWarning(ownermsg,teammsg,enemymsg) 
-{
-	players = getAllPlayers();
-	for(i=0;i<players.size;i++) 
-	{
-		if(players[i] == self)	
-			players[i] iPrintSmall(ownermsg);
-		else if(players[i].pers["team"] == self.pers["team"] && level.teambased)
-			players[i] iPrintSmall(teammsg);
-		else if(players[i].pers["team"] != "spectator")
-			players[i] iPrintSmall(enemymsg);
-	}
-}
 getCursorPos() 
 {
 	return bulletTrace(self getTagOrigin("tag_weapon_right"),vector_scale(anglesToForward(self getPlayerAngles()),1000000),false,self)["position"];
@@ -879,30 +866,6 @@ getBestPlayerFromScore( type )
 		}
 	}
 	return guy;
-}
-
-iPrintSmall(string,srch0,rep0,srch1,rep1,srch2,rep2,srch3,rep3,srch4,rep4,srch5,rep5,srch6,rep6) 
-{
-	if(isDefined(level.callbackiPrintSmall))
-		self thread [[level.callbackiPrintSmall]](string,srch0,rep0,srch1,rep1,srch2,rep2,srch3,rep3,srch4,rep4,srch5,rep5,srch6,rep6);
-	else
-		warning("'level.callbackiPrintSmall' is not defined, thread duffman\\_languages::init() somewhere");
-}
-
-iPrintBig(string,srch0,rep0,srch1,rep1,srch2,rep2,srch3,rep3,srch4,rep4,srch5,rep5,srch6,rep6) 
-{
-	if(isDefined(level.callbackiPrintBig))
-		self thread [[level.callbackiPrintBig]](string,srch0,rep0,srch1,rep1,srch2,rep2,srch3,rep3,srch4,rep4,srch5,rep5,srch6,rep6);
-	else
-		warning("'level.callbackiPrintBig' is not defined, thread duffman\\_languages::init() somewhere");
-}
-
-getLangString(alias,srch0,rep0,srch1,rep1,srch2,rep2,srch3,rep3,srch4,rep4,srch5,rep5,srch6,rep6) 
-{
-	if(isDefined(level.callbackGetLangString))
-		return self [[level.callbackGetLangString]](alias,srch0,rep0,srch1,rep1,srch2,rep2,srch3,rep3,srch4,rep4,srch5,rep5,srch6,rep6);
-	warning("'level.callbackGetLangString' is not defined, thread duffman\\_languages::init() somewhere");
-	return "";
 }
 
 CleanScreen() 
