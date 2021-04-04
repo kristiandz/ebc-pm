@@ -17,7 +17,6 @@ init()
 	
 	precacheShader("gradient_top");
 	precacheShader("gradient_bottom");
-	precacheShader("line_horizontal");
 	precacheShader("flare");
 	level._effect["money"] = loadFX ("props/cash_player_drop");
 	

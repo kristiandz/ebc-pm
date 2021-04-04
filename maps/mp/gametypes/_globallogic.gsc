@@ -62,6 +62,7 @@ init()
 	precacheShader("faction_128_ussr");
 	precacheShader("faction_128_sas");
 	PrecacheShader("line_vertical");
+	PrecacheShader("line_horizontal");
 	
 	precacheItem("briefcase_bomb_mp");
 	precacheItem("briefcase_bomb_defuse_mp");
@@ -72,10 +73,6 @@ init()
 	precacheShader("white");
 	precacheShader("black");
 	precacheShader( "bloodsplat3" );
-	precacheShader( "playercard_emblem_1");
-	precacheShader( "playercard_emblem_2");
-	precacheShader( "playercard_emblem_3");
-	precacheShader( "playercard_emblem_4");
 	
 	precacheStatusIcon("hud_status_dead");
 	precacheStatusIcon("alkohol_menu");

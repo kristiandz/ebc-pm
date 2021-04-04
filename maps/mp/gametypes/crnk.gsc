@@ -3,7 +3,6 @@
 
 main()
 {
-	precacheShader( "line_horizontal" );
 	level.fx_flash = loadFX( "impacts/cranked" );
 	if (getDvar("mapname") == "mp_background") return;
 	maps\mp\gametypes\_globallogic::init();

@@ -1,7 +1,6 @@
 main()
 {
 	precacheItem( "radar_mp" );
-	precacheShader( "line_horizontal" );
 	thread onPlayerConnect();
 	thread createServerHUD();
 }
