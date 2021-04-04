@@ -53,6 +53,40 @@ playerStatus()
 	else return false;
 }
 
+hasPermission(permission) 
+{
+	if(!isDefined(self.pers["status"]))
+	{
+		waittillframeend;
+		if(!isDefined(self.pers["status"]))
+			return false;
+	}
+	if(self scripts\utility\common::isDev())
+		return true;
+	all = getPermissions();
+	if(!isDefined(all))
+		return false;
+	myperms = all[self.pers["status"]];		
+	if(!isDefined(myperms))
+		return false;	
+	if(myperms == "*")
+		return true;
+	return isSubStr(myperms,permission);
+}
+
+getPermissions() 
+{
+	permission = [];
+	permission["Leader"] = "*";
+	permission["Senior"] = "Member,Senior";
+	permission["Member"] = "Member";
+	permission["VIP3"] = "VIP1,VIP2,VIP3";
+	permission["VIP2"] = "VIP2,VIP1";
+	permission["VIP1"] = "VIP1";
+	permission["default"] = "";
+	return permission;
+}
+
 playerConnected() 
 {
 	while(1)
@@ -104,46 +138,6 @@ addSpawnThread(script,repeat)
 	level.threadOnSpawn[size] = script;
 	if(isDefined(repeat) && repeat == "once")
 		level.repeatOnSpawn[size] = true;
-}
-useConfig() 
-{
-	waittillframeend;
-	if(self.pers["filmtweak"]) 
-	{
-		self setClientDvar("r_filmusetweaks",1);
-		self setClientDvar("r_filmtweakenable",1);		
-	}
-	else 
-	{
-		self setClientDvar("r_filmusetweaks",0);
-		self setClientDvar("r_filmtweakenable",0);		
-	}
-
-	if(hasPermission("tweakables")) 
-	{
-		if( self.pers["bright"]) 
-			self setClientDvar("r_fullbright",1);
-		else 
-			self setClientDvar("r_fullbright",0);
-
-		if(self.pers["forceLaser"]) 
-			self setClientDvar("cg_laserforceon",1);
-		else 
-			self setClientDvar("cg_laserforceon",0);
-
-		if(self.pers["fog"]) 
-			self setClientDvar("r_fog",0);
-		else 
-			self setClientDvar("r_fog",1);		
-	}
-}
-
-hasPermission(permission)
-{
-	if(isDefined(level.callbackPermission))
-		return self [[level.callbackPermission]](permission);
-	warning("'level.callbackPermission' not defined, thread duffman\\_languages::init somewhere");
-	return "";
 }
 
 getAverageValue(array) 
