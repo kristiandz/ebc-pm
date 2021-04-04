@@ -37,7 +37,6 @@ init()
 	}
 }
 
-
 setStuff()
 {
 	array = 0;

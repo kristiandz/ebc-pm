@@ -852,13 +852,11 @@ playerLinkToAngles(entity)
 
 linkPlayerAngle(entity)
 {
-	self endon("disconnect");
-			
+	self endon("disconnect");		
 	while(isDefined(entity))
 	{
 		self freezeControls( true );
-		self setPlayerAngles( entity.angles );
-			
+		self setPlayerAngles( entity.angles );	
 		wait 0.05;
 	}
 }
