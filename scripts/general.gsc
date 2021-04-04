@@ -7,7 +7,6 @@ init()
 	level thread scripts\cmd::main();
 	
 	thread duffman\onlymode::init();
-	thread duffman\playerstatus::init();
 	thread duffman\kdratio::init();
 	thread duffman\killcard::init();
 	thread duffman\engine_fixes::init();
