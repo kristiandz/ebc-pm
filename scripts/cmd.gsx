@@ -468,13 +468,14 @@ adminCommands( cmd, pickingType )
 		
 	case "storedpr":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player ) )
+		selected = getPlayer( int(cmd[2]), pickingType );
+		if( isDefined( player ) && isDefined (selected) )
 		{
 			scripts\sql::db_connect("ebc_b3_pm");
-			q_str = "SELECT prestige, backup_pr FROM player_core WHERE guid LIKE " + player GetGuid();
+			q_str = "SELECT prestige, backup_pr FROM player_core WHERE guid LIKE " + selected GetGuid();
 			SQL_Query(q_str);
 			row = SQL_FetchRow();
-			if(isDefined(row)) iprintln( "Stored prestige:^1 " + row[0] + "^7 Backup prestige: ^1" + row[1] );
+			if(isDefined(row)) player iprintln( "Stored prestige:^1 " + row[0] + "^7 Backup prestige: ^1" + row[1] );
 			SQL_Close();
 		}
 		break;
