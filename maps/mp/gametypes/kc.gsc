@@ -211,15 +211,6 @@ onUseTag( friendlyTag, enemyTag, trigger )
 		taker thread onPickupDogTag( event, splash );
 		taker.pers["gottags"]++;
 	}
-	else if ( taker == self.team ) 
-	{
-		tagowner = friendlyTag.owner;
-		event = "tags_retrieved";
-		splash = "Picked up tags";
-		taker thread onPickupDogTag( event, splash );	
-		taker.pers["gottags"]++;
-	}
-		
 	else if ( taker.pers["team"] == self.team ) 
 	{
 		tagowner = friendlyTag.owner;
