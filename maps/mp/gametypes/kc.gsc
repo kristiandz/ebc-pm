@@ -207,15 +207,15 @@ onUseTag( friendlyTag, enemyTag, trigger )
 	{		
 		tagowner = enemyTag.owner;
 		event = "kill_confirmed";
-		splash = "Enemy eliminated";
+		splash = "Picked up tags";
 		taker thread onPickupDogTag( event, splash );
 		taker.pers["gottags"]++;
 	}
-	else if ( taker == self.victim ) 
+	else if ( taker == self.team ) 
 	{
 		tagowner = friendlyTag.owner;
 		event = "tags_retrieved";
-		splash = "Rescued";
+		splash = "Picked up tags";
 		taker thread onPickupDogTag( event, splash );	
 		taker.pers["gottags"]++;
 	}
@@ -224,7 +224,7 @@ onUseTag( friendlyTag, enemyTag, trigger )
 	{
 		tagowner = friendlyTag.owner;
 		event = "tags_retrieved";
-		splash = "Rescued";
+		splash = "Picked up tags";
 		taker thread onPickupDogTag( event, splash );	
 		taker.pers["gottags"]++;
 	}
