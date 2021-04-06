@@ -686,7 +686,7 @@ personalUseBar(object)
 {
 	self endon("disconnect");
 	useBar=createPrimaryProgressBar();
-	useBar setShader("progress_bar_bg",120,8);
+	useBar setShader("progress_bar_bg",120,3);
 	useBar.alpha=1;
 	useBarText=createPrimaryProgressBarText();
 	useBarText setText(object.useText);
