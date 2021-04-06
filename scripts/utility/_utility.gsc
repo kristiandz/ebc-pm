@@ -23,7 +23,6 @@ secondsToTime(time)
 			
 		returnstring = minutes + ":" + seconds;
 	}
-	
 	else returnstring = "0:00";
 	return returnstring;
 }
@@ -133,7 +132,6 @@ getPlayerPrimaryWeapon()
 			return weaponsList[idx];
 		}
 	}
-
 	return "none";
 }
 
@@ -146,7 +144,6 @@ getPlayerSecondaryWeapon()
 			return weaponsList[idx];
 		}
 	}
-
 	return "none";
 }
 

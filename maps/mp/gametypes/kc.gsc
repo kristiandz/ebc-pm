@@ -124,19 +124,19 @@ onSpawnPlayer()
 	self thread intoSpawn(spawnpoint.origin, spawnpoint.angles);
 }
 
-
 onDeadEvent( team )
 {
 	// Make sure players on both teams were not eliminated
-	if ( team != "all" ) {
+	if ( team != "all" ) 
+	{
 		[[level._setTeamScore]]( getOtherTeam(team), [[level._getTeamScore]]( getOtherTeam(team) ) + 1 );
 		thread maps\mp\gametypes\_globallogic::endGame( getOtherTeam(team), game["strings"][team + "_eliminated"] );
-	} else {
+	} else 
+	{
 		// We can't determine a winner if everyone died like in S&D so we declare a tie
 		thread maps\mp\gametypes\_globallogic::endGame( "tie", game["strings"]["round_draw"] );
 	}
 }
-
 
 onRoundSwitch()
 {
@@ -144,48 +144,103 @@ onRoundSwitch()
 	level.halftimeType = "halftime";
 	game["switchedsides"] = !game["switchedsides"];
 }
+
 onPlayerKilled( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, psOffsetTime, deathAnimDuration )
 {
 	if(isDefined(self) && isDefined(attacker))
 		self thread spawnDogTags( attacker );
-}        
-spawnDogTags(attacker)
+}    
+    
+spawnDogTags( attacker )
 {
-	if(isDefined(attacker) && self.pers["team"] != "spectator" && attacker != self && attacker.pers["team"] != self.pers["team"] ) 
+	if(isDefined(attacker) && self.pers["team"] != "spectator" && attacker != self) 
 	{
-		basePosition = playerPhysicsTrace( self.origin, self.origin + ( 0, 0, -99999 ) );
-
-		visuals[0] = spawn( "script_model", basePosition + ( 0, 0, 20 ));
-		visuals[0] setModel( "skull_dogtag" );
-		visuals[1] = spawn( "script_model", basePosition + ( 0, 0, 20 ));
-		visuals[1] setModel( "cross_dogtag" );
-					
-		trigger = spawn( "trigger_radius", basePosition, 0, 20, 50 );
-				
-		level.dogtags[self.guid] = maps\mp\gametypes\_gameobjects::createDogTag( "any", trigger, visuals, (0,0,16) );
-		level.dogtags[self.guid] maps\mp\gametypes\_gameobjects::setUseTime( 0 );
-		level.dogtags[self.guid] maps\mp\gametypes\_gameobjects::setUseText("");
-		level.dogtags[self.guid].onUse = ::onUseDogTag;
-		level.dogtags[self.guid].victim = self;
-		level.dogtags[self.guid].team = self.team;
-				
-		self thread clearOnEvent();
+		if(attacker.pers["team"] != self.pers["team"])
+		{
+			basePosition = playerPhysicsTrace( self.origin + ( 0, 0, 10 ), self.origin + ( 0, 0, -99999 ) );
 		
-		level.dogtags[self.guid] maps\mp\gametypes\_gameobjects::allowUse( "any" );	
-				
-		level.dogtags[self.guid].visuals[0] thread showToTeam( getOtherTeam( self.pers["team"] ) );
-		level.dogtags[self.guid].visuals[1] thread showToTeam( self.pers["team"] );
-			
-		level.dogtags[self.guid].attacker = attacker;
-				
-		level.dogtags[self.guid].visuals[0] thread bounce();
-		level.dogtags[self.guid].visuals[1] thread bounce();
+			trigger = spawn( "trigger_radius", basePosition, 0, 20, 50 );
+			trigger endon( "picked_up" );
+			trigger endon( "timed_out" );
+			trigger.owner = attacker;
+			trigger.team = attacker.pers["team"];
+		
+			friendlyTag = spawn( "script_model", basePosition + ( 0, 0, 20 ) );
+			friendlyTag endon( "picked_up" );
+			friendlyTag endon( "timed_out" );
+			friendlyTag setModel( "cross_dogtag" );
+			friendlyTag.team = self.pers["team"];
+			friendlyTag.owner = self;
+		
+			enemyTag = spawn( "script_model", basePosition + ( 0, 0, 20 ) );
+			enemyTag endon( "picked_up" );
+			enemyTag endon( "timed_out" );
+			enemyTag setModel( "skull_dogtag" );
+			enemyTag.team = attacker.pers["team"];
+			enemyTag.owner = self;
+		
+			self thread onJoinedDisconnect( enemyTag, friendlyTag, trigger );
+			friendlyTag thread bounce();
+			enemyTag thread bounce();
+			friendlyTag thread showTagToTeam();
+			enemyTag thread showTagToTeam();
+			trigger thread onUseTag( friendlyTag, enemyTag, trigger );
+		}
 	}
-}  
-waittill_any_or_time(x,y,z,time)
+}
+
+onUseTag( friendlyTag, enemyTag, trigger )
+{ 
+	//self endon("disconnect"); Test the proper entity
+	trigger endon( "timed_out" );
+	friendlyTag endon( "timed_out" );
+	enemyTag endon( "timed_out" );
+	trigger waittill( "trigger", taker );
+	for(;;)
+	{
+		trigger waittill( "trigger", taker );
+		if( !isdefined(taker) || !isAlive(taker) || !isDefined(taker.pers["team"]) )
+			continue;
+		else break;
+	}
+	if ( taker.pers["team"] != self.team )
+	{		
+		tagowner = enemyTag.owner;
+		event = "kill_confirmed";
+		splash = "Enemy eliminated";
+		taker thread onPickupDogTag( event, splash );
+		taker.pers["gottags"]++;
+	}
+	else if ( taker == self.victim ) 
+	{
+		tagowner = friendlyTag.owner;
+		event = "tags_retrieved";
+		splash = "Rescued";
+		taker thread onPickupDogTag( event, splash );	
+		taker.pers["gottags"]++;
+	}
+		
+	else if ( taker.pers["team"] == self.team ) 
+	{
+		tagowner = friendlyTag.owner;
+		event = "tags_retrieved";
+		splash = "Rescued";
+		taker thread onPickupDogTag( event, splash );	
+		taker.pers["gottags"]++;
+	}
+	trigger playSound( "dogtag_kc_pickup" );
+	trigger notify( "picked_up" );
+	friendlyTag notify( "picked_up" );
+	enemyTag notify( "picked_up" );
+	trigger delete();
+	friendlyTag delete();
+	enemyTag delete ();
+}
+
+waittill_any_or_time(x,y,z,time,r)
 {
 	level endon("game_ended");
-
+	
 	if(isDefined(x))
 		self endon(x);
 
@@ -194,108 +249,75 @@ waittill_any_or_time(x,y,z,time)
 
 	if(isDefined(z))
 		self endon(z);
+	
+	if(isDefined(r))
+		self endon(r);
 
 	if(isDefined(time))
 		wait time;
 }
-clearOnEvent()
-{	
-	guid = self.guid;
-	self waittill_any_or_time( "disconnect", "joined_team", "joined_spectators", 20 );
-	
-	if ( isDefined( level.dogtags[guid] ) )
-	{
-		level.dogtags[guid] maps\mp\gametypes\_gameobjects::allowUse( "none" );			
-		wait( 0.05 );
-		
-		if ( isDefined( level.dogtags[guid] ) )
-		{
-			level.dogtags[guid].trigger delete();
-			for ( i=0; i<level.dogtags[guid].visuals.size; i++ )
-			{
-				level.dogtags[guid].visuals[i] notify("deleted");
-				level.dogtags[guid].visuals[i] delete();
-			}
-			level.dogtags[guid] = undefined;		
-		}	
-	}	
-}
 
-onUseDogTag( player )
-{  
-	for(i = 0; i < self.visuals.size; i++)
-	{
-		self notify("reset");
-		self.visuals[i] hide();
-		self.visuals[i] notify("reset");
-		self.visuals[i].origin = (0,0,1000);
-	}
-	
-	self.trigger.origin = (0,0,1000);
-	
-	self maps\mp\gametypes\_gameobjects::allowUse( "none" );	
-
-	if ( player.pers["team"] != self.team )
-	{
-		player thread givePlayerScore( "kill_confirmed", 15 );
-		player thread underScorePopup(&"PL_KILL_CONFIRMED_P");
-		[[level._setTeamScore]]( player.pers["team"], [[level._getTeamScore]]( player.pers["team"] ) + 10 );
-		player.pers["gottags"]++;
-	}
-   
-	else if ( player == self.victim ) 
-	{
-		player thread givePlayerScore( "gottags", 10 );
-		player thread underScorePopup(&"PL_GOTTAGS");
-		player.pers["gottags"]--;
-	}
-		
-	else if ( player.pers["team"] == self.team ) 
-	{
-		player thread givePlayerScore( "kill_denied", 15 );
-		player thread underScorePopup(&"PL_KILL_DENIED");
-		player.pers["gottags"]--;
-	}
-   
-	player playSound( "dogtag_kc_pickup" );
-}
-
-givePlayerScore( event, score )
+onJoinedDisconnect( enemyTag, friendlyTag, trigger )
 {
-	self maps\mp\gametypes\_rank::giveRankXP( event );
-		
-	self.pers["score"] += score;
-	self maps\mp\gametypes\_persistence::statAdd( "score", (self.pers["score"] - score) );
-	self.score = self.pers["score"];
+	self endon( "spawned_player" );
+	self endon( "game_ended" );
+
+	self waittill_any_or_time( "disconnect", "joined_team", "joined_spectators", 22, "pickup");
+
+	trigger notify( "picked_up" );
+	friendlyTag notify( "picked_up" );
+	enemyTag notify( "picked_up" );
+
+	trigger notify( "timed_out" );
+	friendlyTag notify( "timed_out" );
+	enemyTag notify( "timed_out" );
+
+	if( isDefined( trigger ) )
+		trigger delete();
+
+	if( isDefined( friendlyTag ) ) 
+		friendlyTag delete();
+
+	if( isDefined( enemyTag ) )
+		enemyTag delete ();
+}
+
+onPickupDogTag( event, splash )
+{
+	if(isPlayer(self))
+	{
+		self thread underScorePopup(splash);
+		self thread maps\mp\gametypes\_rank::giveRankXP( event );
+		self.pers["score"] += 2;
+		self maps\mp\gametypes\_persistence::statAdd( "score", self.pers["score"] );
+		self.score = self.pers["score"];
+	}
 }
 
 bounce()
-{	
-	self endon("deleted");
+{
+	self endon( "picked_up" );
+	self endon( "timed_out" );
 	while( isDefined(self) )
 	{
 		self rotateYaw( 360, 3, 0.3, 0.3 );
-
 		self moveZ( 20, 1.5, 0.3, 0.3 );
 		wait 1.5;
 		self moveZ( -20, 1.5, 0.3, 0.3 );
 		wait 1.5;	
 	}
 }
-	
-showToTeam( showForTeam )
-{
-	self endon("disconnect");
-	self endon("reset");
-	
-	while( isDefined( self ) )
-	{	
-		self hide();
 
+showTagToTeam()
+{
+	while( isDefined( self ) ) // use while() in case player changes team
+	{
+		self hide();
 		for( i = 0 ; i < level.players.size ; i ++ )
 		{
-			if ( level.players[i].team == showForTeam )
-				self showToPlayer( level.players[i] );
+			player = level.players[i];
+			if ( player.pers["team"] == self.team )
+				self showToPlayer( player );
 		}
 		wait 0.05;
 	}
@@ -303,7 +325,6 @@ showToTeam( showForTeam )
 
 intoSpawn(originA, anglesA)
 {
-	roundspl = self getStat(3132);
 	if(isDefined(self.pers["gotani"]))
 		return;
 	self.pers["gotani"] = true;
@@ -328,23 +349,13 @@ intoSpawn(originA, anglesA)
 	self unlink();
 	ent delete();
 	self freezeControls( false );
-	if (roundspl==0)
-	{
-		self playLocalSound("welcome");
-		if(self scripts\utility\common::getCvarInt("fullbright"))
-			self iPrintln("You Still Have ^3Fullbright^7 Enabled");
-		if(self scripts\utility\common::getCvarInt("fov") == 1)
-			self iPrintln("You Still Have ^3Fov^7 Enabled At ^11.25^7");
-		if(self scripts\utility\common::getCvarInt("fov") == 2)
-			self iPrintln("You Still Have ^3Fov^7 Enabled At ^11.125^7");
-	}
 }
 
-ispawnang(ent){
-	//self setClientDvars ("ui_hud_hardcore", 1);
-	while(isDefined(ent)){
-	self SetPlayerAngles( ent.angles );
-	wait 0.05;
+ispawnang(ent)
+{
+	while(isDefined(ent) && isDefined(self))
+	{
+		self SetPlayerAngles( ent.angles );
+		wait 0.05;
 	}
-	//self setClientDvars ("ui_hud_hardcore", 0);
 }
