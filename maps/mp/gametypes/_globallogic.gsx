@@ -1943,7 +1943,7 @@ Callback_StartGameType()
 	
 	level.objIDStart=0;
 	level.numGametypeReservedObjectives=0;
-		
+	level.season = checkSeason();	
 	level.forcedEnd=false;
 	level.useStartSpawns=true;
 	
