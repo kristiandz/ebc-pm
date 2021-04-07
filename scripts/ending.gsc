@@ -221,6 +221,23 @@ setStuff()
 			array[ array.size ] = (2770.58, 1313.6, 293.157);
 			array[ array.size ] = (-6.11389, 20.1141, 0);
 			break;
+			
+		case "mp_slick":
+			array[ array.size ] = (1381.64, -336.401, 20);
+			array[ array.size ] = (0.0823975, 94.812, 0);
+			array[ array.size ] = (1340.54, 511.113, 24);
+			array[ array.size ] = (-4.22424, 91.2305, 0);
+			array[ array.size ] = (1291.16, 1284.42, 248);
+			array[ array.size ] = (-0.131836, 96.2128, 0);
+			array[ array.size ] = (1098.61, 2086.21, 395.78);
+			array[ array.size ] = (2.20825, 118.169, 0);
+			array[ array.size ] = (754.204, 2691.74, 493.781);
+			array[ array.size ] = (7.03125, 127.705, 0);
+			array[ array.size ] = (174.224, 3302.48, 493.781);
+			array[ array.size ] = (7.72888, 135.192, 0);
+			array[ array.size ] = (-419.987, 4028.74, 493.781);
+			array[ array.size ] = (6.92139, 119.081, 0);
+			break;
 		
 		default:
 			array[ array.size ] = ( -50, 50, 400 );
