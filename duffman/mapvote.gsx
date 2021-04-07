@@ -372,6 +372,9 @@ getMapNameString( mapName )
 		case "mp_dust2":
 			mapName = "Dust2";
 			break;
+		case "mp_slick":
+			mapName = "Slick";
+			break;
 	}
 	return mapName;
 }
