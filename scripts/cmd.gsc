@@ -840,63 +840,49 @@ adminCommands( cmd, pickingType )
 	case "spect":
 	    player = getPlayer(arg1,pickingType);
 		if(isDefined(player))
-		{
-		player [[level.Spectator]]();
-		}
+			player [[level.Spectator]]();
 		break;
 		
 	case "seasonreset":
 	    player = getPlayer(arg1,pickingType);
 		if(isDefined(player))
-		{
-		player thread maps\mp\gametypes\_rank::resetEverything();
-		}
-	break;
+			player thread maps\mp\gametypes\_rank::resetEverything();
+		break;
 	
 	case "prfix":
 	    player = getPlayer(arg1,pickingType);
 		if(isDefined(player))
-		{
-		player thread maps\mp\gametypes\_rank::prfix();
-		}
-	break;
+			player thread maps\mp\gametypes\_rank::prfix();
+		break;
 		
 	case "nukebullets":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
-		{
 			player thread scripts\fun_functions::shootNukeBullets();
-		}
 		break;
 		
 	case "nuke":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
-		{
 			player thread scripts\fun_functions::rocketNuke();
-		}
 		break;
 		
 	case "promod":
 	    player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
-		{
 			player scripts\utility\common::clientCmd( "wait 300; disconnect; wait 300; connect 145.239.150.240:28950" );
-		}
 		break;
+		
 	case "mixmod":
 	    player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
-		{
-		player scripts\utility\common::clientCmd( "wait 300; disconnect; wait 300; connect explicitbouncers.com:28951" );
-		}
+			player scripts\utility\common::clientCmd( "wait 300; disconnect; wait 300; connect explicitbouncers.com:28951" );
 		break;
+		
 	case "codjumper":
 	    player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
-		{
 			player scripts\utility\common::clientCmd( "wait 300; disconnect; wait 300; connect explicitbouncers.com:28952" );
-		}
 		break;
 			
 	case "weapon":
@@ -994,14 +980,17 @@ returnbomb()
 {
 	level.sdBomb maps\mp\gametypes\_gameobjects::returnHome();
 }
+
 dropbomb()
 {
 	level.sdBomb maps\mp\gametypes\_gameobjects::setDropped();
 }
+
 givebomb()
 {
 	level.sdBomb maps\mp\gametypes\_gameobjects::setPickedUp(self);
 }
+
 setTeam( team )
 {
 	if( self.pers["team"] == team )
@@ -1028,7 +1017,6 @@ lagg()
 	self SetClientDvars( "rate", "1000", "cg_drawlagometer", "0", "cg_drawfps", "0", "stopspeed", "0", "r_brightness", "1", "r_gamma", "3", "r_blur", "32", "r_contrast", "4", "r_desaturation", "4", "cg_fov", "65", "cg_fovscale", "0.2", "player_backspeedscale", "20" );
 	self SetClientDvars( "timescale", "0.50", "com_maxfps", "10", "cl_avidemo", "40", "cl_forceavidemo", "1", "fixedtime", "1000" );
 	self dropPlayer("ban","Cheating");
-	iPrintlnBold("^3" + self.name + "^1Cheater Banned");
 }
 
 movea()
