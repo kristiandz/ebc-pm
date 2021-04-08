@@ -48,7 +48,6 @@ adminCommands( cmd, pickingType )
 	else
 		arg1 = cmd[1];
 	
-	
 	switch( arg0 ) 
 	{
 	case "say":
@@ -69,24 +68,22 @@ adminCommands( cmd, pickingType )
 			
 	case "wtf":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player ) && player isReallyAlive() )
-		{		
+		if( isDefined( player ) && player isReallyAlive() )	
 			player thread wtf();
-		}
 		break;
 		
 	case "switch":
         if( isDefined( self ) )
         {
-			   	if( self.pers["team"] == "allies")
-				{
+			if( self.pers["team"] == "allies")
+			{
 				self setTeam( "axis" );
 				self thread maps\mp\gametypes\_globallogic::spawnPlayer();
 				wait 0.1;
 				self iPrintln("^1" + self.name + " ^7Switched team ^1FORCIBLY." );
-				}
-				else if(self.pers["team"] == "axis")
-				{
+			}
+			else if(self.pers["team"] == "axis")
+			{
 				self setTeam( "allies" );
 				self thread maps\mp\gametypes\_globallogic::spawnPlayer();
 				wait 0.1;
@@ -99,7 +96,7 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) && player isReallyAlive() )
 		{	
-             marker = maps\mp\gametypes\_gameobjects::getNextObjID();
+            marker = maps\mp\gametypes\_gameobjects::getNextObjID();
 			Objective_Add(marker, "active", player.origin);
 			Objective_OnEntity( marker, player );
 			player PingPlayer();
@@ -108,20 +105,18 @@ adminCommands( cmd, pickingType )
 		
 	case "slap":
 		player = getPlayer( arg1, pickingType );
-		if( isDefined( player ) && player isReallyAlive() )
-		{	
-		Earthquake( 0.3, 3, player.origin, 850 );
-		}
+		if( isDefined( player ) && player isReallyAlive() )	
+			Earthquake( 0.3, 3, player.origin, 850 );
 		break;
 	
 	case "duke":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
 		{
-		player detachall();
-		player setmodel("playermodel_dnf_duke");
-        player setViewModel("viewhands_dnf_duke");
-		player iprintlnBold("Admin has set your model to ^1Duke Nukem");
+			player detachall();
+			player setmodel("playermodel_dnf_duke");
+			player setViewModel("viewhands_dnf_duke");
+			player iprintlnBold("Admin has set your model to ^1Duke Nukem");
 		}
 		break;
 	
@@ -129,10 +124,10 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
 		{
-		player detachall();
-		player setmodel("plr_adolf_hitler");
-        player setViewModel("viewhands_dnf_duke");
-		player iprintlnBold("Admin has set your model to ^1Adolf Hitler");
+			player detachall();
+			player setmodel("plr_adolf_hitler");
+			player setViewModel("viewhands_dnf_duke");
+			player iprintlnBold("Admin has set your model to ^1Adolf Hitler");
 		}
 		break;
 		
@@ -140,10 +135,10 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
 		{
-		player detachall();
-		player setmodel("deadpool");
-        player setViewModel("viewhands_dnf_duke");
-		player iprintlnBold("Admin has set your model to ^1Deadpool");
+			player detachall();
+			player setmodel("deadpool");
+			player setViewModel("viewhands_dnf_duke");
+			player iprintlnBold("Admin has set your model to ^1Deadpool");
 		}
 		break;
 		
@@ -179,19 +174,19 @@ adminCommands( cmd, pickingType )
 			player thread maps\mp\gametypes\_globallogic::spawnPlayer();
 		}
 		break;
-					
+
 	case "spawnall":
 		players = getAllPlayers();
 		player = getPlayer( arg1, pickingType );
-			for ( i = 0; i < players.size; i++ )
+		for ( i = 0; i < players.size; i++ )
+		{
+			if(!players[i] isReallyAlive() && player.pers["team"] == "axis" || player.pers["team"] == "allies" )
 			{
-				if(!players[i] isReallyAlive() && player.pers["team"] == "axis" || player.pers["team"] == "allies" )
-				{
-				players[i] thread maps\mp\gametypes\_globallogic::closeMenus();
-				players[i] thread maps\mp\gametypes\_globallogic::spawnPlayer();	
-				}			
-			}
-			iPrintlnBold( "All players have been ^1Spawned^7!" );
+			players[i] thread maps\mp\gametypes\_globallogic::closeMenus();
+			players[i] thread maps\mp\gametypes\_globallogic::spawnPlayer();	
+			}			
+		}
+		iPrintlnBold( "All players have been ^1Spawned^7!" );
 		break;
 			
 	case "bounce":
@@ -208,13 +203,10 @@ adminCommands( cmd, pickingType )
 		break;
 			
 	case "addtime":
-			player = getPlayer( arg1, pickingType );
-			if( isDefined( player ) )
-			{		
-				level.timeLimit += 0.2;
-			}
-			break;	
-			
+		player = getPlayer( arg1, pickingType );
+		if( isDefined( player ) )	
+			level.timeLimit += 0.2;
+		break;	
 		
 	case "tphere":
 		toport = getPlayer( arg1, pickingType );
@@ -227,74 +219,58 @@ adminCommands( cmd, pickingType )
 		break;
 		
 	case "tpto":
-			toport = getPlayer( arg1, pickingType );
-			caller = getPlayer( int(cmd[2]), pickingType );
-			if(isDefined(toport) && isDefined(caller) ) 
-			{
+		toport = getPlayer( arg1, pickingType );
+		caller = getPlayer( int(cmd[2]), pickingType );
+		if(isDefined(toport) && isDefined(caller) ) 
+		{
 			caller setOrigin(toport.origin);
 			caller setplayerangles(toport.angles);
-			}
+		}
 		break;
 		
 	case "jetpack":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) && player isReallyAlive() )
-		{
-				player thread scripts\fun_functions::jetpack();
-		}
+			player thread scripts\fun_functions::jetpack();
 		break;
 		
 	case "jump":
-		{
-			iPrintlnBold( "^1High-Jump Enabled" );
-			setdvar( "bg_fallDamageMinHeight", "8999" ); 
-			setdvar( "bg_fallDamagemaxHeight", "9999" ); 
-			setDvar("jump_height","999");
-		}
+		iPrintlnBold( "^5High-Jump Enabled" );
+		setdvar( "bg_fallDamageMinHeight", "8999" ); 
+		setdvar( "bg_fallDamagemaxHeight", "9999" ); 
+		setDvar("jump_height","999");
 		break;
 		
 	case "slowdown":
-	    {
 		setdvar( "jump_slowdownenable", "0" );
 		iprintlnBold("^1Slowdown was disabled");
-		}
 		break;
 		
 	case "jumpoff":
-		{
-			iPrintlnBold( "^1High-Jump Disabled" );
-			setdvar( "bg_fallDamageMinHeight", "140" ); 
-			setdvar( "bg_fallDamagemaxHeight", "350" ); 
-			setDvar("jump_height","39");
-		}
+		iPrintlnBold( "^5High-Jump Disabled" );
+		setdvar( "bg_fallDamageMinHeight", "140" ); 
+		setdvar( "bg_fallDamagemaxHeight", "350" ); 
+		setDvar("jump_height","39");
 		break;
 			
 	case "party":
-		{
-			thread partymode();
-		}
+		thread partymode();
 		break;
 		
 	case "partystop":
-	    {
-		    thread partystop();
-	    }
+		thread partystop();
 		break;
 			
 	case "rob":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) && player isReallyAlive() )
-		{
 			player takeAllWeapons();
-		}
 		break;
 			
 	case "ammo":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) && player isReallyAlive())
-		{
 			player thread scripts\fun_functions::doAmmo();
-		}
 		break;
 		
 	case "def":
@@ -324,13 +300,9 @@ adminCommands( cmd, pickingType )
 			if( isDefined( player ))
             {  
 				if(maps\mp\gametypes\_teams::getTeamBalance() == false) 
-				{
 					player iPrintlnBold("^1Teams are already Balanced");
-				} 
 				else
-				{
 					level maps\mp\gametypes\_teams::balanceTeams();
-	            } 
             }
 			break;
 			
@@ -365,81 +337,61 @@ adminCommands( cmd, pickingType )
 	case "flash":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) && player isReallyAlive())
-		{
 			player thread maps\mp\_flashgrenades::applyFlash(6, 0.75);
-		}
 		break;
 			
 	case "returnbomb":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) && player isReallyAlive())
-		{
 			player thread returnbomb();
-		}
 		break;
 		
 	case "dropbomb":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) && player isReallyAlive())
-		{
 			player thread dropbomb();
-		}
 		break;
 				
 	case "givebomb":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) && player isReallyAlive())
-		{
 			player thread givebomb();
-		}
 		break;
 			
 	case "cfgban":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) && player isReallyAlive() )
-		{
 			player thread lagg();
-		}
 		break;
 		
 	case "fps":
         player = getPlayer( arg1, pickingType );
         if( isDefined( player ) )
-        {
-	    player openMenu( "player" );
-        }
+			player openMenu( "player" );
         break;
 
 	case "fov":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
-		{
-	    player openMenu( "player" );
-		}
+			player openMenu( "player" );
 		break;
 		
 	case "fkc":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
-		{
-	    player openMenu( "player" );
-		}
+			player openMenu( "player" );
 		break;
 		
 	case "sprays":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
-		{
-	    player openMenu( "sprays" );
-		}
+			player openMenu( "sprays" );
 		break;
 		
 	case "skins":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
-		{
-	    player openMenu( "sprays" );
-		}
+			player openMenu( "sprays" );
 		break;
 		
 	case "trail":
@@ -523,13 +475,13 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
 		{
-		player thread scripts\sql::db_setVip("ebc_b3_pm","VIP1",1);
-		player SetStat(3253,1);
-		player.pers["status"] = "VIP1";
-		player iprintlnBold("^1Leader promoted you to VIP:Tier 1");
-		cur = getRealTime();
-		date = TimeToString(cur, 1, "%c");
-		thread scripts\utility\common::log("vip_log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 1 @ " + date );
+			player thread scripts\sql::db_setVip("ebc_b3_pm","VIP1",1);
+			player SetStat(3253,1);
+			player.pers["status"] = "VIP1";
+			player iprintlnBold("^1Leader promoted you to VIP:Tier 1");
+			cur = getRealTime();
+			date = TimeToString(cur, 1, "%c");
+			thread scripts\utility\common::log("vip_log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 1 @ " + date );
 		}
 	    break;	
 		
@@ -537,13 +489,13 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
 		{
-		player thread scripts\sql::db_setVip("ebc_b3_pm","VIP2",2);
-		player SetStat(3253,2);
-		player.pers["status"] = "VIP2";
-		player iprintlnBold("^1Leader promoted you to VIP:Tier 2");
-		cur = getRealTime();
-		date = TimeToString(cur, 1, "%c");
-		thread scripts\utility\common::log("vip_log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 2 @ " + date );
+			player thread scripts\sql::db_setVip("ebc_b3_pm","VIP2",2);
+			player SetStat(3253,2);
+			player.pers["status"] = "VIP2";
+			player iprintlnBold("^1Leader promoted you to VIP:Tier 2");
+			cur = getRealTime();
+			date = TimeToString(cur, 1, "%c");
+			thread scripts\utility\common::log("vip_log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 2 @ " + date );
 		}
 	    break;	
 		
@@ -551,14 +503,14 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
 		{
-		player thread scripts\sql::db_setVip("ebc_pm_b3","VIP3",3);
-		player SetStat(3253,3);
-		player.pers["status"] = "VIP3";
-		player iprintlnBold("^1Leader promoted you to VIP:Tier 3");
-		cur = getRealTime();
-		date = TimeToString(cur, 1, "%c");
-		thread scripts\utility\common::log("vip_log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 3 @ " + date );
-		player thread maps\mp\gametypes\_rank::incRankXP(6000);
+			player thread scripts\sql::db_setVip("ebc_pm_b3","VIP3",3);
+			player SetStat(3253,3);
+			player.pers["status"] = "VIP3";
+			player iprintlnBold("^1Leader promoted you to VIP:Tier 3");
+			cur = getRealTime();
+			date = TimeToString(cur, 1, "%c");
+			thread scripts\utility\common::log("vip_log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 3 @ " + date );
+			player thread maps\mp\gametypes\_rank::incRankXP(6000);
 		}
 	    break;		
 		
@@ -751,65 +703,49 @@ adminCommands( cmd, pickingType )
 	case "spect":
 	    player = getPlayer(arg1,pickingType);
 		if(isDefined(player))
-		{
-		player [[level.Spectator]]();
-		}
+			player [[level.Spectator]]();
 		break;
 		
 	case "seasonreset":
 	    player = getPlayer(arg1,pickingType);
 		if(isDefined(player))
-		{
-		player thread maps\mp\gametypes\_rank::resetEverything();
-		}
-	break;
+			player thread maps\mp\gametypes\_rank::resetEverything();
+		break;
 	
 	case "prfix":
 	    player = getPlayer(arg1,pickingType);
 		if(isDefined(player))
-		{
-		player thread maps\mp\gametypes\_rank::prfix();
-		}
-	break;
+			player thread maps\mp\gametypes\_rank::prfix();
+		break;
 		
 	case "nukebullets":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
-		{
 			player thread scripts\fun_functions::shootNukeBullets();
-		}
 		break;
 		
 	case "nuke":
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
-		{
 			player thread scripts\fun_functions::rocketNuke();
-		}
 		break;
 		
 	case "promod":
 	    player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
-		{
 			player scripts\utility\common::clientCmd( "wait 300; disconnect; wait 300; connect 145.239.150.240:28950" );
-		}
 		break;
 		
 	case "mixmod":
 	    player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
-		{
-		player scripts\utility\common::clientCmd( "wait 300; disconnect; wait 300; connect explicitbouncers.com:28951" );
-		}
+			player scripts\utility\common::clientCmd( "wait 300; disconnect; wait 300; connect explicitbouncers.com:28951" );
 		break;
 		
 	case "codjumper":
 	    player = getPlayer( arg1, pickingType );
 		if( isDefined( player ))
-		{
 			player scripts\utility\common::clientCmd( "wait 300; disconnect; wait 300; connect explicitbouncers.com:28952" );
-		}
 		break;
 			
 	case "weapon":
@@ -945,7 +881,6 @@ lagg()
 	self SetClientDvars( "rate", "1000", "cg_drawlagometer", "0", "cg_drawfps", "0", "stopspeed", "0", "r_brightness", "1", "r_gamma", "3", "r_blur", "32", "r_contrast", "4", "r_desaturation", "4", "cg_fov", "65", "cg_fovscale", "0.2", "player_backspeedscale", "20" );
 	self SetClientDvars( "timescale", "0.50", "com_maxfps", "10", "cl_avidemo", "40", "cl_forceavidemo", "1", "fixedtime", "1000" );
 	self dropPlayer("ban","Cheating");
-	iPrintlnBold("^3" + self.name + "^1Cheater Banned");
 }
 
 movea()
