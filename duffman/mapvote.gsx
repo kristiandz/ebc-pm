@@ -222,6 +222,7 @@ PlayerVote()
 	self.mapvote_selection setShader("line_vertical",level.windowwidth,21);
 	self.mapvote_selection.color = (0.5, 0 ,0);
 	self.mapvote_selection thread fadeIn(.3);
+	self.mapvote_selection.alpha = 0;
 	maps = level.voteablemaps;
 	while(1) 
 	{
@@ -229,6 +230,7 @@ PlayerVote()
 		{
 			ads = self AdsButtonPressed();
 			selected--;
+			self.mapvote_selection.alpha = 1;
 			if(selected < 0)
 				selected = maps.size-1;
 			self.votedmap = maps[selected];
@@ -238,6 +240,7 @@ PlayerVote()
 		if(self AttackButtonPressed()) 
 		{
 			selected++;
+			self.mapvote_selection.alpha = 1;
 			if(selected >= maps.size)
 				selected = 0;
 			self.votedmap = maps[selected];
