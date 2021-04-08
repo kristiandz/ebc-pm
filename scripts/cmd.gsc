@@ -833,20 +833,6 @@ adminCommands( cmd, pickingType )
 		}
 		break;
 		
-	case "emblem":
-		player = getPlayer( arg1, pickingType );
-	    tekst = cmd[2];
-		if( isDefined( player ) && isDefined(tekst))
-		{
-		if(tekst.size > 3 && tekst.size < 37 )
-		{
-		player thread scripts\utility\common::setCvar("emblem",tekst);
-		player iprintlnBold("You have change your emblem to:\n "+tekst+ "\nYour new emblem will be applied next map");
-		}
-		else player iPrintlnBold("Emblem text needs to be bigger then 3 characters and smaller then 37");
-		}
-	break;
-	
 	case "spect":
 	    player = getPlayer(arg1,pickingType);
 		if(isDefined(player))
