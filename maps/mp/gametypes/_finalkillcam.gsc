@@ -261,9 +261,10 @@ finalKillcam()
 	self thread waitFinalKillcamSlowdown( killcamstarttime );
 
 	self waittill("end_finalkillcam");
+	
 	if( isDefined( self.sname ) ) 
-	self.sname destroy();
-	wait 0.1;
+		self.sname destroy();
+	
 	self.villain destroy();
 	self.versus destroy();
 	self.victim destroy();
@@ -373,9 +374,8 @@ text()
 
 getsongname(songnum)
 {
-    tekst = songnum;
-	if(!isDefined(tekst))return;
-	switch(tekst)
+	if(!isDefined(songnum))return;
+	switch(songnum)
 	{
 		case 1:	level.name = "DJ BLYATMAN - MOLOTOV";
 		break;
