@@ -347,7 +347,7 @@ spawnPlayer()
 	self endon("joined_team");
 	self notify("spawned");
 	self notify("end_respawn");
-	self notify("spawnloop"); // ---------
+	self notify("spawnloop"); //
 	self setSpawnVariables();
 	if(isDefined(self.proxBar))self.proxBar destroyElem();
 	if(isDefined(self.proxBarText))self.proxBarText destroyElem();
@@ -376,19 +376,12 @@ spawnPlayer()
 	level thread updateTeamStatus();
 	prof_begin("spawnPlayer_postUTS");
 	
-	
 	if(isDefined(game["PROMOD_KNIFEROUND"])&&game["PROMOD_KNIFEROUND"]&&isDefined(level.strat_over)&&level.strat_over)
-	{
 		self thread removeWeapons();
-	}
-	
-	if(isDefined(self.class)) self maps\mp\gametypes\_class::giveLoadout(self.team,self.class); // Check if self.class
-	
+	if(isDefined(self.class)) 
+		self maps\mp\gametypes\_class::giveLoadout(self.team,self.class); // Check if self.class
 	if(!hadSpawned&&isDefined(game["state"])&&game["state"]=="playing")
-	{
 		team=self.team;thread maps\mp\gametypes\_hud_message::oldNotifyMessage(game["strings"][team+"_name"],undefined,game["icons"][team],game["colors"][team]);
-	}
-	
 	if(isDefined(level.strat_over)&&!level.strat_over)
 	{
 		self allowsprint(false);
@@ -476,8 +469,7 @@ in_spawnSpectator(origin,angles)
 getPlayerFromClientNum(clientNum)
 {
 	if(clientNum<0)return undefined;
-	for(i=0;
-	i<level.players.size;i++)
+	for(i=0;i<level.players.size;i++)
 	{
 		if(level.players[i]getEntityNumber()==clientNum)return level.players[i];
 	}
@@ -511,14 +503,12 @@ freeLook(condition)
 	if(getDvarInt("scr_game_spectatetype")==1)
 	{
 		if(condition)wait 0.1;
-		for(i=0;
-		i<level.players.size;i++)
+		for(i=0;i<level.players.size;i++)
 		{
 			player=level.players[i];
 			if(player.pers["team"]=="spectator")
-			{
-				if(!isDefined(player.freelook)||!player.freelook)player allowSpectateTeam("freelook",condition);
-			}
+				if(!isDefined(player.freelook)||!player.freelook)
+					player allowSpectateTeam("freelook",condition);
 		}
 	}
 }
@@ -588,9 +578,7 @@ checkADS()
 	for(;;)
 	{
 		while(!self adsButtonPressed())wait 0.07;
-		for(i=0;
-		i<level.players.size;
-		i++)
+		for(i=0;i<level.players.size;i++)
 		{
 			players=level.players[i];
 			if(isAlive(players)&&((players.pers["team"]=="allies"||players.pers["team"]=="axis")))
@@ -686,6 +674,7 @@ endGame(winner,endReasonText)
 	level notify("game_ended");
 	setGameEndTime(0);
 	updatePlacement();
+	
 	for(i=0;i<level.players.size;i++)
 	{
 		player=level.players[i];
@@ -710,7 +699,6 @@ endGame(winner,endReasonText)
 			if(hitRoundLimit()||hitScoreLimit())roundEndWait(level.roundEndDelay/2);
 			else roundEndWait(level.roundEndDelay);
 		}
-		
 		game["roundsplayed"]++;
 		roundSwitching=false;
 		if(!hitRoundLimit()&&!hitScoreLimit())roundSwitching=checkRoundSwitch();
@@ -908,9 +896,7 @@ roundEndWait(defaultDelay)
 	while(!notifiesDone)
 	{
 		notifiesDone=true;
-		for(i=0;
-		i<level.players.size;
-		i++)
+		for(i=0;i<level.players.size;i++)
 		{
 			players=level.players[i];
 			if(!isDefined(players.doingNotify)||!players.doingNotify)continue;
@@ -930,9 +916,7 @@ getHighestScoringPlayer()
 {
 	winner=undefined;
 	tie=false;
-	for(i=0;
-	i<level.players.size;
-	i++)
+	for(i=0;i<level.players.size;i++)
 	{
 		players=level.players[i];
 		if(!isDefined(players.score)||players.score<1)continue;
@@ -993,14 +977,11 @@ hitScoreLimit()
 {
 	if(level.scoreLimit<=0)return false;
 	if(level.teamBased)
-	{
-		if(game["teamScores"]["allies"]>=level.scoreLimit||game["teamScores"]["axis"]>=level.scoreLimit)return true;
-	}
+		if(game["teamScores"]["allies"]>=level.scoreLimit||game["teamScores"]["axis"]>=level.scoreLimit)
+			return true;
 	else
 	{
-		for(i=0;
-		i<level.players.size;
-		i++)
+		for(i=0;i<level.players.size;i++)
 		{
 			player=level.players[i];
 			if(isDefined(player.score)&&player.score>=level.scorelimit)return true;
@@ -1303,7 +1284,7 @@ updatePlacement()
 		playerScore=player.score;
 		for(j=i-1;j>=0&&(playerScore>placementAll[j].score||(playerScore==placementAll[j].score&&player.deaths<placementAll[j].deaths));j--)
 			placementAll[j+1]=placementAll[j];
-			placementAll[j+1]=player;
+		placementAll[j+1]=player;
 	}
 	level.placement["all"]=placementAll;
 	updateTeamPlacement();
@@ -1536,7 +1517,7 @@ timeLimitClock()
 			if(timeLeftInt<=10||(timeLeftInt<=30&&timeLeftInt%2==0))
 			{
 				if(!timeLeftInt)break;
-				clockObject playSound("ui_mp_timer_countdown");
+					clockObject playSound("ui_mp_timer_countdown");
 			}
 			if(timeLeft-floor(timeLeft)>=0.05)wait timeLeft-floor(timeLeft);
 		}
@@ -1651,8 +1632,9 @@ startGame()
 
 disableBombsites()
 {
-	if(level.gametype=="sd"||level.gametype=="sr"&&isDefined(level.bombZones))for(j=0;j<level.bombZones.size;j++)
-	level.bombZones[j]maps\mp\gametypes\_gameobjects::disableObject();
+	if(level.gametype=="sd"||level.gametype=="sr"&&isDefined(level.bombZones))
+		for(j=0;j<level.bombZones.size;j++)
+			level.bombZones[j]maps\mp\gametypes\_gameobjects::disableObject();
 }
 
 prematchPeriod()
@@ -1682,9 +1664,7 @@ gracePeriod()
 	if(!isDefined(game["state"])||game["state"]!="playing")return;
 	if(level.numLives)
 	{
-		for(i=0;
-		i<level.players.size;
-		i++)
+		for(i=0;i<level.players.size;i++)
 		{
 			player=level.players[i];
 			if(!player.hasSpawned&&player.sessionteam!="spectator"&&!isAlive(player))player.statusicon="hud_status_dead";
@@ -1767,12 +1747,11 @@ waitAndSpawnClient(timeAlreadyPassed)
 	}
 	timeUntilSpawn=TimeUntilSpawn();
 	if(timeUntilSpawn>timeAlreadyPassed)
-	{
 		timeUntilSpawn-=timeAlreadyPassed;timeAlreadyPassed=0;
-	}
 	else
 	{
-		timeAlreadyPassed-=timeUntilSpawn;timeUntilSpawn=0;
+		timeAlreadyPassed-=timeUntilSpawn;
+		timeUntilSpawn=0;
 	}
 	if(timeUntilSpawn>0)
 	{
@@ -2028,13 +2007,12 @@ deletePickups()
 
 initialDMScoreUpdate()
 {
-	wait 0.2;numSent=0;
+	wait 0.2; numSent=0;
 	for(;;)
 	{
 		didAny=false;
 		for(i=0;
-		i<level.players.size;
-		i++)
+		i<level.players.size;i++)
 		{
 			player=level.players[i];
 			if(!isdefined(player))continue;
@@ -2325,9 +2303,7 @@ Callback_PlayerDisconnect()
 
 removePlayerOnDisconnect()
 {
-	for(i=0;
-	i<level.players.size;
-	i++)
+	for(i=0;i<level.players.size;i++)
 	{
 		if(level.players[i]==self)
 		{
@@ -2354,20 +2330,14 @@ Callback_PlayerDamage(eInflictor,eAttacker,iDamage,iDFlags,sMeansOfDeath,sWeapon
 	if( isPlayer(eAttacker) && eAttacker != self )
 	{
 		if( isDefined(eattacker.isKnifing) && !isDefined(self.isKnifing) )
-		{
 			return;
-		}
 		if( isDefined(self.isKnifing) && !isDefined(eattacker.isKnifing) )
-		{
 			return;
-		}
 	}
 	if( (isDefined(self.isSpawnProtected) && self.isSpawnProtected) /*|| (isPlayer(eAttacker) && eAttacker GetStat(2583) == 1)*/ ) 
-	return;
+		return;
 	if( sMeansOfDeath == "MOD_MELEE" )
-	{
 		eAttacker thread AddBloodHud();
-	}
 	if(!isDefined(level.rdyup))level.rdyup=false;
 	if(isDefined(game["state"])&&game["state"]=="postgame"||self.sessionteam=="spectator"&&isDefined(self.flying)&&self.flying||isDefined(level.bombDefused)&&level.bombDefused||isDefined(level.bombExploded)&&level.bombExploded&&self.pers["team"]==game["attackers"]||isDefined(game["PROMOD_KNIFEROUND"])&&game["PROMOD_KNIFEROUND"]==1&&sMeansOfDeath!="MOD_MELEE"&&sMeansOfDeath!="MOD_FALLING"&&!level.rdyup)return;
 	if(isDefined(eAttacker)&&isPlayer(eAttacker)&&isPlayer(self)&&eAttacker.sessionstate=="playing"&&isDefined(iDamage)&&isDefined(sMeansOfDeath)&&sMeansOfDeath!=""&&(sMeansOfDeath=="MOD_RIFLE_BULLET"||sMeansOfDeath=="MOD_PISTOL_BULLET"))iDamage=int(iDamage*1.4);
@@ -2377,7 +2347,8 @@ Callback_PlayerDamage(eInflictor,eAttacker,iDamage,iDFlags,sMeansOfDeath,sWeapon
 	{
 		if(!isDefined(eAttacker.ruptally)||eAttacker.ruptally<0)
 		{
-			eAttacker.ruptally=0;eAttacker setclientdvar("self_kills",0);
+			eAttacker.ruptally=0;
+			eAttacker setclientdvar("self_kills",0);
 		}
 		if(!isDefined(self.ruptally))self.ruptally=-1;
 		if(self.ruptally<0)return;
@@ -2385,7 +2356,8 @@ Callback_PlayerDamage(eInflictor,eAttacker,iDamage,iDFlags,sMeansOfDeath,sWeapon
 	if(!isDefined(vDir))iDFlags|=level.iDFLAGS_NO_KNOCKBACK;
 	if(level.teamBased&&self.health==self.maxhealth||!isDefined(self.attackers))
 	{
-		self.attackers=[];self.attackerData=[];
+		self.attackers=[];
+		self.attackerData=[];
 	}
 	if(isHeadShot(sWeapon,sHitLoc,sMeansOfDeath))sMeansOfDeath="MOD_HEAD_SHOT";
 	if(sWeapon=="none"&&isDefined(eInflictor))
@@ -2530,9 +2502,7 @@ Callback_PlayerKilled(eInflictor,attacker,iDamage,sMeansOfDeath,sWeapon,vDir,sHi
 	body = self clonePlayer( deathAnimDuration );
 	body.targetname = "dr_deadbody";
 	if( isDefined( body ) )
-	{
 		body thread delayBloodPool();
-	}
 	
 	if(!isDefined(level.rdyup))level.rdyup=false;self endon("spawned");
 	if(self.sessionteam=="spectator"||(isDefined(game["state"])&&game["state"]=="postgame"))return;
@@ -2715,19 +2685,19 @@ Callback_PlayerKilled(eInflictor,attacker,iDamage,sMeansOfDeath,sWeapon,vDir,sHi
 
 	if(!isDefined(attacker.isKnifing))
 	{
-	logPrint("K;"+self getGuid()+";"+self getEntityNumber()+";"+self.pers["team"]+";"+self.name+";"+lpattackguid+";"+lpattacknum+";"+lpattackerteam+";"+lpattackname+";"+sWeapon+";"+iDamage+";"+sMeansOfDeath+";"+sHitLoc+"\n");
-	self.cur_kill_streak = 0;
-	self SetStat( 2304, 0);
-	if(isDefined(attacker) && isPlayer(attacker))
-	{
-	attacker.cur_kill_streak++;		
-	attacker SetStat( 2304, attacker.cur_kill_streak );
-	attacker GetStat( 2304 );
+		logPrint("K;"+self getGuid()+";"+self getEntityNumber()+";"+self.pers["team"]+";"+self.name+";"+lpattackguid+";"+lpattacknum+";"+lpattackerteam+";"+lpattackname+";"+sWeapon+";"+iDamage+";"+sMeansOfDeath+";"+sHitLoc+"\n");
+		self.cur_kill_streak = 0;
+		self SetStat( 2304, 0);
+		if(isDefined(attacker) && isPlayer(attacker))
+		{
+			attacker.cur_kill_streak++;		
+			attacker SetStat( 2304, attacker.cur_kill_streak );
+			attacker GetStat( 2304 );
+		}
 	}
-	}
-					
+	
 	if( !isDefined(attacker.isKnifing) )
-	level thread updateTeamStatus();
+		level thread updateTeamStatus();
 	self clonePlayer(deathAnimDuration);
 	self thread[[level.onPlayerKilled]](eInflictor,attacker,iDamage,sMeansOfDeath,sWeapon,vDir,sHitLoc,psOffsetTime,deathAnimDuration);
 	if(sWeapon=="none")doKillcam=false;
