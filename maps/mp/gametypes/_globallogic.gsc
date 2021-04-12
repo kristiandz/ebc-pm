@@ -2481,23 +2481,27 @@ Callback_PlayerKilled(eInflictor,attacker,iDamage,sMeansOfDeath,sWeapon,vDir,sHi
 	body.targetname = "dr_deadbody";
 	if( isDefined( body ) )
 		body thread delayBloodPool();
-	
 	if(!isDefined(level.rdyup))level.rdyup=false;self endon("spawned");
 	if(self.sessionteam=="spectator"||(isDefined(game["state"])&&game["state"]=="postgame"))return;
 	prof_begin("PlayerKilled pre constants");
 	if(level.gametype == "sd" )
-	{
 		if( !isDefined(attacker.spawnedKnifing) )
 			thread duffman\_roofbattle::knifegame();
-	}
 	if(isHeadShot(sWeapon,sHitLoc,sMeansOfDeath))sMeansOfDeath="MOD_HEAD_SHOT";
 	if(attacker.classname=="script_vehicle"&&isDefined(attacker.owner))attacker=attacker.owner;
 	if(level.teamBased&&isDefined(attacker.pers)&&self.team==attacker.team&&sMeansOfDeath=="MOD_GRENADE"&&!level.friendlyfire)obituary(self,self,sWeapon,sMeansOfDeath);
-	else if(!isDefined(attacker.isKnifing)) obituary(self,attacker,sWeapon,sMeansOfDeath);
-	self maps\mp\gametypes\_weapons::dropWeaponForDeath(attacker); //
-	self.sessionstate="dead";if(!isDefined(level.rdyup)||!level.rdyup)self.statusicon="hud_status_dead";
+	else if(!isDefined(attacker.isKnifing)) 
+		obituary(self,attacker,sWeapon,sMeansOfDeath);
+	if ( !isDefined( game["promod_do_readyup"] ) || !game["promod_do_readyup"] )
+		self maps\mp\gametypes\_weapons::dropWeaponForDeath( attacker ); //
+	self.sessionstate="dead";
+	if(!isDefined(level.rdyup)||!level.rdyup)
+		self.statusicon="hud_status_dead";
 	if(level.rdyup&&isDefined(attacker.pers)&&(attacker!=self))
-		attacker.ruptally++;attacker setclientdvar("self_kills",attacker.ruptally);
+	{
+		attacker.ruptally++;
+		attacker setclientdvar("self_kills",attacker.ruptally);
+	}
 	if(!level.rdyup && !isDefined(attacker.isKnifing))
 	{
 		self.deathCount++;
