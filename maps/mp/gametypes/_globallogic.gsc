@@ -2,7 +2,6 @@
 #include maps\mp\gametypes\_hud_util;
 #include maps\mp\gametypes\_globallogic_utils;
 #include scripts\utility\common;
-#include scripts\_dvar;
 
 init()
 {
@@ -103,10 +102,9 @@ init()
 	thread buildSprayInfo();
 	thread buildCharacterInfo();
 	
-	thread admin_list(); // Test performance first
+	thread admin_list();
 	thread list_cleaner();
 	
-	scripts\_dvar::setupDvars();
 	thread scripts\general::init();
 }
 
@@ -2765,16 +2763,13 @@ sprayLogo()
 	self endon( "joined_spectators" );
 	self endon( "death" );
 
-	if( !level.dvar["sprays"] )
-		return;
-
 	while( game["state"] != "playing" )
-	wait 0.05;
+		wait 0.5;
+	
 	while( isRealyAlive() )
 	{
 		while( !self UseButtonPressed() )
-		
-		wait 0.2; 
+			wait 0.2; 
 		angles = self getPlayerAngles();
 		eye = self getTagOrigin( "j_head" );
 		forward = eye + vector_scale( anglesToForward( angles ), 70 );
@@ -2790,14 +2785,14 @@ sprayLogo()
 		up = anglesToUp( angles );
 		sprayNum = self getStat( 979 );		
 		if( sprayNum < 0 )	
-		sprayNum = 0;
+			sprayNum = 0;
 		else if( sprayNum > level.numSprays )
-		sprayNum = level.numSprays;
+			sprayNum = level.numSprays;
 	    playFx( level.sprayInfo[sprayNum]["effect"], position, forward, up );
 		self playSound( "sprayer" );
 		self notify( "spray", sprayNum, position, forward, up ); // ch_sprayit
-		wait level.dvar["sprays_delay"];
-	    }
+		wait 10;
+	}
 }
 
 buildCharacterInfo()
