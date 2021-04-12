@@ -139,29 +139,13 @@ printStats()
 	}
 }
 
-dropWeaponForDeath(attacker)
+dropWeaponForDeath()
 {
 	weapon=self getCurrentWeapon();
-	if(!isDefined(weapon)||!self hasWeapon(weapon))return;
-	/*
-	if(isPrimaryWeapon(weapon))
-	{
-		switch(level.primary_weapon_array[weapon])
-		{
-			case"weapon_assault":if(!getDvarInt("class_assault_allowdrop"))return;
-			break;
-			case"weapon_smg":if(!getDvarInt("class_specops_allowdrop"))return;
-			break;
-			case"weapon_sniper":if(!getDvarInt("class_sniper_allowdrop"))return;
-			break;
-			case"weapon_shotgun":if(!getDvarInt("class_demolitions_allowdrop"))return;
-			break;
-			default:return;
-		}
-	}
-	else if(WeaponClass(weapon)!="pistol")return false;
-	*/
-	switch ( weapon ) // OVERFLOW TEST
+	if(!isDefined(weapon)||!self hasWeapon(weapon)|| !isDefined(self))
+		return;
+	
+	switch ( weapon )
 	{
 		case "m16_mp":
 		case "m16_silencer_mp":
@@ -176,8 +160,8 @@ dropWeaponForDeath(attacker)
 		case "m14_mp":
 		case "m14_silencer_mp":
 		case "mp44_mp":
-		if ( !getDvarInt( "class_assault_allowdrop" ) )
-			return;
+			if ( !getDvarInt( "class_assault_allowdrop" ) )
+				return;
 		break;
 		
 		case "mp5_mp":
@@ -186,34 +170,34 @@ dropWeaponForDeath(attacker)
 		case "uzi_silencer_mp":
 		case "ak74u_mp":
 		case "ak74u_silencer_mp":
-		if ( !getDvarInt( "class_specops_allowdrop" ) )
-			return;
+			if ( !getDvarInt( "class_specops_allowdrop" ) )
+				return;
 		break;
 		
 		case "m40a3_mp":
 		case "remington700_mp":
-		if ( !getDvarInt( "class_sniper_allowdrop" ) )
-			return;
+			if ( !getDvarInt( "class_sniper_allowdrop" ) )
+				return;
 		break;
 		
 		case "winchester1200_mp":
 		case "m1014_mp":
-		if ( !getDvarInt( "class_demolitions_allowdrop" ) )
-			return;
+			if ( !getDvarInt( "class_demolitions_allowdrop" ) )
+				return;
 		break;
 		
 		default:
-		return;
+			return;
 	}
 	clipAmmo=self GetWeaponAmmoClip(weapon);
 	if(!clipAmmo)return;
 	stockAmmo=self GetWeaponAmmoStock(weapon);
 	stockMax=WeaponMaxAmmo(weapon);
-	if(stockAmmo>stockMax)stockAmmo=stockMax;
+	if(stockAmmo>stockMax) stockAmmo=stockMax;
 	item=self dropItem(weapon);
 	item ItemWeaponSetAmmo(clipAmmo,stockAmmo);
 	if(!isDefined(game["PROMOD_MATCH_MODE"])||game["PROMOD_MATCH_MODE"]!="match"||(game["PROMOD_MATCH_MODE"]=="match"&&level.gametype!="sd"||level.gametype!="sr")||game["promod_do_readyup"])
-	item thread watchPickup();
+		item thread watchPickup();
 	item thread deletePickupAfterAWhile();
 }
 
@@ -256,10 +240,11 @@ watchPickup()
 deletePickupAfterAWhile()
 {
 	self endon("death");
-	wait 180;
+	wait 120;
 	if(!isDefined(self))return;
 	self delete();
 }
+
 watchWeaponUsage()
 {
 	self endon("death");

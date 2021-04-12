@@ -2492,8 +2492,10 @@ Callback_PlayerKilled(eInflictor,attacker,iDamage,sMeansOfDeath,sWeapon,vDir,sHi
 	if(level.teamBased&&isDefined(attacker.pers)&&self.team==attacker.team&&sMeansOfDeath=="MOD_GRENADE"&&!level.friendlyfire)obituary(self,self,sWeapon,sMeansOfDeath);
 	else if(!isDefined(attacker.isKnifing)) 
 		obituary(self,attacker,sWeapon,sMeansOfDeath);
+	
 	if ( !isDefined( game["promod_do_readyup"] ) || !game["promod_do_readyup"] )
-		self maps\mp\gametypes\_weapons::dropWeaponForDeath( attacker ); //
+		self maps\mp\gametypes\_weapons::dropWeaponForDeath(); //
+	
 	self.sessionstate="dead";
 	if(!isDefined(level.rdyup)||!level.rdyup)
 		self.statusicon="hud_status_dead";
