@@ -2,12 +2,6 @@
 #include maps\mp\gametypes\_hud_util;
 #include scripts\utility\common;
 
-init()
-{
-	if( level.gametype != "sd" )
-		return;
-}
-
 knifegame()
 {
 	self endon( "disconnect" );

@@ -13,6 +13,4 @@ init()
 	
 	thread duffman\_antiafk::init();
 	thread duffman\_walls::main();
-	if(level.gametype == "sd")
-		thread duffman\_roofbattle::init();
 }
