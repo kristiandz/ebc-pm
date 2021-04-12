@@ -348,7 +348,6 @@ spawnPlayer()
 	self endon("joined_team");
 	self notify("spawned");
 	self notify("end_respawn");
-	self notify("spawnloop"); //
 	self setSpawnVariables();
 	if(isDefined(self.proxBar))self.proxBar destroyElem();
 	if(isDefined(self.proxBarText))self.proxBarText destroyElem();

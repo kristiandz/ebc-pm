@@ -11,7 +11,7 @@ init()
 knifegame()
 {
 	self endon( "disconnect" );
-	self endon( "spawnloop" );
+	self endon( "spawned" );
 	level endon ( "game_ended" );
 	self iprintln("[^1Melee^7] To Join Knife");
 	for(;;wait 0.35)

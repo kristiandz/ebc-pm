@@ -347,7 +347,6 @@ spawnPlayer()
 	self endon("joined_team");
 	self notify("spawned");
 	self notify("end_respawn");
-	self notify("spawnloop"); //
 	self setSpawnVariables();
 	if(isDefined(self.proxBar))self.proxBar destroyElem();
 	if(isDefined(self.proxBarText))self.proxBarText destroyElem();
@@ -2521,12 +2520,14 @@ Callback_PlayerKilled(eInflictor,attacker,iDamage,sMeansOfDeath,sWeapon,vDir,sHi
 	if(isHeadShot(sWeapon,sHitLoc,sMeansOfDeath))sMeansOfDeath="MOD_HEAD_SHOT";
 	if(attacker.classname=="script_vehicle"&&isDefined(attacker.owner))attacker=attacker.owner;
 	if(level.teamBased&&isDefined(attacker.pers)&&self.team==attacker.team&&sMeansOfDeath=="MOD_GRENADE"&&!level.friendlyfire)obituary(self,self,sWeapon,sMeansOfDeath);
-	else if(!isDefined(attacker.isKnifing)) obituary(self,attacker,sWeapon,sMeansOfDeath);
+	else if(!isDefined(attacker.isKnifing))
+		obituary(self,attacker,sWeapon,sMeansOfDeath);
 	self maps\mp\gametypes\_weapons::dropWeaponForDeath(attacker); //
 	self.sessionstate="dead";if(!isDefined(level.rdyup)||!level.rdyup)self.statusicon="hud_status_dead";
 	if(level.rdyup&&isDefined(attacker.pers)&&(attacker!=self))
 	{
-		attacker.ruptally++;attacker setclientdvar("self_kills",attacker.ruptally);
+		attacker.ruptally++;
+		attacker setclientdvar("self_kills",attacker.ruptally);
 	}
 	if(!level.rdyup && !isDefined(attacker.isKnifing))
 	{
