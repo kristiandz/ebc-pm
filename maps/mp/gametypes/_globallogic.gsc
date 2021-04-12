@@ -382,7 +382,10 @@ spawnPlayer()
 	if(isDefined(self.class)) 
 		self maps\mp\gametypes\_class::giveLoadout(self.team,self.class); // Check if self.class
 	if(!hadSpawned&&isDefined(game["state"])&&game["state"]=="playing")
-		team=self.team;thread maps\mp\gametypes\_hud_message::oldNotifyMessage(game["strings"][team+"_name"],undefined,game["icons"][team],game["colors"][team]);	
+	{
+		team=self.team;
+		thread maps\mp\gametypes\_hud_message::oldNotifyMessage(game["strings"][team+"_name"],undefined,game["icons"][team],game["colors"][team]);
+	}		
 	if(isDefined(level.strat_over)&&!level.strat_over)
 	{
 		self allowsprint(false);
@@ -1757,7 +1760,7 @@ waitAndSpawnClient(timeAlreadyPassed)
 	{
 		timeAlreadyPassed-=timeUntilSpawn;
 		timeUntilSpawn=0;
-
+	}
 	if(timeUntilSpawn>0)
 	{
 		setLowerMessage(game["strings"]["waiting_to_spawn"],timeUntilSpawn);
