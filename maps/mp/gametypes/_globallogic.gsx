@@ -2679,13 +2679,9 @@ Callback_PlayerKilled(eInflictor,attacker,iDamage,sMeansOfDeath,sWeapon,vDir,sHi
 	{
 		killcamentityindex = killcamentity getEntityNumber(); 
 		if ( isdefined( killcamentity.startTime ) )
-		{
 			killcamentitystarttime = killcamentity.startTime;
-		}
 		else
-		{
 			killcamentitystarttime = killcamentity.birthtime;
-		}
 		if ( !isdefined( killcamentitystarttime ) )
 			killcamentitystarttime = 0;
 	}
@@ -2715,7 +2711,8 @@ Callback_PlayerKilled(eInflictor,attacker,iDamage,sMeansOfDeath,sWeapon,vDir,sHi
 	wait 0.25;
 	self.cancelKillcam=false;
 	self thread cancelKillCamOnUse();
-	if(isDefined(game["PROMOD_MATCH_MODE"])&&game["PROMOD_MATCH_MODE"]=="match"&&level.gametype=="sd"||level.gametype=="sr")postDeathDelay=waitForTimeOrNotifies(0.75);
+	if(isDefined(game["PROMOD_MATCH_MODE"])&&game["PROMOD_MATCH_MODE"]=="match"&&level.gametype=="sd"||level.gametype=="sr")
+		postDeathDelay=waitForTimeOrNotifies(0.75);
 	else postDeathDelay=waitForTimeOrNotifies(1.75);
 	self notify("death_delay_finished");
 	level thread maps\mp\gametypes\_finalkillcam::startFinalKillcam( lpattacknum, self getEntityNumber(), killcamentityindex, sWeapon, self.deathTime, 0, psOffsetTime, attacker, self );
@@ -2789,7 +2786,6 @@ buildCharacterInfo()
 {
 	level.characterInfo = [];
 	level.numCharacters = 0;
-	
 	tableName = "mp/characterTable.csv";
 	for( idx = 1; isdefined( tableLookup( tableName, 0, idx, 0 ) ) && tableLookup( tableName, 0, idx, 0 ) != ""; idx++ )
 	{
@@ -2797,7 +2793,6 @@ buildCharacterInfo()
 		level.characterInfo[id]["prestige"] = (int(tableLookup( tableName, 0, idx, 2 )) -1 );
 		level.characterInfo[id]["shader"] = tableLookup( tableName, 0, idx, 3 );
 		level.characterInfo[id]["handsModel"] = tableLookup( tableName, 0, idx, 4 );
-		
 		precacheShader( level.characterInfo[id]["shader"] );
 		precacheModel( level.characterInfo[id]["handsModel"] );
 		level.numCharacters++;
@@ -2808,16 +2803,13 @@ buildSprayInfo()
 {
 	level.sprayInfo = [];
 	level.numSprays = 0;
-	
 	tableName = "mp/sprayTable.csv";
-
 	for( idx = 1; isdefined( tableLookup( tableName, 0, idx, 0 ) ) && tableLookup( tableName, 0, idx, 0 ) != ""; idx++ )
 	{
 		id = level.sprayInfo.size;
 		level.sprayInfo[id]["prestige"] = (int(tableLookup( tableName, 0, idx, 2 )) - 1);
 		level.sprayInfo[id]["shader"] = tableLookup( tableName, 0, idx, 3 );
 		level.sprayInfo[id]["effect"] = loadFx( tableLookup( tableName, 0, idx, 4 ) );
-		
 		precacheShader( level.sprayInfo[id]["shader"] );
 		level.numSprays++;
 	}
