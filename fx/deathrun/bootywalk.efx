@@ -12,9 +12,9 @@ iwfx 2
 	spawnOneShot 1 0;
 	spawnDelayMsec 0 0;
 	lifeSpanMsec 1000000 0;
-	spawnOrgX 10 -10;
+	spawnOrgX 30 -30;
 	spawnOrgY 0 0;
-	spawnOrgZ 0 10;
+	spawnOrgZ 0 20;
 	spawnOffsetRadius -9 9;
 	spawnOffsetHeight 0 0;
 	spawnAnglePitch 0 0;
