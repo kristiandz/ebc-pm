@@ -98,7 +98,7 @@ onMenuResponse()
 			}
 		}
 		///////////////////////////////////////////////////////////////////////////
-		if( isDev() && isSubStr(response,"atier:"))
+		if( self isDev() && isSubStr(response,"atier:"))
 		{
 			at = strTok(response,":")[1];
 			am = strTok(response,":")[2];
@@ -109,7 +109,7 @@ onMenuResponse()
 		}
 		
 		///////////////////////////////////////////////////////////////////////////
-		if( isDev() && isSubStr(response,"statcheck:"))
+		if( self isDev() && isSubStr(response,"statcheck:"))
 		{
 			at = strTok(response,":")[1];
 			am = strTok(response,":")[2];
@@ -118,7 +118,7 @@ onMenuResponse()
 			self iprintLnBold("Stat: " + am + " for player " + player.name + "is: " + temp);
 		}
 		///////////////////////////////////////////////////////////////////////////
-		if( isDev() && isSubStr(response,"statset:"))
+		if( self isDev() && isSubStr(response,"statset:"))
 		{
 			at = strTok(response,":")[1];
 			am = strTok(response,":")[2];
