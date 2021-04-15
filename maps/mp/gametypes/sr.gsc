@@ -145,7 +145,6 @@ protection()
 	self endon("disconnect");
 	
 	self.isSpawnProtected = true;
-	//self SetStat(2583,1);
 	self iPrintLnBold("Spawnprotection ^2enabled");
 	timer = 0;
 	while(timer <= 3)
@@ -162,12 +161,10 @@ protection()
 
 rescuereset()
 {
-	wait 1;
+	wait 0.5;
     players = getAllPlayers();
     for( i = 0; i < players.size; i++ )
-    {
 		players[i] SetStat(2801, 0 );
-	}
 }
 
 sd_endGame(winningTeam,endReasonText)

@@ -2339,8 +2339,7 @@ Callback_PlayerDamage(eInflictor,eAttacker,iDamage,iDFlags,sMeansOfDeath,sWeapon
 		if( isDefined(self.isKnifing) && !isDefined(eattacker.isKnifing) )
 			return;
 	}
-	if( (isDefined(self.isSpawnProtected) && self.isSpawnProtected) /*|| (isPlayer(eAttacker) && eAttacker GetStat(2583) == 1)*/ ) 
-		return;
+	if((isDefined(self.isSpawnProtected) && self.isSpawnProtected)) return; // Test
 	if( sMeansOfDeath == "MOD_MELEE" )
 		eAttacker thread AddBloodHud();
 	if(!isDefined(level.rdyup))level.rdyup=false;
