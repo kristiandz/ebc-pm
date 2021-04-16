@@ -2,7 +2,6 @@ init()
 {
 	level.spectateOverride["allies"] = spawnstruct();
 	level.spectateOverride["axis"] = spawnstruct();
-
 	level thread onPlayerConnect();
 }
 
@@ -11,7 +10,6 @@ onPlayerConnect()
 	for(;;)
 	{
 		level waittill("connecting", player);
-
 		player thread onJoinedTeam();
 		player thread onJoinedSpectators();
 		player thread onPlayerSpawned();
@@ -21,7 +19,6 @@ onPlayerConnect()
 onPlayerSpawned()
 {
 	self endon("disconnect");
-
 	for(;;)
 	{
 		self waittill("spawned_player");
@@ -32,7 +29,6 @@ onPlayerSpawned()
 onJoinedTeam()
 {
 	self endon("disconnect");
-
 	for(;;)
 	{
 		self waittill("joined_team");
@@ -43,7 +39,6 @@ onJoinedTeam()
 onJoinedSpectators()
 {
 	self endon("disconnect");
-
 	for(;;)
 	{
 		self waittill("joined_spectators");
@@ -54,7 +49,6 @@ onJoinedSpectators()
 updateSpectateSettings()
 {
 	level endon ( "game_ended" );
-
 	for ( i = 0; i < level.players.size; i++ )
 		level.players[i] setSpectatePermissions();
 }
@@ -73,7 +67,6 @@ setSpectatePermissions()
 {
 	team = self.sessionteam;
 	spectateType = maps\mp\gametypes\_tweakables::getTweakableValue( "game", "spectatetype" );
-
 	switch( spectateType )
 	{
 		case 0:
