@@ -3,8 +3,9 @@
 onPlayerConnect()
 {
 	for(;;)
-	level waittill("connected",player);
+		level waittill("connected",player);
 }
+
 findBoxCenter(mins,maxs)
 {
 	center=(0,0,0);
@@ -12,6 +13,7 @@ findBoxCenter(mins,maxs)
 	center=(center[0]/2,center[1]/2,center[2]/2)+mins;
 	return center;
 }
+
 expandMins(mins,point)
 {
 	if(mins[0]>point[0])mins=(point[0],mins[1],mins[2]);
@@ -19,6 +21,7 @@ expandMins(mins,point)
 	if(mins[2]>point[2])mins=(mins[0],mins[1],point[2]);
 	return mins;
 }
+
 expandMaxs(maxs,point)
 {
 	if(maxs[0]<point[0])maxs=(point[0],maxs[1],maxs[2]);
@@ -26,6 +29,7 @@ expandMaxs(maxs,point)
 	if(maxs[2]<point[2])maxs=(maxs[0],maxs[1],point[2]);
 	return maxs;
 }
+
 addSpawnPoints(team,spawnPointName)
 {
 	oldSpawnPoints=[];
@@ -43,9 +47,7 @@ addSpawnPoints(team,spawnPointName)
 		return;
 	}
 	if(!isDefined(level.spawnpoints))level.spawnpoints=[];
-	for(i=0;
-	i<level.teamSpawnPoints[team].size;
-	i++)
+	for(i=0;i<level.teamSpawnPoints[team].size;i++)
 	{
 		spawnpoint=level.teamSpawnPoints[team][i];
 		if(!isdefined(spawnpoint.inited))
@@ -54,9 +56,7 @@ addSpawnPoints(team,spawnPointName)
 			level.spawnpoints[level.spawnpoints.size]=spawnpoint;
 		}
 	}
-	for(i=0;
-	i<oldSpawnPoints.size;
-	i++)
+	for(i=0;i<oldSpawnPoints.size;i++)
 	{
 		origin=oldSpawnPoints[i].origin;
 		level.spawnMins=expandMins(level.spawnMins,origin);
@@ -64,6 +64,7 @@ addSpawnPoints(team,spawnPointName)
 		level.teamSpawnPoints[team][level.teamSpawnPoints[team].size]=oldSpawnPoints[i];
 	}
 }
+
 placeSpawnPoints(spawnPointName)
 {
 	spawnPoints=getEntArray(spawnPointName,"classname");
@@ -78,8 +79,10 @@ placeSpawnPoints(spawnPointName)
 		wait 1;
 		return;
 	}
-	for(i=0;i<spawnPoints.size;i++)spawnPoints[i]spawnPointInit();
+	for(i=0;i<spawnPoints.size;i++)
+		spawnPoints[i]spawnPointInit();
 }
+
 spawnPointInit()
 {
 	spawnpoint=self;
@@ -91,10 +94,12 @@ spawnPointInit()
 	spawnpoint.sightTracePoint=spawnpoint.origin+(0,0,50);
 	spawnpoint.inited=true;
 }
+
 getTeamSpawnPoints(team)
 {
 	return level.teamSpawnPoints[team];
 }
+
 getSpawnpoint_Final(spawnpoints,useweights)
 {
 	prof_begin("spawn_final");
@@ -104,9 +109,7 @@ getSpawnpoint_Final(spawnpoints,useweights)
 	if(useweights)bestspawnpoint=getBestWeightedSpawnpoint(spawnpoints);
 	else
 	{
-		for(i=0;
-		i<spawnpoints.size;
-		i++)
+		for(i=0;i<spawnpoints.size;i++)
 		{
 			if((isdefined(self.lastspawnpoint)&&self.lastspawnpoint==spawnpoints[i])||positionWouldTelefrag(spawnpoints[i].origin))continue;
 			bestspawnpoint=spawnpoints[i];
@@ -114,9 +117,7 @@ getSpawnpoint_Final(spawnpoints,useweights)
 		}
 		if(!isdefined(bestspawnpoint)&&isdefined(self.lastspawnpoint)&&!positionWouldTelefrag(self.lastspawnpoint.origin))
 		{
-			for(i=0;
-			i<spawnpoints.size;
-			i++)
+			for(i=0;i<spawnpoints.size;i++)
 			{
 				if(spawnpoints[i]==self.lastspawnpoint)
 				{
@@ -139,19 +140,16 @@ getSpawnpoint_Final(spawnpoints,useweights)
 	prof_end("spawn_final");
 	return bestspawnpoint;
 }
+
 getBestWeightedSpawnpoint(spawnpoints)
 {
 	maxSightTracedSpawnpoints=3;
-	for(try=0;
-	try<=maxSightTracedSpawnpoints;
-	try++)
+	for(try=0;try<=maxSightTracedSpawnpoints;try++)
 	{
 		bestspawnpoints=[];
 		bestweight=undefined;
 		bestspawnpoint=undefined;
-		for(i=0;
-		i<spawnpoints.size;
-		i++)
+		for(i=0;i<spawnpoints.size;i++)
 		{
 			if(!isdefined(bestweight)||spawnpoints[i].weight>bestweight)
 			{
@@ -173,12 +171,12 @@ getBestWeightedSpawnpoint(spawnpoints)
 		bestspawnpoint.lastSightTraceTime=gettime();
 	}
 }
+
 getSpawnpoint_Random(spawnpoints)
 {
-	if(!isdefined(spawnpoints))return undefined;
-	for(i=0;
-	i<spawnpoints.size;
-	i++)
+	if(!isdefined(spawnpoints))
+		return undefined;
+	for(i=0;i<spawnpoints.size;i++)
 	{
 		j=randomInt(spawnpoints.size);
 		spawnpoint=spawnpoints[i];
@@ -187,17 +185,18 @@ getSpawnpoint_Random(spawnpoints)
 	}
 	return getSpawnpoint_Final(spawnpoints,false);
 }
+
 getAllOtherPlayers()
 {
 	aliveplayers=[];
-	for(i=0;
-	i<level.players.size;i++)
+	for(i=0;i<level.players.size;i++)
 	{
 		if(!isdefined(level.players[i])||(level.players[i].sessionstate!="playing"||level.players[i]==self))continue;
 		aliveplayers[aliveplayers.size]=level.players[i];
 	}
 	return aliveplayers;
 }
+
 getAllAlliedAndEnemyPlayers(obj)
 {
 	if(level.teambased)
@@ -219,12 +218,13 @@ getAllAlliedAndEnemyPlayers(obj)
 		obj.enemies=level.activePlayers;
 	}
 }
+
 initWeights(spawnpoints)
 {
-	for(i=0;
-	i<spawnpoints.size;
-	i++)spawnpoints[i].weight=0;
+	for(i=0;i<spawnpoints.size;i++)
+		spawnpoints[i].weight=0;
 }
+
 getSpawnpoint_NearTeam(spawnpoints,favoredspawnpoints)
 {
 	if(!isdefined(spawnpoints))return undefined;
@@ -238,9 +238,7 @@ getSpawnpoint_NearTeam(spawnpoints,favoredspawnpoints)
 	prof_begin("sumdists");
 	myTeam=self.pers["team"];
 	enemyTeam=getOtherTeam(myTeam);
-	for(i=0;
-	i<spawnpoints.size;
-	i++)
+	for(i=0;i<spawnpoints.size;i++)
 	{
 		spawnpoint=spawnpoints[i];
 		if(isDefined(spawnpoint.numPlayersAtLastUpdate)&&spawnpoint.numPlayersAtLastUpdate>0)
@@ -265,6 +263,7 @@ getSpawnpoint_NearTeam(spawnpoints,favoredspawnpoints)
 	result=getSpawnpoint_Final(spawnpoints);
 	return result;
 }
+
 getSpawnpoint_DM(spawnpoints)
 {
 	if(!isdefined(spawnpoints))return undefined;
@@ -274,15 +273,11 @@ getSpawnpoint_DM(spawnpoints)
 	badDist=1200;
 	if(aliveplayers.size>0)
 	{
-		for(i=0;
-		i<spawnpoints.size;
-		i++)
+		for(i=0;i<spawnpoints.size;i++)
 		{
 			totalDistFromIdeal=0;
 			nearbyBadAmount=0;
-			for(j=0;
-			j<aliveplayers.size;
-			j++)
+			for(j=0;j<aliveplayers.size;j++)
 			{
 				dist=distance(spawnpoints[i].origin,aliveplayers[j].origin);
 				if(dist<badDist)nearbyBadAmount+=(badDist-dist)/badDist;
@@ -300,6 +295,7 @@ getSpawnpoint_DM(spawnpoints)
 	avoidVisibleEnemies(spawnpoints,false);
 	return getSpawnpoint_Final(spawnpoints);
 }
+
 init()
 {
 	level.spawnlogic_deaths=[];
@@ -309,31 +305,26 @@ init()
 	level thread onPlayerConnect();
 	level thread trackGrenades();
 }
+
 updateDeathInfo()
 {
 	prof_begin("updateDeathInfo");
 	time=getTime();
-	for(i=0;
-	i<level.spawnlogic_deaths.size;
-	i++)
+	for(i=0;i<level.spawnlogic_deaths.size;i++)
 	{
 		deathInfo=level.spawnlogic_deaths[i];
 		if(time-deathInfo.time>90000||!isdefined(deathInfo.killer)||!isalive(deathInfo.killer)||(deathInfo.killer.pers["team"]!="axis"&&deathInfo.killer.pers["team"]!="allies")||distance(deathInfo.killer.origin,deathInfo.killOrg)>400)
-		{
 			level.spawnlogic_deaths[i].remove=true;
-		}
 	}
 	oldarray=level.spawnlogic_deaths;
 	level.spawnlogic_deaths=[];
 	start=0;
 	if(oldarray.size-1024>0)start=oldarray.size-1024;
-	for(i=start;
-	i<oldarray.size;i++)
-	{
+	for(i=start;i<oldarray.size;i++)
 		if(!isdefined(oldarray[i].remove))level.spawnlogic_deaths[level.spawnlogic_deaths.size]=oldarray[i];
-	}
 	prof_end("updateDeathInfo");
 }
+
 trackGrenades()
 {
 	for(;;)
@@ -342,6 +333,7 @@ trackGrenades()
 		wait 0.05;
 	}
 }
+
 isPointVulnerable(playerorigin)
 {
 	pos=self.origin+level.claymoremodelcenteroffset;
@@ -356,16 +348,13 @@ isPointVulnerable(playerorigin)
 	}
 	return false;
 }
+
 avoidWeaponDamage(spawnpoints)
 {
 	prof_begin("spawn_grenade");
-	for(i=0;
-	i<spawnpoints.size;
-	i++)
+	for(i=0;i<spawnpoints.size;i++)
 	{
-		for(j=0;
-		j<level.grenades.size;
-		j++)
+		for(j=0;j<level.grenades.size;j++)
 		{
 			if(!isdefined(level.grenades[j]))continue;
 			if(distancesquared(spawnpoints[i].origin,level.grenades[j].origin)<62500)spawnpoints[i].weight-=100000;
@@ -373,6 +362,7 @@ avoidWeaponDamage(spawnpoints)
 	}
 	prof_end("spawn_grenade");
 }
+
 spawnPerFrameUpdate()
 {
 	spawnpointindex=0;
@@ -401,9 +391,7 @@ spawnPerFrameUpdate()
 		spawnpoint.distSum["allies"]=0;
 		spawnpoint.distSum["axis"]=0;
 		spawnpoint.numPlayersAtLastUpdate=0;
-		for(i=0;
-		i<level.players.size;
-		i++)
+		for(i=0;i<level.players.size;i++)
 		{
 			player=level.players[i];
 			if(player.sessionstate!="playing")continue;
@@ -426,10 +414,12 @@ spawnPerFrameUpdate()
 		prof_end("spawn_sight_checks");
 	}
 }
+
 getLosPenalty()
 {
 	return 100000;
 }
+
 lastMinuteSightTraces(spawnpoint)
 {
 	prof_begin("spawn_lastminutesc");
@@ -440,9 +430,7 @@ lastMinuteSightTraces(spawnpoint)
 	closestDistsq=undefined;
 	secondClosest=undefined;
 	secondClosestDistsq=undefined;
-	for(i=0;
-	i<spawnpoint.nearbyPlayers[team].size;
-	i++)
+	for(i=0;i<spawnpoint.nearbyPlayers[team].size;i++)
 	{
 		player=spawnpoint.nearbyPlayers[team][i];
 		if(!isdefined(player)||player.sessionstate!="playing"||player==self)continue;
@@ -463,6 +451,7 @@ lastMinuteSightTraces(spawnpoint)
 	if(isdefined(closest)&&bullettracepassed(closest.origin+(0,0,50),spawnpoint.sightTracePoint,false,undefined)||(isdefined(secondClosest)&&bullettracepassed(secondClosest.origin+(0,0,50),spawnpoint.sightTracePoint,false,undefined)))return true;
 	return false;
 }
+
 avoidVisibleEnemies(spawnpoints,teambased)
 {
 	lospenalty=getLosPenalty();
@@ -470,8 +459,7 @@ avoidVisibleEnemies(spawnpoints,teambased)
 	if(self.pers["team"]=="axis")otherteam="allies";
 	if(teambased)
 	{
-		for(i=0;i<spawnpoints.size;
-		i++)
+		for(i=0;i<spawnpoints.size;i++)
 		{
 			if(!isdefined(spawnpoints[i].sights))continue;
 			penalty=lospenalty*spawnpoints[i].sights[otherteam];
@@ -480,24 +468,21 @@ avoidVisibleEnemies(spawnpoints,teambased)
 	}
 	else
 	{
-		for(i=0;
-		i<spawnpoints.size;
-		i++)
+		for(i=0;i<spawnpoints.size;i++)
 		{
 			if(!isdefined(spawnpoints[i].sights))continue;
 			penalty=lospenalty*spawnpoints[i].sights;spawnpoints[i].weight-=penalty;
 		}
 	}
 }
+
 avoidSpawnReuse(spawnpoints,teambased)
 {
 	prof_begin("spawn_reuse");
 	time=getTime();
 	maxtime=10000;
 	maxdistSq=640000;
-	for(i=0;
-	i<spawnpoints.size;
-	i++)
+	for(i=0;i<spawnpoints.size;i++)
 	{
 		if(!isdefined(spawnpoints[i].lastspawnedplayer)||!isdefined(spawnpoints[i].lastspawntime)||!isalive(spawnpoints[i].lastspawnedplayer)||spawnpoints[i].lastspawnedplayer==self||(teambased&&spawnpoints[i].lastspawnedplayer.pers["team"]==self.pers["team"]))continue;
 		timepassed=time-spawnpoints[i].lastspawntime;
@@ -515,13 +500,12 @@ avoidSpawnReuse(spawnpoints,teambased)
 	}
 	prof_end("spawn_reuse");
 }
+
 avoidSameSpawn(spawnpoints)
 {
 	prof_begin("spawn_samespwn");
 	if(!isdefined(self.lastspawnpoint))return;
-	for(i=0;
-	i<spawnpoints.size;
-	i++)
+	for(i=0;i<spawnpoints.size;i++)
 	{
 		if(spawnpoints[i]==self.lastspawnpoint)
 		{
