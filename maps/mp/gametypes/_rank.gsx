@@ -1,6 +1,5 @@
 #include common_scripts\utility;
 #include maps\mp\gametypes\_hud_util;
-// Removed utility
 
 init()
 {
@@ -143,7 +142,6 @@ onPlayerSpawned()
 	for(;;)
 	{
 		self waittill("spawned_player");
-
 		if(!isdefined(self.hud_rankscroreupdate))
 		{
 			self.hud_rankscroreupdate = newClientHudElem(self);
@@ -185,9 +183,7 @@ giveRankXP( type, value )
 	self incRankXP( value * level.scoreMP );
 
 	if ( getDvarInt( "scr_enable_scoretext" ) )
-	{
 		self thread updateRankScoreHUD( value );
-	}
 	
 	if ( updateRank() )
 		self thread updateRankAnnounceHUD();
@@ -223,10 +219,8 @@ resetEverything()
 prfix()
 {
 	self endon("disconnect");
-	
 	self.pers["rank"] = 0;
 	self.pers["rankxp"] = 0;
-	
 	self setRank( self.pers["rank"], self.pers["prestige"] );
 	self setStat( 2350, self.pers["rank"] );
 	self setStat( 2301, self.pers["rankxp"] );
@@ -252,7 +246,6 @@ updateRankScoreHUD( amount )
 	wait 0.05;
 	
 	if( isDefined( self.hud_rankscroreupdate ) )
-	
 	{
 		if ( self.rankUpdateTotal < 0 )
 		{
@@ -264,13 +257,10 @@ updateRankScoreHUD( amount )
 			self.hud_rankscroreupdate.label = &"MP_PLUS";
 			self.hud_rankscroreupdate.color = (1,1,1);
 		}
-
 		self.hud_rankscroreupdate thread maps\mp\gametypes\_hud::fontPulse( self );
 		self.hud_rankscroreupdate setValue(self.rankUpdateTotal);
 		self.hud_rankscroreupdate.alpha = 1;
-		
 		blinkTheHud();
-
 		self.hud_rankscroreupdate fadeIt(0.1,0);
 		wait 0.1;
 		self.rankUpdateTotal = 0;	
@@ -288,8 +278,8 @@ blinkTheHud()
 	wait 0.8;
 	for(i = 0;i < 3; i++)
 	{
-	self.hud_rankscroreupdate fadeIt(0.1,0.1);
-	self.hud_rankscroreupdate fadeIt(0.1,1);
+		self.hud_rankscroreupdate fadeIt(0.1,0.1);
+		self.hud_rankscroreupdate fadeIt(0.1,1);
 	}
 }
 
@@ -348,16 +338,16 @@ incRankXP( amount )
 	self endon("disconnect");
 	if(isPlayer(self))
 	{
-	xp = self getRankXP();
-	newXp = (xp + amount);
-
-	if ( self.pers["rank"] == level.maxRank && newXp >= getRankInfoMaxXP( level.maxRank ) )
-		newXp = getRankInfoMaxXP( level.maxRank );
-
-	self.pers["rankxp"] = newXp;
-	self maps\mp\gametypes\_persistence::statSet( "rankxp", newXp );
-	self setStat( 251, self getRank() );
-	self setStat( 252, self getRank() );
+		xp = self getRankXP();
+		newXp = (xp + amount);
+	
+		if ( self.pers["rank"] == level.maxRank && newXp >= getRankInfoMaxXP( level.maxRank ) )
+			newXp = getRankInfoMaxXP( level.maxRank );
+	
+		self.pers["rankxp"] = newXp;
+		self maps\mp\gametypes\_persistence::statSet( "rankxp", newXp );
+		self setStat( 251, self getRank() );
+		self setStat( 252, self getRank() );
 	}
 }
 
@@ -398,14 +388,12 @@ getPrestigeLevel()
 
 canPrestigeUp()
 {
-	if(!isPlayer(self))return false;
-	
+	if(!isPlayer(self))
+		return false;
 	if (self.pers["prestige"] == level.maxPrestige )
 		return false;
-	
 	if (self getRank() < level.maxRank)
 		return false;
-	
 	return true;
 }
 
@@ -469,8 +457,6 @@ updateRank()
 	while ( rankId <= newRankId )
 	{	
 		self maps\mp\gametypes\_persistence::statSet( "rank", rankId );
-		//self maps\mp\gametypes\_persistence::statSet( "minxp", int(level.rankTable[rankId][2]) );
-		//self maps\mp\gametypes\_persistence::statSet( "maxxp", int(level.rankTable[rankId][7]) );
 		self setStat( 252, rankId );
 		rankId++;
 	}
@@ -491,55 +477,38 @@ isASprayUnlocked( num )
 {
 	upit = self GetStat(3252);
 	if( upit == 5 && ( num >= 1 && num <= 5 ) )
-	{
-	return true;
-	}
-	else if( upit == 4 && ( num >= 1 && num <= 4 ) )
-	{		
-	return true;
-	}
-	else if( upit == 3 && ( num >= 1 && num <= 3 ) )
-	{		
-	return true;
-	}
-	else if( upit == 2 && ( num >= 1 && num <= 2 ) )
-	{		
-	return true;
-	}
+		return true;
+	else if( upit == 4 && ( num >= 1 && num <= 4 ) )	
+		return true;
+	else if( upit == 3 && ( num >= 1 && num <= 3 ) )	
+		return true;
+	else if( upit == 2 && ( num >= 1 && num <= 2 ) )	
+		return true;
 	else if( upit == 1 && ( num == 1 ))
-	{		
-	return true;
-	}
-	else return false;
+		return true;
+	else 
+		return false;
 }
 
 isDSprayUnlocked( num )
 {
 	dupit = self GetStat(3253);
 	if ( dupit == 3 && ( num >= 1 && num <= 3 ))
-	{
 		return true;
-	}
 	else if ( dupit == 2 && ( num >= 1 && num <= 2 ))
-	{
 		return true;
-	}
 	else if ( dupit == 1 && num == 1)
-	{
 		return true;
-	}
 	else 
-	{
 		return false;
-	}
 }
 
 isCharacterUnlocked( num )
 {
 	if( num >= level.characterInfo.size || num <= -1)
-	return false;
+		return false;
 	if( self.pers["prestige"] >= level.characterInfo[num]["prestige"] )
-	return true;
+		return true;
 	return false;
 }
 
