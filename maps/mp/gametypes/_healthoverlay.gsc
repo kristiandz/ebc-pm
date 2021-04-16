@@ -1,25 +1,10 @@
-/*
-  Copyright (c) 2009-2017 Andreas Göransson <andreas.goransson@gmail.com>
-  Copyright (c) 2009-2017 Indrek Ardel <indrek@ardel.eu>
-
-  This file is part of Call of Duty 4 Promod.
-
-  Call of Duty 4 Promod is licensed under Promod Modder Ethical Public License.
-  Terms of license can be found in LICENSE.md document bundled with the project.
-*/
-
 init()
 {
 	precacheShader("overlay_low_health");
-
 	level.healthOverlayCutoff = 0.55;
-
 	regenTime = 5;
-
 	level.playerHealth_RegularRegenDelay = regenTime * 1000;
-
 	level.healthRegenDisabled = (level.playerHealth_RegularRegenDelay <= 0);
-
 	level thread onPlayerConnect();
 }
 
@@ -39,7 +24,6 @@ onPlayerConnect()
 onJoinedTeam()
 {
 	self endon("disconnect");
-
 	for(;;)
 	{
 		self waittill("joined_team");
@@ -50,7 +34,6 @@ onJoinedTeam()
 onJoinedSpectators()
 {
 	self endon("disconnect");
-
 	for(;;)
 	{
 		self waittill("joined_spectators");
@@ -61,7 +44,6 @@ onJoinedSpectators()
 onPlayerSpawned()
 {
 	self endon("disconnect");
-
 	for(;;)
 	{
 		self waittill("spawned_player");
@@ -72,7 +54,6 @@ onPlayerSpawned()
 onPlayerKilled()
 {
 	self endon("disconnect");
-
 	for(;;)
 	{
 		self waittill("killed_player");
@@ -97,18 +78,14 @@ playerHealthRegen()
 	oldhealth = maxhealth;
 	player = self;
 	health_add = 0;
-
 	regenRate = 0.1;
 	veryHurt = false;
-
 	player.breathingStopTime = -10000;
-
 	thread playerBreathingSound(maxhealth * 0.35);
-
 	lastSoundTime_Recover = 0;
 	hurtTime = 0;
 	newHealth = 0;
-
+	
 	for(;;)
 	{
 		wait 0.05;
@@ -118,7 +95,6 @@ playerHealthRegen()
 			self.atBrinkOfDeath = false;
 			continue;
 		}
-
 		if (player.health <= 0)
 			return;
 
@@ -131,7 +107,6 @@ playerHealthRegen()
 			if (!wasVeryHurt)
 				hurtTime = gettime();
 		}
-
 		if (player.health >= oldhealth)
 		{
 			if (gettime() - hurttime < level.playerHealth_RegularRegenDelay || level.healthRegenDisabled)
@@ -142,7 +117,6 @@ playerHealthRegen()
 				lastSoundTime_Recover = gettime();
 				self playLocalSound("breathing_better");
 			}
-
 			if (veryHurt)
 			{
 				newHealth = ratio;
@@ -162,9 +136,7 @@ playerHealthRegen()
 			oldhealth = player.health;
 			continue;
 		}
-
 		oldhealth = player.health;
-
 		health_add = 0;
 		hurtTime = gettime();
 		player.breathingStopTime = hurtTime + 6000;
@@ -174,7 +146,6 @@ playerHealthRegen()
 playerBreathingSound(healthcap)
 {
 	self endon("end_healthregen");
-
 	wait 2;
 	player = self;
 	for(;;)
@@ -182,10 +153,8 @@ playerBreathingSound(healthcap)
 		wait 0.2;
 		if ( player.health <= 0 )
 			return;
-
 		if ( player.health >= healthcap || level.healthRegenDisabled && gettime() > player.breathingStopTime )
 			continue;
-
 		player playLocalSound("breathing_hurt");
 		wait 0.784;
 		wait (0.1 + randomfloat (0.8));
