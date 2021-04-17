@@ -9,13 +9,9 @@ onPlayerConnect()
 	for(;;)
 	{
 		level waittill( "connected", player );
-
-		player setClientDvar("ui_xpText", "1");
-		player.enableText = true;
 	}
 }
 
-//Returns the value of the named stat
 statGet( dataName )
 {
 	if ( !level.onlineGame )
@@ -24,7 +20,6 @@ statGet( dataName )
 	return self getStat( int(tableLookup( "mp/playerStatsTable.csv", 1, dataName, 0 )) );
 }
 
-//Sets the value of the named stat
 statSet( dataName, value )
 {
 	if ( !level.rankedMatch )
@@ -33,7 +28,6 @@ statSet( dataName, value )
 	self setStat( int(tableLookup( "mp/playerStatsTable.csv", 1, dataName, 0 )), value );	
 }
 
-//Adds the passed value to the value of the named stat
 statAdd( dataName, value )
 {	
 	if ( !level.rankedMatch )
