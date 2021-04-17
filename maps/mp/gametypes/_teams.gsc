@@ -2,15 +2,13 @@ init()
 {
 	switch(game["allies"])
 	{
-	case "marines":
-		precacheShader("mpflag_american");
+		case "marines":
+			precacheShader("mpflag_american");
 		break;
 	}
-
+	game["strings"]["autobalance"] = &"MP_AUTOBALANCE_NOW";
 	precacheShader("mpflag_russian");
 	precacheShader("mpflag_spectator");
-
-	game["strings"]["autobalance"] = &"MP_AUTOBALANCE_NOW";
 	precacheString( &"MP_AUTOBALANCE_NOW" );
 	precacheString( &"MP_AUTOBALANCE_NEXT_ROUND" );
 	precacheString( &"MP_AUTOBALANCE_SECONDS" );
@@ -32,56 +30,46 @@ init()
 	level.maxClients = getDvarInt( "sv_maxclients" );
 	
 	setPlayerModels();
-
 	level.freeplayers = [];
 
 	if( level.teamBased )
 	{
 		level thread onPlayerConnect();
 		level thread updateTeamBalance();
-	
 		wait .15;
 		level thread updatePlayerTimes();
 	}
 	else
 	{
 		level thread onFreePlayerConnect();
-	
 		wait .15;
 		level thread updateFreePlayerTimes();
 	}
 }
-
 
 onPlayerConnect()
 {
 	for(;;)
 	{
 		level waittill("connecting", player);
-		
 		player thread onJoinedTeam();
 		player thread onJoinedSpectators();
-		
 		player thread trackPlayedTime();
 	}
 }
-
 
 onFreePlayerConnect()
 {
 	for(;;)
 	{
 		level waittill("connecting", player);
-		
 		player thread trackFreePlayedTime();
 	}
 }
 
-
 onJoinedTeam()
 {
 	self endon("disconnect");
-	
 	for(;;)
 	{
 		self waittill("joined_team");
@@ -90,11 +78,9 @@ onJoinedTeam()
 	}
 }
 
-
 onJoinedSpectators()
 {
 	self endon("disconnect");
-	
 	for(;;)
 	{
 		self waittill("joined_spectators");
@@ -102,11 +88,9 @@ onJoinedSpectators()
 	}
 }
 
-
 trackPlayedTime()
 {
 	self endon( "disconnect" );
-
 	self.timePlayed["allies"] = 0;
 	self.timePlayed["axis"] = 0;
 	self.timePlayed["free"] = 0;
@@ -134,13 +118,10 @@ trackPlayedTime()
 			{
 				self.timePlayed["other"]++;
 			}
-				
 		}
-		
 		wait ( 1.0 );
 	}
 }
-
 
 updatePlayerTimes()
 {
@@ -150,14 +131,11 @@ updatePlayerTimes()
 		nextToUpdate++;
 		if ( nextToUpdate >= level.players.size )
 			nextToUpdate = 0;
-
 		if ( isDefined( level.players[nextToUpdate] ) )
 			level.players[nextToUpdate] updatePlayedTime();
-
 		wait ( 4.0 );
 	}
 }
-
 
 updatePlayedTime()
 {
@@ -166,19 +144,16 @@ updatePlayedTime()
 		self maps\mp\gametypes\_persistence::statAdd( "time_played_allies", self.timePlayed["allies"] );
 		self maps\mp\gametypes\_persistence::statAdd( "time_played_total", self.timePlayed["allies"] );
 	}
-	
 	if ( self.timePlayed["axis"] )
 	{
 		self maps\mp\gametypes\_persistence::statAdd( "time_played_opfor", self.timePlayed["axis"] );
 		self maps\mp\gametypes\_persistence::statAdd( "time_played_total", self.timePlayed["axis"] );
 	}
-		
 	if ( self.timePlayed["other"] )
 	{
 		self maps\mp\gametypes\_persistence::statAdd( "time_played_other", self.timePlayed["other"] );			
 		self maps\mp\gametypes\_persistence::statAdd( "time_played_total", self.timePlayed["other"] );
 	}
-	
 	if ( game["state"] == "postgame" )
 		return;
 
@@ -187,15 +162,13 @@ updatePlayedTime()
 	self.timePlayed["other"] = 0;
 }
 
-
 updateTeamTime()
 {
 	if ( game["state"] != "playing" )
 		return;
-		
+
 	self.pers["teamTime"] = getTime();
 }
-
 
 updateTeamBalanceDvar()
 {
@@ -204,20 +177,16 @@ updateTeamBalanceDvar()
 		teambalance = getdvarInt("scr_teambalance");
 		if(level.teambalance != teambalance)
 			level.teambalance = getdvarInt("scr_teambalance");
-
 		wait 1;
 	}
 }
 
-
 updateTeamBalance()
 {
 	level.teamLimit = level.maxclients / 2;
-	
 	level thread updateTeamBalanceDvar();
-
 	wait .15;
-
+	
 	if ( level.teamBalance && (level.roundLimit > 1 || (!level.roundLimit && level.scoreLimit != 1)) )
 	{
     	if( isDefined( game["BalanceTeamsNextRound"] ) )
@@ -232,9 +201,7 @@ updateTeamBalance()
 			game["BalanceTeamsNextRound"] = undefined;
 		}
 		else if( !getTeamBalance() )
-		{
 			game["BalanceTeamsNextRound"] = true;
-		}
 	}
 	else
 	{
@@ -251,16 +218,12 @@ updateTeamBalance()
 					if( !getTeamBalance() )
 						level balanceTeams();
 				}
-				
 				wait 59.0;
 			}
-			
 			wait 1.0;
 		}
 	}
-
 }
-
 
 getTeamBalance()
 {
@@ -270,67 +233,51 @@ getTeamBalance()
 	
 	players = level.players;
 	for(i = 0; i < players.size; i++) // fills players teams array
-		{	
-			if((isdefined(players[i].pers["team"])) && (players[i].pers["team"] == "allies"))
-			{
-				AlliedPlayers[AlliedPlayers.size] = players[i]; //[AlliedPlayers.size]
-			
-			}
-			else if((isdefined(players[i].pers["team"])) && (players[i].pers["team"] == "axis"))
-				AxisPlayers[AxisPlayers.size] = players[i];//[AxisPlayers.size]
-		}
+	{	
+		if((isdefined(players[i].pers["team"])) && (players[i].pers["team"] == "allies"))
+			AlliedPlayers[AlliedPlayers.size] = players[i]; //[AlliedPlayers.size]
+		else if((isdefined(players[i].pers["team"])) && (players[i].pers["team"] == "axis"))
+			AxisPlayers[AxisPlayers.size] = players[i]; //[AxisPlayers.size]
+	}
 	
 	if((AlliedPlayers.size == (AxisPlayers.size + 1)) || (AxisPlayers.size == (AlliedPlayers.size + 1)) || AlliedPlayers.size == AxisPlayers.size)
 		return false;
 	else
 		return true;
-		
 }
 
 balanceTeams()
 {
 	AlliedPlayers = [];
 	AxisPlayers = [];
-	players = getEntArray( "player", "classname" );//level.players; 
+	players = getEntArray( "player", "classname" );
 	SPlayer = undefined; //player for switching
 	
 	for(i = 0; i < players.size; i++) // fills players teams array
 	{	
 		if((isdefined(players[i].pers["team"])) && (players[i].pers["team"] == "allies"))
-		{
 			AlliedPlayers[AlliedPlayers.size] = players[i]; //[AlliedPlayers.size]
-			
-		}
 		else if((isdefined(players[i].pers["team"])) && (players[i].pers["team"] == "axis"))
-			AxisPlayers[AxisPlayers.size] = players[i];//[AxisPlayers.size]
+			AxisPlayers[AxisPlayers.size] = players[i]; //[AxisPlayers.size]
 	}
-			
+
 	while((AlliedPlayers.size > (AxisPlayers.size + 1)) || (AxisPlayers.size > (AlliedPlayers.size + 1)))
 	{	
 		if(AlliedPlayers.size > (AxisPlayers.size + 1))
 		{
 			// Move the player that's been on the team the shortest ammount of time (highest teamTime value)
 			for(j = 0; j < AlliedPlayers.size; j++)
-			{
-				
-					SPlayer = AlliedPlayers[j];
-			}
-			
+				SPlayer = AlliedPlayers[j];
 			SPlayer changeTeam("axis");
 		}
 		else if(AxisPlayers.size > (AlliedPlayers.size + 1))
 		{
 			// Move the player that's been on the team the shortest ammount of time (highest teamTime value)
 			for(j = 0; j < AxisPlayers.size; j++)
-			{
-				
-					SPlayer = AxisPlayers[j];
-				
-			}
-
+				SPlayer = AxisPlayers[j];
 			SPlayer changeTeam("allies");
 		}
-
+		
 		SPlayer = undefined;
 		AlliedPlayers = [];
 		AxisPlayers = [];
@@ -357,7 +304,6 @@ changeTeam( team )
 		self.switching_teams = true;
 		self.joining_team = team;
 		self.leaving_team = self.pers["team"];
-		
 		// Suicide the player so they can't hit escape and fail the team balance
 		self suicide();
 	}
@@ -367,7 +313,6 @@ changeTeam( team )
 	self.pers["teamTime"] = undefined;
 	self.sessionteam = self.pers["team"];
 	self maps\mp\gametypes\_globallogic::updateObjectiveText();
-	
 	// update spectator permissions immediately on change of team
 	self maps\mp\gametypes\_spectating::setSpectatePermissions();
 	
@@ -381,7 +326,6 @@ changeTeam( team )
 		self setclientdvar("g_scriptMainMenu", game["menu_class_axis"]);
 		self openMenu( game[ "menu_changeclass_axis" ] );
 	}
-	
 	self notify( "end_respawn" );
 }
 
@@ -413,24 +357,20 @@ setPlayerModels()
 	}
 	else
 		game["axis_soldiertype"] = axisCharSet;
-	
 
 	if ( game["allies_soldiertype"] == "desert" )
 	{
 		//assert( game["allies"] == "marines" );
-		
 		mptype\mptype_ally_cqb::precache();
 		mptype\mptype_ally_sniper::precache();
 		mptype\mptype_ally_engineer::precache();
 		mptype\mptype_ally_rifleman::precache();
 		mptype\mptype_ally_support::precache();
-
 		game["allies_model"]["SNIPER"] = mptype\mptype_ally_sniper::main;
 		game["allies_model"]["SUPPORT"] = mptype\mptype_ally_support::main;
 		game["allies_model"]["ASSAULT"] = mptype\mptype_ally_rifleman::main;
 		game["allies_model"]["RECON"] = mptype\mptype_ally_engineer::main;
 		game["allies_model"]["SPECOPS"] = mptype\mptype_ally_cqb::main;
-
 		// custom class defaults
 		game["allies_model"]["CLASS_CUSTOM1"] = mptype\mptype_ally_cqb::main;
 		game["allies_model"]["CLASS_CUSTOM2"] = mptype\mptype_ally_cqb::main;
@@ -441,19 +381,16 @@ setPlayerModels()
 	else if ( game["allies_soldiertype"] == "urban" )
 	{
 		assert( game["allies"] == "sas" );
-
 		mptype\mptype_ally_urban_sniper::precache();
 		mptype\mptype_ally_urban_support::precache();
 		mptype\mptype_ally_urban_assault::precache();
 		mptype\mptype_ally_urban_recon::precache();
 		mptype\mptype_ally_urban_specops::precache();
-
 		game["allies_model"]["SNIPER"] = mptype\mptype_ally_urban_sniper::main;
 		game["allies_model"]["SUPPORT"] = mptype\mptype_ally_urban_support::main;
 		game["allies_model"]["ASSAULT"] = mptype\mptype_ally_urban_assault::main;
 		game["allies_model"]["RECON"] = mptype\mptype_ally_urban_recon::main;
 		game["allies_model"]["SPECOPS"] = mptype\mptype_ally_urban_specops::main;
-		
 		// custom class defaults
 		game["allies_model"]["CLASS_CUSTOM1"] = mptype\mptype_ally_urban_assault::main;
 		game["allies_model"]["CLASS_CUSTOM2"] = mptype\mptype_ally_urban_assault::main;
@@ -464,19 +401,16 @@ setPlayerModels()
 	else
 	{
 		assert( game["allies"] == "sas" );
-
 		mptype\mptype_ally_woodland_assault::precache();
 		mptype\mptype_ally_woodland_recon::precache();
 		mptype\mptype_ally_woodland_sniper::precache();
 		mptype\mptype_ally_woodland_specops::precache();
 		mptype\mptype_ally_woodland_support::precache();
-
 		game["allies_model"]["SNIPER"] = mptype\mptype_ally_woodland_sniper::main;
 		game["allies_model"]["SUPPORT"] = mptype\mptype_ally_woodland_support::main;
 		game["allies_model"]["ASSAULT"] = mptype\mptype_ally_woodland_assault::main;
 		game["allies_model"]["RECON"] = mptype\mptype_ally_woodland_recon::main;
 		game["allies_model"]["SPECOPS"] = mptype\mptype_ally_woodland_specops::main;
-		
 		// custom class defaults
 		game["allies_model"]["CLASS_CUSTOM1"] = mptype\mptype_ally_woodland_recon::main;
 		game["allies_model"]["CLASS_CUSTOM2"] = mptype\mptype_ally_woodland_recon::main;
@@ -488,21 +422,17 @@ setPlayerModels()
 	if ( game["axis_soldiertype"] == "desert" )
 	{
 		//assert( game["axis"] == "opfor" || game["axis"] == "arab" );
-
 		mptype\mptype_axis_cqb::precache();
 		mptype\mptype_axis_sniper::precache();
 		mptype\mptype_axis_engineer::precache();
 		mptype\mptype_axis_rifleman::precache();
 		mptype\mptype_axis_support::precache();
-
 		game["axis_model"] = [];
-
 		game["axis_model"]["SNIPER"] = mptype\mptype_axis_sniper::main;
 		game["axis_model"]["SUPPORT"] = mptype\mptype_axis_support::main;
 		game["axis_model"]["ASSAULT"] = mptype\mptype_axis_rifleman::main;
 		game["axis_model"]["RECON"] = mptype\mptype_axis_engineer::main;
 		game["axis_model"]["SPECOPS"] = mptype\mptype_axis_cqb::main;
-		
 		// custom class defaults
 		game["axis_model"]["CLASS_CUSTOM1"] = mptype\mptype_axis_cqb::main;
 		game["axis_model"]["CLASS_CUSTOM2"] = mptype\mptype_axis_cqb::main;
@@ -513,19 +443,16 @@ setPlayerModels()
 	else if ( game["axis_soldiertype"] == "urban" )
 	{
 		//assert( game["axis"] == "opfor" );
-
 		mptype\mptype_axis_urban_sniper::precache();
 		mptype\mptype_axis_urban_support::precache();
 		mptype\mptype_axis_urban_assault::precache();
 		mptype\mptype_axis_urban_engineer::precache();
 		mptype\mptype_axis_urban_cqb::precache();
-
 		game["axis_model"]["SNIPER"] = mptype\mptype_axis_urban_sniper::main;
 		game["axis_model"]["SUPPORT"] = mptype\mptype_axis_urban_support::main;
 		game["axis_model"]["ASSAULT"] = mptype\mptype_axis_urban_assault::main;
 		game["axis_model"]["RECON"] = mptype\mptype_axis_urban_engineer::main;
 		game["axis_model"]["SPECOPS"] = mptype\mptype_axis_urban_cqb::main;
-		
 		// custom class defaults
 		game["axis_model"]["CLASS_CUSTOM1"] = mptype\mptype_axis_urban_assault::main;
 		game["axis_model"]["CLASS_CUSTOM2"] = mptype\mptype_axis_urban_assault::main;
@@ -536,19 +463,16 @@ setPlayerModels()
 	else
 	{
 		assert( game["axis"] == "opfor" );
-
 		mptype\mptype_axis_woodland_rifleman::precache();
 		mptype\mptype_axis_woodland_cqb::precache();
 		mptype\mptype_axis_woodland_sniper::precache();
 		mptype\mptype_axis_woodland_engineer::precache();
 		mptype\mptype_axis_woodland_support::precache();
-
 		game["axis_model"]["SNIPER"] = mptype\mptype_axis_woodland_sniper::main;
 		game["axis_model"]["SUPPORT"] = mptype\mptype_axis_woodland_support::main;
 		game["axis_model"]["ASSAULT"] = mptype\mptype_axis_woodland_rifleman::main;
 		game["axis_model"]["RECON"] = mptype\mptype_axis_woodland_engineer::main;
 		game["axis_model"]["SPECOPS"] = mptype\mptype_axis_woodland_cqb::main;
-		
 		// custom class defaults
 		game["axis_model"]["CLASS_CUSTOM1"] = mptype\mptype_axis_woodland_cqb::main;
 		game["axis_model"]["CLASS_CUSTOM2"] = mptype\mptype_axis_woodland_cqb::main;
@@ -558,11 +482,9 @@ setPlayerModels()
 	}
 }
 
-
 playerModelForWeapon( weapon )
 {
 	self detachAll();
-	
 	weaponClass = tablelookup( "mp/statstable.csv", 4, weapon, 2 );
 	
 	switch ( weaponClass )
@@ -588,10 +510,8 @@ playerModelForWeapon( weapon )
 	}
 }	
 
-
 CountPlayers()
 {
-	//chad
 	players = level.players;
 	allies = 0;
 	axis = 0;
@@ -610,11 +530,9 @@ CountPlayers()
 	return players;
 }
 
-
 trackFreePlayedTime()
 {
 	self endon( "disconnect" );
-
 	self.timePlayed["allies"] = 0;
 	self.timePlayed["axis"] = 0;
 	self.timePlayed["other"] = 0;
@@ -639,11 +557,9 @@ trackFreePlayedTime()
 				self.timePlayed["other"]++;
 			}
 		}
-		
 		wait ( 1.0 );
 	}
 }
-
 
 updateFreePlayerTimes()
 {
@@ -661,7 +577,6 @@ updateFreePlayerTimes()
 	}
 }
 
-
 updateFreePlayedTime()
 {
 	if ( self.timePlayed["allies"] )
@@ -669,19 +584,16 @@ updateFreePlayedTime()
 		self maps\mp\gametypes\_persistence::statAdd( "time_played_allies", self.timePlayed["allies"] );
 		self maps\mp\gametypes\_persistence::statAdd( "time_played_total", self.timePlayed["allies"] );
 	}
-	
 	if ( self.timePlayed["axis"] )
 	{
 		self maps\mp\gametypes\_persistence::statAdd( "time_played_opfor", self.timePlayed["axis"] );
 		self maps\mp\gametypes\_persistence::statAdd( "time_played_total", self.timePlayed["axis"] );
 	}
-		
 	if ( self.timePlayed["other"] )
 	{
 		self maps\mp\gametypes\_persistence::statAdd( "time_played_other", self.timePlayed["other"] );			
 		self maps\mp\gametypes\_persistence::statAdd( "time_played_total", self.timePlayed["other"] );
 	}
-	
 	if ( game["state"] == "postgame" )
 		return;
 
@@ -690,20 +602,16 @@ updateFreePlayedTime()
 	self.timePlayed["other"] = 0;
 }
 
-
 getJoinTeamPermissions( team )
 {
 	teamcount = 0;
-	
 	players = level.players;
 	for(i = 0; i < players.size; i++)
 	{
 		player = players[i];
-		
 		if((isdefined(player.pers["team"])) && (player.pers["team"] == team))
 			teamcount++;
 	}
-	
 	if( teamCount < level.teamLimit )
 		return true;
 	else
@@ -711,13 +619,8 @@ getJoinTeamPermissions( team )
 }
 
 setSpectatePermissions()
-
 {
-
 	self allowSpectateTeam( "allies", true );
-
 	self allowSpectateTeam( "axis", true );
-
 	self allowSpectateTeam( "none", false );
-
 }
