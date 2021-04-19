@@ -339,9 +339,6 @@ xmodel,glovem13
 xmodel,glovem16
 
 #Materijali za skinove
-material,mtl_desert_op_force_glove1
-material,mtl_desert_op_force_sleeve1
-material,mtl_desert_op_force_arm1
 material,mtl_desert_op_force_arm3
 material,mtl_desert_op_force_glove3
 material,mtl_desert_op_force_sleeve3
@@ -351,9 +348,6 @@ material,mtl_desert_op_force_sleeve4
 material,mtl_desert_op_force_arm5
 material,mtl_desert_op_force_glove5
 material,mtl_desert_op_force_sleeve5
-material,mtl_desert_op_force_arm6
-material,mtl_desert_op_force_glove6
-material,mtl_desert_op_force_sleeve6
 material,mtl_desert_op_force_arm7
 material,mtl_desert_op_force_glove7
 material,mtl_desert_op_force_sleeve7
