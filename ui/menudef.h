@@ -72,9 +72,7 @@
 #define	COLOR_DEV		0.3 0.3 0.3 1
 
 #define DEFAULT_MP_CFG			"default_mp.cfg"
-#define SPLITSCREEN_MP_CFG		"default_splitscreen.cfg"
 #define SYSTEMLINK_MP_CFG		"default_systemlink.cfg"
-#define XBOXLIVE_MP_CFG			"default_xboxlive.cfg"
 
 #define MAX_RANK		int(tableLookup( "mp/rankTable.csv", 0, "maxrank", 1))
 #define MAX_PRESTIGE	int(tableLookup( "mp/rankIconTable.csv", 0, "maxprestige", 1))

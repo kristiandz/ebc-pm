@@ -221,9 +221,6 @@
 #define BUTTON_BG_COLOR		0 0 0 0.25  // Main Menu Button Color // Multiplyer Buttons
 #endif
 
-// ------------ splitscreen ----------------
-
-
 // -----------------------------------------
 
 #if !defined( CHOICE_SEP_1 ) || !defined( CHOICE_SEP_SPACING )
@@ -313,7 +310,6 @@
 			visible			when( localVarInt( ui_highlight ) == itemIndex && localVarString( ui_choicegroup ) == CHOICE_GROUP ); \
 			decoration \
 		} \
-		CHOICE_ACCEPT_HINT( itemIndex, visArg )
 
 // used for custom highlights for itemDefs that are special and can not use itemIndex or complie with the strict alignment of this macro set
 #define CHOICE_HIGHLIGHT_CUSTOM_2( px, py, pw, ph, visArg ) \
@@ -352,31 +348,9 @@
 			forecolor		HIGHLIGHT_COLOR \
 			visible			visArg \
 			decoration \
-		} \	
-
+		} \
 
 //CHOICE_TEXT_OFFSET_X
-
-#if defined( CONSOLE ) && !defined( SPLITSCREEN )
-#define CHOICE_ACCEPT_HINT( itemIndex, vis ) \
-		itemDef \
-		{ \
-			rect			CHOICE_RECT( itemIndex ) \
-			origin			A_BUTTON_OFFSET_X A_BUTTON_OFFSET_Y \
-			text			"@PLATFORM_UI_SELECTBUTTON" \
-			textfont		A_BUTTON_FONT \
-			textscale		A_BUTTON_SIZE \
-			textstyle		A_BUTTON_TEXTSTYLE \
-			textAlign		CHOICE_TEXTALIGN \
-			textAlignX		0 \
-			textAlignY		-1\
-			forecolor		0 0 1 1 \
-			visible			when( localVarInt( ui_highlight ) == itemIndex && localVarString( ui_choicegroup ) == CHOICE_GROUP && vis ); \
-			decoration \
-		} 
-#else // #if defined( CONSOLE ) && !defined( SPLITSCREEN )
-#define CHOICE_ACCEPT_HINT( itemIndex, vis )
-#endif // #else // #if defined( CONSOLE ) && !defined( SPLITSCREEN )
 		
 #define CHOICE_MENU_TITLE_SS( titleArg ) \
 		itemDef \

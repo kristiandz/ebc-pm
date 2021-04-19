@@ -10,7 +10,6 @@ menuDef
 		focuscolor		COLOR_FOCUSED
 		style			WINDOW_STYLE_EMPTY
 		blurWorld		3
-		legacySplitScreenScale
 		
 		onClose
 		{

@@ -10,8 +10,6 @@ init()
 	
 	level.gametype=toLower(getDvar("g_gametype"));
 	if(!isDefined(level.tweakablesInitialized))maps\mp\gametypes\_tweakables::init();
-	level.splitscreen=0;
-	level.console=0;
 	level.oldschool=0;
 	level.onlineGame = true;
 	level.rankedMatch = true;

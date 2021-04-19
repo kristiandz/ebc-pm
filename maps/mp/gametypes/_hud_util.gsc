@@ -442,11 +442,10 @@ createBar( color, width, height, flashFrac )
 	
 	barElemBG = newClientHudElem( self );
 	barElemBG.elemType = "bar";
-	if ( !level.splitScreen )
-	{
-		barElemBG.x = -2;
-		barElemBG.y = -2;
-	}
+
+	barElemBG.x = -2;
+	barElemBG.y = -2;
+	
 	barElemBG.width = width;
 	barElemBG.height = height;
 	barElemBG.xOffset = 0;
@@ -458,10 +457,7 @@ createBar( color, width, height, flashFrac )
 	barElemBG.color = (0,0,0);
 	barElemBG.alpha = 0.5;
 	barElemBG setParent( level.uiParent );
-	if ( !level.splitScreen )
-		barElemBG setShader( "progress_bar_bg", width + 4, height + 4 );
-	else
-		barElemBG setShader( "progress_bar_bg", width + 0, height + 0 );
+	barElemBG setShader( "progress_bar_bg", width + 4, height + 4 );
 	barElemBG.hidden = false;
 	
 	return barElemBG;
@@ -482,21 +478,13 @@ getCurrentFraction()
 createPrimaryProgressBar()
 {
 	bar = createBar( (1, 1, 1), level.primaryProgressBarWidth, level.primaryProgressBarHeight );
-	if ( level.splitScreen )
-		bar setPoint("TOP", undefined, level.primaryProgressBarX, level.primaryProgressBarY);
-	else
-		bar setPoint("CENTER", undefined, level.primaryProgressBarX, level.primaryProgressBarY);
-
+	bar setPoint("CENTER", undefined, level.primaryProgressBarX, level.primaryProgressBarY);
 	return bar;
 }
 createPrimaryProgressBarText()
 {
 	text = createFontString( "objective", level.primaryProgressBarFontSize );
-	if ( level.splitScreen )
-		text setPoint("TOP", undefined, level.primaryProgressBarTextX, level.primaryProgressBarTextY);
-	else
-		text setPoint("CENTER", undefined, level.primaryProgressBarTextX, level.primaryProgressBarTextY);
-	
+	text setPoint("CENTER", undefined, level.primaryProgressBarTextX, level.primaryProgressBarTextY);
 	text.sort = -1;
 	return text;
 }
@@ -516,7 +504,6 @@ createSecondaryProgressBarText()
 	return text;
 }
 */
-
 
 createTeamProgressBar( team )
 {
@@ -686,10 +673,7 @@ showPerk( index, perk, ypos )
 		assert( !isdefined( self.perkname[ index ] ) );
 		
 		xpos = -5;
-		if ( level.splitScreen )
-			ypos = 0 - (80 + iconsize * (2 - index));
-		else
-			ypos = 0 - (90 + iconsize * (2 - index));
+		ypos = 0 - (90 + iconsize * (2 - index));
 		
 		icon = createIcon( "white", iconsize, iconsize );
 		icon setPoint( "BOTTOMRIGHT", undefined, xpos, ypos );

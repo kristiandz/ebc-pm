@@ -56,7 +56,6 @@
 		// disable the other positioning overrides
 		#undef STYLE2_NOPOSITION
 		#define STYLE2_NOPOSITION			1
-		#undef SPLITSCREEN_ENABLED
 		
 	#endif
 
@@ -90,27 +89,6 @@
 #else
 	#undef CHOICE_TEXTSIZE
 	#define CHOICE_TEXTSIZE			TEXTSIZE_DEFAULT
-#endif
-
-// position setting for splitscreen
-#ifdef SPLITSCREEN_ENABLED
-	#undef CHOICE_SIZE_X
-	#define CHOICE_SIZE_X 120
-	#undef CHOICE_SIZE_Y
-	#define CHOICE_SIZE_Y 18
-	#define CHOICE_TEXT_OFFSET_X	(0 - (4+CHOICE_SIZE_Y))
-	#define CHOICE_ACCEPT_ALIGN_X	-2
-	#define CHOICE_ACCEPT_ALIGN_Y	0
-	#define	CHOICE_TEXTALIGN		ITEM_ALIGN_MIDDLE_RIGHT
-	#define ALT_HINT_X_OFFSET		-(CHOICE_SIZE_Y)
-	#undef CHOICE_SEP_OFFSET_Y
-	#define CHOICE_SEP_OFFSET_Y		-2
-	#define NEW_X_OFFSET			2
-	
-	#undef CHOICE_TEXTSIZE
-	#define CHOICE_TEXTSIZE		TEXTSIZE_SMALL
-	
-	#define BUTTON_BG_COLOR			0.9 0.9 1 0.12
 #endif
 
 #undef CHOICE_TEXTCOLOR

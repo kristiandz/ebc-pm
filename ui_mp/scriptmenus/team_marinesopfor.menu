@@ -25,7 +25,6 @@
 		focuscolor		COLOR_FOCUSED
 		style			WINDOW_STYLE_EMPTY
 		blurWorld		7
-		legacySplitScreenScale
 		onOpen
 		{
 			setLocalVarInt ui_highlight "";

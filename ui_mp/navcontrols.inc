@@ -2,27 +2,6 @@
 #define ALT_PANEL		0
 #endif
 
-#ifdef	SPLITSCREEN_ENABLED
-
-	itemDef 	
-	{ 
-		style			WINDOW_STYLE_SHADER 
-		rect			-320 0 500 64 0 0 
-		background		"white" 
-		forecolor		0 0 1 1
-		visible			1	decoration 
-	} 
-	itemDef 	
-	{ 
-		style			WINDOW_STYLE_SHADER 
-		rect			180 0 16 -64 0 0 
-		origin			0 0 
-		background		HIGHLIGHT_SHADER_ART 
-		forecolor		0 0 1 1
-		visible			1	decoration	
-	}
-#endif
-
 #ifdef	PC
 	itemDef 	
 	{ 
@@ -94,7 +73,6 @@
 	}
 #endif
 
-#ifndef SPLITSCREEN_ENABLED
 #ifndef PC
 	itemDef 	
 	{ 
@@ -153,139 +131,6 @@
 		decoration	
 	}
 #endif
-#endif
-
-#ifdef CONSOLE
-		#define LOCAL_NOT_IN_CAC ( !menuisopen("menu_cac_assault") && !menuisopen("menu_cac_heavygunner") && !menuisopen("menu_cac_sniper") && !menuisopen("menu_cac_specops") && !menuisopen("menu_cac_demolitions") )
-		#define LOCAL_IN_CAC ( menuisopen("menu_cac_assault") || menuisopen("menu_cac_heavygunner") || menuisopen("menu_cac_sniper") || menuisopen("menu_cac_specops") || menuisopen("menu_cac_demolitions") )
-		
-		#ifndef BUTTON_Y_FILTER
-		#define BUTTON_Y_FILTER		0
-		#endif
-		
-		#undef NAV_FONT
-		#ifdef SPLITSCREEN_ENABLED
-			#define NAV_FONT	UI_FONT_SMALL
-		#else
-			#define NAV_FONT	UI_FONT_NORMAL
-		#endif	
-		
-		// change filter Y button for leaderboards
-		itemDef
-		{
-			name			change_filter
-			text			"@PLATFORM_CHANGE_FILTER"
-			textfont		UI_FONT_NORMAL
-			textscale		TEXTSIZE_SMALL
-			rect			100 -4 0 0 CHOICE_HORIZONTAL_ALIGN VERTICAL_ALIGN_BOTTOM
-			visible			when( BUTTON_Y_FILTER );
-			decoration
-			execKeyInt BUTTON_Y
-			{
-				play "mouse_click";
-				execNow "toggle lb_filter 0 1";
-			}
-		}
-
-		#ifndef BUTTON_X_GOTOTOP
-		#define BUTTON_X_GOTOTOP	0
-		#endif
-		
-		// jump to top X button for leaderboards
-		itemDef
-		{
-			name			change_filter
-			text			"@PLATFORM_GOTOTOP"
-			textfont		NAV_FONT
-			textscale		TEXTSIZE_SMALL
-			textalign		ITEM_ALIGN_CENTER
-			rect			0 -4 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM
-			visible			when( BUTTON_X_GOTOTOP );
-			decoration
-		}
-		
-		#ifndef BUTTON_PGUP
-		#define BUTTON_PGUP		0
-		#endif
-		#ifndef BUTTON_PGDOWN
-		#define BUTTON_PGDOWN	0
-		#endif
-				
-		#ifndef	BUTTON_REFRESH
-		#define BUTTON_REFRESH	0
-		#endif
-				
-		// refresh button for systemlink 
-		itemDef
-		{
-			name			refresh
-			text			"@PLATFORM_REFRESH"
-			textfont		NAV_FONT
-			textscale		TEXTSIZE_SMALL
-			textalign		ITEM_ALIGN_RIGHT
-			rect			-20 -4 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM
-			visible			when( BUTTON_REFRESH );
-			decoration
-		}		
-
-		// page up and down 
-		itemDef
-		{
-			name			pgup
-			text			"@PLATFORM_PGUP"
-			textfont		NAV_FONT
-			textscale		TEXTSIZE_SMALL
-			textalign		ITEM_ALIGN_LEFT
-			rect			-190 -4 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
-			visible			when( BUTTON_PGUP );
-			decoration
-		}
-		itemDef
-		{
-			name			pgdown
-			text			"@PLATFORM_PGDOWN"
-			textfont		NAV_FONT
-			textscale		TEXTSIZE_SMALL
-			textalign		ITEM_ALIGN_LEFT
-			rect			-90 -4 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
-			visible			when( BUTTON_PGDOWN );
-			decoration
-		}
-		
-		
-		itemDef {
-			style			WINDOW_STYLE_SHADER
-			rect			0 -20 16 16 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
-			origin			0 0
-			background		"ui_arrow_left"
-			forecolor		1 0 1 1
-			visible			1
-			decoration
-		}
-		itemDef
-		{
-			rect			18 -4 0 0 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
-			origin			0 0
-			text			"@PLATFORM_BACK"
-			textfont		NAV_FONT
-			textscale		TEXTSIZE_SMALL
-			textalign		ITEM_ALIGN_BOTTOM_LEFT
-			visible			WHEN( LOCAL_NOT_IN_CAC );
-			decoration
-		}
-		itemDef
-		{
-			rect			18 -4 0 0 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
-			origin			0 0
-			text			"@PLATFORM_SAVECUSTOMMODE"
-			textfont		NAV_FONT
-			textscale		TEXTSIZE_SMALL
-			textalign		ITEM_ALIGN_BOTTOM_LEFT
-			visible			when( LOCAL_IN_CAC );
-			decoration
-		}		
-		
-#endif // #ifdef CONSOLE
 
 #ifdef PC
 
