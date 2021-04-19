@@ -1946,7 +1946,7 @@ Callback_StartGameType()
 	thread maps\mp\gametypes\_gameobjects::init();
 	thread maps\mp\gametypes\_spawnlogic::init();
 	thread maps\mp\gametypes\_hud_message::init();
-	thread maps\mp\gametypes\_quickmessages::init();
+	thread scripts\menus\quickmessages_menu_response::init();
 	
 	stringNames=getArrayKeys(game["strings"]);
 	for(i=0;i<stringNames.size;i++)if(!isstring(game["strings"][stringNames[i]]))precacheString(game["strings"][stringNames[i]]);
