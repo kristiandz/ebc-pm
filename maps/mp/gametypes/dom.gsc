@@ -352,9 +352,6 @@ onUse( player )
 	oldTeam = self maps\mp\gametypes\_gameobjects::getOwnerTeam();
 	label = self maps\mp\gametypes\_gameobjects::getLabel();
 
-	if ( isDefined( level.scorebot ) && level.scorebot )
-		game["promod_scorebot_ticker_buffer"] += "captured" + self.label + "" + player.name;
-
 	logPrint("P_F;" + player getGuid() + ";" + player getEntityNumber() + ";" + player.name + "\n");
 
 	self maps\mp\gametypes\_gameobjects::setOwnerTeam( team );

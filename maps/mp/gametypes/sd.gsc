@@ -116,9 +116,7 @@ rreset()
 	wait 1;
     players = scripts\utility\_utility::getAllPlayers();
     for( i = 0; i < players.size; i++ )
-    {
 		players[i] SetStat(1190,0); // Arena Icons
-	}
 }
 
 onSpawnPlayer()
@@ -270,7 +268,8 @@ onBeginUse(player)
 		player.isPlanting = true;
 		if(level.multibomb)
 		{
-			for( i=0; i < self.otherBombZones.size; i++) self.otherBombZones[i] maps\mp\gametypes\_gameobjects::disableObject();
+			for( i=0; i < self.otherBombZones.size; i++) 
+				self.otherBombZones[i] maps\mp\gametypes\_gameobjects::disableObject();
 		}
 	}
 }
@@ -316,7 +315,6 @@ onUsePlantObject(player)
 		for( i=0; i < level.players.size; i++) level.players[i] playLocalSound("promod_planted");
 		player thread[[level.onXPEvent]]("plant");
 		level thread bombPlanted(self, player);
-		if(isDefined(level.scorebot)&&level.scorebot)game["promod_scorebot_ticker_buffer"]+="planted_by"+player.name;
 		logPrint("P_P;"+player getGuid()+";"+player getEntityNumber()+";"+player.name+"\n");
 	}
 }
@@ -330,7 +328,6 @@ onUseDefuseObject(player)
 	if(!level.hardcoreMode) iPrintLn( &"MP_EXPLOSIVES_DEFUSED_BY", player.name);
 	maps\mp\gametypes\_globallogic::givePlayerScore("defuse", player);
 	player thread[[level.onXPEvent]]("defuse");
-	if(isDefined(level.scorebot)&&level.scorebot)game["promod_scorebot_ticker_buffer"]+="defused_by"+player.name;
 	logPrint("P_D;"+player getGuid()+";"+player getEntityNumber()+";"+player.name+"\n");
 }
 
@@ -338,8 +335,8 @@ onDrop(player)
 {
 	if(!level.bombPlanted)
 	{
-		if(isDefined(player) && isDefined(player.name)) printOnTeamArg( &"MP_EXPLOSIVES_DROPPED_BY", game["attackers"], player);
-		if(isDefined(level.scorebot)&&level.scorebot&&isDefined(player)&&isDefined(player.name))game["promod_scorebot_ticker_buffer"]+="dropped_bomb"+player.name; //
+		if(isDefined(player) && isDefined(player.name))
+			printOnTeamArg( &"MP_EXPLOSIVES_DROPPED_BY", game["attackers"], player);
 	}
 	self maps\mp\gametypes\_gameobjects::set3DIcon("friendly", "waypoint_bomb");
 	if (!level.bombPlanted) playSoundOnPlayers(game["bomb_dropped_sound"], game["attackers"]);
@@ -350,8 +347,8 @@ onPickup(player)
 	self maps\mp\gametypes\_gameobjects::set3DIcon("friendly", "waypoint_defend");
 	if(!level.bombDefused)
 	{
-		if(isDefined(player) && isDefined(player.name)) printOnTeamArg( &"MP_EXPLOSIVES_RECOVERED_BY", game["attackers"], player);
-		if(isDefined(level.scorebot)&&level.scorebot&&isDefined(player)&&isDefined(player.name))game["promod_scorebot_ticker_buffer"]+="pickup_bomb"+player.name;
+		if(isDefined(player) && isDefined(player.name)) 
+			printOnTeamArg( &"MP_EXPLOSIVES_RECOVERED_BY", game["attackers"], player);
 	}
 	playSoundOnPlayers(game["bomb_recovered_sound"], game["attackers"]);
 }
@@ -412,7 +409,6 @@ bombPlanted(destroyedObj, player)
 	level.bombExploded = true;
 	explosionOrigin = level.sdBombModel.origin;
 	level.sdBombModel hide();
-	if(isDefined(level.scorebot)&&level.scorebot)game["promod_scorebot_ticker_buffer"]+="bomb_exploded";
 	if(isdefined(player))destroyedObj.visuals[0] radiusDamage(explosionOrigin, 512, 200, 20, player);
 	else destroyedObj.visuals[0] radiusDamage(explosionOrigin, 512, 200, 20);
 	rot = randomfloat(360);

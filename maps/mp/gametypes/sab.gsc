@@ -377,9 +377,6 @@ onPickup( player )
 
 	player playLocalSound( "mp_suitcase_pickup" );
 
-	if ( isDefined( level.scorebot ) && level.scorebot && isDefined( player ) && isDefined( player.name ) )
-		game["promod_scorebot_ticker_buffer"] += "pickup_bomb" + player.name;
-
 	excludeList[0] = player;
 
 	if ( team == self maps\mp\gametypes\_gameobjects::getOwnerTeam() )
@@ -410,9 +407,6 @@ onDrop( player )
 	{
 		if ( isDefined( player ) )
 			printOnTeamArg( &"MP_EXPLOSIVES_DROPPED_BY", self maps\mp\gametypes\_gameobjects::getOwnerTeam(), player );
-
-		if ( isDefined( level.scorebot ) && level.scorebot && isDefined( player ) && isDefined( player.name ) )
-			game["promod_scorebot_ticker_buffer"] += "dropped_bomb" + player.name;
 
 		playSoundOnPlayers( game["bomb_dropped_sound"], self maps\mp\gametypes\_gameobjects::getOwnerTeam() );
 
@@ -462,9 +456,6 @@ onUse( player )
 		player thread [[level.onXPEvent]]( "plant" );
 		level thread bombPlanted( self, player.pers["team"] );
 
-		if ( isDefined( level.scorebot ) && level.scorebot )
-			game["promod_scorebot_ticker_buffer"] += "planted_by" + player.name;
-
 		logPrint("P_P;" + player getGuid() + ";" + player getEntityNumber() + ";" + player.name + "\n");
 
 		level.bombOwner = player;
@@ -489,9 +480,6 @@ onUse( player )
 
 		player thread [[level.onXPEvent]]( "defuse" );
 		level thread bombDefused( self );
-
-		if ( isDefined( level.scorebot ) && level.scorebot )
-			game["promod_scorebot_ticker_buffer"] += "defused_by" + player.name;
 
 		logPrint("P_D;" + player getGuid() + ";" + player getEntityNumber() + ";" + player.name + "\n");
 
@@ -543,9 +531,6 @@ bombPlanted( destroyedObj, team )
 
 	explosionOrigin = level.sabBomb.visuals[0].origin;
 	level.bombExploded = true;
-
-	if ( isDefined( level.scorebot ) && level.scorebot )
-		game["promod_scorebot_ticker_buffer"] += "bomb_exploded";
 
 	if ( isdefined( level.bombowner ) )
 		destroyedObj.visuals[0] radiusDamage( explosionOrigin, 512, 200, 20, level.bombowner );
