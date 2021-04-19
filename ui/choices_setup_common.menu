@@ -208,11 +208,8 @@
 #endif
 
 /////////////////////////////////////////////////////////// BACKGROUND COLOR NOT FOCUES
-#ifdef PS3
-	#define A_BUTTON_BG_COLOR 	0 0 0 0.15
-#else
-	#define A_BUTTON_BG_COLOR 	0 0 0 0.15
-#endif
+
+#define A_BUTTON_BG_COLOR 	0 0 0 0.15
 
 #define A_BUTTON_TEXTSTYLE	ITEM_TEXTSTYLE_NORMAL
 

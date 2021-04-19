@@ -48,16 +48,9 @@ onStartGameType()
 	maps\mp\gametypes\_globallogic::setObjectiveText( "allies", &"PL_OBJECTIVES_KC" );
 	maps\mp\gametypes\_globallogic::setObjectiveText( "axis", &"PL_OBJECTIVES_KC" );
 	
-	if ( level.splitscreen )
-	{
-		maps\mp\gametypes\_globallogic::setObjectiveScoreText( "allies", &"PL_OBJECTIVES_KC" );
-		maps\mp\gametypes\_globallogic::setObjectiveScoreText( "axis", &"PL_OBJECTIVES_KC" );
-	}
-	else
-	{
-		maps\mp\gametypes\_globallogic::setObjectiveScoreText( "allies", &"PL_OBJECTIVES_KC_SCORE" );
-		maps\mp\gametypes\_globallogic::setObjectiveScoreText( "axis", &"PL_OBJECTIVES_KC_SCORE" );
-	}
+	maps\mp\gametypes\_globallogic::setObjectiveScoreText( "allies", &"PL_OBJECTIVES_KC_SCORE" );
+	maps\mp\gametypes\_globallogic::setObjectiveScoreText( "axis", &"PL_OBJECTIVES_KC_SCORE" );
+	
 	maps\mp\gametypes\_globallogic::setObjectiveHintText( "allies", &"PL_OBJECTIVES_KC_HINT" );
 	maps\mp\gametypes\_globallogic::setObjectiveHintText( "axis", &"PL_OBJECTIVES_KC_HINT" );
 			
