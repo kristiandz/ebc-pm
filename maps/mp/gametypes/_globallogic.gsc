@@ -10,10 +10,6 @@ init()
 	
 	level.gametype=toLower(getDvar("g_gametype"));
 	if(!isDefined(level.tweakablesInitialized))maps\mp\gametypes\_tweakables::init();
-	level.oldschool=0;
-	level.onlineGame = true;
-	level.rankedMatch = true;
-	level.tempEntity = spawn( "script_model", (0,0,0) );
 	level.script=toLower(getDvar("mapname"));
 	checkRestartMap();
 	level.otherTeam["allies"]="axis";
