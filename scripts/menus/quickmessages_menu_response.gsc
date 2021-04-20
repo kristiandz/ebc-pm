@@ -92,7 +92,7 @@ quickpromod(response)
 	switch(response)
 	{
 		case "1":
-			self iprintln("Promod Live ^1V3.00^7 by Kreator");
+			self iprintln("Promod Live ^8V3.00^7 by Kreator");
 			wait 0.5;
 			self iprintln("Optimised for public servers, source available on github!");
 			break;
