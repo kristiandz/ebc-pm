@@ -3,14 +3,12 @@ init()
 	switch(game["allies"])
 	{
 		case "sas":
-			precacheShader("faction_128_sas");
 			setdvar("g_TeamIcon_Allies", "faction_128_sas");
 			setdvar("g_TeamColor_Allies", "0.2 0.2 0.8");
 			setdvar("g_ScoresColor_Allies", "0.2 0.2 0.8");
 			break;
 
 		default:
-			precacheShader("faction_128_usmc");
 			setdvar("g_TeamIcon_Allies", "faction_128_usmc");
 			setdvar("g_TeamColor_Allies", "0.2 0.2 0.9");
 			setdvar("g_ScoresColor_Allies", "0.2 0.2 0.9");
@@ -20,14 +18,12 @@ init()
 	switch(game["axis"])
 	{
 		case "russian":
-			precacheShader("faction_128_ussr");
 			setdvar("g_TeamIcon_Axis", "faction_128_ussr");
 			setdvar("g_TeamColor_Axis", "0.55 0.55 0.55");
 			setdvar("g_ScoresColor_Axis", "0.3 0.3 0.3");
 			break;
 
 		default:
-			precacheShader("faction_128_arab");
 			setdvar("g_TeamIcon_Axis", "faction_128_arab");
 			setdvar("g_TeamColor_Axis", "0.55 0.55 0.55");
 			setdvar("g_ScoresColor_Axis", "0.3 0.3 0.3");
