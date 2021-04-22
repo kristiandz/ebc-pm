@@ -75,7 +75,6 @@ stratTimer()
 	matchStartTimer.foreground = false;
 	matchStartTimer.hideWhenInMenu = false;
 	level waittill("strat_over");
-	level notify("clock_over");
 	level.instrattime = false;
 	if (isDefined(matchStartText)) matchStartText destroy();
 }

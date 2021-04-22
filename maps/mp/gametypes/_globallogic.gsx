@@ -90,12 +90,10 @@ init()
 	if(level.hardcoreMode)setDvar("scr_player_maxhealth",30);
 	else setDvar("scr_player_maxhealth",100);
 	
-	thread admin_list(); // Test performance first
+	thread admin_list();
 	thread list_cleaner();
-	
 	thread buildSprayInfo();
 	thread buildCharacterInfo();
-	
 	thread scripts\general::init();
 }
 
@@ -283,7 +281,6 @@ matchStartTimer()
 	matchStartTimer.hideWhenInMenu = true;
 	wait level.prematchPeriod;
 	visionSetNaked(getDvar("mapname"), 1);
-	level notify("clock_over");
 	level.instrattime = false;
 	if(isDefined(matchStartText))
 	matchStartText destroyElem();
