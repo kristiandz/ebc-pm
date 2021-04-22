@@ -43,7 +43,6 @@ init()
 	level.instrattime = false;
 	level.firstblood = false;
 	level.inFinalKillcam = false;
-	level.numKills = 0;
 	
 	level.randomcolour = (RandomFloat(1), RandomFloat(1), RandomFloat(1));
 	registerDvars();
