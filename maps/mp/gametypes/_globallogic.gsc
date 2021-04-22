@@ -2732,7 +2732,6 @@ sprayLogo()
 			sprayNum = level.numSprays;
 	    playFx( level.sprayInfo[sprayNum]["effect"], position, forward, up );
 		self playSound( "sprayer" );
-		self notify( "spray", sprayNum, position, forward, up ); // ch_sprayit
 		wait 10;
 	}
 }
