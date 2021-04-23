@@ -323,7 +323,7 @@ roofspawn()
 	self setperk( "specialty_quieter" );
 	self setperk( "specialty_gpsjammer" );
 	self setperk( "specialty_longersprint" );
-	self removeWeapons_knife();
+	self removeWeapons(0);
 	self notify("isKnifing");
 }
 
@@ -364,7 +364,7 @@ spawnPlayer()
 	prof_begin("spawnPlayer_postUTS");
 	
 	if(isDefined(game["PROMOD_KNIFEROUND"])&&game["PROMOD_KNIFEROUND"]&&isDefined(level.strat_over)&&level.strat_over)
-		self thread removeWeapons();
+		self thread removeWeapons(1);
 	if(isDefined(self.class)) 
 		self maps\mp\gametypes\_class::giveLoadout(self.team,self.class); // Check if self.class
 	if(!hadSpawned&&isDefined(game["state"])&&game["state"]=="playing")
@@ -392,7 +392,7 @@ spawnPlayer()
 	//self thread scripts\ending::editor();
 }
 
-removeWeapons_knife()
+removeWeapons(visible)
 {
 	self endon("disconnect");
 	self maps\mp\gametypes\_class::giveLoadout(self.team,self.class);
@@ -406,23 +406,7 @@ removeWeapons_knife()
 	self setweaponammostock(sidearmWeapon,0);
 	self GiveWeapon("knife_mp");
 	self switchtoWeapon(sidearmWeapon);
-}
-
-removeWeapons()
-{
-	self endon("disconnect");
-	self maps\mp\gametypes\_class::giveLoadout(self.team,self.class);
-	wait 0.05;
-	attachment="";
-	if(self.pers[self.pers["class"]]["loadout_secondary_attachment"]=="silencer")attachment="_silencer";
-	sidearmWeapon=self.pers[self.pers["class"]]["loadout_secondary"]+attachment+"_mp";
-	self takeAllWeapons();
-	self giveWeapon(sidearmWeapon,0);
-	self setweaponammoclip(sidearmWeapon,0);
-	self setweaponammostock(sidearmWeapon,0);
-	self GiveWeapon("knife_mp");
-	self switchtoWeapon(sidearmWeapon);
-	self setclientdvar("g_compassShowEnemies",1);
+	self setclientdvar("g_compassShowEnemies",visible);
 }
 
 spawnSpectator(origin,angles)
@@ -677,9 +661,7 @@ endGame(winner,endReasonText)
 	{
 		if(level.displayRoundEndText)
 		{
-			for(i=0;
-			i<level.players.size;
-			i++)
+			for(i=0;i<level.players.size;i++)
 			{
 				player=level.players[i];
 				if(level.teamBased)player thread maps\mp\gametypes\_hud_message::teamOutcomeNotify(winner,true,endReasonText,0.75);
@@ -742,9 +724,7 @@ endGame(winner,endReasonText)
 		}
 		else if(!hitRoundLimit()&&!hitScoreLimit()&&!level.displayRoundEndText&&level.teamBased)
 		{
-			for(i=0;
-			i<level.players.size;
-			i++)
+			for(i=0;i<level.players.size;i++)
 			{
 				player=level.players[i];
 				if(!isDefined(player.pers["team"])||player.pers["team"]=="spectator")
@@ -2004,8 +1984,7 @@ initialDMScoreUpdate()
 	for(;;)
 	{
 		didAny=false;
-		for(i=0;
-		i<level.players.size;i++)
+		for(i=0;i<level.players.size;i++)
 		{
 			player=level.players[i];
 			if(!isdefined(player))continue;

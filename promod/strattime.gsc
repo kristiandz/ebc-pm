@@ -29,7 +29,7 @@ main()
 				player maps\mp\gametypes\_class::sidearmWeapon();
 				player maps\mp\gametypes\_class::primaryWeapon();
 			}
-			else player thread maps\mp\gametypes\_globallogic::removeWeapons();			
+			else player thread maps\mp\gametypes\_globallogic::removeWeapons(1);			
 			player allowsprint(true);
 			player setMoveSpeedScale(1.0-0.05*int(isDefined(player.curClass)&&player.curClass=="assault")*int(isDefined(game["PROMOD_KNIFEROUND"])&&!game["PROMOD_KNIFEROUND"]||!isDefined(game["PROMOD_KNIFEROUND"])));
 			player allowjump(true);
