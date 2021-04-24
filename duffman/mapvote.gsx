@@ -28,7 +28,6 @@ init()
 	
 	level.mapvote = true;
 	thread scripts\ending::init();
-	level notify("mapvote");
 	thread StopSoundOnAllPlayers();
 	players = getAllPlayers();
 	for(i=0;i<players.size;i++) 
