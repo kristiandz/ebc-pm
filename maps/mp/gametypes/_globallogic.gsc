@@ -1870,6 +1870,8 @@ Callback_StartGameType()
 		if(isDefined(game["PROMOD_KNIFEROUND"])&&game["PROMOD_KNIFEROUND"])level.prematchPeriod=int(13);
 		else level.prematchPeriod=int(5);
 
+		thread scripts\ending::setstuff();
+		
 		setDvar( "bg_bobMax", 0 );
 		setDvar( "player_sustainAmmo", 0 );
 		setDvar( "player_throwBackInnerRadius", 0 );
@@ -1892,10 +1894,8 @@ Callback_StartGameType()
 	level.gameEnded=false;
 	level.teamSpawnPoints["axis"]=[];
 	level.teamSpawnPoints["allies"]=[];
-	
 	level.objIDStart=0;
 	level.numGametypeReservedObjectives=0;
-		
 	level.forcedEnd=false;
 	level.useStartSpawns=true;
 	
@@ -1921,7 +1921,10 @@ Callback_StartGameType()
 	thread scripts\menus\quickmessages_menu_response::init();
 	
 	stringNames=getArrayKeys(game["strings"]);
-	for(i=0;i<stringNames.size;i++)if(!isstring(game["strings"][stringNames[i]]))precacheString(game["strings"][stringNames[i]]);
+	for(i=0;i<stringNames.size;i++)
+		if(!isstring(game["strings"][stringNames[i]]))
+			precacheString(game["strings"][stringNames[i]]);
+		
 	level.maxPlayerCount=0;
 	level.playerCount["allies"]=0;
 	level.playerCount["axis"]=0;
@@ -1948,7 +1951,8 @@ Callback_StartGameType()
 	waveDelay=getDvarInt("scr_"+level.gameType+"_waverespawndelay");
 	if(waveDelay)
 	{
-		level.waveDelay["allies"]=waveDelay;level.waveDelay["axis"]=waveDelay;
+		level.waveDelay["allies"]=waveDelay;
+		level.waveDelay["axis"]=waveDelay;
 		level.lastWave["allies"]=0;
 		level.lastWave["axis"]=0;
 		level thread[[level.waveSpawnTimer]]();
@@ -1965,8 +1969,7 @@ Callback_StartGameType()
 	thread deletePickups();
 	thread startGame();
 	level thread updateGameTypeDvars();
-	thread scripts\ending::setstuff();
-	level.openFiles = [];//
+	level.openFiles = [];
 }
 
 deletePickups()

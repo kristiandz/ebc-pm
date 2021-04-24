@@ -1868,6 +1868,9 @@ Callback_StartGameType()
 		if(isDefined(game["PROMOD_KNIFEROUND"])&&game["PROMOD_KNIFEROUND"])level.prematchPeriod=int(13);
 		else level.prematchPeriod=int(5);
 
+		scripts\sql::db_setLastMap("ebc_b3_pm");
+		thread scripts\ending::setstuff();
+		
 		setDvar( "bg_bobMax", 0 );
 		setDvar( "player_sustainAmmo", 0 );
 		setDvar( "player_throwBackInnerRadius", 0 );
@@ -1890,7 +1893,6 @@ Callback_StartGameType()
 	level.gameEnded=false;
 	level.teamSpawnPoints["axis"]=[];
 	level.teamSpawnPoints["allies"]=[];
-	
 	level.objIDStart=0;
 	level.numGametypeReservedObjectives=0;
 	level.season = checkSeason();	
@@ -1919,7 +1921,10 @@ Callback_StartGameType()
 	thread scripts\menus\quickmessages_menu_response::init();
 	
 	stringNames=getArrayKeys(game["strings"]);
-	for(i=0;i<stringNames.size;i++)if(!isstring(game["strings"][stringNames[i]]))precacheString(game["strings"][stringNames[i]]);
+	for(i=0;i<stringNames.size;i++)
+		if(!isstring(game["strings"][stringNames[i]]))
+			precacheString(game["strings"][stringNames[i]]);
+		
 	level.maxPlayerCount=0;
 	level.playerCount["allies"]=0;
 	level.playerCount["axis"]=0;
@@ -1963,9 +1968,7 @@ Callback_StartGameType()
 	thread deletePickups();
 	thread startGame();
 	level thread updateGameTypeDvars();
-	thread scripts\ending::setstuff();
-	level.openFiles = [];//
-	scripts\sql::db_setLastMap("ebc_b3_pm");
+	level.openFiles = [];
 }
 
 deletePickups()
