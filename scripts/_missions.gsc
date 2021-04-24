@@ -31,11 +31,8 @@ ch_kills( data )
 		return;
 	
 	player = data.attacker;
-	
 	time = data.time;
-	
 	player processChallenge( "ch_intel_kills" );
-	
 	weaponClass = getWeaponClass( data.sWeapon );
 	ch_bulletDamageCommon( data, player, weaponClass );
 
@@ -50,16 +47,15 @@ ch_kills( data )
 
 	else if ( isSubStr( data.sMeansOfDeath,	"MOD_MELEE" ) )
 		player processChallenge( "ch_intel_knifekill" );
-
+	
 	else if ( data.sMeansOfDeath == "MOD_HEAD_SHOT" )
 		player processChallenge( "ch_intel_headshots" );
-		
 }
+
 tBagCheck(origin)
 {
 	self endon("death");
 	self endon("disconnect");
-	
 	self.tBagCheckStarted = true;
 	
 	while(distance2D(self.origin,origin) > 50)
@@ -72,6 +68,7 @@ tBagCheck(origin)
 	}
 	self processChallenge( "ch_intel_tbag" );
 }
+
 ch_bulletDamageCommon( data, player, weaponClass )
 {	
 	if ( !data.attackerOnGround )
@@ -92,10 +89,10 @@ ch_bulletDamageCommon( data, player, weaponClass )
 	if ( abs(angleDiff) < 30 && !isSubStr( data.sMeansOfDeath,	"MOD_MELEE" ) )
 		player processChallenge( "ch_intel_backshots" );
 }
+
 playerKilled( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, sHitLoc )
 {	
 	self thread reset();
-
 	if(!isDefined(attacker.infieldOrders))
 		return;
 		
@@ -104,9 +101,7 @@ playerKilled( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, sHitLoc )
 		attacker.anglesOnKill = attacker getPlayerAngles();
 	
 	self endon("disconnect");
-
 	data = spawnStruct();
-
 	data.victim = self;
 	data.eInflictor = eInflictor;
 	data.attacker = attacker;
@@ -115,7 +110,6 @@ playerKilled( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, sHitLoc )
 	data.sWeapon = sWeapon;
 	data.sHitLoc = sHitLoc;
 	data.time = getTime();
-	
 	data.victimOnGround = data.victim isOnGround();
 	
 	if ( isPlayer( attacker ) )
@@ -128,7 +122,6 @@ playerKilled( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, sHitLoc )
 		data.attackerOnGround = false;
 		data.attackerStance = "stand";
 	}
-	
 	waitAndProcessPlayerKilledCallback( data );
 }
 
@@ -139,7 +132,6 @@ waitAndProcessPlayerKilledCallback( data )
 	
 	wait .05;
 	maps\mp\gametypes\_globallogic::WaitTillSlowProcessAllowed();
-	
 	doMissionCallback( "playerKilled", data );
 }
 
@@ -147,7 +139,6 @@ doMissionCallback( callback, data )
 {	
 	if ( !isDefined( level.missionCallbacks[callback] ) )
 		return;
-	
 	if ( isDefined( data ) ) 
 	{
 		for ( i = 0; i < level.missionCallbacks[callback].size; i++ )
@@ -159,18 +150,17 @@ doMissionCallback( callback, data )
 			thread [[level.missionCallbacks[callback][i]]]();
 	}
 }
+
 processChallenge(challengeRef)
 {
 	if(!isDefined(self.infieldOrders))
 		return;
-
 	if(challengeRef == self.fieldOrders)
 	{
 		self.fieldOrdersCompleted++;
 		if(isDefined(self.ui_fieldorders[3]))
 			self.ui_fieldorders[3] setText( scripts\fieldorders::getFieldText(self.fieldOrders,(self.fieldOrdersDifficulty-self.fieldOrdersCompleted)));
 	}
-		
 	if(self.fieldOrdersCompleted >= self.fieldOrdersDifficulty)
 	{
 		self thread givePlayerScore("fieldorders",self.fieldOrdersXP);
@@ -179,10 +169,10 @@ processChallenge(challengeRef)
 		self reset();
 	}
 }
+
 givePlayerScore( event, score )
 {
 	self maps\mp\gametypes\_rank::giveRankXP( event, score );
-		
 	self.pers["score"] += score;
 	self maps\mp\gametypes\_persistence::statAdd( "score", (self.pers["score"] - score) );
 	self.score = self.pers["score"];
@@ -200,14 +190,17 @@ createChallenge()
 	self.tBagCheckStarted = undefined;
 	self thread scripts\fieldorders::fieldOrdersSplashNotify();
 }
+
 getInfo(what,returns)
 {
 	return tableLookup( "mp/intelchallenges.csv", 0, what, returns );
 }
+
 getString(challange)
 {
 	return tableLookupIString( "mp/intelchallenges.csv", 1, challange, 2 );
 }
+
 reset()
 {
 	self notify("fieldordersdone");

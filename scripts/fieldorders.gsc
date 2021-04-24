@@ -3,7 +3,6 @@
 #include common_scripts\utility;
 #include scripts\utility\_utility;
 
-
 init()
 { 
 	precacheModel("field_orders_suitcase");
@@ -15,32 +14,27 @@ init()
 	precacheString(&"INTEL_COMPLETED");
 	precacheString(&"INTEL_CHALLENGE_CAPS");
 	precacheString(&"INTEL_ACQUIRING_INTEL");
-	
-} 
+}
+
 onKill( victim )
 {	
 	self endon("disconnect");
-	
 	if(level.numKills > 1 && (!isDefined(level.fieldowner) || level.fieldowner != victim))
 		return;
 	
 	level.fieldowner = undefined;
-	
 	basePosition = playerPhysicsTrace( victim.origin, victim.origin + ( 0, 0, -99999 ) );
-	
 	visuals[0] = spawn( "script_model", basePosition + ( 0, 0, 20 ));
 	visuals[0] setModel( "field_orders_suitcase" );			
-	trigger = spawn( "trigger_radius", basePosition, 0, 20, 50 );
-		
+	trigger = spawn( "trigger_radius", basePosition, 0, 20, 50 );	
 	level.fieldorders = maps\mp\gametypes\_gameobjects::createDogTag( "any", trigger, visuals, (0,0,16) );
 	level.fieldorders maps\mp\gametypes\_gameobjects::setUseTime( 0.2 );
 	level.fieldorders maps\mp\gametypes\_gameobjects::setUseText(&"INTEL_ACQUIRING_INTEL");
 	level.fieldorders.onUse = ::onUseFieldOrders;
-					
 	level.fieldorders maps\mp\gametypes\_gameobjects::allowUse( "any" );	
-								
 	level.fieldorders.visuals[0] thread bounce();
 }
+
 onUseFieldOrders( player )
 {					
 	self maps\mp\gametypes\_gameobjects::allowUse( "none" );
@@ -60,7 +54,6 @@ bounce()
 	while( isDefined(level.fieldorders) )
 	{
 		self rotateYaw( 360, 3, 0.3, 0.3 );
-
 		self moveZ( 20, 1.5, 0.3, 0.3 );
 		wait 1.5;
 		self moveZ( -20, 1.5, 0.3, 0.3 );
@@ -73,10 +66,9 @@ fieldOrdersSplashNotify()
 	self endon("disconnect");
 	wait 0.05;
 	if ( level.gameEnded )
-	return;
+		return;
 		
 	self destroyFieldOrders();
-		
 	wait 0.05;
 	
 	self.ui_fieldorders[0] = newClientHudElem( self );
@@ -91,7 +83,6 @@ fieldOrdersSplashNotify()
 	self.ui_fieldorders[0].sort = 900;
 	self.ui_fieldorders[0].hideWhenInMenu = true;
 	self.ui_fieldorders[0].archived = false;
-	
 	self.ui_fieldorders[1] = newClientHudElem( self );
 	self.ui_fieldorders[1].x = -150;
 	self.ui_fieldorders[1].y = -50;
@@ -104,7 +95,6 @@ fieldOrdersSplashNotify()
 	self.ui_fieldorders[1].sort = 901;
 	self.ui_fieldorders[1].hideWhenInMenu = true;
 	self.ui_fieldorders[1].archived = false;
-		
 	self.ui_fieldorders[2] = addTextHud( self, -100, -85, 1, "left", "bottom", 1.4 ); 
 	self.ui_fieldorders[2].horzAlign = "left";
 	self.ui_fieldorders[2].vertAlign = "bottom";
@@ -113,7 +103,6 @@ fieldOrdersSplashNotify()
 	self.ui_fieldorders[2].color = game["colors"]["blue"];
 	self.ui_fieldorders[2].hideWhenInMenu = true;
 	self.ui_fieldorders[2].archived = false;
-		
 	self.ui_fieldorders[3] = addTextHud( self, -100, -70, 1, "left", "bottom", 1.4 );
 	self.ui_fieldorders[3].horzAlign = "left";
 	self.ui_fieldorders[3].vertAlign = "bottom";
@@ -122,7 +111,6 @@ fieldOrdersSplashNotify()
 	self.ui_fieldorders[3].sort = 904;
 	self.ui_fieldorders[3].hideWhenInMenu = true;
 	self.ui_fieldorders[3].archived = false;
-	
 	self.ui_fieldorders[4] = newClientHudElem( self );
 	self.ui_fieldorders[4].x = -150;
 	self.ui_fieldorders[4].y = -104;
@@ -135,7 +123,6 @@ fieldOrdersSplashNotify()
 	self.ui_fieldorders[4].sort = 905;
 	self.ui_fieldorders[4].hideWhenInMenu = true;
 	self.ui_fieldorders[4].archived = false;
-		
 	self.ui_fieldorders[5] = newClientHudElem( self );
 	self.ui_fieldorders[5].x = -150;
 	self.ui_fieldorders[5].y = -50;
@@ -151,16 +138,14 @@ fieldOrdersSplashNotify()
 		
 	for(i = 0 ; i < self.ui_fieldorders.size && isDefined(self.ui_fieldorders[i]); i++)
 		self.ui_fieldorders[i] moveOverTime(0.15);
-				
+
 	self.ui_fieldorders[0].x = 5;
 	self.ui_fieldorders[1].x = 5;
 	self.ui_fieldorders[2].x = 10;
 	self.ui_fieldorders[3].x = 10;
 	self.ui_fieldorders[4].x = 5;
 	self.ui_fieldorders[5].x = 5;
-	
 	wait 0.15;
-
 	waittill_any_ents(self,"fieldordersdone",level,"_game_ended");
 		
 	for(i = 0; i < self.ui_fieldorders.size && isDefined(self.ui_fieldorders[i]); i++)
@@ -172,15 +157,14 @@ fieldOrdersSplashNotify()
 	self.ui_fieldorders[3].x = -100;	
 	self.ui_fieldorders[4].x = -150;
 	self.ui_fieldorders[5].x = -150;		
-
 	wait 0.15;
 	self destroyFieldOrders();
 }
+
 destroyFieldOrders()
 {
 	if( !isDefined( self.ui_fieldorders ) || !self.ui_fieldorders.size )
 		return;
-
 	for( i = 0; i < self.ui_fieldorders.size; i++ )
 		self.ui_fieldorders[i] destroy();
 	self.ui_fieldorders = [];
@@ -192,7 +176,6 @@ addTextHud( who, x, y, alpha, alignX, alignY, fontScale )
 		hud = newClientHudElem( who );
 	else
 		hud = newHudElem();
-
 	hud.x = x;
 	hud.y = y;
 	hud.alpha = alpha;
@@ -201,6 +184,7 @@ addTextHud( who, x, y, alpha, alignX, alignY, fontScale )
 	hud.fontScale = fontScale;
 	return hud;
 }
+
 getFieldText(orders,num)
 {
 	if(!isDefined(num))
