@@ -359,7 +359,7 @@ text()
 {
 	self endon("disconnect");
     names = level.name;
-	if(isDefined(names))
+	if(isDefined(names) && level.gametype != "dm" )
 	{
 		self.sname = createFontString( "default", 1.4 );
 		self.sname setPoint( "CENTER", "BOTTOM", 0, 10 );  
