@@ -818,7 +818,7 @@
             textscale       0.46
             textstyle       ITEM_TEXTSTYLE_SHADOWED
             textfont        UI_FONT_NORMAL
-            forecolor       0.9 0.685 0.660 1
+            forecolor       0.9 0.6 0.6 1
 			exp text		dvarString(opposing_alive)
             visible         when(team( name ) != "TEAM_SPECTATOR" && ( dvarint( ui_hud_hardcore ) == 0 ) && ( dvarstring("g_gametype") != "ffa"))
             decoration

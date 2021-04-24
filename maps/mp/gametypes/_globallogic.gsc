@@ -1803,11 +1803,11 @@ Callback_StartGameType()
 		game["strings"]["time_limit_reached"]=&"MP_TIME_LIMIT_REACHED";
 		game["strings"]["players_forfeited"]=&"MP_PLAYERS_FORFEITED";
 		
-		game["colors"]["blue"] = (0.4, 0.65, 0.8);
+		game["colors"]["blue"] = (0.4, 0.6, 0.8);
 		game["colors"]["orange"] = (1, 0.44, 0.13);
 		game["colors"]["red"] = (0.9,0.1,0.1);
-		game["colors"]["white"] = (1.0,1.0,1.0);
-		game["colors"]["black"] = (0.0,0.0,0.0);
+		game["colors"]["white"] = (1,1,1);
+		game["colors"]["black"] = (0,0,0);
 		game["colors"]["green"] = (0.25,0.75,0.25);
 		game["colors"]["yellow"] = (0.65,0.65,0.0);
 		
