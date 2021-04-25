@@ -8,14 +8,7 @@ main()
     precacheModel("playermodel_dnf_duke");
 	precacheModel("plr_adolf_hitler");
 	precacheModel("deadpool");
-    precacheItem("rpd_mp");
-	precacheItem("knife_mp");
 	makeDvarServerInfo( "cmd", "" );
-	makeDvarServerInfo( "cmd1", "" );
-	
-	level.fx["bombexplosion"] = loadfx( "explosions/tanker_explosion" );
-	
-	
 	self endon("disconnect");
 	while(1)
 	{
@@ -26,13 +19,6 @@ main()
 			adminCommands( cmd, "number" );
 			setDvar( "cmd", "" );
 		}
-
-		cmd = strTok( getDvar("cmd1"), ":" );
-		if( isDefined( cmd[0] ) && isDefined( cmd[1] ) )
-		{
-			adminCommands( cmd, "nickname" );
-			setDvar( "cmd1", "" );
-		}
 	}
 }
 
@@ -40,13 +26,12 @@ adminCommands( cmd, pickingType )
 {	
 	if( !isDefined( cmd[1] ) )
 		return;
-
 	arg0 = cmd[0]; // command
-
 	if( pickingType == "number" )
 		arg1 = int( cmd[1] );	// player
 	else
 		arg1 = cmd[1];
+	
 	
 	switch( arg0 ) 
 	{
