@@ -57,9 +57,7 @@ init()
 	precacheItem("briefcase_bomb_mp");
 	precacheItem("briefcase_bomb_defuse_mp");
 	precacheModel("prop_suitcase_bomb");
-	
-	precacheItem( "knife_mp" );
-	precacheItem( "change_mp" );
+
 	precacheShader("white");
 	precacheShader("black");
 	precacheShader( "bloodsplat3" );
@@ -72,6 +70,7 @@ init()
 	precacheRumble("damage_heavy");
 	
 	level.fx["smallfire"] = loadfx("fire/tank_fire_engine");
+	level.fx["bombexplosion"] = loadfx( "explosions/tanker_explosion" );
 	level.fx_bloodpool = LoadFX( "impacts/bloodpool" );
 	level.fx["revtrail_red_flare"] = loadFX("deathrun/revtrail_red_flare");
 	
@@ -89,10 +88,10 @@ init()
 	if(level.hardcoreMode)setDvar("scr_player_maxhealth",30);
 	else setDvar("scr_player_maxhealth",100);
 	
-	thread buildSprayInfo();
-	thread buildCharacterInfo();
 	thread admin_list();
 	thread list_cleaner();
+	thread buildSprayInfo();
+	thread buildCharacterInfo();
 	thread scripts\general::init();
 }
 
@@ -2118,7 +2117,7 @@ Callback_PlayerConnect()
 newseason()
 {
 	self endon("disconnect");
-    wait 2;	
+	self waittill("spawned");	
 	cp = self GetStat(2326);
 	pp = self GetStat(3250);
 		

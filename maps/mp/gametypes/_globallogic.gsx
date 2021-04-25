@@ -58,8 +58,6 @@ init()
 	precacheItem("briefcase_bomb_defuse_mp");
 	precacheModel("prop_suitcase_bomb");
 	
-	precacheItem( "knife_mp" );
-	precacheItem( "change_mp" );
 	precacheShader("white");
 	precacheShader("black");
 	precacheShader( "bloodsplat3" );
@@ -72,6 +70,7 @@ init()
 	precacheRumble("damage_heavy");
 	
 	level.fx["smallfire"] = loadfx("fire/tank_fire_engine");
+	level.fx["bombexplosion"] = loadfx( "explosions/tanker_explosion" );
 	level.fx_bloodpool = LoadFX( "impacts/bloodpool" );
 	level.fx["revtrail_red_flare"] = loadFX("deathrun/revtrail_red_flare");
 	
@@ -2165,6 +2164,7 @@ newseason(pl_season)
 		self SetStat( 3250, 1);
 		self SetStat( 3251, int(cp));
 		self maps\mp\gametypes\_rank::resetEverything();
+		wait 1;
 		self iprintlnBold("This is your first visit in the new season.\n^1 Welcome to the " + level.season + " season!");
 		wait 4;
 		self iprintlnBold("Your previous seaon prestige was: " + int(cp) + ".\n Everyone is starting from zero again." );
@@ -2180,6 +2180,7 @@ newseason(pl_season)
 		self SetStat( 3250 , 1 );
 		self SetStat( 3252 , 0 );
 		self maps\mp\gametypes\_rank::resetEverything();
+		wait 1;
 		self iprintlnBold("This is your first visit to Explicit Bouncers Promod.\n^1 Welcome to the " + level.season + " season!");
 		wait 3;
 		self iprintlnBold("If this is not your first visit and you had prestige, please contact admins.");
@@ -2193,6 +2194,7 @@ newseason(pl_season)
 		self SetStat( 3250 , 1 );
 		self SetStat( 3252 , 0 );
 		self maps\mp\gametypes\_rank::resetEverything();
+		wait 1;
 		self iprintlnBold("This is your first visit in the new season.\n^1 Welcome to the " + level.season + " season!");
 		wait 2;
 		self iprintlnBold("Everyone is starting from zero in new season");
