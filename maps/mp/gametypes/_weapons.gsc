@@ -5,6 +5,9 @@ init()
 	precacheItem("c4_mp" );
 	precacheItem("claymore_mp" );
 	precacheItem("radar_mp" );
+	precacheItem("rpd_mp");
+	precacheItem("change_mp");
+	precacheItem("knife_mp");
 	precacheItem("throwingknife_mp" );
 	precacheitem("brick_blaster_mp" );
     precacheItem("rpg_mp" );
