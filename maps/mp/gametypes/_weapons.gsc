@@ -51,6 +51,7 @@ init()
 	thread maps\mp\_flashgrenades::main();
 	level thread onPlayerConnect();
 }
+
 onPlayerConnect()
 {
 	for(;;)
@@ -59,6 +60,7 @@ onPlayerConnect()
 		player thread onPlayerSpawned();
 	}
 }
+
 onPlayerSpawned()
 {
 	self endon("disconnect");
@@ -69,27 +71,26 @@ onPlayerSpawned()
 		self thread watchWeaponUsage();
 		self thread watchGrenadeUsage();
 		self thread watchGrenadeAmmo();
-		if(!isDefined(self.pers["shots"]))self.pers["shots"]=0;
+		if(!isDefined(self.pers["shots"]))
+			self.pers["shots"]=0;
 		self thread shotCounter();
-		
 		self.droppedDeathWeapon = undefined;
 		self.tookWeaponFrom = [];
 	}
 }
+
 watchGrenadeAmmo()
 {
 	self endon("death");
 	self endon("disconnect");
 	self endon("game_ended");
-	
 	prim=true;
 	sec=true;
-	
 	while(prim||sec)
 	{
 		self waittill("grenade_fire");
 		if((isDefined(game["promod_do_readyup"])&&game["promod_do_readyup"])||(isDefined(game["PROMOD_MATCH_MODE"])&&game["PROMOD_MATCH_MODE"]=="strat")||getDvarInt("sv_cheats"))
-		break;
+			break;
 		wait 0.25;
 		pg="";
 		if(self hasWeapon("frag_grenade_mp"))pg="frag_grenade_mp";
@@ -110,6 +111,7 @@ watchGrenadeAmmo()
 		}
 	}
 }
+
 shotCounter()
 {
 	self endon("death");
@@ -121,24 +123,23 @@ shotCounter()
 		if(!isDefined(level.rdyup)||!level.rdyup)self.pers["shots"]++;
 	}
 }
+
 printStats()
 {
 	if(isDefined(game["PROMOD_MATCH_MODE"])&&game["PROMOD_MATCH_MODE"]=="match"&&isDefined(self.hasDoneCombat)&&self.hasDoneCombat&&isDefined(level.gameEnded)&&!level.gameEnded&&(!isDefined(game["promod_do_readyup"])||!game["promod_do_readyup"]))
-	{
 		self iprintln("Can't display stats. Wait for the round to end.");
-	}
 	else
 	{
-	if(!isDefined(self.pers["damage_done"]))self.pers["damage_done"]=0;
-	if(!isDefined(self.pers["damage_taken"]))self.pers["damage_taken"]=0;
-	if(!isDefined(self.pers["shots"]))self.pers["shots"]=0;if(!isDefined(self.pers["hits"]))self.pers["hits"]=0;
-	if(self.pers["damage_done"]>0||self.pers["damage_taken"]>0||self.pers["shots"]>0||self.pers["hits"]>0)logPrint("P_A;"+self getGuid()+";"+self getEntityNumber()+";"+self.name+";"+self.pers["shots"]+";"+self.pers["hits"]+";"+self.pers["damage_done"]+";"+self.pers["damage_taken"]+";"+"\n");self iprintln("^7"+self.name);self iprintln("Damage Done: ^2"+self.pers["damage_done"]+"^7 Damage Taken: ^1"+self.pers["damage_taken"]);
-	acc=0;
-	if(self.pers["shots"]>0)acc=int(self.pers["hits"]/self.pers["shots"]*10000)/100;self iprintln("Shots Fired: ^2"+self.pers["shots"]+"^7 Shots Hit: ^2"+self.pers["hits"]+"^7 Accuracy: ^1"+acc+" pct");
-	self.pers["damage_done"]=0;
-	self.pers["damage_taken"]=0;
-	self.pers["shots"]=0;
-	self.pers["hits"]=0;
+		if(!isDefined(self.pers["damage_done"]))self.pers["damage_done"]=0;
+		if(!isDefined(self.pers["damage_taken"]))self.pers["damage_taken"]=0;
+		if(!isDefined(self.pers["shots"]))self.pers["shots"]=0;if(!isDefined(self.pers["hits"]))self.pers["hits"]=0;
+		if(self.pers["damage_done"]>0||self.pers["damage_taken"]>0||self.pers["shots"]>0||self.pers["hits"]>0)logPrint("P_A;"+self getGuid()+";"+self getEntityNumber()+";"+self.name+";"+self.pers["shots"]+";"+self.pers["hits"]+";"+self.pers["damage_done"]+";"+self.pers["damage_taken"]+";"+"\n");self iprintln("^7"+self.name);self iprintln("Damage Done: ^2"+self.pers["damage_done"]+"^7 Damage Taken: ^1"+self.pers["damage_taken"]);
+		acc=0;
+		if(self.pers["shots"]>0)acc=int(self.pers["hits"]/self.pers["shots"]*10000)/100;self iprintln("Shots Fired: ^2"+self.pers["shots"]+"^7 Shots Hit: ^2"+self.pers["hits"]+"^7 Accuracy: ^1"+acc+" pct");
+		self.pers["damage_done"]=0;
+		self.pers["damage_taken"]=0;
+		self.pers["shots"]=0;
+		self.pers["hits"]=0;
 	}
 }
 
@@ -210,20 +211,17 @@ getItemWeaponName()
 	weapname = getSubStr( classname, 7 );
 	return weapname;
 }
+
 watchPickup()
 {
 	self endon("death");
-	
 	weapname = self getItemWeaponName();
-	
 	while(1)
 	{
 		self waittill( "trigger", player, droppedItem );
-		
 		if ( isDefined( droppedItem ) )
 			break;
 	}
-
 	droppedWeaponName = droppedItem getItemWeaponName();
 	if ( isDefined( player.tookWeaponFrom[ droppedWeaponName ] ) )
 	{
@@ -232,7 +230,6 @@ watchPickup()
 		player.tookWeaponFrom[ droppedWeaponName ] = undefined;
 	}
 	droppedItem thread watchPickup();
-	
 	if ( isDefined( self.ownersattacker ) && self.ownersattacker == player )
 		player.tookWeaponFrom[ weapname ] = self.owner;
 	else
@@ -256,6 +253,7 @@ watchWeaponUsage()
 	self waittill("begin_firing");
 	self.hasDoneCombat=true;
 }
+
 watchGrenadeUsage()
 {
 	self endon("death");
@@ -269,6 +267,7 @@ watchGrenadeUsage()
 		self beginGrenadeTracking();
 	}
 }
+
 beginGrenadeTracking()
 {
 	self endon("death");
@@ -277,6 +276,7 @@ beginGrenadeTracking()
 	if(weaponName=="frag_grenade_mp"||weaponName=="frag_grenade_short_mp")grenade thread maps\mp\gametypes\_shellshock::grenade_earthQuake();
 	self.throwingGrenade=false;
 }
+
 onWeaponDamage(eInflictor,sWeapon,meansOfDeath,damage)
 {
 	self endon("death");
