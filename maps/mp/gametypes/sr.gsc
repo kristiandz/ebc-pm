@@ -515,47 +515,42 @@ ispawnang(ent)
 
 onPlayerKilled( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, psOffsetTime, deathAnimDuration )
 {
-	if(isDefined(self) && isDefined(attacker) && (self GetStat(2801) < 1))
-	{
-	self thread spawnDogTags( attacker );
-	}
+	if( isPlayer( attacker ) && attacker != self && (self GetStat(2801) < 1))
+		self thread spawnDogTags( attacker );
 } 
 
 spawnDogTags( attacker )
 {
 	if(isDefined(attacker) && self.pers["team"] != "spectator" && attacker != self) 
 	{
-		if(attacker.pers["team"] != self.pers["team"])
-		{
-			basePosition = playerPhysicsTrace( self.origin + ( 0, 0, 10 ), self.origin + ( 0, 0, -99999 ) );
+		basePosition = playerPhysicsTrace( self.origin + ( 0, 0, 10 ), self.origin + ( 0, 0, -99999 ) );
 		
-			trigger = spawn( "trigger_radius", basePosition, 0, 20, 50 );
-			trigger endon( "picked_up" );
-			trigger endon( "timed_out" );
-			trigger.owner = attacker;
-			trigger.team = attacker.pers["team"];
+		trigger = spawn( "trigger_radius", basePosition, 0, 20, 50 );
+		trigger endon( "picked_up" );
+		trigger endon( "timed_out" );
+		trigger.owner = attacker;
+		trigger.team = attacker.pers["team"];
 		
-			friendlyTag = spawn( "script_model", basePosition + ( 0, 0, 20 ) );
-			friendlyTag endon( "picked_up" );
-			friendlyTag endon( "timed_out" );
-			friendlyTag setModel( "cross_dogtag" );
-			friendlyTag.team = self.pers["team"];
-			friendlyTag.owner = self;
+		friendlyTag = spawn( "script_model", basePosition + ( 0, 0, 20 ) );
+		friendlyTag endon( "picked_up" );
+		friendlyTag endon( "timed_out" );
+		friendlyTag setModel( "cross_dogtag" );
+		friendlyTag.team = self.pers["team"];
+		friendlyTag.owner = self;
 		
-			enemyTag = spawn( "script_model", basePosition + ( 0, 0, 20 ) );
-			enemyTag endon( "picked_up" );
-			enemyTag endon( "timed_out" );
-			enemyTag setModel( "skull_dogtag" );
-			enemyTag.team = attacker.pers["team"];
-			enemyTag.owner = self;
+		enemyTag = spawn( "script_model", basePosition + ( 0, 0, 20 ) );
+		enemyTag endon( "picked_up" );
+		enemyTag endon( "timed_out" );
+		enemyTag setModel( "skull_dogtag" );
+		enemyTag.team = attacker.pers["team"];
+		enemyTag.owner = self;
 		
-			self thread onJoinedDisconnect( enemyTag, friendlyTag, trigger );
-			friendlyTag thread bounce();
-			enemyTag thread bounce();
-			friendlyTag thread showTagToTeam();
-			enemyTag thread showTagToTeam();
-			trigger thread onUseTag( friendlyTag, enemyTag, trigger );
-		}
+		self thread onJoinedDisconnect( enemyTag, friendlyTag, trigger );
+		friendlyTag thread bounce();
+		enemyTag thread bounce();
+		friendlyTag thread showTagToTeam();
+		enemyTag thread showTagToTeam();
+		trigger thread onUseTag( friendlyTag, enemyTag, trigger );
 	}
 }
 
