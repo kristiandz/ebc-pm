@@ -2,52 +2,54 @@
 
 init()
 {
-	game["menu_team"] = "team_marinesopfor";
-	if(game["attackers"] == "axis" && game["defenders"] == "allies")
-		game["menu_team"] += "_flipped";
-	game["menu_class_allies"] = "class_marines";
-	game["menu_changeclass_allies"] = "changeclass_marines_mw";
-	game["menu_class_axis"] = "class_opfor";
-	game["menu_changeclass_axis"] = "changeclass_opfor_mw";
-	game["menu_class"] = "class";
-	game["menu_changeclass"] = "changeclass_mw";
-	game["menu_changeclass_offline"] = "changeclass_offline";
-	game["menu_callvote"] = "callvote";
-	game["menu_muteplayer"] = "muteplayer";
-	game["menu_quickcommands"] = "quickcommands";
-	game["menu_quickstatements"] = "quickstatements";
-	game["menu_quickresponses"] = "quickresponses";
-	game["menu_quickpromod"] = "quickpromod";
-	game["menu_quickpromodgfx"] = "quickpromodgfx";
-	game["menu_quickpromodfps"] = "quickpromodfps";
-    game["menu_admin"] = "admin";
-	game["menu_player"] = "player";
-	game["menu_vip"] = "vip";
-	game["menu_sprays"] = "sprays";
-	game["menu_clientcmd"] = "clientcmd";
-	
-	precacheMenu("clientcmd");
-	precacheMenu("quickcommands");
-	precacheMenu("quickpromodfps");
-	precacheMenu("vip");
-	precacheMenu("sprays");
-	precacheMenu("player");
-	precacheMenu("admin");
-	precacheMenu("quickstatements");
-	precacheMenu("quickresponses");
-	precacheMenu("quickpromod");
-	precacheMenu("quickpromodgfx");
-	precacheMenu("scoreboard");
-	precacheMenu(game["menu_team"]);
-	precacheMenu("class_marines");
-	precacheMenu("changeclass_marines_mw");
-	precacheMenu("class_opfor");
-	precacheMenu("changeclass_opfor_mw");
-	precacheMenu("class");
-	precacheMenu("changeclass_mw");
-	precacheMenu("changeclass_offline");
-	precacheMenu("echo");
-
+	if(!isDefined(game["gamestarted_threads"]))
+	{
+		game["menu_team"] = "team_marinesopfor";
+		if(game["attackers"] == "axis" && game["defenders"] == "allies")
+			game["menu_team"] += "_flipped";
+		game["menu_class_allies"] = "class_marines";
+		game["menu_changeclass_allies"] = "changeclass_marines_mw";
+		game["menu_class_axis"] = "class_opfor";
+		game["menu_changeclass_axis"] = "changeclass_opfor_mw";
+		game["menu_class"] = "class";
+		game["menu_changeclass"] = "changeclass_mw";
+		game["menu_changeclass_offline"] = "changeclass_offline";
+		game["menu_callvote"] = "callvote";
+		game["menu_muteplayer"] = "muteplayer";
+		game["menu_quickcommands"] = "quickcommands";
+		game["menu_quickstatements"] = "quickstatements";
+		game["menu_quickresponses"] = "quickresponses";
+		game["menu_quickpromod"] = "quickpromod";
+		game["menu_quickpromodgfx"] = "quickpromodgfx";
+		game["menu_quickpromodfps"] = "quickpromodfps";
+		game["menu_admin"] = "admin";
+		game["menu_player"] = "player";
+		game["menu_vip"] = "vip";
+		game["menu_sprays"] = "sprays";
+		game["menu_clientcmd"] = "clientcmd";
+		
+		precacheMenu("clientcmd");
+		precacheMenu("quickcommands");
+		precacheMenu("quickpromodfps");
+		precacheMenu("vip");
+		precacheMenu("sprays");
+		precacheMenu("player");
+		precacheMenu("admin");
+		precacheMenu("quickstatements");
+		precacheMenu("quickresponses");
+		precacheMenu("quickpromod");
+		precacheMenu("quickpromodgfx");
+		precacheMenu("scoreboard");
+		precacheMenu(game["menu_team"]);
+		precacheMenu("class_marines");
+		precacheMenu("changeclass_marines_mw");
+		precacheMenu("class_opfor");
+		precacheMenu("changeclass_opfor_mw");
+		precacheMenu("class");
+		precacheMenu("changeclass_mw");
+		precacheMenu("changeclass_offline");
+		precacheMenu("echo");
+	}
 	level thread onPlayerConnect();
 }
 

@@ -62,11 +62,14 @@ init()
 	precacheShader("black");
 	precacheShader( "bloodsplat3" );
 	
-	precacheStatusIcon("hud_status_dead");
-	precacheStatusIcon("alkohol_menu");
-	precacheStatusIcon("hud_status_connecting");
-	precacheStatusIcon("compassping_friendlyfiring_mp");
-	precacheStatusIcon("compassping_enemy");
+	if(!isDefined(game["gamestarted_threads"]))
+	{
+		precacheStatusIcon("hud_status_dead");
+		precacheStatusIcon("alkohol_menu");
+		precacheStatusIcon("hud_status_connecting");
+		precacheStatusIcon("compassping_friendlyfiring_mp");
+		precacheStatusIcon("compassping_enemy");
+	}
 	precacheRumble("damage_heavy");
 	
 	level.fx["smallfire"] = loadfx("fire/tank_fire_engine");
@@ -1918,7 +1921,8 @@ Callback_StartGameType()
 	thread maps\mp\gametypes\_spawnlogic::init();
 	thread maps\mp\gametypes\_hud_message::init();
 	thread scripts\menus\quickmessages_menu_response::init();
-	
+	game["gamestarted_threads"]=true;
+		
 	stringNames=getArrayKeys(game["strings"]);
 	for(i=0;i<stringNames.size;i++)
 		if(!isstring(game["strings"][stringNames[i]]))
