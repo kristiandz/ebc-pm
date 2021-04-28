@@ -413,7 +413,8 @@ rocketNuke()
 	wait 0.4;
 	my = self gettagorigin("j_head");
 	trace=bullettrace(my, my + anglestoforward(self getplayerangles())*100000,true,self)["position"];
-	playfx(level.expbullt,trace);
+	explode = loadfx( "explosions/tanker_explosion" );
+	playfx(explode,trace);
 	self playSound( "artillery_impact" );
 	Earthquake( 0.4, 4, self.origin, 100 );
 	self playsound("mp_last_stand");
