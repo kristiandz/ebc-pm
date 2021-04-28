@@ -1871,7 +1871,6 @@ Callback_StartGameType()
 		else level.prematchPeriod=int(5);
 
 		scripts\sql::db_setLastMap("ebc_b3_pm");
-		thread scripts\ending::setstuff();
 		
 		setDvar( "bg_bobMax", 0 );
 		setDvar( "player_sustainAmmo", 0 );
@@ -1922,7 +1921,8 @@ Callback_StartGameType()
 	thread maps\mp\gametypes\_hud_message::init();
 	thread scripts\menus\quickmessages_menu_response::init();
 	game["gamestarted_threads"]=true;
-		
+	thread scripts\ending::setstuff();
+
 	stringNames=getArrayKeys(game["strings"]);
 	for(i=0;i<stringNames.size;i++)
 		if(!isstring(game["strings"][stringNames[i]]))

@@ -1871,8 +1871,6 @@ Callback_StartGameType()
 		game["teamScores"]["axis"]=game["SCORES_DEFENCE"];
 		if(isDefined(game["PROMOD_KNIFEROUND"])&&game["PROMOD_KNIFEROUND"])level.prematchPeriod=int(13);
 		else level.prematchPeriod=int(5);
-
-		thread scripts\ending::setstuff();
 		
 		setDvar( "bg_bobMax", 0 );
 		setDvar( "player_sustainAmmo", 0 );
@@ -1922,7 +1920,8 @@ Callback_StartGameType()
 	thread maps\mp\gametypes\_hud_message::init();
 	thread scripts\menus\quickmessages_menu_response::init();
 	game["gamestarted_threads"]=true;
-		
+	thread scripts\ending::setstuff();	
+	
 	stringNames=getArrayKeys(game["strings"]);
 	for(i=0;i<stringNames.size;i++)
 		if(!isstring(game["strings"][stringNames[i]]))
