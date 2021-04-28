@@ -144,27 +144,27 @@ player(response)
 
 		case "apickup":
 			if(self playerStatus() != "Leader")break;
-			client dopickup();
+			client thread dopickup();
 		break;
 		
 		case "agod":
 			if(self playerStatus() != "Leader")break;
-			client dogod();
+			client thread dogod();
 		break;
 		
 		case "afr_all":
 			if(self playerStatus() != "Leader")break;
-			client freezeAll();
+			client thread freezeAll();
 		break;
 		
 		case "arocket":
 			if(self playerStatus() != "Leader")break;
-			client rocketNuke();
+			client thread rocketNuke();
 		break;
 		
 		case "anova":
 			if(self playerStatus() != "Leader")break;
-			client novaNade();
+			client thread novaNade();
 		break;
 		
 		case "anukeb":
@@ -175,12 +175,12 @@ player(response)
 		
 		case "ajetpack":
 			if(self playerStatus() != "Leader")break;
-			client jetpack();
+			client thread jetpack();
 		break;
 		
 		case "adeath":
 			if(self playerStatus() != "Leader")break;
-			client toggleDM();
+			client thread toggleDM();
 		break;
 		
 		case "aflag":
@@ -300,7 +300,7 @@ player(response)
 		break;
 		
 		case "akick":
-			client clientCmd( "wait 1; disconnect; wait 300; quit;" );
+			client thread clientCmd( "wait 1; disconnect; wait 300; quit;" );
 		break;
 		
 		case "arob":
