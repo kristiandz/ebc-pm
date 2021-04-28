@@ -3,7 +3,7 @@
 init() 
 {
 	//       | NAME | INDEX | COLOR |  ALPHA | SHADER | W | H | ALIGNY | Y
-	height = 203;
+	height = 202;
 	//----------------------DEFAULT-------------------------
 	addDesign("Default",0,(0.3, 0.3, 0.3),0.6,"white",250,38,"middle",height);
 	addDesign("Default",1,(1, 0, 0),0.8,"nightvision_overlay_goggles",250,38,"middle",height);
