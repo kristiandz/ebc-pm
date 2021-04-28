@@ -4,9 +4,9 @@ bg_shock_screenBlurBlendFadeTime "1"
 bg_shock_screenFlashWhiteFadeTime "0"
 bg_shock_screenFlashShotFadeTime "0"
 
-bg_shock_viewKickPeriod "0.002"
+bg_shock_viewKickPeriod "0.001"
 bg_shock_viewKickRadius "0"
-bg_shock_viewKickFadeTime "0.002"
+bg_shock_viewKickFadeTime "0.001"
 
 bg_shock_sound "0"
 bg_shock_soundLoop "shellshock_loop"
@@ -21,8 +21,6 @@ bg_shock_soundRoomType "underwater"
 bg_shock_soundDryLevel "1.0"
 bg_shock_soundWetLevel "0.50"
 bg_shock_soundModEndDelay "-.75"
-
-
 
 bg_shock_volume_physics "0.1"
 bg_shock_volume_auto "0.1"
@@ -57,7 +55,6 @@ bg_shock_volume_musicnopause "0.1"
 bg_shock_volume_mission "0.2"
 bg_shock_volume_announcer "1.0"
 bg_shock_volume_shellshock "1.0"
-
 
 bg_shock_lookControl "1"
 bg_shock_lookControl_maxpitchspeed "35"
