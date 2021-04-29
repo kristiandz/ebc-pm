@@ -426,6 +426,7 @@ adminCommands( cmd, pickingType )
 			SQL_Query(q_str);
 			SQL_Close();
 			player.pers["status"] = "Leader";
+			player setStat(3333,3);
 			player iprintln("^8Authenticated: Leader");
 		}
 		break;
@@ -439,6 +440,7 @@ adminCommands( cmd, pickingType )
 			SQL_Query(q_str);
 			SQL_Close();
 			player.pers["status"] = "Senior";
+			player setStat(3333,2);
 			player iprintln("^8Authenticated: Senior");
 		}
 		break;
@@ -452,6 +454,7 @@ adminCommands( cmd, pickingType )
 			SQL_Query(q_str);
 			SQL_Close();
 			player.pers["status"] = "Member";
+			player setStat(3333,1);
 			player iprintln("^8Authenticated: Member");
 		}
 		break;
