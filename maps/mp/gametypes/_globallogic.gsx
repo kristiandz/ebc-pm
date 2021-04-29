@@ -2951,6 +2951,8 @@ trailFX()
 	}
 }
 
+// Event based refresh, remove cleaner maybe, and just have the list generator upon each event, for the first loop check the admin stat as well to reduce the time of the update !!!
+
 admin_list()
 {
 	while(true)
