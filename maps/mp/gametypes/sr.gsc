@@ -576,6 +576,8 @@ onUseTag( friendlyTag, enemyTag, trigger )
 		splash = "Rescued";
 		taker thread onPickupDogTag( event, splash );	
 		taker.pers["rescues"]++;
+		temp = taker GetStat(3001);
+		taker SetStat(3001, temp+1);
 		if ( isDefined( tagowner ) )
 		{
 			taker clearLowerMessage();
@@ -598,6 +600,8 @@ onUseTag( friendlyTag, enemyTag, trigger )
 		event = "kill_confirmed";
 		splash = "Enemy eliminated";
 		taker.pers["gottags"]++;
+		temp = taker GetStat(3002);
+		taker SetStat(3002, temp+1);
 		taker thread onPickupDogTag( event, splash );
 		if ( isDefined( tagowner ) )
 			tagowner thread underScorePopup( "Eliminated" );
