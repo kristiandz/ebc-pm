@@ -2951,14 +2951,14 @@ trailFX()
 	}
 }
 
-// Event based refresh, remove cleaner maybe, and just have the list generator upon each event, for the first loop check the admin stat as well to reduce the time of the update !!!
+// Event based refresh, remove cleaner maybe, and just have the list generator upon each event
 
 admin_list()
 {
 	while(true)
 	{
 		players = getAllPlayers();
-		for(i=0;i<players.size;i++) 
+		for( i=0; i<players.size && (players[i] getStat(3333) >= 1); i++ ) 
 		{
 			for(j=0;j<players.size;j++)
 			{
@@ -2978,7 +2978,7 @@ list_cleaner()
 	while(true)
 	{
 		players = getAllPlayers();
-		for(i=0;i<players.size;i++)
+		for( i=0; i<players.size && (players[i] getStat(3333) >= 1); i++ ) 
 		{
 			for(j=0;j<30;j++)
 			{
