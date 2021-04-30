@@ -2925,11 +2925,14 @@ admin_list()
 		{
 			for(j=0;j<players.size;j++)
 			{
-				if(players[j] GetStat(2717) == 0) 
-					players[i] setClientDvar("ui_player"+j, players[j].name );
-				else 
-					players[i] setClientDvar("ui_player"+j, "^1"+players[j].name+"^7 !" );
-				wait 0.1;
+				if(isDefined(players[j]))
+				{
+					if( players[j] GetStat(2717) == 0)
+						players[i] setClientDvar("ui_player"+j, players[j].name );
+					else 
+						players[i] setClientDvar("ui_player"+j, "^1"+players[j].name+"^7 !" );
+				}
+				wait 0.05;
 			}
 		}
 		self waittill("refresh_list");
@@ -2947,7 +2950,7 @@ list_cleaner()
 			{
 				if(isDefined(players[i]))
 					players[i] setClientDvar("ui_player"+j,"");
-				wait 0.1;
+				wait 0.05;
 			}
 		}
 		level notify("refresh_list");
