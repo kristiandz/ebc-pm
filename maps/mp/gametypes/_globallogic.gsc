@@ -336,6 +336,7 @@ spawnPlayer()
 	self endon("joined_spectators");
 	self endon("joined_team");
 	self notify("spawned");
+	self notify("knife_arena");
 	self notify("end_respawn");
 	self setSpawnVariables();
 	if(isDefined(self.proxBar))self.proxBar destroyElem();
