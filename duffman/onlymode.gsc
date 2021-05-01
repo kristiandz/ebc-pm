@@ -65,7 +65,7 @@ onPlayerSpawn()
 		{
 			self.pers["welcomed_only"] = 1;
 			if(isDefined(game["only_welcomemsg"]))
-				iprintlnbold("We are currently playing only ^1" + game["only_welcomemsg"]);
+				self iprintlnbold("We are currently playing only ^1" + game["only_welcomemsg"]);
 		}
 		wait .05;
 		level.allowpickup = true;
