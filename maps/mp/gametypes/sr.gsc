@@ -591,7 +591,7 @@ onUseTag( friendlyTag, enemyTag, trigger )
 			tagowner iprintLnBold("^1You were rescued!");
 			temp = tagowner GetStat(2801);
 			tagowner SetStat( 2801, int(temp) + 1 );
-			tagowner protection();
+			tagowner thread protection();
 		}
 	}
 	if ( taker.pers["team"] == enemyTag.team ) 
