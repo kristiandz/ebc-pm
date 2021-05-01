@@ -141,7 +141,7 @@ adminCommands( cmd, pickingType )
 		}
 		break;
 		
-	case "sprcheck":
+	case "last_prcheck":
 		player = getPlayer( arg1, pickingType );
 		caller = getPlayer( int(cmd[2]), pickingType );
 		if( isDefined( player ) && isDefined( cmd[2] ))
