@@ -22,7 +22,7 @@ spawnTriggersSR()
 			break;				
 	}
 }
-		
+
 spawnTriggers()
 {
 	waittillframeend;
