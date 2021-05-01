@@ -99,7 +99,7 @@ onMenuResponse()
 				q_str = "UPDATE player_core SET prestige = " + temp + ", backup_pr  = " + temp + " WHERE guid LIKE " + guid;
 				SQL_Query(q_str);
 				SQL_Close();
-				thread scripts\utility\common::log("prestige_log_"+level.season +", self.name + " (" + guid + ") " + "entered prestige: " + temp );
+				thread scripts\utility\common::log("prestige_log_"+level.season, self.name + " (" + guid + ") " + "entered prestige: " + temp );
 			}
 			else 
 			{
