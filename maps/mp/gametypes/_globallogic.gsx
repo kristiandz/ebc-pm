@@ -2167,7 +2167,7 @@ newseason(pl_season)
 		SQL_Close();
 		self SetStat( 3250, 1);
 		self SetStat( 3251, int(cp));
-		self maps\mp\gametypes\_rank::resetEverything();
+		self thread maps\mp\gametypes\_rank::resetEverything();
 		wait 1;
 		self iprintlnBold("This is your first visit in the new season.\n^1 Welcome to the " + level.season + " season!");
 		wait 4;
@@ -2183,7 +2183,7 @@ newseason(pl_season)
 		SQL_Close();
 		self SetStat( 3250 , 1 );
 		self SetStat( 3252 , 0 );
-		self maps\mp\gametypes\_rank::resetEverything();
+		self thread maps\mp\gametypes\_rank::resetEverything();
 		wait 1;
 		self iprintlnBold("This is your first visit to Explicit Bouncers Promod.\n^1 Welcome to the " + level.season + " season!");
 		wait 3;
@@ -2197,7 +2197,7 @@ newseason(pl_season)
 		SQL_Close();
 		self SetStat( 3250 , 1 );
 		self SetStat( 3252 , 0 );
-		self maps\mp\gametypes\_rank::resetEverything();
+		self thread maps\mp\gametypes\_rank::resetEverything();
 		wait 1;
 		self iprintlnBold("This is your first visit in the new season.\n^1 Welcome to the " + level.season + " season!");
 		wait 2;
