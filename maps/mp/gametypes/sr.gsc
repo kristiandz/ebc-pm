@@ -506,10 +506,10 @@ intoSpawn(originA, anglesA)
 
 ispawnang(ent)
 {
-	while(isDefined(ent))
+	while(isDefined(ent) && isDefined(self))
 	{
-	self SetPlayerAngles( ent.angles );
-	wait 0.05;
+		self SetPlayerAngles( ent.angles );
+		wait 0.05;
 	}
 }
 
