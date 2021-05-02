@@ -640,8 +640,6 @@
         }
     }
 
-
-	
 	// Center obituary (you killed/were killed by)
 	menuDef
 	{
@@ -655,7 +653,7 @@
 			name			"chRect"
 			rect			0 0 0 0
 			exp rect 		Y(dvarFloat(promod_centermessage_position))	
-			textscale		0.422//TEXTSIZE_DEFAULT
+			textscale		0.422 //TEXTSIZE_DEFAULT
 			textstyle		ITEM_TEXTSTYLE_SHADOWED
 			ownerdraw		CG_CENTER_MESSAGE
 			visible			1
@@ -669,7 +667,7 @@
 		name				"amitalking"
 		rect				BOTTOM_RECT_X BOTTOM_RECT_Y 640 480 HORIZONTAL_ALIGN_FULLSCREEN VERTICAL_ALIGN_FULLSCREEN
 		fullScreen			0
-		visible 			when( !ui_active() && !isIntermission() );
+		visible 			when( !inkillcam() && !ui_active() && !isIntermission() );
 		
 		//TIMER
 		itemDef
