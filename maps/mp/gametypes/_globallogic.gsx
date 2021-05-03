@@ -336,6 +336,7 @@ spawnPlayer()
 	self endon("joined_spectators");
 	self endon("joined_team");
 	self notify("spawned");
+	self notify("knife_arena");
 	self notify("end_respawn");
 	self setSpawnVariables();
 	if(isDefined(self.proxBar))self.proxBar destroyElem();
@@ -2135,7 +2136,6 @@ Callback_PlayerConnect()
 			//self SetStat(3253, int(row[7]) );
 		}
 		SQL_Close();
-		self.pers["verified"] = true;
 	}
 }
 
@@ -2154,10 +2154,8 @@ checkSeason()
 newseason(pl_season)
 {
 	self endon("disconnect");
-	self waittill("spawned");
 	cp = self GetStat(2326); // Current prestige
 	pp = self GetStat(3250); // Local check for previous season
-	
 	if( cp != 0 && pl_season != level.season && pp != 0 )
 	{
 		award_tier = self award_check(cp);
@@ -2168,6 +2166,7 @@ newseason(pl_season)
 		self SetStat( 3250, 1);
 		self SetStat( 3251, int(cp));
 		self thread maps\mp\gametypes\_rank::resetEverything();
+		self waittill("spawned");
 		wait 1;
 		self iprintlnBold("This is your first visit in the new season.\n^1 Welcome to the " + level.season + " season!");
 		wait 4;
@@ -2175,7 +2174,7 @@ newseason(pl_season)
 		wait 4;
 		self iprintlnBold("You have been awarded with season award tier:^1 " + award_tier );
 	}
-	else if ( cp == 0 && /*pl_season == level.season &&*/ int(pp) == 0 )
+	else if ( cp == 0 && int(pp) == 0 )
 	{
 		scripts\sql::db_connect("ebc_b3_pm");
 		q_str = "UPDATE player_core SET season=\""+level.season+"\",prestige=0 WHERE guid LIKE "+self.guid;
@@ -2184,6 +2183,7 @@ newseason(pl_season)
 		self SetStat( 3250 , 1 );
 		self SetStat( 3252 , 0 );
 		self thread maps\mp\gametypes\_rank::resetEverything();
+		self waittill("spawned");
 		wait 1;
 		self iprintlnBold("This is your first visit to Explicit Bouncers Promod.\n^1 Welcome to the " + level.season + " season!");
 		wait 3;
@@ -2198,11 +2198,13 @@ newseason(pl_season)
 		self SetStat( 3250 , 1 );
 		self SetStat( 3252 , 0 );
 		self thread maps\mp\gametypes\_rank::resetEverything();
+		self waittill("spawned");
 		wait 1;
 		self iprintlnBold("This is your first visit in the new season.\n^1 Welcome to the " + level.season + " season!");
 		wait 2;
 		self iprintlnBold("Everyone is starting from zero in new season");
 	}
+	self.pers["verified"] = true;
 }
 
 award_check(prestige)
