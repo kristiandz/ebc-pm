@@ -62,7 +62,7 @@ ShowKDRatio()
 	self.mc_streak.label = &"^7Killstreak:^8 &&1";
 	self.mc_streak FadeOverTime(0.2);
 	self.mc_streak.alpha = 1;
-	self.mc_streak.archived = false;
+	self.mc_streak.archived = true; // Make a workaround to hide the stats in fkc, but to retain sepctating stats for all players
 	
 	self.mc_kdratio = NewClientHudElem(self);
 	self.mc_kdratio.x = 110;
@@ -77,7 +77,7 @@ ShowKDRatio()
 	self.mc_kdratio.label = &"K/D Ratio:^8 &&1";
 	self.mc_kdratio FadeOverTime(0.4);
 	self.mc_kdratio.alpha = 1;
-	self.mc_kdratio.archived = false;
+	self.mc_kdratio.archived = true;
 	
 	if(level.gametype == "kc" || level.gametype == "sr" )
 	{
@@ -96,7 +96,7 @@ ShowKDRatio()
 		self.mc_kc.alpha = 1;
 		self.mc_kc.glowcolor = (0.1, 0.2, 0.7);
 		self.mc_kc.glowalpha = 0.8;
-		self.mc_kc.archived = false;
+		self.mc_kc.archived = true;
 		
 		if(level.gametype == "sr")
 		{
@@ -115,7 +115,7 @@ ShowKDRatio()
 			self.mc_rsc.alpha = 1;
 			self.mc_rsc.glowcolor = (0.1, 0.2, 0.7);
 			self.mc_rsc.glowalpha = 0.8;
-			self.mc_rsc.archived = false;
+			self.mc_rsc.archived = true;
 		}
 	}
 	color = (0,0,0);
