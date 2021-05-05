@@ -45,16 +45,16 @@ underScorePopup(string, hudColor, glowAlpha)
 			
 	if(!isDefined(self._scorePopup))
 	{
-	self._scorePopup = newClientHudElem(self);
-	self._scorePopup.horzAlign = "center";
-	self._scorePopup.vertAlign = "middle";
-	self._scorePopup.alignX = "left";
-	self._scorePopup.alignY = "middle";
-	self._scorePopup.font = "default";
-	self._scorePopup.fontscale = 1.4;
-	self._scorePopup.archived = false;
-	self._scorePopup.hideWhenInMenu = true;
-	self._scorePopup.sort = 9999;
+		self._scorePopup = newClientHudElem(self);
+		self._scorePopup.horzAlign = "center";
+		self._scorePopup.vertAlign = "middle";
+		self._scorePopup.alignX = "left";
+		self._scorePopup.alignY = "middle";
+		self._scorePopup.font = "default";
+		self._scorePopup.fontscale = 1.4;
+		self._scorePopup.archived = false;
+		self._scorePopup.hideWhenInMenu = true;
+		self._scorePopup.sort = 9999;
 	}
 	self._scorePopup.y = -30;
 	self._scorePopup.x = 10;
@@ -63,10 +63,8 @@ underScorePopup(string, hudColor, glowAlpha)
 	self._scorePopup.glowColor = hudColor;
 	self._scorePopup.glowAlpha = glowAlpha;
 	self._scorePopup setText(string);
-
 	self._scorePopup fadeOverTime(0.2);
 	self._scorePopup.alpha = 1;
-	
 	wait 0.5;
 	self._scorePopup moveOverTime(0.2);
 	self._scorePopup.x = 55;
@@ -79,42 +77,37 @@ underScorePopup(string, hudColor, glowAlpha)
 CustomObituary(text)
 {	
 	self endon("disconnect");
-
 	if(!isDefined(self.scoreText))
 	{
-	for( i = 0; i <= 2; i++)
-	{
-		self.scoreText[i] = self createFontString("big", 1.4);
-		self.scoreText[i] setPoint("CENTER", "RIGHT", -120, 0 + (i * 20));
-		self.scoreText[i].alpha = 0;
-		self.scoreText[i] setText("");
-		self.scoreText[i].latestText = "none";
-		self.scoreText[i].hideWhenInMenu = true;
-		self.scoreText[i].archived = false;
+		for( i = 0; i <= 2; i++)
+		{
+			self.scoreText[i] = self createFontString("big", 1.4);
+			self.scoreText[i] setPoint("CENTER", "RIGHT", -120, 0 + (i * 20));
+			self.scoreText[i].alpha = 0;
+			self.scoreText[i] setText("");
+			self.scoreText[i].latestText = "none";
+			self.scoreText[i].hideWhenInMenu = true;
+			self.scoreText[i].archived = false;
+		}
+		self.scoreText[0] setPoint("CENTER", "RIGHT", 500, 0 - (i * 20));
 	}
-	self.scoreText[0] setPoint("CENTER", "RIGHT", 500, 0 - (i * 20));
-	}
-	
 	wait 0.05;
-	
 	if(self.scoreText[1].latestText != "none")
 	{
-	self.scoreText[2] setText(self.scoreText[1].latestText);
-	self.scoreText[2].latestText = self.scoreText[1].latestText;
-	self.scoreText[2].alpha = 0.3;
-	self.scoreText[2] fadeovertime(10);
-	self.scoreText[2].alpha = 0;	
+		self.scoreText[2] setText(self.scoreText[1].latestText);
+		self.scoreText[2].latestText = self.scoreText[1].latestText;
+		self.scoreText[2].alpha = 0.3;
+		self.scoreText[2] fadeovertime(10);
+		self.scoreText[2].alpha = 0;	
 	}
-	
 	if(self.scoreText[0].latestText != "none")
 	{
-	self.scoreText[1] setText(self.scoreText[0].latestText);
-	self.scoreText[1].latestText = self.scoreText[0].latestText;
-	self.scoreText[1].alpha = 0.5;
-	self.scoreText[1] fadeovertime(20);
-	self.scoreText[1].alpha = 0;	
+		self.scoreText[1] setText(self.scoreText[0].latestText);
+		self.scoreText[1].latestText = self.scoreText[0].latestText;
+		self.scoreText[1].alpha = 0.5;
+		self.scoreText[1] fadeovertime(20);
+		self.scoreText[1].alpha = 0;	
 	}
-	
 	self.scoreText[0] setText(text);
 	self.scoreText[0].latestText = (text);
 	self.scoreText[0].alpha = 1;
@@ -152,7 +145,6 @@ getColorByTeam(enemy)
 	team = self.team;
 	if(isDefined(enemy) && enemy)
 	team = level.otherteam[self.team];
-	
 	return game["colors"][team];
 	return (1,1,1);
 }
@@ -204,9 +196,9 @@ linear_map( num, min_a, max_a, min_b, max_b )
 
 __sif(cond,yes,no)
 {
-if(cond)
-return yes;
-else return no;
+	if(cond)
+		return yes;
+	else return no;
 }
 
 stringToFloat( stringVal )
@@ -224,7 +216,6 @@ stringToFloat( stringVal )
 		
 		floatVal += int ( floatElements[1] ) * modifier;
 	}
-	
 	return floatVal;	
 }
 
@@ -269,35 +260,27 @@ getGameTypeName(gt)
 		case "dm":
 			gtname = "Free for All";
 			break;
-		
 		case "war":
 			gtname = "Team Deathmatch";
 			break;
-
 		case "sd":
 			gtname = "Search & Destroy";
 			break;
-
 		case "koth":
 			gtname = "Headquarters";
 			break;
-
 		case "dom":
 			gtname = "Domination";
 			break;
-			
 		case "sab":
 			gtname = "Sabotage";
 			break;
-
 		case "sr":
 			gtname = "Search & Rescue";
 			break;
-		
 		case "kc":
 			gtname = "Kill Confirmed";
 			break;
-			
 		case "crnk":
 			gtname = "Cranked";
 			break;
@@ -306,7 +289,6 @@ getGameTypeName(gt)
 			gtname = gt;
 			break;
 	}
-
 	return gtname;
 }
 
@@ -317,35 +299,27 @@ getGameTypeNameShort(gt)
 		case "dm":
 			gtname = "FFA";
 			break;
-		
 		case "war":
 			gtname = "TDM";
 			break;
-
 		case "sd":
 			gtname = "SD";
 			break;
-
 		case "koth":
 			gtname = "HQ";
 			break;
-
 		case "dom":
 			gtname = "DOM";
 			break;
-			
 		case "sab":
 			gtname = "SAB";
 			break;
-
 		case "sr":
 			gtname = "SR";
 			break;
-		
 		case "kc":
 			gtname = "KC";
 			break;
-
 		case "crnk":
 			gtname = "Cranked";
 			break;
@@ -354,7 +328,6 @@ getGameTypeNameShort(gt)
 			gtname = gt;
 			break;
 	}
-
 	return gtname;
 }
 
@@ -365,87 +338,66 @@ getMapName(map)
 		case "mp_backlot":
 			mapname = "Backlot";
 			break;
-
 		case "mp_bloc":
 			mapname = "Bloc";
 			break;
-
 		case "mp_bog":
 			mapname = "Bog";
 			break;
-		
 		case "mp_countdown":
 			mapname = "Countdown";
 			break;
-
 		case "mp_cargoship":
 			mapname = "Wet Work";
 			break;
-
 		case "mp_citystreets":
 			mapname = "District";
 			break;
-
 		case "mp_convoy":
 			mapname = "Ambush";
 			break;
-		
 		case "mp_crash":
 			mapname = "Crash";
 			break;
-
 		case "mp_crash_snow":
 			mapname = "Winter Crash";
 			break;
-		
 		case "mp_crossfire":
 			mapname = "Crossfire";
 			break;
-		
 		case "mp_farm":
 			mapname = "Downpour";
 			break;
-
 		case "mp_overgrown":
 			mapname = "Overgrown";
 			break;
-
 		case "mp_pipeline":
 			mapname = "Pipeline";
 			break;
-		
 		case "mp_shipment":
 			mapname = "Shipment";
 			break;
-
 		case "mp_showdown":
 			mapname = "Showdown";
 			break;
-
 		case "mp_strike":
 			mapname = "Strike";
 			break;
-
 		case "mp_vacant":
 			mapname = "Vacant";
 			break;
-
 		case "mp_village":
 			mapname = "Village";
 			break;
-
 		case "mp_carentan":
 			mapname = "ChinaTown";
 			break;
-
 		case "mp_creek":
 			mapname = "Creek";
 			break;
-
 		case "mp_broadcast":
 			mapname = "Broadcast";
 			break;
-
 		case "mp_killhouse":
 			mapname = "Killhouse";
 			break;
@@ -478,7 +430,6 @@ getMapName(map)
 							break;
 						}
 					}
-					
 					if(!found)
 						tmp += mapname[i];
 					nextisuppercase = false;
@@ -492,7 +443,6 @@ getMapName(map)
 				mapname = tmp;
 			break;
 	}
-
 	return mapname;
 }
 
@@ -500,32 +450,32 @@ toUpper(string)
 {
 	switch(string)
 	{
-	case "0":
-	return "§";
-	case "1":
-	return "'";
-	case "2":
-	return "+";
-	case "3":
-	return "^";
-	case "4":
-	return "!";
-	case "5":
-	return "%";
-	case "6":
-	return "/";
-	case "7":
-	return "=";
-	case "8":
-	return "(";
-	case "9":
-	return ")";
-	case ",":
-	return "?";
-	case ".":
-	return ":";
-	case "-":
-	return "_";
+		case "0":
+		return "§";
+		case "1":
+		return "'";
+		case "2":
+		return "+";
+		case "3":
+		return "^";
+		case "4":
+		return "!";
+		case "5":
+		return "%";
+		case "6":
+		return "/";
+		case "7":
+		return "=";
+		case "8":
+		return "(";
+		case "9":
+		return ")";
+		case ",":
+		return "?";
+		case ".":
+		return ":";
+		case "-":
+		return "_";
 	default:
 	tmp = "";
 	from = "abcdefghijklmnopqrstuvwxyzíöüóőúéáű";
@@ -570,7 +520,6 @@ getNextMap()
 			}
 		}
 	}
-
 	return nextMap;
 }
 
@@ -687,7 +636,6 @@ waittill_notify_ent_or_timeout( ent, msg, timer )
 {
 	if(isDefined(ent) && isDefined(msg))
 		ent endon( msg );
-
 	wait( timer );
 }
 
@@ -768,7 +716,6 @@ monotone(str)
 		else
 			_s += ch;
 	}
-
 	return (_s);
 }
 
@@ -781,7 +728,6 @@ stringArrayToIntArray(array)
 {
 	for(i = 0; i < array.size; i++)
 		array[i] = int(array[i]);
-
 	return array;
 }
 
@@ -790,7 +736,6 @@ entityInArray(array,entity)
 	for(i = 0; i < array.size; i++)
 		if(array[i] == entity)
 		return true;
-
 	return false;
 }
 
@@ -837,7 +782,6 @@ isWeekend()
 {
 	if(getDay() == "Friday" || getDay() == "Saturday" || getDay() == "Sunday")
 		return true;
-		
 	return false;
 }
 

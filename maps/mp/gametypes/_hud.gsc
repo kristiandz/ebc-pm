@@ -36,6 +36,7 @@ init()
 	level.lowerTextFontSize = 2;
 	level.SongsSize = 1.5;
 }
+
 fontPulseInit( maxFontScale )
 {
 	self.baseFontScale = self.fontScale;
@@ -46,6 +47,7 @@ fontPulseInit( maxFontScale )
 	self.inFrames = 2;
 	self.outFrames = 4;
 }
+
 fontPulse(player)
 {
 	self notify("fontPulse");
