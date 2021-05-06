@@ -5,9 +5,6 @@
 
 init()
 {
-	//precacheModel("projectile_cbu97_clusterbomb");
-	//level.pointEffext = loadfx( "misc/ui_pickup_unavailable" );
-	
 	level.gametype=toLower(getDvar("g_gametype"));
 	if(!isDefined(level.tweakablesInitialized))maps\mp\gametypes\_tweakables::init();
 	level.script=toLower(getDvar("mapname"));
@@ -392,7 +389,6 @@ spawnPlayer()
 	waittillframeend;
 	id = self getStat( 980 );
 	if( id != 0 && isDefined(level.characterInfo[id]["handsModel"]) ) self setViewModel( level.characterInfo[id]["handsModel"] );
-	//self thread scripts\ending::editor();
 }
 
 removeWeapons(visible)
