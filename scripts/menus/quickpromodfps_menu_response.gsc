@@ -10,25 +10,25 @@ quickpromodfps(response)
 		case "1":
 		if(response == "1")
 		{
-		self openMenu("player");
+			self openMenu("player");
 		}
 		break;
 		
 		case "2":
 	    if(response == "2")
 	    {
-		self OpenMenu("sprays");
+			self OpenMenu("sprays");
         }			
         break;
 		
 		case "3":
 	    if(response == "3")
 	    {
-		awtest = self GetStat(3252);
-		dntest = self GetStat(3253);
-		if( awtest != 0 || dntest != 0 )
-			self openMenu("vip");
-		else self iprintLn("^8Unauthorized");
+			awtest = self GetStat(3252);
+			dntest = self GetStat(3253);
+			if( awtest != 0 || dntest != 0 )
+				self openMenu("vip");
+			else self iprintLn("^8Unauthorized");
         }	
 		break;
 	

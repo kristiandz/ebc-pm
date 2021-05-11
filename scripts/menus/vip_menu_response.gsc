@@ -1,7 +1,6 @@
 player(response)
 {
 	self endon ( "disconnect" );
-
 	if( response != "emblem_1" && response != "emblem_2"  && response != "emblem_3" )
 	{
 		if( int(response) < 6)

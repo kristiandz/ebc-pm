@@ -1,7 +1,6 @@
 player(response)
 {
 	self endon ( "disconnect" );
-	
 	if( int(response) <= 35 )
 	{
 		spray = int(response)-1;
