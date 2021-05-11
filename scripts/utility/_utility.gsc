@@ -23,7 +23,8 @@ secondsToTime(time)
 			
 		returnstring = minutes + ":" + seconds;
 	}
-	else returnstring = "0:00";
+	else 
+		returnstring = "0:00";
 	return returnstring;
 }
 
@@ -120,11 +121,8 @@ getPlayerPrimaryWeapon()
 {
 	weaponsList = self getWeaponsList();
 	for( idx = 0; idx < weaponsList.size; idx++ )
-	{
-		if ( maps\mp\gametypes\_weapons::isPrimaryWeapon( weaponsList[idx] ) && self hasWeapon(weaponsList[idx]) ) {
+		if ( maps\mp\gametypes\_weapons::isPrimaryWeapon( weaponsList[idx] ) && self hasWeapon(weaponsList[idx]) )
 			return weaponsList[idx];
-		}
-	}
 	return "none";
 }
 
@@ -132,11 +130,8 @@ getPlayerSecondaryWeapon()
 {
 	weaponsList = self getWeaponsList();
 	for( idx = 0; idx < weaponsList.size; idx++ )
-	{
-		if ( !maps\mp\gametypes\_weapons::isPrimaryWeapon( weaponsList[idx] ) && self hasWeapon(weaponsList[idx]) && !isSubStr(weaponsList[idx], "grenade_mp") ) {
+		if ( !maps\mp\gametypes\_weapons::isPrimaryWeapon( weaponsList[idx] ) && self hasWeapon(weaponsList[idx]) && !isSubStr(weaponsList[idx], "grenade_mp") )
 			return weaponsList[idx];
-		}
-	}
 	return "none";
 }
 
@@ -144,7 +139,7 @@ getColorByTeam(enemy)
 {
 	team = self.team;
 	if(isDefined(enemy) && enemy)
-	team = level.otherteam[self.team];
+		team = level.otherteam[self.team];
 	return game["colors"][team];
 	return (1,1,1);
 }
@@ -182,10 +177,8 @@ clamp( val, val_min, val_max )
 	if ( val < val_min )
 		val = val_min;
 	else
-	{
 		if ( val > val_max )
 			val = val_max;
-	}
 	return val;
 }
 
@@ -321,7 +314,7 @@ getGameTypeNameShort(gt)
 			gtname = "KC";
 			break;
 		case "crnk":
-			gtname = "Cranked";
+			gtname = "CRNK";
 			break;
 
 		default:
@@ -401,6 +394,18 @@ getMapName(map)
 		case "mp_killhouse":
 			mapname = "Killhouse";
 			break;
+		case "mp_naout":
+			mapname = "Naout";
+			break;
+		case "mp_marketcenter":
+			mapname = "Marketcenter";
+			break;
+		case "mp_slick":
+			mapname = "Slick";
+			break;
+		case "mp_toujane_beta":
+			mapname = "Toujane";
+			break;
 
 		default:
 		    if(getsubstr(map,0,3) == "mp_")
@@ -476,22 +481,22 @@ toUpper(string)
 		return ":";
 		case "-":
 		return "_";
-	default:
-	tmp = "";
-	from = "abcdefghijklmnopqrstuvwxyzíöüóőúéáű";
-	to   = "ABCDEFGHIJKLMNOPQRSTUVWXYZÍÖÜÓŐÚÉÁŰ";
-	for(i = 0; i < string.size; i++)
-	{
-		for(j = 0; j < from.size; j++)
+		default:
+		tmp = "";
+		from = "abcdefghijklmnopqrstuvwxyzíöüóőúéáű";
+		to   = "ABCDEFGHIJKLMNOPQRSTUVWXYZÍÖÜÓŐÚÉÁŰ";
+		for(i = 0; i < string.size; i++)
 		{
-			if(string[i] == from[j])
+			for(j = 0; j < from.size; j++)
 			{
-				tmp += to[j];
-				break;
+				if(string[i] == from[j])
+				{
+					tmp += to[j];
+					break;
+				}
 			}
 		}
-	}
-	return tmp;
+		return tmp;
 	}
 	return string;
 }
