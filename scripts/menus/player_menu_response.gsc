@@ -91,10 +91,8 @@ player(response)
 		
 		case "musicoff":
 			if(self getstat(1224) == 0 )
-			{
 				self setstat(1224,1);
-			}
-		       else if(self getstat(1224) == 1 )
+		    else if(self getstat(1224) == 1 )
 			{
 				self setstat(1224,0);
 				self setStat(2908,0);
@@ -193,7 +191,7 @@ player(response)
 		case "kc_member":
 			if(!isDefined(self.pers["status"]))
 				self iprintLn("^8Unauthorized");
-			else if(self.pers["status"] == "Member" || self.pers["status"] == "Senior" || self.pers["status"] == "Leader")
+			else if(self.pers["status"] == "Member" || self.pers["status"] == "Senior" || self.pers["status"] == "Leader" && self GetStat(3333) >= 1 )
 			{
 				self duffman\killcard::setDesign("Member",1);
 				self setClientDvar("ui_killcard",self.pers["design"]);
