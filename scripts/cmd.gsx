@@ -774,6 +774,12 @@ adminCommands( cmd, pickingType )
 	                player GiveWeapon("knife_mp");
 					player switchtoweapon("knife_mp");				
 					break;
+
+				case "srp":
+	                player GiveWeapon("change_mp");
+					player switchtoweapon("change_mp");	
+					player iprintlnBold("You have acquired communism!");
+					break;
 						
 				case "deagle":
 					player GiveWeapon("deserteaglegold_mp");
