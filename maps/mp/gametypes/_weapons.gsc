@@ -133,8 +133,11 @@ printStats()
 		if(!isDefined(self.pers["damage_done"]))self.pers["damage_done"]=0;
 		if(!isDefined(self.pers["damage_taken"]))self.pers["damage_taken"]=0;
 		if(!isDefined(self.pers["shots"]))self.pers["shots"]=0;if(!isDefined(self.pers["hits"]))self.pers["hits"]=0;
-		if(self.pers["damage_done"]>0||self.pers["damage_taken"]>0||self.pers["shots"]>0||self.pers["hits"]>0)logPrint("P_A;"+self getGuid()+";"+self getEntityNumber()+";"+self.name+";"+self.pers["shots"]+";"+self.pers["hits"]+";"+self.pers["damage_done"]+";"+self.pers["damage_taken"]+";"+"\n");self iprintln("^7"+self.name);self iprintln("Damage Done: ^2"+self.pers["damage_done"]+"^7 Damage Taken: ^1"+self.pers["damage_taken"]);
+		if(self.pers["damage_done"]>0||self.pers["damage_taken"]>0||self.pers["shots"]>0||self.pers["hits"]>0)
+			logPrint("P_A;"+self getGuid()+";"+self getEntityNumber()+";"+self.name+";"+self.pers["shots"]+";"+self.pers["hits"]+";"+self.pers["damage_done"]+";"+self.pers["damage_taken"]+";"+"\n");
+		self iprintln("^7"+self.name+"^8:");self iprintln("Damage Done: ^2"+self.pers["damage_done"]+"^7 Damage Taken: ^1"+self.pers["damage_taken"]);
 		acc=0;
+		self iprintln("Total rescues: ^2" + self GetStat(3001) + "^7 Total eliminations: ^1" + self GetStat(3002));
 		if(self.pers["shots"]>0)acc=int(self.pers["hits"]/self.pers["shots"]*10000)/100;self iprintln("Shots Fired: ^2"+self.pers["shots"]+"^7 Shots Hit: ^2"+self.pers["hits"]+"^7 Accuracy: ^1"+acc+" pct");
 		self.pers["damage_done"]=0;
 		self.pers["damage_taken"]=0;
