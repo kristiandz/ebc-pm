@@ -2457,7 +2457,7 @@ Callback_PlayerDamage(eInflictor,eAttacker,iDamage,iDFlags,sMeansOfDeath,sWeapon
 		logPrint("D;"+self getGuid()+";"+self getEntityNumber()+";"+self.pers["team"]+";"+self.name+";"+lpattackGuid+";"+lpattacknum+";"+lpattackerteam+";"+lpattackname+";"+sWeapon+";"+iDamage+";"+sMeansOfDeath+";"+sHitLoc+"\n");
 	}
 	if(isPlayer(eAttacker) && !(iDFlags&level.iDFLAGS_PENETRATION) && isDefined(iDamage) && sMeansOfDeath != "MOD_FALLING" )
-	eAttacker thread scripts\randompopup::randomPopUp(iDamage); //
+		eAttacker thread scripts\randompopup::randomPopUp(iDamage); //
 }
 
 dinkNoise(player1,player2)
@@ -2496,10 +2496,8 @@ Callback_PlayerKilled(eInflictor,attacker,iDamage,sMeansOfDeath,sWeapon,vDir,sHi
 	if(level.teamBased&&isDefined(attacker.pers)&&self.team==attacker.team&&sMeansOfDeath=="MOD_GRENADE"&&!level.friendlyfire)obituary(self,self,sWeapon,sMeansOfDeath);
 	else if(!isDefined(attacker.isKnifing))
 		obituary(self,attacker,sWeapon,sMeansOfDeath);
-	
 	if ( !isDefined( game["promod_do_readyup"] ) || !game["promod_do_readyup"] )
 		self maps\mp\gametypes\_weapons::dropWeaponForDeath(); //
-	
 	self.sessionstate="dead";
 	if(!isDefined(level.rdyup)||!level.rdyup)
 		self.statusicon="hud_status_dead";
@@ -2738,7 +2736,7 @@ sprayLogo()
 		eye = self getTagOrigin( "j_head" );
 		forward = eye + vector_scale( anglesToForward( angles ), 70 );
 		trace = bulletTrace( eye, forward, false, self );
-		if( trace["fraction"] == 1 ) //we didnt hit the wall or floor
+		if( trace["fraction"] == 1 )
 		{
 			wait 0.2;
 			continue;
@@ -2911,7 +2909,6 @@ delayBloodPool()
 AddBloodHud()
 {
 	self endon( "disconnect" );
-
 	hud = NewClientHudElem( self );
 	hud.alignX = "center";
 	hud.alignY = "middle";
