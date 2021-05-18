@@ -468,21 +468,22 @@ intoSpawn(originA, anglesA)
 	self linkto( ent );
 	ent.angles = ( ent.angles[ 0 ] + 89, ent.angles[ 1 ], ent.angles[ 2 ] );
 	ent moveto ( originA + (0,0,0), 2, 0, 2 );
-	wait ( 1.00 );
-	wait( 0.6 );
+	wait 1.6;
 	ent rotateto( ( ent.angles[ 0 ] - 89, ent.angles[ 1 ], ent.angles[ 2 ]  ), 0.5, 0.3, 0.2 );
-	wait ( 0.5 );
-	wait( 0.1 );
-	self unlink();
+	wait 0.6;
+	if(isDefined(self))
+	{
+		self unlink();
+		self freezeControls( false );
+	}
 	ent delete();
-	self freezeControls( false );
 }
 
 ispawnang(ent)
 {
 	while(isDefined(ent) && isDefined(self))
 	{
-	self SetPlayerAngles( ent.angles );
-	wait 0.05;
+		self SetPlayerAngles( ent.angles );
+		wait 0.05;
 	}
 }
