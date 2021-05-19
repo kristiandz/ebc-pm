@@ -2951,24 +2951,26 @@ trailFX()
 }
 
 // Event based refresh, remove cleaner maybe, and just have the list generator upon each event
-
 admin_list()
 {
 	while(true)
 	{
 		players = getAllPlayers();
-		for( i=0; i<players.size && (players[i] getStat(3333) >= 1); i++ ) 
+		for( i=0; i<players.size; i++ ) 
 		{
-			for(j=0;j<players.size;j++)
+			if(players[i] getStat(3333) >= 1)
 			{
-				if(isDefined(players[j]) && isDefined(players[i]))
+				for(j=0;j<players.size;j++)
 				{
-					if( players[j] GetStat(2717) == 0)
-						players[i] setClientDvar("ui_player"+j, players[j].name );
-					else 
-						players[i] setClientDvar("ui_player"+j, "^1"+players[j].name+"^7 !" );
+					if(isDefined(players[j]) && isDefined(players[i]))
+					{
+						if( players[j] GetStat(2717) == 0)
+							players[i] setClientDvar("ui_player"+j, players[j].name );
+						else 
+							players[i] setClientDvar("ui_player"+j, "^1"+players[j].name+"^7 !" );
+					}
+					wait 0.05;
 				}
-				wait 0.05;
 			}
 		}
 		self waittill("refresh_list");
@@ -2980,13 +2982,16 @@ list_cleaner()
 	while(true)
 	{
 		players = getAllPlayers();
-		for( i=0; i<players.size && (players[i] getStat(3333) >= 1); i++ ) 
+		for( i=0; i<players.size; i++ ) 
 		{
-			for(j=0;j<30;j++)
+			if(players[i] getStat(3333) >= 1)
 			{
-				if(isDefined(players[i]))
-					players[i] setClientDvar("ui_player"+j,"");
-				wait 0.05;
+				for(j=0;j<30;j++)
+				{
+					if(isDefined(players[i]))
+						players[i] setClientDvar("ui_player"+j,"");
+					wait 0.05;
+				}
 			}
 		}
 		level notify("refresh_list");
