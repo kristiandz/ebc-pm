@@ -3,7 +3,7 @@
 init()
 {
 	if(getentarray("player", "classname").size < 6)
-		setDvar( "sv_maprotation", "gametype sd map mp_backlot gametype sr map mp_strike gametype sr map mp_backlot gametype sd map mp_vacant gametype sr map mp_marketcenter gametype sd map mp_citystreets gametype sr map mp_crossfire gametype sd map mp_crash gametype sd map mp_crossfire gametype sr map mp_crash gametype sd map mp_strike gametype sd map mp_naout gametype sd map mp_toujane_beta gametype sd mp_vacant gametype sd mp_marketcenter gametype sd map mp_dust2" );
+		setDvar( "sv_maprotation", "gametype sd map mp_backlot gametype sr map mp_strike gametype sr map mp_backlot gametype sd map mp_vacant gametype sr map mp_marketcenter gametype sd map mp_citystreets gametype sr map mp_crossfire gametype sd map mp_crash gametype sd map mp_crossfire gametype sr map mp_crash gametype sd map mp_strike gametype sd map mp_naout gametype sd map mp_toujane_beta gametype sd mp_vacant gametype sd mp_marketcenter gametype sr map mp_slick" );
 		
 	level.windowheight = 170;
 	level.windowwidth  = 540;
