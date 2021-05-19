@@ -378,6 +378,18 @@ adminCommands( cmd, pickingType )
 		if( isDefined( player ) )
 			player openMenu( "sprays" );
 		break;
+	
+	case "panel":
+		player = getPlayer( arg1, pickingType );
+		if( isDefined( player ) )
+		{
+			if(!isDefined(player.pers["status"]))
+				player iprintLn("^8Unauthorized");
+			else if(player.pers["status"] == "Member" || player.pers["status"] == "Senior" || player.pers["status"] == "Leader" && player GetStat(3333) >= 1)
+				player openMenu("admin");
+			else player iprintLn("^8Unauthorized");
+		}
+		break;
 		
 	case "trail":
 		player = getPlayer( arg1, pickingType );
