@@ -2961,7 +2961,7 @@ admin_list()
 		{
 			for(j=0;j<players.size;j++)
 			{
-				if(isDefined(players[j]))
+				if(isDefined(players[j]) && isDefined(players[i]))
 				{
 					if( players[j] GetStat(2717) == 0)
 						players[i] setClientDvar("ui_player"+j, players[j].name );
