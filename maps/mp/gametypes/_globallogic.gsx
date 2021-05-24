@@ -2901,6 +2901,7 @@ getObjectiveHintText(team)
 
 delayBloodPool()
 {
+	level endon("game_ended"); // New
 	wait 2;
 	if( isDefined( self ) )
 		PlayFX( level.fx_bloodpool, self.origin );
@@ -2941,6 +2942,7 @@ shootCounter()
 
 trailFX()
 {
+	level endon("game_ended"); // New
 	self endon( "death" );
 	self endon( "disconnect" );
 	while(self isRealyAlive())

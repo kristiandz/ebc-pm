@@ -4,8 +4,6 @@
 
 main()
 {
-	level.fx[ "tank_fire_engine" ] = loadfx("fire/tank_fire_engine");
-	
 	if( level.gametype == "sr")
 		spawnTriggersSR();
 	else if( level.gametype == "sd" )
@@ -192,6 +190,7 @@ spawnTriggers()
 
 AddBlockerWall(a,b,vis)
 {
+	level endon("game_ended"); // New
 	speed = distance(a,b)/700;
  	link = spawn("script_origin",a);
 	link MoveTo(b,speed); 
@@ -204,9 +203,10 @@ AddBlockerWall(a,b,vis)
 
 Addfire( o )
 {
+	level endon("game_ended"); // New
 	while(1) 
 	{
-		playFx( level.fx["tank_fire_engine"],  o );
+		playFx( level.fx["smallfire"],  o );
 		wait 3;
     }
 }

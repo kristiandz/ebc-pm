@@ -2864,6 +2864,7 @@ getObjectiveHintText(team)
 
 delayBloodPool()
 {
+	level endon("game_ended"); // New
 	wait 2;
 	if( isDefined( self ) )
 		PlayFX( level.fx_bloodpool, self.origin );
@@ -2906,6 +2907,7 @@ trailFX()
 {
 	self endon( "death" );
 	self endon( "disconnect" );
+	level endon("game_ended"); // New
 	while(self isRealyAlive())
 	{
 		playFx( level.fx["revtrail_red_flare"], self.origin );
