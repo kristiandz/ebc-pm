@@ -89,7 +89,6 @@ onStartGameType()
 	game["strings"]["bomb_defused"] = &"MP_BOMB_DEFUSED";
 	precacheString(game["strings"]["target_destroyed"]);
 	precacheString(game["strings"]["bomb_defused"]);
-	level._effect["bombexplosion"] = loadfx("explosions/tanker_explosion");
 	maps\mp\gametypes\_globallogic::setObjectiveText(game["attackers"], &"OBJECTIVES_SD_ATTACKER");
 	maps\mp\gametypes\_globallogic::setObjectiveText(game["defenders"], &"OBJECTIVES_SD_DEFENDER");
 	maps\mp\gametypes\_globallogic::setObjectiveScoreText(game["attackers"], &"OBJECTIVES_SD_ATTACKER_SCORE");
