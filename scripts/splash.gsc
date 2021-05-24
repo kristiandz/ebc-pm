@@ -18,7 +18,6 @@ init()
 	precacheShader("gradient_top");
 	precacheShader("gradient_bottom");
 	precacheShader("flare");
-	level._effect["money"] = loadFX ("props/cash_player_drop");
 	
 	level.numKills = 0;
 	
@@ -114,7 +113,6 @@ killedPlayer( victim, weapon, meansOfDeath )
 	{
 		self.lastKilledBy = undefined;
 		self revenge();
-		playFx( level._effect["money"], victim getTagOrigin( "j_spine4" ) );
 	}
 
 	victim.lastKilledBy = self;	
