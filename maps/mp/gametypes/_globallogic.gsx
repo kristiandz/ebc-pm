@@ -1955,7 +1955,8 @@ Callback_StartGameType()
 	waveDelay=getDvarInt("scr_"+level.gameType+"_waverespawndelay");
 	if(waveDelay)
 	{
-		level.waveDelay["allies"]=waveDelay;level.waveDelay["axis"]=waveDelay;
+		level.waveDelay["allies"]=waveDelay;
+		level.waveDelay["axis"]=waveDelay;
 		level.lastWave["allies"]=0;
 		level.lastWave["axis"]=0;
 		level thread[[level.waveSpawnTimer]]();
@@ -1987,7 +1988,8 @@ deletePickups()
 
 initialDMScoreUpdate()
 {
-	wait 0.2; numSent=0;
+	wait 0.2; 
+	numSent=0;
 	for(;;)
 	{
 		didAny=false;

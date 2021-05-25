@@ -190,7 +190,6 @@ spawnTriggers()
 
 AddBlockerWall(a,b,vis)
 {
-	level endon("game_ended"); // New
 	speed = distance(a,b)/700;
  	link = spawn("script_origin",a);
 	link MoveTo(b,speed); 
@@ -198,7 +197,7 @@ AddBlockerWall(a,b,vis)
 	{ 		
 		AddBlock(link.origin,25,100,vis);
 		wait .05;
-		if(isDefined(link))link delete();
+		link delete();
 	}
 }
 
