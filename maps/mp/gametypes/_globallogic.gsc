@@ -2031,6 +2031,7 @@ Callback_PlayerConnect()
 	self.killcount = 0;
 	self.pickup = false;
 	self setStat(1124,0);
+	self.prestige = self GetStat(2326);
 	self thread shootCounter();
 	self.guid = self getGuid();
 	self.cur_kill_streak = self GetStat(2304);
