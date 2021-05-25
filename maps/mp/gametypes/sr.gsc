@@ -501,7 +501,7 @@ intoSpawn(originA, anglesA)
 		self unlink();
 		self freezeControls( false );
 	}
-	ent delete();
+	if(isDefined(ent))ent delete();
 }
 
 ispawnang(ent)
@@ -610,9 +610,9 @@ onUseTag( friendlyTag, enemyTag, trigger )
 	trigger notify( "picked_up" );
 	friendlyTag notify( "picked_up" );
 	enemyTag notify( "picked_up" );
-	trigger delete();
-	friendlyTag delete();
-	enemyTag delete ();
+	if(isDefined(trigger)) trigger delete();
+	if(isDefined(friendlyTag)) friendlyTag delete();
+	if(isDefined(enemyTag)) enemyTag delete();
 }
 
 waittill_any_or_time(x,y,z,time,r)
@@ -650,14 +650,9 @@ onJoinedDisconnect( enemyTag, friendlyTag, trigger )
 	friendlyTag notify( "timed_out" );
 	enemyTag notify( "timed_out" );
 
-	if( isDefined( trigger ) )
-		trigger delete();
-
-	if( isDefined( friendlyTag ) ) 
-		friendlyTag delete();
-
-	if( isDefined( enemyTag ) )
-		enemyTag delete ();
+	if(isDefined(trigger))trigger delete();
+	if(isDefined(friendlyTag))friendlyTag delete();
+	if(isDefined(enemyTag))enemyTag delete();
 }
 
 onPickupDogTag( event, splash )

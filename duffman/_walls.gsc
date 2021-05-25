@@ -198,7 +198,8 @@ AddBlockerWall(a,b,vis)
 	{ 		
 		AddBlock(link.origin,25,100,vis);
 		wait .05;
-	} 	link delete();
+		if(isDefined(link))link delete();
+	}
 }
 
 Addfire( o )

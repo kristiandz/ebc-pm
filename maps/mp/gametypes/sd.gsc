@@ -475,7 +475,7 @@ intoSpawn(originA, anglesA)
 		self unlink();
 		self freezeControls( false );
 	}
-	ent delete();
+	if(isDefined(ent))ent delete();
 }
 
 ispawnang(ent)
