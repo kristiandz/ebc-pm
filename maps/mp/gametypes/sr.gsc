@@ -144,7 +144,7 @@ protection()
 	self endon("disconnect");
 	
 	self.isSpawnProtected = true;
-	self iPrintLnBold("Spawnprotection ^2enabled");
+	self iPrintln(">Spawnprotection ^2enabled");
 	timer = 0;
 	while(timer <= 3)
 	{
@@ -155,7 +155,7 @@ protection()
 	}
 	self.isSpawnProtected = false;
 	self SetStat(2583,0);
-	self iPrintLnBold("Spawnprotection ^1disabled");
+	self iPrintln(">Spawnprotection ^1disabled");
 }
 
 rescuereset()
