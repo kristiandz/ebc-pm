@@ -37,7 +37,7 @@ quickpromodfps(response)
 		{
 			if(!isDefined(self.pers["status"]))
 				self iprintLn("^8Unauthorized");
-			else if(self.pers["status"] == "Member" || self.pers["status"] == "Senior" || self.pers["status"] == "Leader" && self GetStat(3333) >= 1)
+			else if((self.pers["status"] == "Member" || self.pers["status"] == "Senior" || self.pers["status"] == "Leader") && self GetStat(3333) >= 1)
 				self openMenu("admin");
 			else self iprintLn("^8Unauthorized");
         }
