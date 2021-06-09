@@ -2962,7 +2962,7 @@ admin_list()
 		players = getAllPlayers();
 		for( i=0; i<players.size; i++ ) 
 		{
-			if(players[i] getStat(3333) >= 1)
+			if(isDefined(players[i]) && players[i] getStat(3333) >= 1)
 			{
 				for(j=0;j<players.size;j++)
 				{
@@ -2988,7 +2988,7 @@ list_cleaner()
 		players = getAllPlayers();
 		for( i=0; i<players.size; i++ ) 
 		{
-			if(players[i] getStat(3333) >= 1)
+			if(isDefined(players[i]) && players[i] getStat(3333) >= 1)
 			{
 				for(j=0;j<30;j++)
 				{
