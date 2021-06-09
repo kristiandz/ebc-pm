@@ -411,7 +411,7 @@ bombPlanted(destroyedObj, player)
 	if(isdefined(player))destroyedObj.visuals[0] radiusDamage(explosionOrigin, 512, 200, 20, player);
 	else destroyedObj.visuals[0] radiusDamage(explosionOrigin, 512, 200, 20);
 	rot = randomfloat(360);
-	explosionEffect = spawnFx(level._effect["bombexplosion"], explosionOrigin + (0, 0, 50), (0, 0, 1), (cos(rot), sin(rot), 0));
+	explosionEffect = spawnFx(level.fx["bombexplosion"], explosionOrigin + (0, 0, 50), (0, 0, 1), (cos(rot), sin(rot), 0));
 	triggerFx(explosionEffect);
 	thread playSoundinSpace("exp_suitcase_bomb_main", explosionOrigin);
 	for(i=0; i < level.bombZones.size; i++) level.bombZones[i] maps\mp\gametypes\_gameobjects::disableObject();
