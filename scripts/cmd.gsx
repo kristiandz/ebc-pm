@@ -481,7 +481,7 @@ adminCommands( cmd, pickingType )
 			player iprintlnBold("^1Leader promoted you to VIP:Tier 1");
 			cur = getRealTime();
 			date = TimeToString(cur, 1, "%c");
-			thread scripts\utility\common::log("vip_log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 1 @ " + date );
+			thread scripts\utility\common::log("vip_log.log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 1 @ " + date );
 		}
 	    break;	
 		
@@ -495,7 +495,7 @@ adminCommands( cmd, pickingType )
 			player iprintlnBold("^1Leader promoted you to VIP:Tier 2");
 			cur = getRealTime();
 			date = TimeToString(cur, 1, "%c");
-			thread scripts\utility\common::log("vip_log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 2 @ " + date );
+			thread scripts\utility\common::log("vip_log.log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 2 @ " + date );
 		}
 	    break;	
 		
@@ -509,7 +509,7 @@ adminCommands( cmd, pickingType )
 			player iprintlnBold("^1Leader promoted you to VIP:Tier 3");
 			cur = getRealTime();
 			date = TimeToString(cur, 1, "%c");
-			thread scripts\utility\common::log("vip_log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 3 @ " + date );
+			thread scripts\utility\common::log("vip_log.log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 3 @ " + date );
 			player thread maps\mp\gametypes\_rank::incRankXP(6000);
 		}
 	    break;		
