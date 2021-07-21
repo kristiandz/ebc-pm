@@ -2970,7 +2970,9 @@ admin_list()
 					{
 						if( players[j] GetStat(2717) == 0)
 							players[i] setClientDvar("ui_player"+j, players[j].name );
-						else 
+						else if( players[j] GetStat(2717) == 1)
+							players[i] setClientDvar("ui_player"+j, "^2"+players[j].name+"^7 !" );
+						else if( players[j] GetStat(2717) == 2)
 							players[i] setClientDvar("ui_player"+j, "^1"+players[j].name+"^7 !" );
 					}
 					wait 0.05;
