@@ -1448,7 +1448,8 @@ updateTeamStatus()
 	}
 	if(level.aliveCount["allies"]+level.aliveCount["axis"]>level.maxPlayerCount)level.maxPlayerCount=level.aliveCount["allies"]+level.aliveCount["axis"];
 	if(level.aliveCount["allies"])level.everExisted["allies"]=true;if(level.aliveCount["axis"])level.everExisted["axis"]=true;
-	for(i=0;i<level.players.size;i++)
+	// This error is causing script stack overflow, or could be the codeitself, this needs to be checked and resolved
+	for(i=0;i<level.players.size && isDefined(level.players[i]);i++) // Check for runtime
 		if(level.players[i].pers["team"]=="allies"||level.players[i].pers["team"]=="axis")level.players[i]setClientDvars("self_alive",level.aliveCount[level.players[i].pers["team"]],"opposing_alive",level.aliveCount[maps\mp\gametypes\_gameobjects::getEnemyTeam(level.players[i].pers["team"])]);
 	prof_end("updateTeamStatus");
 	level updateGameEvents();
