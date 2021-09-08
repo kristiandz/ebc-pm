@@ -316,7 +316,6 @@ roofspawn()
 	self notify( "spawned_player" );
 	[[level.onSpawnPlayer]]();
 	prof_end("spawnPlayer_preUTS");
-	//level thread updateTeamStatus(); Not needed since they do not count already ? 
 	prof_begin("spawnPlayer_postUTS");
 	self enableWeapons();
 	self maps\mp\gametypes\_class::giveLoadout(self.team,self.class);
