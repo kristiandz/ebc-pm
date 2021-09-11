@@ -2112,6 +2112,7 @@ Callback_PlayerConnect()
 	}
 	if(!isDefined(self.pers["verified"]))
 	{
+		prof_begin("SQL");
 		scripts\sql::db_connect("ebc_b3_pm");
 		q_str = "SELECT guid, prestige, backup_pr, season, status, style, award_tier, donation_tier FROM player_core WHERE guid LIKE " + self.guid;
 		SQL_Query(q_str); 
@@ -2133,10 +2134,11 @@ Callback_PlayerConnect()
 			self thread newseason(row[3]);
 			self.pers["status"] = row[4];
 			self.pers["design"] = row[5];
-			//self SetStat(3252, int(row[6]) ); Thread saefty test 
-			//self SetStat(3253, int(row[7]) );
+			self SetStat(3252, int(row[6]));
+			self SetStat(3253, int(row[7]));
 		}
 		SQL_Close();
+		prof_end("SQL");
 	}
 }
 
@@ -2614,9 +2616,7 @@ Callback_PlayerKilled(eInflictor,attacker,iDamage,sMeansOfDeath,sWeapon,vDir,sHi
 					prof_begin("PlayerKilled assists");
 					if(isdefined(self.attackers))
 					{
-						for(j=0;
-						j<self.attackers.size;
-						j++)
+						for(j=0;j<self.attackers.size;j++)
 						{
 							player=self.attackers[j];
 							if(!isDefined(player)||player==attacker)continue;
