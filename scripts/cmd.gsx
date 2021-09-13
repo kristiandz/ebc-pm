@@ -475,11 +475,12 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
 		{
-			player thread scripts\sql::db_setVip("ebc_b3_pm","VIP1",1);
+			cur = getRealTime();
+			dateDB = TimeToString(cur, 1, "%D");
+			player thread scripts\sql::db_setVip("ebc_b3_pm","VIP1",1,dateDB);
 			player SetStat(3253,1);
 			player.pers["status"] = "VIP1";
 			player iprintlnBold("^1Leader promoted you to VIP:Tier 1");
-			cur = getRealTime();
 			date = TimeToString(cur, 1, "%c");
 			thread scripts\utility\common::log("vip_log.log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 1 @ " + date );
 		}

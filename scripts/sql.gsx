@@ -7,10 +7,10 @@ db_connect(database)
 	}
 }
 
-db_setVip(database,tier,numeric)
+db_setVip(database,tier,numeric,date)
 {
 	db_connect(database);
-	q_str = "UPDATE player_core SET status = \"" + tier + "\", donation_tier = " + numeric+ " WHERE guid LIKE " + self.guid;
+	q_str = "UPDATE player_core SET status = \"" + tier + "\", donation_tier = " + numeric+ ", donation_date = \"" + date + "\" WHERE guid LIKE " + self.guid;
 	SQL_Query(q_str);
 	SQL_Close();
 }
