@@ -490,11 +490,12 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
 		{
-			player thread scripts\sql::db_setVip("ebc_b3_pm","VIP2",2);
+			cur = getRealTime();
+			dateDB = TimeToString(cur, 1, "%D");
+			player thread scripts\sql::db_setVip("ebc_b3_pm","VIP2",2,dateDB);
 			player SetStat(3253,2);
 			player.pers["status"] = "VIP2";
 			player iprintlnBold("^1Leader promoted you to VIP:Tier 2");
-			cur = getRealTime();
 			date = TimeToString(cur, 1, "%c");
 			thread scripts\utility\common::log("vip_log.log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 2 @ " + date );
 		}
@@ -504,11 +505,12 @@ adminCommands( cmd, pickingType )
 		player = getPlayer( arg1, pickingType );
 		if( isDefined( player ) )
 		{
-			player thread scripts\sql::db_setVip("ebc_pm_b3","VIP3",3);
+			cur = getRealTime();
+			dateDB = TimeToString(cur, 1, "%D");
+			player thread scripts\sql::db_setVip("ebc_b3_pm","VIP3",3,dateDB);
 			player SetStat(3253,3);
 			player.pers["status"] = "VIP3";
 			player iprintlnBold("^1Leader promoted you to VIP:Tier 3");
-			cur = getRealTime();
 			date = TimeToString(cur, 1, "%c");
 			thread scripts\utility\common::log("vip_log.log", player.name + " (" + player getGuid() + ") " + "was promoted to VIP tier 3 @ " + date );
 			player thread maps\mp\gametypes\_rank::incRankXP(6000);
