@@ -2112,6 +2112,7 @@ Callback_PlayerConnect()
 	}
 	if(!isDefined(self.pers["verified"]))
 	{
+		// Wait till spawned for some of these as more players connect in the same time rather than spawn ?
 		prof_begin("SQL");
 		scripts\sql::db_connect("ebc_b3_pm");
 		q_str = "SELECT guid, prestige, backup_pr, season, status, style, award_tier, donation_tier FROM player_core WHERE guid LIKE " + self.guid;
@@ -2122,7 +2123,7 @@ Callback_PlayerConnect()
 			name = GetSubStr(self.name, 0, 25);
 			atier = self GetStat(3252);
 			dtier = self GetStat(3253);
-			backup_pr = self GetCvar("backup-pr"); if(!isDefined(backup_pr) || backup_pr == "")	backup_pr = 0;
+			backup_pr = self GetCvar("backup-pr"); if(!isDefined(backup_pr) || backup_pr == "")	backup_pr = 0; //
 			season = "winter"; // remove after summer		
 			q_str = "INSERT INTO player_core (guid,name,prestige,backup_pr,season,award_tier,donation_tier) VALUES ("+self.guid+",\""+name+"\","+self.prestige+","+backup_pr+",\""+season +"\","+atier+","+dtier+")"; // level.season here
 			SQL_Query(q_str);
@@ -2136,6 +2137,8 @@ Callback_PlayerConnect()
 			self.pers["design"] = row[5];
 			self SetStat(3252, int(row[6]));
 			self SetStat(3253, int(row[7]));
+			if(self GetStat(3253) > 0)
+				self thread checkDonationExpiry();
 		}
 		SQL_Close();
 		prof_end("SQL");
@@ -2152,6 +2155,42 @@ checkSeason()
 	else
 		season = "winter";
 	return season;
+}
+
+checkDonationExpiry()
+{
+	donationExpiry = 6; // How long do donations last in month (Donation will last one transitional month longer)
+	currentTime = getRealTime();
+	currentMonth = TimeToString(currentTime, 1, "%m");
+	currentYear = TimeToString(currentTime, 1, "%Y");
+	scripts\sql::db_connect("ebc_b3_pm");
+	q_str = "SELECT donation_tier, donation_date FROM player_core WHERE guid LIKE " + self.guid;
+	SQL_Query(q_str); 
+	row = SQL_AffectedRows();
+	if(row != 0 && row[0] != 0)
+	{
+		storedData = strtok(row[1],"/");
+		storedMonth = int(storedData[0]);
+		storedDay = int(storedData[1]);
+		storedYear = int(storedData[2]);
+	}
+	else return;
+	if(storedYear == currentYear && (currentMonth-storedMonth > donationExpiry ))
+	{
+		self setStat( 979, 0 );
+		self setStat( 980, 0 );
+		self duffman\killcard::setDesign("Default");
+		self iprintlnBold("Your ^8VIP Status^7 has expired, you got it on ^8" + storedDay + "-" + storedMonth + "-" + storedYear);
+		self iprintlnBold("Thank you for your contribution");
+	}
+	else if(storedYear < currentYear && (currentMonth+(12-storedMonth) > donationExpiry ))
+	{
+		self setStat( 979, 0 );
+		self setStat( 980, 0 );
+		self duffman\killcard::setDesign("Default");
+		self iprintlnBold("Your ^8VIP Status^7 has expired, you got it on ^8" + storedDay + "-" + storedMonth + "-" + storedYear);
+		self iprintlnBold("Thank you for your contribution");
+	}
 }
 
 newseason(pl_season)
@@ -2236,7 +2275,6 @@ prcheck(storedpr,backup)
 	prestige = self GetStat(2326);
 	cur = getRealTime();
 	date = TimeToString(cur, 1, "%c");
-		
 	if( int(storedpr) != 0 && int(prestige) != int(storedpr) )
 	{
 		self SetStat(2326,int(storedpr));
@@ -2726,10 +2764,10 @@ sprayLogo()
 	self endon( "joined_spectators" );
 	self endon( "death" );
 
-	while( game["state"] != "playing" )
+	while(game["state"] != "playing")
 		wait 0.5;
 	
-	while( isRealyAlive() )
+	while(isRealyAlive())
 	{
 		while( !self UseButtonPressed() )
 			wait 0.2; 
