@@ -2167,6 +2167,7 @@ checkDonationExpiry()
 	q_str = "SELECT donation_tier, donation_date FROM player_core WHERE guid LIKE " + self.guid;
 	SQL_Query(q_str); 
 	row = SQL_AffectedRows();
+	SQL_Close();;
 	if(row != 0 && row[0] != 0)
 	{
 		storedData = strtok(row[1],"/");
