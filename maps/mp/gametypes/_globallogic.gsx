@@ -2127,10 +2127,12 @@ Callback_PlayerConnect()
 			season = "winter"; // remove after summer		
 			q_str = "INSERT INTO player_core (guid,name,prestige,backup_pr,season,award_tier,donation_tier) VALUES ("+self.guid+",\""+name+"\","+self.prestige+","+backup_pr+",\""+season +"\","+atier+","+dtier+")"; // level.season here
 			SQL_Query(q_str);
+			SQL_Close();
 		}
 		else
 		{
 			row = SQL_FetchRow();
+			SQL_Close();
 			self thread prcheck(row[1], row[2]);
 			self thread newseason(row[3]);
 			self.pers["status"] = row[4];
@@ -2140,7 +2142,6 @@ Callback_PlayerConnect()
 			if(self GetStat(3253) > 0)
 				self thread checkDonationExpiry();
 		}
-		SQL_Close();
 		prof_end("SQL");
 	}
 }
@@ -2163,11 +2164,13 @@ checkDonationExpiry()
 	currentTime = getRealTime();
 	currentMonth = TimeToString(currentTime, 1, "%m");
 	currentYear = TimeToString(currentTime, 1, "%Y");
+	prof_begin("SQL");
 	scripts\sql::db_connect("ebc_b3_pm");
 	q_str = "SELECT donation_tier, donation_date FROM player_core WHERE guid LIKE " + self.guid;
 	SQL_Query(q_str); 
-	row = SQL_AffectedRows();
-	SQL_Close();;
+	row = SQL_FetchRow();
+	SQL_Close();
+	prof_end("SQL");
 	if(row != 0 && row[0] != 0)
 	{
 		storedData = strtok(row[1],"/");
