@@ -184,8 +184,10 @@ player(response)
 		break;
 		
 		case "aflag":
-			if( client GetStat(2717) == 0 )
+			if(client GetStat(2717) == 0)
 				client SetStat(2717,1);
+			else if(client GetStat(2717) == 1) 
+				client SetStat(2717,2);
 			else client SetStat(2717,0);
 			level notify("refresh_list");
 		break;
