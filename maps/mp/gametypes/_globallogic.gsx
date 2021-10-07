@@ -2178,13 +2178,23 @@ checkDonationExpiry()
 		storedDay = int(storedData[1]);
 		storedYear = int(storedData[2]);
 	}
-	else return;
+	else 
+	{
+		self setStat( 979, 0 );
+		self setStat( 980, 0 );
+		self duffman\killcard::setDesign("Default"); //Just update in db
+		self iprintlnBold("Your ^8VIP Status^7 has expired");
+		wait 1;
+		self iprintlnBold("Thank you for your contribution");
+		return;
+	}
 	if(storedYear == currentYear && (currentMonth-storedMonth > donationExpiry ))
 	{
 		self setStat( 979, 0 );
 		self setStat( 980, 0 );
 		self duffman\killcard::setDesign("Default");
 		self iprintlnBold("Your ^8VIP Status^7 has expired, you got it on ^8" + storedDay + "-" + storedMonth + "-" + storedYear);
+		wait 1;
 		self iprintlnBold("Thank you for your contribution");
 	}
 	else if(storedYear < currentYear && (currentMonth+(12-storedMonth) > donationExpiry ))
@@ -2193,6 +2203,7 @@ checkDonationExpiry()
 		self setStat( 980, 0 );
 		self duffman\killcard::setDesign("Default");
 		self iprintlnBold("Your ^8VIP Status^7 has expired, you got it on ^8" + storedDay + "-" + storedMonth + "-" + storedYear);
+		wait 1;
 		self iprintlnBold("Thank you for your contribution");
 	}
 }
