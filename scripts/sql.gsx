@@ -49,3 +49,12 @@ db_setLastMap(database)
 	SQL_Query(q_str);
 	SQL_Close();
 }
+
+db_simpleQuery(database,q_str)
+{
+	db_connect(database);
+	SQL_Query(q_str); 
+	row = SQL_FetchRow();
+	SQL_Close();
+	return row;
+}
