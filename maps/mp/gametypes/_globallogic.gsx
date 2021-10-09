@@ -2165,13 +2165,9 @@ checkDonationExpiry()
 	currentMonth = TimeToString(currentTime, 1, "%m");
 	currentYear = TimeToString(currentTime, 1, "%Y");
 	prof_begin("SQL");
-	scripts\sql::db_connect("ebc_b3_pm");
 	q_str = "SELECT donation_tier, donation_date FROM player_core WHERE guid LIKE " + self.guid;
-	SQL_Query(q_str); 
-	row = SQL_FetchRow();
-	SQL_Close();
-	prof_end("SQL");
-	if(row != 0 && row[0] != 0)
+	row = scripts\sql::db_simpleQuery("ebc_b3_pm",q_str); 
+	if(row != 0 && row[0] != 0) // Fix data type comparison
 	{
 		storedData = strtok(row[1],"/");
 		storedMonth = int(storedData[0]);
@@ -2206,6 +2202,7 @@ checkDonationExpiry()
 		wait 1;
 		self iprintlnBold("Thank you for your contribution");
 	}
+	prof_end("SQL");
 }
 
 newseason(pl_season)
