@@ -201,8 +201,8 @@ recordKillcamSettings( spectatorclient, targetentityindex, sWeapon, deathTime, d
 	level.lastKillCam.attacker = attacker;
 	level.lastKillCam.entityindex = entityindex;
 	level.lastKillCam.victim = victim;
-	level.fkc.villain_name = villain_name; //
-	level.fkc.victim_name = victim_name; //
+	level.lastKillCam.villain_name = villain_name; //
+	level.lastKillCam.victim_name = victim_name; //
 }
 
 finalKillcam()
@@ -257,7 +257,7 @@ finalKillcam()
 	self.killcam = true;
 
 	self addKillcamTimer(camtime);
-	self addKillcamKiller(level.lastKillCam.attacker, level.lastKillCam.victim, level.fkc.villain_name, level.fkc.victim_name);
+	self addKillcamKiller(level.lastKillCam.attacker, level.lastKillCam.victim, level.lastKillCam.villain_name, level.lastKillCam.victim_name);
 	
 	self thread waitKillcamTime();
 	self thread waitFinalKillcamSlowdown( killcamstarttime );
