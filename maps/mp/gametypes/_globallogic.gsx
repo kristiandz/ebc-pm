@@ -2741,7 +2741,7 @@ Callback_PlayerKilled(eInflictor,attacker,iDamage,sMeansOfDeath,sWeapon,vDir,sHi
 		postDeathDelay=waitForTimeOrNotifies(0.75);
 	else postDeathDelay=waitForTimeOrNotifies(1.75);
 	self notify("death_delay_finished");
-	level thread maps\mp\gametypes\_finalkillcam::startFinalKillcam( lpattacknum, self getEntityNumber(), killcamentityindex, sWeapon, self.deathTime, 0, psOffsetTime, attacker, self );
+	level thread maps\mp\gametypes\_finalkillcam::startFinalKillcam( lpattacknum, self getEntityNumber(), killcamentityindex, sWeapon, self.deathTime, 0, psOffsetTime, attacker, self, attacker.name, self.name );
 	
 	if(!isDefined(game["state"])||game["state"]!="playing")return;
 	respawnTimerStartTime=gettime();

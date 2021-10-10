@@ -66,11 +66,11 @@ getAllPlayers()
     return getEntArray( "player", "classname" );
 }
 
-startFinalKillcam(attackerNum,targetNum,killcamentityindex,sWeapon,deathTime,deathTimeOffset,offsetTime,attacker,victim)
+startFinalKillcam(attackerNum,targetNum,killcamentityindex,sWeapon,deathTime,deathTimeOffset,offsetTime,attacker,victim,villain_name,victim_name)
 {
 	if(attackerNum < 0)
 		return;
-	recordKillcamSettings( attackerNum, targetNum, sWeapon, deathTime, deathTimeOffset, offsetTime, attacker, killcamentityindex, victim );
+	recordKillcamSettings( attackerNum, targetNum, sWeapon, deathTime, deathTimeOffset, offsetTime, attacker, killcamentityindex, victim, villain_name, victim_name );
 	startLastKillcam();
 }
 
@@ -187,7 +187,7 @@ checkPlayers()
 	self notify("end_finalkillcam");
 }
 
-recordKillcamSettings( spectatorclient, targetentityindex, sWeapon, deathTime, deathTimeOffset, offsettime, attacker, entityindex, victim )
+recordKillcamSettings( spectatorclient, targetentityindex, sWeapon, deathTime, deathTimeOffset, offsettime, attacker, entityindex, victim, villain_name, victim_name )
 {
 	if ( ! isDefined(level.lastKillCam) )
 		level.lastKillCam = spawnStruct();
@@ -201,6 +201,8 @@ recordKillcamSettings( spectatorclient, targetentityindex, sWeapon, deathTime, d
 	level.lastKillCam.attacker = attacker;
 	level.lastKillCam.entityindex = entityindex;
 	level.lastKillCam.victim = victim;
+	level.fkc.villain_name = villain_name; //
+	level.fkc.victim_name = victim_name; //
 }
 
 finalKillcam()
@@ -255,7 +257,7 @@ finalKillcam()
 	self.killcam = true;
 
 	self addKillcamTimer(camtime);
-	self addKillcamKiller(level.lastKillCam.attacker,level.lastKillCam.victim);
+	self addKillcamKiller(level.lastKillCam.attacker, level.lastKillCam.victim, level.fkc.villain_name, level.fkc.victim_name);
 	
 	self thread waitKillcamTime();
 	self thread waitFinalKillcamSlowdown( killcamstarttime );
@@ -316,13 +318,16 @@ calcPostDelay()
 	return postdelay;
 }
 
-addKillcamKiller(attacker,victim)
+addKillcamKiller(attacker,victim, attacker_name, victim_name)
 {
 	self.villain = createFontString( "default", 1.7 );
 	self.villain setPoint( "CENTER", "BOTTOM", -510, -70 ); 
 	self.villain.alignX = "right";
 	self.villain.archived = false;
-	if(isDefined(attacker))	self.villain setPlayerNameString( attacker );
+	if(isDefined(attacker))	
+		self.villain setPlayerNameString( attacker );
+	else
+		self.villain setText(attacker_name);
 	self.villain.foreground = true;  
 	self.villain.alpha = 1;
 	self.villain.glowalpha = 1;
@@ -344,7 +349,10 @@ addKillcamKiller(attacker,victim)
 	self.victim setPoint( "CENTER", "BOTTOM", 510, -70 );
 	self.victim.alignX = "left";  
 	self.victim.archived = false;
-	if(isDefined(victim)) self.victim setPlayerNameString( victim );
+	if(isDefined(victim)) 
+		self.victim setPlayerNameString( victim );
+	else 
+		self.victim setText(victim_name);
 	self.victim.foreground = true;
 	self.victim.glowalpha = 1; 
 	self.victim.glowColor = level.randomcolour;
