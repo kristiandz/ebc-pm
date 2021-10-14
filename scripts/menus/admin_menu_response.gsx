@@ -241,7 +241,12 @@ player(response)
 		
 		case "aonly_cancer":
 			if(self playerStatus() != "Leader")break;
-			duffman\onlymode::Only("m14_mp;p90_mp$Cancer");
+			duffman\onlymode::Only("m14_mp;g3_mp$Cancer");
+		break;
+		
+		case "aonly_spray":
+			if(self playerStatus() != "Leader")break;
+			duffman\onlymode::Only("uzi_mp;p90_mp$Cancer");
 		break;
 		
 		case "aonly_reset":

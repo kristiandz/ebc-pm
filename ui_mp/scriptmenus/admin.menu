@@ -70,8 +70,7 @@
 			mouseEnter 			{ play "mouse_over";} \
 			action 				{ play "mouse_click";responseArg;} \
 			visible 			when(dvarString("ui_player" + itemNum) != "") \
-		}	
-		
+		}
 {
 	menuDef 
 	{
@@ -163,9 +162,10 @@
 		BUTTON2(6,"RPG only",aonly_rpg,"RPG only mode.") 		
 		BUTTON2(7,"RPD only",aonly_rpd,"RPD only mode.") 		
 		BUTTON2(8,"Pistol only",aonly_pistol,"Pistol only mode.") 
-		BUTTON2(11,"^1Reset mode",aonly_reset,"Resets only mode.") 				
+		BUTTON2(12,"^1Reset mode",aonly_reset,"Resets only mode.") 				
 		BUTTON2(10,"Soviet only",aonly_soviet,"Soviet only mode.") 		
-		BUTTON2(5,"Cancer only",aonly_cancer,"Cancer only mode.") 
+		BUTTON2(5,"Cancer only",aonly_cancer,"Cancer only mode.")
+		BUTTON2(11,"Spray only",aonly_spray,"Spray only mode.") 		
 		//
 		itemDef 
 		{ 
