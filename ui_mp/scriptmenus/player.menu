@@ -520,7 +520,7 @@
 		}
 		itemDef
 		{
-			rect			288 288 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			288 290 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			forecolor		1 1 1 1
 			exp text		("Music On/Off: \n^1Music Off" )
 			textfont		UI_FONT_NORMAL
