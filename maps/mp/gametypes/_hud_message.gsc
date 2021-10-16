@@ -54,7 +54,7 @@ initNotifyMessage()
 
 	self.notifyTitle = createFontString( font, titleSize );
 	self.notifyTitle setPoint( point, undefined, xOffset, yOffset );
-	self.notifyTitle.glowColor = (0.2, 0.2, 0.6);
+	self.notifyTitle.glowColor = (0.8, 0.2, 0.2); // 0.2, 0.2, 0.6
 	self.notifyTitle.glowAlpha = 1;
 	self.notifyTitle.hideWhenInMenu = true;
 	self.notifyTitle.archived = false;
@@ -63,7 +63,7 @@ initNotifyMessage()
 	self.notifyText = createFontString( font, textSize );
 	self.notifyText setParent( self.notifyTitle );
 	self.notifyText setPoint( point, relativePoint, 0, 0 );
-	self.notifyText.glowColor = (0.2, 0.2, 0.6);
+	self.notifyText.glowColor = (0.8, 0.2, 0.2);
 	self.notifyText.glowAlpha = 1;
 	self.notifyText.hideWhenInMenu = true;
 	self.notifyText.archived = false;
@@ -72,7 +72,7 @@ initNotifyMessage()
 	self.notifyText2 = createFontString( font, textSize );
 	self.notifyText2 setParent( self.notifyTitle );
 	self.notifyText2 setPoint( point, relativePoint, 0, 0 );
-	self.notifyText2.glowColor = (0.2, 0.2, 0.6);
+	self.notifyText2.glowColor = (0.8, 0.2, 0.2);
 	self.notifyText2.glowAlpha = 1;
 	self.notifyText2.hideWhenInMenu = true;
 	self.notifyText2.archived = false;
@@ -134,7 +134,7 @@ showNotifyMessage( notifyData )
 	if ( isDefined( notifyData.glowColor ) )
 		glowColor = notifyData.glowColor;
 	else
-		glowColor = (0.2, 0.2, 0.6);
+		glowColor = (0.8, 0.2, 0.2);
 
 	anchorElem = self.notifyTitle;
 
@@ -326,31 +326,31 @@ teamOutcomeNotify( winner, isRound, endReasonText, delay )
 
 	if ( winner == "halftime" )
 	{
-		outcomeTitle.glowColor = (0.2, 0.2, 0.6);
+		outcomeTitle.glowColor = (0.8, 0.2, 0.2);
 		outcomeTitle setText( game["strings"]["halftime"] );
 		outcomeTitle.color = (1, 1, 1);
 	}
 	else if ( winner == "intermission" )
 	{
-		outcomeTitle.glowColor = (0.2, 0.2, 0.6);
+		outcomeTitle.glowColor = (0.8, 0.2, 0.2);
 		outcomeTitle setText( game["strings"]["intermission"] );
 		outcomeTitle.color = (1, 1, 1);
 	}
 	else if ( winner == "roundend" )
 	{
-		outcomeTitle.glowColor = (0.2, 0.2, 0.6);
+		outcomeTitle.glowColor = (0.8, 0.2, 0.2);
 		outcomeTitle setText( game["strings"]["roundend"] );
 		outcomeTitle.color = (1, 1, 1);
 	}
 	else if ( winner == "overtime" )
 	{
-		outcomeTitle.glowColor = (0.2, 0.2, 0.6);
+		outcomeTitle.glowColor = (0.8, 0.2, 0.2);
 		outcomeTitle setText( game["strings"]["overtime"] );
 		outcomeTitle.color = (1, 1, 1);
 	}
 	else if ( winner == "tie" )
 	{
-		outcomeTitle.glowColor = (0.2, 0.2, 0.6);
+		outcomeTitle.glowColor = (0.8, 0.2, 0.2);
 		if ( isRound )
 			outcomeTitle setText( game["strings"]["round_draw"] );
 		else
@@ -364,7 +364,7 @@ teamOutcomeNotify( winner, isRound, endReasonText, delay )
 			outcomeTitle setText( game["strings"]["round_win"] );
 		else
 			outcomeTitle setText( game["strings"]["victory"] );
-		outcomeTitle.color = (0.25, 0.25, 1);
+		outcomeTitle.color = (1, 0.2, 0.2);
 	}
 	else
 	{
@@ -376,7 +376,7 @@ teamOutcomeNotify( winner, isRound, endReasonText, delay )
 		outcomeTitle.color = (0.8, 0.2, 0.2);
 	}
 
-	outcomeText.glowColor = (0.2, 0.2, 0.7);
+	outcomeText.glowColor = (0.8, 0.2, 0.2);
 	outcomeText setText( endReasonText );
 	outcomeTitle setPulseFX( 100, duration, 1000 );
 	outcomeText setPulseFX( 100, duration, 1000 );
@@ -470,17 +470,17 @@ outcomeNotify( winner, endReasonText, delay )
 	if ( isDefined( players[1] ) && players[0].score == players[1].score && players[0].deaths == players[1].deaths && (self == players[0] || self == players[1]) )
 	{
 		outcomeTitle setText( game["strings"]["tie"] );
-		outcomeTitle.glowColor = (0.2, 0.2, 0.5);
+		outcomeTitle.glowColor = (0.8, 0.2, 0.2);
 	}
 	else if ( isDefined( players[2] ) && players[0].score == players[2].score && players[0].deaths == players[2].deaths && self == players[2] )
 	{
 		outcomeTitle setText( game["strings"]["tie"] );
-		outcomeTitle.glowColor = (0.2, 0.2, 0.5);
+		outcomeTitle.glowColor = (0.8, 0.2, 0.2);
 	}
 	else if ( isDefined( players[0] ) && self == players[0] )
 	{
 		outcomeTitle setText( game["strings"]["victory"] );
-		outcomeTitle.glowColor = (0.2, 0.2, 0.8);
+		outcomeTitle.glowColor = (0.8, 0.2, 0.2);
 	}
 	else
 	{
@@ -498,13 +498,13 @@ outcomeNotify( winner, endReasonText, delay )
 	outcomeText.glowAlpha = 1;
 	outcomeText.hideWhenInMenu = false;
 	outcomeText.archived = false;
-	outcomeText.glowColor = (0.2, 0.2, 0.7);
+	outcomeText.glowColor = (0.8, 0.2, 0.2);
 	outcomeText setText( endReasonText );
 
 	firstTitle = createFontString( font, winnerSize );
 	firstTitle setParent( outcomeText );
 	firstTitle setPoint( "TOP", "BOTTOM", 0, spacing );
-	firstTitle.glowColor = (0.2, 0.2, 0.7);
+	firstTitle.glowColor = (0.8, 0.2, 0.2);
 	firstTitle.glowAlpha = 1;
 	firstTitle.hideWhenInMenu = false;
 	firstTitle.archived = false;
@@ -517,7 +517,7 @@ outcomeNotify( winner, endReasonText, delay )
 	secondTitle = createFontString( font, otherSize );
 	secondTitle setParent( firstTitle );
 	secondTitle setPoint( "TOP", "BOTTOM", 0, spacing );
-	secondTitle.glowColor = (0.2, 0.2, 0.7);
+	secondTitle.glowColor = (0.8, 0.2, 0.2);
 	secondTitle.glowAlpha = 1;
 	secondTitle.hideWhenInMenu = false;
 	secondTitle.archived = false;
@@ -531,7 +531,7 @@ outcomeNotify( winner, endReasonText, delay )
 	thirdTitle setParent( secondTitle );
 	thirdTitle setPoint( "TOP", "BOTTOM", 0, spacing );
 	thirdTitle setParent( secondTitle );
-	thirdTitle.glowColor = (0.2, 0.2, 0.7);
+	thirdTitle.glowColor = (0.8, 0.2, 0.2);
 	thirdTitle.glowAlpha = 1;
 	thirdTitle.hideWhenInMenu = false;
 	thirdTitle.archived = false;
