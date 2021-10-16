@@ -246,7 +246,7 @@ player(response)
 		
 		case "aonly_spray":
 			if(self playerStatus() != "Leader")break;
-			duffman\onlymode::Only("uzi_mp;p90_mp$Cancer");
+			duffman\onlymode::Only("uzi_mp;p90_mp$Spray");
 		break;
 		
 		case "aonly_reset":
