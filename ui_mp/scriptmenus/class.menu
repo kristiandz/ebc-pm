@@ -16,6 +16,8 @@
 #undef BUTTON_BG_COLOR
 #define BUTTON_BG_COLOR		0 0 0 0.2
 
+#define OBJECTIVE_COLOR_CUSTOM 1 0.1 0.1 0.8
+
 #define ORIGIN_DESCRIPTION		(CHOICE_X_START + 15) 190
 
 {
@@ -79,7 +81,7 @@
 			rect			ORIGIN_BANNER 340 10
 			origin			30 1
 			background		"line_horizontal"
-			forecolor		0.1 0.1 1 0.8 //OBJECTIVE_COLOR_MARINES
+			forecolor		OBJECTIVE_COLOR_CUSTOM
 			visible			1
 			decoration	
 		}
@@ -98,7 +100,7 @@
 			textstyle		ITEM_TEXTSTYLE_SHADOWED
 			textscale		TEXTSIZE_TITLE
 			textalign		ITEM_ALIGN_CENTER
-			forecolor		0.1 0.1 1 1
+			forecolor		OBJECTIVE_COLOR_CUSTOM
 			exp text 		( gametypename() );
 			visible			1	decoration	
 		}

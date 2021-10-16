@@ -94,11 +94,11 @@
 #endif
 
 #ifndef CHOICE_HEADERCOLOR
-#define CHOICE_HEADERCOLOR		0 0 1 1
+#define CHOICE_HEADERCOLOR		1 0 0 1
 #endif
 
 #ifndef CHOICE_TEXTCOLOR
-#define CHOICE_TEXTCOLOR		0 0 1 1
+#define CHOICE_TEXTCOLOR		1 0 0 1
 #endif
 
 #ifndef CHOICE_TEXTCOLOR_CAPT
@@ -162,14 +162,22 @@
 #endif
 
 #ifndef ALTERNATE_HINT_COLOR
-#define ALTERNATE_HINT_COLOR	.8 .8 1 1
+#define ALTERNATE_HINT_COLOR	1 .8 .8 1
+#endif
+
+#ifndef HIGHLIGHT_FOCUS_COLOR
+#define HIGHLIGHT_FOCUS_COLOR 1 0 0 0.03
+#endif
+
+#ifndef CHOICE_TEXTCOLOR_LOW_ALPHA
+#define CHOICE_TEXTCOLOR_LOW_ALPHA 1 0 0 0.4
 #endif
 
 #ifndef HIGHLIGHT_COLOR
-#define HIGHLIGHT_COLOR			0 0 1 1
+#define HIGHLIGHT_COLOR			1 0 0 1
 #endif
 #ifndef HIGHLIGHT_BORDER_COLOR
-#define HIGHLIGHT_BORDER_COLOR	0 0 1 1
+#define HIGHLIGHT_BORDER_COLOR	1 0 0 1
 #endif
 
 #ifndef CHOICE_HORIZONTAL_ALIGN
@@ -294,7 +302,7 @@
 			style			WINDOW_STYLE_SHADER \
 			rect			CHOICE_ORIGIN( itemIndex ) (CHOICE_SIZE_X-(CHOICE_SIZE_Y/4)) CHOICE_SIZE_Y CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN \
 			background		HIGHLIGHT_SHADER \
-			forecolor		0 0 1 0.03 \
+			forecolor		HIGHLIGHT_FOCUS_COLOR \
 			border			HIGHLIGHT_BORDER \
 			bordersize		2 \
 			bordercolor		borderColorArg \
@@ -306,7 +314,7 @@
 			style			WINDOW_STYLE_SHADER \
 			rect			(CHOICE_X( itemIndex )+(CHOICE_SIZE_X-(CHOICE_SIZE_Y/4))) CHOICE_Y( itemIndex ) (CHOICE_SIZE_Y/4) CHOICE_SIZE_Y CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN \
 			background		HIGHLIGHT_SHADER_ART \
-			forecolor		0 0 1 0.035 \
+			forecolor		HIGHLIGHT_FOCUS_COLOR \
 			visible			when( localVarInt( ui_highlight ) == itemIndex && localVarString( ui_choicegroup ) == CHOICE_GROUP ); \
 			decoration \
 		} \
@@ -357,7 +365,7 @@
 		{ \
 			type			ITEM_TYPE_TEXT \
 			origin			ORIGIN_TITLE \
-			forecolor		0 0 1 1 \  // Title color
+			forecolor		CHOICE_TEXTCOLOR \  // Title color
 			exp				text( titleArg ) \
 			textalignx		-34 \
 			textfont		UI_FONT_NORMAL \
@@ -373,7 +381,7 @@
 		{ \
 			type			ITEM_TYPE_TEXT \
 			origin			ORIGIN_TITLE \
-			forecolor		0 0 1 1 \ // Mp menu main title
+			forecolor		CHOICE_TEXTCOLOR \ // Mp menu main title
 			exp				text( titleArg ) \
 			textfont		UI_FONT_NORMAL \
 			textscale		TEXTSIZE_TITLE \
@@ -410,7 +418,7 @@
 		rect			(SECTION_X_OFFSET+0) 7 240 0.5 CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN \
 		origin			CHOICE_ORIGIN( itemIndex ) \
 		background		"line_horizontal" \
-		forecolor		0 0 1 1 \
+		forecolor		CHOICE_TEXTCOLOR \
 		visible			visArg \
 		decoration \
 	}	 \
@@ -420,7 +428,7 @@
 		rect			(SECTION_X_OFFSET+20) 8 200 10 CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN \
 		origin			CHOICE_ORIGIN( itemIndex ) \
 		background		"line_horizontal" \
-		forecolor		0 0 1 0.4 \ // Mp menu red lines
+		forecolor		CHOICE_TEXTCOLOR_LOW_ALPHA \ // Mp menu red lines
 		visible			visArg \
 		decoration \
 	} \
@@ -430,7 +438,7 @@
 		rect			(SECTION_X_OFFSET+0) 19 240 0.5 CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN \
 		origin			CHOICE_ORIGIN( itemIndex ) \
 		background		"line_horizontal" \
-		forecolor		0 0 1 0.8 \
+		forecolor		CHOICE_TEXTCOLOR \
 		visible			visArg \
 		decoration \
 	} \
@@ -439,7 +447,7 @@
 		type			ITEM_TYPE_TEXT \
 		rect			(SECTION_X_OFFSET+0) -1 240 24 CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN \
 		origin			CHOICE_ORIGIN( itemIndex ) \
-		forecolor		0 0 1 1 \
+		forecolor		CHOICE_TEXTCOLOR \
 		exp				text( titleArg );\ // mp menu text color
 		textstyle 		ITEM_TEXTSTYLE_SHADOWED \
 		textfont		UI_FONT_NORMAL \
@@ -833,7 +841,7 @@
 			textscale		CHOICE_TEXTSIZE \
 			textstyle		CHOICE_TEXTSTYLE \
 			textAlign		ITEM_ALIGN_MIDDLE_LEFT \
-			forecolor		0 0 1 1 \
+			forecolor		CHOICE_TEXTCOLOR \
 			visible			visArg \
 			decoration \
 		}
@@ -877,7 +885,7 @@
 			textscale		TEXTSIZE_DEFAULT \
 			textstyle		ITEM_TEXTSTYLE_SHADOWED \
 			textAlign		ITEM_ALIGN_MIDDLE_CENTER \
-			forecolor		0 0 1 1 \
+			forecolor		CHOICE_TEXTCOLOR \
 			visible			visArg ; \
 			action \
 			{ \
@@ -899,7 +907,7 @@
 			textscale		TEXTSIZE_DEFAULT \
 			textstyle		ITEM_TEXTSTYLE_SHADOWED \
 			textAlign		ITEM_ALIGN_MIDDLE_CENTER \
-			forecolor		0 0 1 1 \
+			forecolor		CHOICE_TEXTCOLOR \
 			visible			visArg ; \
 			action \
 			{ \
@@ -936,7 +944,7 @@
 			textstyle		ITEM_TEXTSTYLE_SHADOWED \
 			style			WINDOW_STYLE_FILLED \
 			backcolor		0 0 0 0 \
-			forecolor		0 0 1 1 \
+			forecolor		CHOICE_TEXTCOLOR \
 			border			0 \
 			bordercolor		.5 .5 .5 .5 \
 			textscale		TEXTSIZE_SMALL \

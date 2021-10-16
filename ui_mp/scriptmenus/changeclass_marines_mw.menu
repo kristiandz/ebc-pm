@@ -21,7 +21,7 @@
 #define ORIGIN_MENU_TITLE_MARINES	178 64
 #define ORIGIN_MENU_TITLE_OPFOR		170 64
 #define TREE_COLOR					1 1 1 0.5
-#define LABEL_TEXT_COLOR		0 0 1 1
+#define LABEL_TEXT_COLOR		1 0 0 1
 
 {
 	menuDef
