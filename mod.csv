@@ -81,14 +81,23 @@ material,gfx_spray27
 material,gfx_spray28
 material,gfx_spray29
 
-material,gfx_bootywalk
-material,gfx_shocdance
-material,gfx_goodfellas
-material,gfx_yesjackdaniels
-material,gfx_tenserage
-material,gfx_kermitdance
-material,gfx_sexykiss
-material,gfx_vibingcat
+material,gfx_angry
+material,gfx_booty
+material,gfx_bugsbunny
+material,gfx_cheers
+material,gfx_laughing
+material,gfx_shootgun
+material,gfx_spicy
+material,gfx_therock
+
+material,angry_menu
+material,booty_menu
+material,bugsbunny_menu
+material,cheers_menu
+material,laughing_menu
+material,shootgun_menu
+material,spicy_menu
+material,therock_menu
 
 material,spray0_menu
 material,spray1_menu
@@ -121,16 +130,7 @@ material,spray27_menu
 material,spray28_menu
 material,spray29_menu
 
-material,bootywalk_menu
-material,shocdance_menu
-material,goodfellas_menu
-material,yesjackdaniels_menu
-material,tenserage_menu
-material,kermitdance_menu
-material,sexykiss_menu
-material,vibingcat_menu
 material,alkohol_menu
-
 material,bloodsplat3
 material,cross_hud
 material,skull_hud
@@ -171,14 +171,14 @@ fx,deathrun/spray27
 fx,deathrun/spray28
 fx,deathrun/spray29
 
-fx,deathrun/bootywalk
-fx,deathrun/shocdance
-fx,deathrun/goodfellas
-fx,deathrun/yesjackdaniels
-fx,deathrun/tenserage
-fx,deathrun/kermitdance
-fx,deathrun/sexykiss
-fx,deathrun/vibingcat
+fx,deathrun/angry
+fx,deathrun/booty
+fx,deathrun/bugsbunny
+fx,deathrun/cheers
+fx,deathrun/laughing
+fx,deathrun/shootgun
+fx,deathrun/spicy
+fx,deathrun/therock
 
 fx,deathrun/revtrail_red_flare
 
