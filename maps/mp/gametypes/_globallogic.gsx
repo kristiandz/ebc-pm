@@ -2123,9 +2123,8 @@ Callback_PlayerConnect()
 			name = GetSubStr(self.name, 0, 25);
 			atier = self GetStat(3252);
 			dtier = self GetStat(3253);
-			backup_pr = self GetCvar("backup-pr"); if(!isDefined(backup_pr) || backup_pr == "")	backup_pr = 0; //
-			season = "winter"; // remove after summer		
-			q_str = "INSERT INTO player_core (guid,name,prestige,backup_pr,season,award_tier,donation_tier) VALUES ("+self.guid+",\""+name+"\","+self.prestige+","+backup_pr+",\""+season +"\","+atier+","+dtier+")"; // level.season here
+			backup_pr = 0; // Remove
+			q_str = "INSERT INTO player_core (guid,name,prestige,backup_pr,season,award_tier,donation_tier) VALUES ("+self.guid+",\""+name+"\","+self.prestige+","+backup_pr+",\""+ level.season +"\","+atier+","+dtier+")"; // level.season here
 			SQL_Query(q_str);
 			SQL_Close();
 		}
@@ -2151,7 +2150,7 @@ checkSeason()
 	season = undefined;
 	cur = getRealTime();
 	month = TimeToString(cur, 1, "%m");
-	if(int(month) >= 5 && int(month) <= 11)
+	if(int(month) >= 5 && int(month) < 11)
 		season = "summer";
 	else
 		season = "winter";
