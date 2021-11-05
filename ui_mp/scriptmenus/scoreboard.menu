@@ -1,7 +1,7 @@
 #include "ui/menudef.h"
 
 #define 	SCOREBAR_OFFSET 0 4
-#define     SCOREBOARD_THICC_LINE_COLOR 1 0.25 0.25 1
+#define     SCOREBOARD_THICC_LINE_COLOR 1 0.2 0.2 1
 
 #define SCORE_BAR() \
 		itemDef \
@@ -10,7 +10,7 @@
 			rect			0 3 640 18 HORIZONTAL_ALIGN_FULLSCREEN VERTICAL_ALIGN_TOP \
 			origin			SCOREBAR_OFFSET\
 			background		"line_horizontal_scorebar" \
-			forecolor		0.9 0.4 0.2 1 \    /// thic sas
+			forecolor		1 0.2 0.2 1 \    /// thic sas
 			visible			when( team( name ) == "TEAM_ALLIES" && dvarString( "scr_allies" ) == "sas"  && !isIntermission() ) \
 			decoration \
 		} \

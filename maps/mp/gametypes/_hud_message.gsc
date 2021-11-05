@@ -364,7 +364,7 @@ teamOutcomeNotify( winner, isRound, endReasonText, delay )
 			outcomeTitle setText( game["strings"]["round_win"] );
 		else
 			outcomeTitle setText( game["strings"]["victory"] );
-		outcomeTitle.color = (1, 0.2, 0.2);
+		outcomeTitle.color = (1, 0.9, 0.9);
 	}
 	else
 	{

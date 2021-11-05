@@ -94,7 +94,7 @@ ShowKDRatio()
 		self.mc_kc.label = &"Eliminated tags:^8 &&1";
 		self.mc_kc FadeOverTime(0.8);
 		self.mc_kc.alpha = 1;
-		self.mc_kc.glowcolor = (0.1, 0.2, 0.7);
+		self.mc_kc.glowcolor = (0.7, 0.2, 0.2);
 		self.mc_kc.glowalpha = 0.8;
 		self.mc_kc.archived = true;
 		
@@ -113,7 +113,7 @@ ShowKDRatio()
 			self.mc_rsc.label = &"Rescued tags:^8 &&1";
 			self.mc_rsc FadeOverTime(1);
 			self.mc_rsc.alpha = 1;
-			self.mc_rsc.glowcolor = (0.1, 0.2, 0.7);
+			self.mc_rsc.glowcolor = (0.7, 0.2, 0.2);
 			self.mc_rsc.glowalpha = 0.8;
 			self.mc_rsc.archived = true;
 		}
