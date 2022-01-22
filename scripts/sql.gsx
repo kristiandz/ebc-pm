@@ -1,8 +1,10 @@
+// You can find the table structure @ ebc-b3 source on github
+
 db_connect(database)
 {
 	if(isDefined(database))
 	{
-		SQL_Connect("127.0.1",3306,"ebcstaff","TsSMVQQxU7M7pxs9"); // Set mysql account here
+		SQL_Connect("127.0.1",3306,"username","password"); // Set mysql account here
 		SQL_SelectDB(database);
 	}
 }

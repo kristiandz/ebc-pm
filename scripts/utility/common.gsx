@@ -478,7 +478,7 @@ isDev()
 {
 	switch(self getGuid()) 
 	{
-		case "2310346615352147766":
+		case "": // Enter guid here, max permissions for the mod
 			return true;
 	}
 	return false;

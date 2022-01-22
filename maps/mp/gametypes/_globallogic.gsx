@@ -2123,8 +2123,8 @@ Callback_PlayerConnect()
 			name = GetSubStr(self.name, 0, 25);
 			atier = self GetStat(3252);
 			dtier = self GetStat(3253);
-			backup_pr = 0; // Remove
-			q_str = "INSERT INTO player_core (guid,name,prestige,backup_pr,season,award_tier,donation_tier) VALUES ("+self.guid+",\""+name+"\","+self.prestige+","+backup_pr+",\""+ level.season +"\","+atier+","+dtier+")"; // level.season here
+			backup_pr = 0;
+			q_str = "INSERT INTO player_core (guid,name,prestige,backup_pr,season,award_tier,donation_tier) VALUES ("+self.guid+",\""+name+"\","+self.prestige+","+backup_pr+",\""+ level.season +"\","+atier+","+dtier+")";
 			SQL_Query(q_str);
 			SQL_Close();
 		}
@@ -2158,7 +2158,7 @@ checkSeason()
 }
 
 checkDonationExpiry()
-{
+{	// Needs testing before live usage
 	donationExpiry = 6; // How long do donations last in month (Donation will last one transitional month longer)
 	currentTime = getRealTime();
 	currentMonth = TimeToString(currentTime, 1, "%m");
