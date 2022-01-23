@@ -8,15 +8,15 @@ Visit us at [Explicit Bouncers](https://explicitbouncers.com) or join the [serve
 ## Features
 
 - This is a mod built on a cleaned up version of [Promod V2.20](https://github.com/cod4mw/promod), only custom_public and strat modes are available, most of promod features have been removed, everything that is not needed for pub servers.
-- Old bugs from promod and cod4 files have been fixed and there are updates to the code that optimize the mod and server. eBc Promod is quite a heavy mod but it will run pretty well within 100+ MB of RAM then your typical promod or similar servers. Average usage for filled and active 24 slot server is around 300-350MB of RAM, or less if you restart the server daily, the mod has been running for weeks at times without any crashes or restarts.
-- The mod features ranks that were removed in promod, and it also includes prestiges which was not available on PC version of the game. There are 55 levels anad 30 prestige levels. With the current settings, the players need around 4-5 months of active and normal playing to get to level/prestige cap.
-- The mod features season that change every 6 months, twice a year, including a prestige and rank reset. After each season players are awarded depending on their achieved prestige. The server runs prestige check on the players to prevent exploiting, also there is logging for quite a lot of items to easily check what is happening with the playerbase and the server.
+- Old bugs from promod and cod4 files have been fixed and there are updates to the code that optimize the mod and server. eBc Promod is quite a heavy mod but it will run pretty well within 100+MB of RAM than your typical promod or similar servers. Average usage for filled and active 24 slot server is around 300-350MB of RAM, or less if you restart the server daily, the mod has been running for weeks at times without any crashes or restarts.
+- The mod features ranks that were removed in promod, and it also includes prestiges which was not available on PC version of the game. There are 55 levels anad 30 prestige levels. With the current settings, the players need around 4-5 months of active playing to get to level/prestige cap.
+- The mod features seasons that change every 6 months, including prestige and rank reset. After each season players are awarded depending on their achieved prestige. The server runs prestige check on the players to prevent exploiting, also there is logging for quite a lot of items to easily check what is happening with the playerbase and the server.
 - You can find custom viewmodels, sprays, killcards that have been ported from different mods/games, each prestige unlocks a set of rewards.
 - There are 4 key menus that are available to different ranks on the server. A graphics/player settings menu, prestige awards menu, VIP menu and admin menu.
 - Mod runs SQL support to expand the possibilities of the modding and access to adminmod data and other SQL db's to provide easy integration with whatever application you run.
 - Mod is primarily built for S&D and S&R gametypes, but you can access some other custom gametypes as well, note that not all the gametypes from mixmod are available here.
 - Mod contains plenty of features, yet keeps simplicity and a clean UI, you can find custom stuff like map voting with custom camera movement, killcards, custom commands for players and admins.
-- Damage is increased by 2 points in the player_killed callback to prevent tags with sniper weapons, slodown is disabled and FPS limit is increased to 333. Promod checks for some DVARS and restrictions have been removed to suit pub server settings.
+- Damage is increased by 2 points in the player_killed callback to prevent tags with sniper weapons, slowdown is disabled and FPS limit has been increased to 333. Promod checks for some DVARS and restrictions have been removed to suit pub server settings.
 - And many more for you to explore and use...
 
 ## How to work on the mod
