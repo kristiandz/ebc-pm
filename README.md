@@ -1,4 +1,4 @@
-## Explicit Bouncers Promod
+## Explicit Bouncers Promod [![CodeFactor](https://www.codefactor.io/repository/github/kristiandz/ebc-pm/badge)](https://www.codefactor.io/repository/github/kristiandz/ebc-pm) ![GitHub](https://img.shields.io/github/license/kristiandz/ebc-pm)
 
 This repository contains live code from the promod server.
 The mod is stable and has all known issues solved, you can use it for your needs freely, just leave credits. Feel free to contribute to the project.
