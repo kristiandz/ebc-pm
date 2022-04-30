@@ -81,23 +81,23 @@ material,gfx_spray27
 material,gfx_spray28
 material,gfx_spray29
 
-material,gfx_angry
-material,gfx_booty
-material,gfx_bugsbunny
-material,gfx_cheers
-material,gfx_laughing
-material,gfx_shootgun
-material,gfx_spicy
-material,gfx_therock
+material,gfx_bootygrab
+material,gfx_burningelmo
+material,gfx_nichrome
+material,gfx_hackerman
+material,gfx_hearteyes
+material,gfx_ripcoffin
+material,gfx_rubhands
+material,gfx_verynice
 
-material,angry_menu
-material,booty_menu
-material,bugsbunny_menu
-material,cheers_menu
-material,laughing_menu
-material,shootgun_menu
-material,spicy_menu
-material,therock_menu
+material,bootygrab_menu
+material,burningelmo_menu
+material,purechocolatealpaca_menu
+material,hackerman_menu
+material,hearteyes_menu
+material,ripcoffin_menu
+material,rubhands_menu
+material,verynice_menu
 
 material,spray0_menu
 material,spray1_menu
@@ -171,14 +171,14 @@ fx,deathrun/spray27
 fx,deathrun/spray28
 fx,deathrun/spray29
 
-fx,deathrun/angry
-fx,deathrun/booty
-fx,deathrun/bugsbunny
-fx,deathrun/cheers
-fx,deathrun/laughing
-fx,deathrun/shootgun
-fx,deathrun/spicy
-fx,deathrun/therock
+fx,deathrun/bootygrab
+fx,deathrun/burningelmo
+fx,deathrun/purechocolatealpaca
+fx,deathrun/hackerman
+fx,deathrun/hearteyes
+fx,deathrun/ripcoffin
+fx,deathrun/rubhands
+fx,deathrun/verynice
 
 fx,deathrun/revtrail_red_flare
 
