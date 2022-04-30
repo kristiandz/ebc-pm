@@ -517,7 +517,7 @@ getsongname(songnum)
         break;
 		case 66: level.name = "Blame The Mono - Spread Unison";	
         break;
-		case 67: level.name = "Blame The Mono - Spread Unison";	
+		case 67: level.name = "Oxia - Domino (David_Guetta Remix)";	
         break;
 		case 68: level.name = "Be My Lover - Julian Muller Mix";	
         break;
