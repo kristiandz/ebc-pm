@@ -703,7 +703,7 @@
 			textscale	0.35
 			textalign	ITEM_ALIGN_LEFT
 			textstyle	ITEM_TEXTSTYLE_SHADOWEDMORE
-			forecolor	1 0.45 0.45 HUD_FOREGROUND_ALPHA //0 0.6 1 HUD_FOREGROUND_ALPHA
+			forecolor	0 0.6 1 HUD_FOREGROUND_ALPHA //1 0.45 0.45 HUD_FOREGROUND_ALPHA
 			visible 	when ( timeLeft() >= 30 && timeLeft() < 60 && !dvarBool( ui_bomb_timer ) && dvarBool(cg_voiceiconsize) == 1 && dvarbool("promod_movie_hidescorebar") != 1 && team( name ) != "TEAM_SPECTATOR");
 			decoration 
 		}		
@@ -716,7 +716,7 @@
 			textscale	0.35
 			textalign	ITEM_ALIGN_LEFT
 			textstyle	ITEM_TEXTSTYLE_SHADOWEDMORE
-			forecolor	1 0.2 0.2 1 //0 0.3 1 1
+			forecolor	0 0.3 1 1 // 1 0.2 0.2 1
 			visible 	when ( ( (timeLeft() >= 0 && timeLeft() < 30) || dvarBool( ui_bomb_timer ) ) && dvarBool(cg_voiceiconsize) == 1 && dvarbool("promod_movie_hidescorebar") != 1 && team( name ) != "TEAM_SPECTATOR" );
 			decoration 
 		}
@@ -753,7 +753,7 @@
 			textscale	0.35
 			textalign	ITEM_ALIGN_LEFT
 			textstyle	ITEM_TEXTSTYLE_SHADOWEDMORE
-			forecolor	1 0.55 0.55 HUD_FOREGROUND_ALPHA // 0 0.75 0.9 HUD_FOREGROUND_ALPHA
+			forecolor	0 0.75 0.9 HUD_FOREGROUND_ALPHA //1 0.55 0.55  HUD_FOREGROUND_ALPHA
 			visible 	when ( timeLeft() >= 30 && timeLeft() < 60 && !dvarBool( ui_bomb_timer ) && ( dvarBool(cg_voiceiconsize) == 0 || team( name ) == "TEAM_SPECTATOR" ) && dvarbool("promod_movie_hidescorebar") != 1);
 			decoration 
 		}		
@@ -766,7 +766,7 @@
 			textscale	0.35
 			textalign	ITEM_ALIGN_LEFT
 			textstyle	ITEM_TEXTSTYLE_SHADOWEDMORE
-			forecolor	1 0.3 0.3 1 // 0 0.5 1 1
+			forecolor	0 0.5 1 1 // 1 0.3 0.3 1
 			visible 	when ( ( (timeLeft() >= 0 && timeLeft() < 30) || dvarBool( ui_bomb_timer ) ) && ( dvarBool(cg_voiceiconsize) == 0 || team( name ) == "TEAM_SPECTATOR" ) && dvarbool("promod_movie_hidescorebar") != 1);
 			decoration 
 		}
@@ -777,7 +777,7 @@
 			textscale       0.35
 			textstyle		ITEM_TEXTSTYLE_SHADOWED
 			textfont        UI_FONT_NORMAL
-			forecolor		1 0.8 0.8 1 // 0.7 1 1 1
+			forecolor		0.7 1 1 1 //  1 0.8 0.8 1
 			exp text        dvarString( promod_hud_website )
 			visible			when(dvarString( promod_hud_website ) != "" && dvarBool(cg_voiceiconsize) == 1  && dvarbool("promod_movie_hidescorebar") != 1 && ( dvarint( ui_hud_hardcore ) == 0 ) &&  team( name )!= "TEAM_SPECTATOR")
 			decoration
@@ -789,7 +789,7 @@
 			textscale       0.35
 			textstyle		ITEM_TEXTSTYLE_SHADOWED
 			textfont        UI_FONT_NORMAL
-			forecolor		1 0.8 0.8 1 //0.7 1 1 1
+			forecolor		0.7 1 1 1 // 1 0.8 0.8 1
 			exp text        dvarString( promod_hud_website )
 			visible			when(dvarString( promod_hud_website ) != "" && ( dvarBool(cg_voiceiconsize) == 0  || team( name )== "TEAM_SPECTATOR" ) && dvarbool("promod_movie_hidescorebar") != 1 && ( dvarint( ui_hud_hardcore ) == 0 ))
 			decoration
