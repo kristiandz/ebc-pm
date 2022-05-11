@@ -2142,6 +2142,7 @@ Callback_PlayerConnect()
 				self thread checkDonationExpiry();
 		}
 		prof_end("SQL");
+		self.pers["verified"] = true;
 	}
 }
 
@@ -2259,7 +2260,6 @@ newseason(pl_season)
 		wait 2;
 		self iprintlnBold("Everyone is starting from zero in new season");
 	}
-	self.pers["verified"] = true;
 }
 
 award_check(prestige)
