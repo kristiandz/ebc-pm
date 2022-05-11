@@ -2207,6 +2207,8 @@ checkDonationExpiry()
 newseason(pl_season)
 {
 	self endon("disconnect");
+	// Wait for the prestige restore to finish, so it doesn't happen after season reset
+	self waittill("prcheck_done");
 	cp = self GetStat(2326); // Current prestige
 	pp = self GetStat(3250); // Local check for previous season
 	if( cp != 0 && pl_season != level.season && pp != 0 )
@@ -2309,6 +2311,7 @@ prcheck(storedpr,backup)
 		self iprintlnBold("Date: " + date + " | GUID: " + self GetGuid() );
 		thread scripts\utility\common::log("prcheck", self.name + " (" + self getGuid() + ") " + "was reseted 3@ " + date + " | Login Prestige: " + prestige );
 	}
+	self notify("prcheck_done");
 }
 
 Callback_PlayerDisconnect()
