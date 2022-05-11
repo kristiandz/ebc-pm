@@ -100,7 +100,7 @@ onMenuResponse()
 				// Update prestige_log
 				cur = getRealTime();
 				time = TimeToString(cur, 1, "%c");
-				q_str = "INSERT INTO prestige_log (guid, prestige, time) VALUES ( \"" + guid + "\", " + temp + ", \"" + time + "\");";
+				q_str = "INSERT INTO prestige_log (guid, name, prestige, time) VALUES ( \"" + guid + "\", \"" + self.name + "\", " + temp + ", \"" + time + "\");";
 				SQL_Query(q_str);
 				SQL_Close();
 				thread scripts\utility\common::log("prestige_log_"+level.season, self.name + " (" + guid + ") " + "entered prestige: " + temp ); // Will be kept for a short transition period
