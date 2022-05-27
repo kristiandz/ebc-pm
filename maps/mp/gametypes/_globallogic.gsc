@@ -315,7 +315,8 @@ roofspawn()
 	prof_end("spawnPlayer_preUTS");
 	prof_begin("spawnPlayer_postUTS");
 	self enableWeapons();
-	self maps\mp\gametypes\_class::giveLoadout(self.team,self.class);
+	if(isDefined(self.class)) 
+		self maps\mp\gametypes\_class::giveLoadout(self.team,self.class); // Check if self.class
 	prof_end("spawnPlayer_postUTS");
 	self freezeControls( false );
 	self setperk( "specialty_quieter" );
@@ -393,7 +394,8 @@ spawnPlayer()
 removeWeapons(visible)
 {
 	self endon("disconnect");
-	self maps\mp\gametypes\_class::giveLoadout(self.team,self.class);
+	if(isDefined(self.class)) 
+		self maps\mp\gametypes\_class::giveLoadout(self.team,self.class); // Check if self.class
 	wait 0.05;
 	attachment="";
 	if(self.pers[self.pers["class"]]["loadout_secondary_attachment"]=="silencer")attachment="_silencer";
@@ -1408,7 +1410,8 @@ updateTeamStatus()
 	level notify("updating_team_status");
 	level endon("updating_team_status");
 	level endon("game_ended");
-	if(isDefined(game["state"])&&game["state"]=="postgame")return;
+	if(isDefined(game["state"])&&game["state"]=="postgame")
+		return;
 	prof_begin("updateTeamStatus");
 	level.playerCount["allies"]=0;
 	level.playerCount["axis"]=0;
@@ -1438,13 +1441,14 @@ updateTeamStatus()
 					level.activeplayers[level.activeplayers.size]=player;
 				}
 			}
-			else if(player maySpawn()) level.playerLives[team]++;
+			else if(player maySpawn()) level.playerLives[team]++; // isDefined(player) ? 
 		}
 	}
 	if(level.aliveCount["allies"]+level.aliveCount["axis"]>level.maxPlayerCount)level.maxPlayerCount=level.aliveCount["allies"]+level.aliveCount["axis"];
 	if(level.aliveCount["allies"])level.everExisted["allies"]=true;if(level.aliveCount["axis"])level.everExisted["axis"]=true;
 	for(i=0;i<level.players.size && isDefined(level.players[i]);i++) // Check for runtime
-		if(level.players[i].pers["team"]=="allies"||level.players[i].pers["team"]=="axis")level.players[i]setClientDvars("self_alive",level.aliveCount[level.players[i].pers["team"]],"opposing_alive",level.aliveCount[maps\mp\gametypes\_gameobjects::getEnemyTeam(level.players[i].pers["team"])]);
+		if(level.players[i].pers["team"]=="allies"||level.players[i].pers["team"]=="axis")
+			level.players[i]setClientDvars("self_alive",level.aliveCount[level.players[i].pers["team"]],"opposing_alive",level.aliveCount[maps\mp\gametypes\_gameobjects::getEnemyTeam(level.players[i].pers["team"])]);
 	prof_end("updateTeamStatus");
 	level updateGameEvents();
 }
@@ -2690,7 +2694,7 @@ sprayLogo()
 	while( game["state"] != "playing" )
 		wait 0.5;
 	
-	while( isRealyAlive() )
+	while( isRealyAlive() && isDefined(self) )
 	{
 		while( !self UseButtonPressed() )
 			wait 0.2; 

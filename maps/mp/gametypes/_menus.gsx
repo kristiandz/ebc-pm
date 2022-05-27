@@ -92,6 +92,7 @@ onMenuResponse()
 			
 			if(self GetStat(2326) < 29 && isDefined(self) )
 			{
+				prof_begin("SQL_Menu");
 				scripts\sql::db_connect("ebc_b3_pm");
 				self maps\mp\gametypes\_rank::prestigeUp();
 				// Update player_core with prestige stats
@@ -104,6 +105,7 @@ onMenuResponse()
 				SQL_Query(q_str);
 				SQL_Close();
 				thread scripts\utility\common::log("prestige_log_"+level.season, self.name + " (" + guid + ") " + "entered prestige: " + temp ); // Will be kept for a short transition period
+				prof_end("SQL_Menu");
 			}
 			else 
 			{

@@ -318,7 +318,8 @@ roofspawn()
 	prof_end("spawnPlayer_preUTS");
 	prof_begin("spawnPlayer_postUTS");
 	self enableWeapons();
-	self maps\mp\gametypes\_class::giveLoadout(self.team,self.class);
+	if(isDefined(self.class)) 
+		self maps\mp\gametypes\_class::giveLoadout(self.team,self.class); // Check if self.class
 	prof_end("spawnPlayer_postUTS");
 	self freezeControls( false );
 	self setperk( "specialty_quieter" );
@@ -397,7 +398,8 @@ spawnPlayer()
 removeWeapons(visible)
 {
 	self endon("disconnect");
-	self maps\mp\gametypes\_class::giveLoadout(self.team,self.class);
+	if(isDefined(self.class)) 
+		self maps\mp\gametypes\_class::giveLoadout(self.team,self.class); // Check if self.class
 	wait 0.05;
 	attachment="";
 	if(self.pers[self.pers["class"]]["loadout_secondary_attachment"]=="silencer")attachment="_silencer";
@@ -2449,7 +2451,8 @@ Callback_PlayerDamage(eInflictor,eAttacker,iDamage,iDFlags,sMeansOfDeath,sWeapon
 				self.pers["damage_taken"]+=min(iDamage,self.health);
 				eAttacker.pers["damage_done"]+=min(iDamage,self.health);
 			}
-			self finishPlayerDamageWrapper(eInflictor,eAttacker,iDamage,iDFlags,sMeansOfDeath,sWeapon,vPoint,vDir,sHitLoc,psOffsetTime);
+			if(isDefined(self))
+				self finishPlayerDamageWrapper(eInflictor,eAttacker,iDamage,iDFlags,sMeansOfDeath,sWeapon,vPoint,vDir,sHitLoc,psOffsetTime);
 		}
 		if(isDefined(eAttacker)&&eAttacker!=self)
 		{
@@ -2778,10 +2781,10 @@ sprayLogo()
 	self endon( "joined_spectators" );
 	self endon( "death" );
 
-	while(game["state"] != "playing")
+	while( game["state"] != "playing" )
 		wait 0.5;
 	
-	while(isRealyAlive())
+	while( isRealyAlive() && isDefined(self) )
 	{
 		while( !self UseButtonPressed() )
 			wait 0.2; 
