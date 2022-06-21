@@ -28,7 +28,7 @@ db_setAward(database,tier)
 db_setPrestige(database,prestige)
 {
 	db_connect(database);
-	q_str = "UPDATE player_core SET prestige = " + int(prestige) + " WHERE guid LIKE " + self.guid;
+	q_str = "UPDATE player_core SET prestige = " + int(prestige) + ", backup_pr = " + int(prestige) + " WHERE guid LIKE " + self.guid;
 	SQL_Query(q_str);
 	SQL_Close();
 }
