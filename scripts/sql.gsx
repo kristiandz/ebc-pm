@@ -52,6 +52,14 @@ db_setLastMap(database)
 	SQL_Close();
 }
 
+db_setFlag(database,level)
+{
+	db_connect(database);
+	q_str = "UPDATE player_core SET flag = " + level + " WHERE guid = \"" + self.guid + "\";";
+	SQL_Query(q_str);
+	SQL_Close();
+}
+
 db_simpleQuery(database,q_str)
 {
 	db_connect(database);
