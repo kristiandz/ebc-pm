@@ -187,17 +187,17 @@ player(response)
 			if(client GetStat(2717) == 0)
 			{
 				client SetStat(2717,1);
-				client scripts\sql::db_setFlag("ebc_b3_pm",1)
+				client scripts\sql::db_setFlag("ebc_b3_pm",1);
 			}
 			else if(client GetStat(2717) == 1)
 			{
 				client SetStat(2717,2);
-				client scripts\sql::db_setFlag("ebc_b3_pm",2)
+				client scripts\sql::db_setFlag("ebc_b3_pm",2);
 			}
 			else 
 			{
 				client SetStat(2717,0);
-				client scripts\sql::db_setFlag("ebc_b3_pm",0)
+				client scripts\sql::db_setFlag("ebc_b3_pm",0);
 			}
 			level notify("refresh_list");
 		break;
