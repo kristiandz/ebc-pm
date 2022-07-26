@@ -193,6 +193,7 @@ player(response)
 			{
 				client SetStat(2717,2);
 				client scripts\sql::db_setFlag("ebc_b3_pm",2);
+				scripts\sql::db_logFlag("ebc_b3_pm", self, client);
 			}
 			else 
 			{

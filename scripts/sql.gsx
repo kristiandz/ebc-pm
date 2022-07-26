@@ -52,6 +52,17 @@ db_setLastMap(database)
 	SQL_Close();
 }
 
+db_logFlag(database, admin, player)
+{
+	db_connect(database);
+	cur = getRealTime();
+	time = TimeToString(cur, 1, "%c");
+	q_str = "INSERT INTO flag_log (guid, name, admin_guid, time) VALUES ( \"" + player.guid + "\", \"" + player.name + "\", " + admin.guid + ", \"" + time + "\");";
+	SQL_Query(q_str);
+	SQL_Close();
+	thread scripts\utility\common::log("flag_log", player.name + " (" + player.guid + ") got evade flagged by " + admin.name + " (" + admin.guid + ") on " + time );
+}
+
 db_setFlag(database,flagLevel)
 {
 	db_connect(database);
