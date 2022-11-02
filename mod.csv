@@ -81,23 +81,23 @@ material,gfx_spray27
 material,gfx_spray28
 material,gfx_spray29
 
-material,gfx_bootygrab
-material,gfx_burningelmo
-material,gfx_nichrome
-material,gfx_hackerman
-material,gfx_hearteyes
-material,gfx_ripcoffin
-material,gfx_rubhands
-material,gfx_verynice
+material,gfx_alohabeaches
+material,gfx_batmanhmm
+material,gfx_dissapointed
+material,gfx_kermittea
+material,gfx_omgwow
+material,gfx_radar
+material,gfx_showoff
+material,gfx_takemymoney
 
-material,bootygrab_menu
-material,burningelmo_menu
-material,purechocolatealpaca_menu
-material,hackerman_menu
-material,hearteyes_menu
-material,ripcoffin_menu
-material,rubhands_menu
-material,verynice_menu
+material,alohabeaches_menu
+material,batmanhmm_menu
+material,dissapointed_menu
+material,kermittea_menu
+material,omgwow_menu
+material,radar_menu
+material,showoff_menu
+material,takemymoney_menu
 
 material,spray0_menu
 material,spray1_menu
@@ -171,14 +171,14 @@ fx,deathrun/spray27
 fx,deathrun/spray28
 fx,deathrun/spray29
 
-fx,deathrun/bootygrab
-fx,deathrun/burningelmo
-fx,deathrun/purechocolatealpaca
-fx,deathrun/hackerman
-fx,deathrun/hearteyes
-fx,deathrun/ripcoffin
-fx,deathrun/rubhands
-fx,deathrun/verynice
+fx,deathrun/alohabeaches
+fx,deathrun/batmanhmm
+fx,deathrun/dissapointed
+fx,deathrun/kermittea
+fx,deathrun/omgwow
+fx,deathrun/radar
+fx,deathrun/showoff
+fx,deathrun/takemymoney
 
 fx,deathrun/revtrail_red_flare
 
