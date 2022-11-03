@@ -17,15 +17,15 @@
 #endif
 
 #ifndef CHOICE_TITLE_COLOR 
-#define CHOICE_TITLE_COLOR 0 0 1 1
+#define CHOICE_TITLE_COLOR 1 0 0 1
 #endif
 
 #ifndef CHOICE_TITLE_COLOR_HA 
-#define CHOICE_TITLE_COLOR_HA 0 0 1 0.45
+#define CHOICE_TITLE_COLOR_HA 1 0 0 0.45
 #endif
 
 #ifndef CHOICE_COLOR_MIX 
-#define CHOICE_COLOR_MIX 0.2 0.2 0.8 0.8
+#define CHOICE_COLOR_MIX 0.8 0.2 0.2 0.8
 #endif
 
 #ifndef CHOICE_POPUP_TITLE_TEXTSIZE

@@ -4,14 +4,14 @@ init()
 	{
 		case "sas":
 			setdvar("g_TeamIcon_Allies", "faction_128_sas");
-			setdvar("g_TeamColor_Allies", "0.25 0.25 0.85");
-			setdvar("g_ScoresColor_Allies", "0.25 0.25 0.85");
+			setdvar("g_TeamColor_Allies", "0.85 0.25 0.25");
+			setdvar("g_ScoresColor_Allies", "0.85 0.25 0.25");
 			break;
 
 		default:
 			setdvar("g_TeamIcon_Allies", "faction_128_usmc");
-			setdvar("g_TeamColor_Allies", "0.25 0.25 0.85");
-			setdvar("g_ScoresColor_Allies", "0.25 0.25 0.85");
+			setdvar("g_TeamColor_Allies", "0.85 0.25 0.25");
+			setdvar("g_ScoresColor_Allies", "0.85 0.25 0.25");
 			break;
 	}
 

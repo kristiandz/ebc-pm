@@ -58,11 +58,11 @@ itemDef { \
 #endif
 
 #ifndef BUTTON_TEXTCOLOR
-#define BUTTON_TEXTCOLOR 	0.1 0.2 1 1
+#define BUTTON_TEXTCOLOR 	1 0.2 0.1 1
 #endif
 
 #ifndef BUTTON_LOCKEDCOLOR
-#define BUTTON_LOCKEDCOLOR 	0.1 0.2 1 1
+#define BUTTON_LOCKEDCOLOR 	1 0.2 0.1 1
 #endif
 
 #ifndef BUTTON_TEXTSIZE
@@ -74,7 +74,7 @@ itemDef { \
 #endif
 
 #ifndef BUTTON_SHADERCOLOR
-#define BUTTON_SHADERCOLOR 0.1 0.2 1 1
+#define BUTTON_SHADERCOLOR 1 0.2 0.1 1
 #endif
 
 #ifndef BUTTON_SHADER_OFFSET
@@ -86,7 +86,7 @@ itemDef { \
 #endif
 
 #ifndef BUTTON_DESCCOLOR
-#define BUTTON_DESCCOLOR	0.5 0.5 1 1
+#define BUTTON_DESCCOLOR	1 0.5 0.1 1
 #endif
 
 #define BUTTON_DESC_RAW( pnum, plock, porigin, psize, ptext ) \
@@ -120,7 +120,7 @@ itemDef{											\
 	textstyle 		ITEM_TEXTSTYLE_SHADOWED			\
 	exp				text( ptext );					\
 	textscale		BUTTON_TEXTSIZE					\
-	forecolor		0 0 1 1 						\
+	forecolor		1 0 0 1 						\
 	visible			when( p_vis );					\
 	onFocus{										\
 		play "mouse_over";							\

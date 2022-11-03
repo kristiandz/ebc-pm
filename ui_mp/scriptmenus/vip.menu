@@ -43,7 +43,7 @@
 		{
 			rect 			7 84 645 1
 			style			WINDOW_STYLE_FILLED
-			backcolor		0.2 0.3 0.9 0.75
+			backcolor		0.9 0.3 0.2 0.75
 			visible			1
 			decoration
 		}

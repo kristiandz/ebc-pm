@@ -127,7 +127,7 @@ itemDef { \
 	PREPROC_VALUE_TEXT_VIS( int(tableLookup( "mp/rankTable.csv", 0, stat(252), 7) - stat( 2301 )), 7, -86, LABEL_TEXTCOLOR, when( CAN_RANK_UP ), ITEM_ALIGN_MIDDLE_RIGHT )
 
 	PREPROC_SHADER_DRAW_ALIGNED_VIS( 200 127 60 14 RIGHTITEM_ALIGN VERTICAL_ALIGN_TOP, ORIGIN_PLAYERSTATS, "white", 0.1 0.1 0.1 0.35, 1, 1, 1 1 1 0.2,  when( CAN_RANK_UP ) )
-	PREPROC_SHADER_DRAW_ADV_VIS( (PLAYERSTATS_X+202), (PLAYERSTATS_Y+93+36), -58*((int(tableLookup( "mp/rankTable.csv", 0, stat(252), 2 )) - stat(2301)) / int(tableLookup( "mp/rankTable.csv", 0, stat(252), 3 ))), 12, "gradient_fadein", 0.2 0.2 0.6 0.6, 0, 1, 0 0 1 1 rect 0 0 60 0  RIGHTITEM_ALIGN VERTICAL_ALIGN_TOP, when( CAN_RANK_UP ) )
+	PREPROC_SHADER_DRAW_ADV_VIS( (PLAYERSTATS_X+202), (PLAYERSTATS_Y+93+36), -58*((int(tableLookup( "mp/rankTable.csv", 0, stat(252), 2 )) - stat(2301)) / int(tableLookup( "mp/rankTable.csv", 0, stat(252), 3 ))), 12, "gradient_fadein", 0.6 0.2 0.2 0.6, 0, 1, 0 0 1 1 rect 0 0 60 0  RIGHTITEM_ALIGN VERTICAL_ALIGN_TOP, when( CAN_RANK_UP ) )
 	
 	PREPROC_DIVIDER( 8 )	
 	PREPROC_LABEL( "@MPUI_SCORE_PRE", 9)	
