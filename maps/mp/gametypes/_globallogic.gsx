@@ -3029,7 +3029,6 @@ admin_list()
 						else if( players[j] GetStat(2717) == 2)
 							players[i] setClientDvar("ui_player"+j, "^1"+getsubstr(players[j].name,0,16)+"^7 !" );
 					}
-					wait 0.01;
 				}
 			}
 		}
@@ -3050,7 +3049,6 @@ list_cleaner()
 				{
 					if(isDefined(players[i]))
 						players[i] setClientDvar("ui_player"+j,"");
-					wait 0.01;
 				}
 			}
 		}
