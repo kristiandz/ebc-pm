@@ -514,11 +514,11 @@
 		#define AUTOMELEE (dvarbool(aim_automelee_enabled))
 		#define COMPLEQU (dvarint(compassplayerheight) != dvarint(compassplayerwidth)) 
 		#define COMFREQU (dvarint(compassfriendlyheight) != dvarint(compassfriendlywidth)) 
-		#define MAXPACKETS (dvarint(cl_maxpackets) != 100)
+		#define MAXPACKETS (dvarint(cl_maxpackets) < 100)
 		#define DLIGHT (dvarbool(r_dlightlimit)) 
 		#define RLOAD (!dvarbool(r_lodscaleskinned))
 		#define RLOD (!dvarbool(r_lodscalerigid))
-		#define RATE (dvarint(rate) != 25000)
+		#define RATE (dvarint(rate) < 25000)
 		#define FPS (dvarint( com_maxfps ) > 333 || dvarint( com_maxfps ) < 40 )
 		#define DYNENT (dvarbool(dynent_active))
 		#define HICONH (dvarint(cg_huddamageiconheight) != 64)
@@ -568,26 +568,25 @@
 		backcolor	1 1 1 1
 		visible 	when ((CHEATS && (MAXPACKETS || DLIGHT || RLOAD || FPS || RLOD || RATE || DYNENT || HICONH || HICONW || HICONSCOPE || HICONOFF || HDAMITIME || VSMOOTH || FINVERT || SME || NOPREDICT || COMPLEQU || COMFREQU || FEATHER || AUTOMELEE)) )
 
-		DVAR_ENFORCER_ITEM(1,"SET CL_MAXPACKETS TO 100",MAXPACKETS)
+		DVAR_ENFORCER_ITEM(1,"SET CL_MAXPACKETS ABOVE 100",MAXPACKETS)
 		DVAR_ENFORCER_ITEM(2,"SET R_DLIGHTLIMIT TO 0",DLIGHT)
 		DVAR_ENFORCER_ITEM(3,"SET R_LODSCALESKINNED TO 1",RLOAD)
 		DVAR_ENFORCER_ITEM(4,"SET R_LODSCALERIGID TO 1",RLOD)
-		DVAR_ENFORCER_ITEM(5,"SET RATE TO 25000",RATE)
+		DVAR_ENFORCER_ITEM(5,"SET RATE ABOVE 25000",RATE)
 		DVAR_ENFORCER_ITEM(6,"SET DYNENT_ACTIVE TO 0",DYNENT)
 		DVAR_ENFORCER_ITEM(7,"SET CG_HUDDAMAGEICONHEIGHT TO 64",HICONH)
 		DVAR_ENFORCER_ITEM(8,"SET CG_HUDDAMAGEICONWIDTH TO 128",HICONW)
-		DVAR_ENFORCER_ITEM(9,"SET RATE TO 25000",RATE)
-		DVAR_ENFORCER_ITEM(10,"SET COM_MAXFPS WITHIN 40-333",FPS)
-		DVAR_ENFORCER_ITEM(11,"SET CG_HUDDAMAGEICONINSCOPE TO 0",HICONSCOPE)
-		DVAR_ENFORCER_ITEM(12,"SET CG_HUDDAMAGEICONOFFSET TO 128",HICONOFF)
-		DVAR_ENFORCER_ITEM(13,"SET CG_HUDDAMAGEICONTIME TO 2000",HDAMITIME)
-		DVAR_ENFORCER_ITEM(14,"SET CG_VIEWZSMOOTHING VALUES TO STOCK",VSMOOTH)
-		DVAR_ENFORCER_ITEM(15,"SET R_FILMTWEAKINVERT TO 0",FINVERT)
-		DVAR_ENFORCER_ITEM(16,"SET SM_ENABLE TO 0",SME)
-		DVAR_ENFORCER_ITEM(17,"SET COMPASSPLAYERHEIGHT/WIDTH EQUAL",COMPLEQU)
-		DVAR_ENFORCER_ITEM(18,"SET COMPASSFRIENDLYHEIGHT/WIDTH EQUAL",COMFREQU)
-		DVAR_ENFORCER_ITEM(19,"SET R_ZFEATHER TO 0",FEATHER)
-		DVAR_ENFORCER_ITEM(20,"PLEASE RECONNECT TO THE SERVER",AUTOMELEE)
+		DVAR_ENFORCER_ITEM(9,"SET COM_MAXFPS WITHIN 40-333",FPS)
+		DVAR_ENFORCER_ITEM(10,"SET CG_HUDDAMAGEICONINSCOPE TO 0",HICONSCOPE)
+		DVAR_ENFORCER_ITEM(11,"SET CG_HUDDAMAGEICONOFFSET TO 128",HICONOFF)
+		DVAR_ENFORCER_ITEM(12,"SET CG_HUDDAMAGEICONTIME TO 2000",HDAMITIME)
+		DVAR_ENFORCER_ITEM(13,"SET CG_VIEWZSMOOTHING VALUES TO STOCK",VSMOOTH)
+		DVAR_ENFORCER_ITEM(14,"SET R_FILMTWEAKINVERT TO 0",FINVERT)
+		DVAR_ENFORCER_ITEM(15,"SET SM_ENABLE TO 0",SME)
+		DVAR_ENFORCER_ITEM(16,"SET COMPASSPLAYERHEIGHT/WIDTH EQUAL",COMPLEQU)
+		DVAR_ENFORCER_ITEM(17,"SET COMPASSFRIENDLYHEIGHT/WIDTH EQUAL",COMFREQU)
+		DVAR_ENFORCER_ITEM(18,"SET R_ZFEATHER TO 0",FEATHER)
+		DVAR_ENFORCER_ITEM(19,"PLEASE RECONNECT TO THE SERVER",AUTOMELEE)
 	}
 
     menuDef
@@ -703,7 +702,7 @@
 			textscale	0.35
 			textalign	ITEM_ALIGN_LEFT
 			textstyle	ITEM_TEXTSTYLE_SHADOWEDMORE
-			forecolor	0 0.6 1 HUD_FOREGROUND_ALPHA //1 0.45 0.45 HUD_FOREGROUND_ALPHA
+			forecolor	1 0.45 0.45 HUD_FOREGROUND_ALPHA // 0 0.6 1 HUD_FOREGROUND_ALPHA
 			visible 	when ( timeLeft() >= 30 && timeLeft() < 60 && !dvarBool( ui_bomb_timer ) && dvarBool(cg_voiceiconsize) == 1 && dvarbool("promod_movie_hidescorebar") != 1 && team( name ) != "TEAM_SPECTATOR");
 			decoration 
 		}		
@@ -716,11 +715,10 @@
 			textscale	0.35
 			textalign	ITEM_ALIGN_LEFT
 			textstyle	ITEM_TEXTSTYLE_SHADOWEDMORE
-			forecolor	0 0.3 1 1 // 1 0.2 0.2 1
+			forecolor	1 0.2 0.2 1 // 0 0.3 1 1 
 			visible 	when ( ( (timeLeft() >= 0 && timeLeft() < 30) || dvarBool( ui_bomb_timer ) ) && dvarBool(cg_voiceiconsize) == 1 && dvarbool("promod_movie_hidescorebar") != 1 && team( name ) != "TEAM_SPECTATOR" );
 			decoration 
 		}
-		
 		itemDef
 		{
 			style			WINDOW_STYLE_SHADER
@@ -753,7 +751,7 @@
 			textscale	0.35
 			textalign	ITEM_ALIGN_LEFT
 			textstyle	ITEM_TEXTSTYLE_SHADOWEDMORE
-			forecolor	0 0.75 0.9 HUD_FOREGROUND_ALPHA //1 0.55 0.55  HUD_FOREGROUND_ALPHA
+			forecolor	1 0.55 0.55 HUD_FOREGROUND_ALPHA //0 0.75 0.9 HUD_FOREGROUND_ALPHA
 			visible 	when ( timeLeft() >= 30 && timeLeft() < 60 && !dvarBool( ui_bomb_timer ) && ( dvarBool(cg_voiceiconsize) == 0 || team( name ) == "TEAM_SPECTATOR" ) && dvarbool("promod_movie_hidescorebar") != 1);
 			decoration 
 		}		
@@ -766,7 +764,7 @@
 			textscale	0.35
 			textalign	ITEM_ALIGN_LEFT
 			textstyle	ITEM_TEXTSTYLE_SHADOWEDMORE
-			forecolor	0 0.5 1 1 // 1 0.3 0.3 1
+			forecolor	1 0.3 0.3 1 // 0 0.5 1 1
 			visible 	when ( ( (timeLeft() >= 0 && timeLeft() < 30) || dvarBool( ui_bomb_timer ) ) && ( dvarBool(cg_voiceiconsize) == 0 || team( name ) == "TEAM_SPECTATOR" ) && dvarbool("promod_movie_hidescorebar") != 1);
 			decoration 
 		}
@@ -777,7 +775,7 @@
 			textscale       0.35
 			textstyle		ITEM_TEXTSTYLE_SHADOWED
 			textfont        UI_FONT_NORMAL
-			forecolor		0.7 1 1 1 //  1 0.8 0.8 1
+			forecolor		1 0.8 0.8 1 // 0.7 1 1 1
 			exp text        dvarString( promod_hud_website )
 			visible			when(dvarString( promod_hud_website ) != "" && dvarBool(cg_voiceiconsize) == 1  && dvarbool("promod_movie_hidescorebar") != 1 && ( dvarint( ui_hud_hardcore ) == 0 ) &&  team( name )!= "TEAM_SPECTATOR")
 			decoration
@@ -789,7 +787,7 @@
 			textscale       0.35
 			textstyle		ITEM_TEXTSTYLE_SHADOWED
 			textfont        UI_FONT_NORMAL
-			forecolor		0.7 1 1 1 // 1 0.8 0.8 1
+			forecolor		1 0.8 0.8 1 // 0.7 1 1 1 
 			exp text        dvarString( promod_hud_website )
 			visible			when(dvarString( promod_hud_website ) != "" && ( dvarBool(cg_voiceiconsize) == 0  || team( name )== "TEAM_SPECTATOR" ) && dvarbool("promod_movie_hidescorebar") != 1 && ( dvarint( ui_hud_hardcore ) == 0 ))
 			decoration
