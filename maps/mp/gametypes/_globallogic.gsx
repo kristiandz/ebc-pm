@@ -398,19 +398,21 @@ spawnPlayer()
 removeWeapons(visible)
 {
 	self endon("disconnect");
-	if(isDefined(self.class)) 
-		self maps\mp\gametypes\_class::giveLoadout(self.team,self.class); // Check if self.class
 	wait 0.05;
-	attachment="";
-	if(self.pers[self.pers["class"]]["loadout_secondary_attachment"]=="silencer")attachment="_silencer";
-	sidearmWeapon=self.pers[self.pers["class"]]["loadout_secondary"]+attachment+"_mp";
+	if(isDefined(self.class)) 
+		self maps\mp\gametypes\_class::giveLoadout(self.team, self.class); // Check if self.class
+	if(self.pers[self.pers["class"]]["loadout_secondary_attachment"] == "silencer")
+		attachment = "_silencer";
+	else
+		attachment = "";
+	sidearmWeapon = self.pers[self.pers["class"]]["loadout_secondary"] + attachment + "_mp";
 	self takeAllWeapons();
 	self giveWeapon(sidearmWeapon,0);
 	self setweaponammoclip(sidearmWeapon,0);
 	self setweaponammostock(sidearmWeapon,0);
 	self GiveWeapon("knife_mp");
 	self switchtoWeapon(sidearmWeapon);
-	self setclientdvar("g_compassShowEnemies",visible);
+	self setclientdvar("g_compassShowEnemies", visible);
 }
 
 spawnSpectator(origin,angles)
