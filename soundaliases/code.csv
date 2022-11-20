@@ -38,9 +38,6 @@ name,sequence,file,vol_min,vol_max,vol_mod,pitch_min,pitch_max,dist_min,dist_max
 
 null,,null.wav,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-music_mainmenu,,music/HGW_gameshell_v10.mp3,1,,music,,,,,menu,streamed,,looping,,menu,,,,,,music,,,,!PC,,,
-music_mainmenu_mp,,music/HGW_gameshell_v10.mp3,1,,music,,,,,menu,streamed,,looping,,menu,,,,,,music,,,,!PC,,,
-
 mouse_click,,user_interface/ui_select_v1.wav,0.32,,interface,,,,,menu,,,,,menu,,,,,,,nowetlevel fulldrylevel,,
 mouse_over,,user_interface/ui_select_v1.wav,0.43,,interface,,,,,menu,,,,,menu,,,,,,,nowetlevel fulldrylevel,,
 mouse_submenu_over,,user_interface/ui_select_v1.wav,0.43,,interface,,,,,menu,,,,,menu,,,,,,,nowetlevel fulldrylevel,,
