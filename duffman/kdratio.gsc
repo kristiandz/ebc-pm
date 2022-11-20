@@ -2,15 +2,15 @@
 
 init()
 {
-
-	addConnectThread(::initStats,"once");
+	addConnectThread(::initStats, "once");
 	addConnectThread(::ShowKDRatio);
 	wait .05;
-	for(;;wait 1)
+	for(;; wait 1)
 	{
-		if( game["state"] == "playing" ) continue;
+		if(game["state"] == "playing")
+			continue;
 		players = getAllPlayers();
-		for(i=0;i<players.size;i++)
+		for(i = 0; i < players.size; i++)
 		{
 			if(isDefined(players[i]))
 			{
@@ -42,12 +42,16 @@ ShowKDRatio()
 	self notify( "new_KDRRatio" );
 	self endon( "new_KDRRatio" );
 	self endon( "disconnect" );
-	
 	wait 1;
-	if( IsDefined( self.mc_kdratio ) )	self.mc_kdratio Destroy();
-	if( IsDefined( self.mc_streak ) )	self.mc_streak Destroy();
-	if( IsDefined( self.mc_kc ) )	self.mc_kc Destroy();
-	if( IsDefined( self.mc_rsc ) )	self.mc_rsc Destroy();
+	
+	if(IsDefined(self.mc_kdratio))
+		self.mc_kdratio Destroy();
+	if(IsDefined(self.mc_streak))
+		self.mc_streak Destroy();
+	if(IsDefined(self.mc_kc))
+		self.mc_kc Destroy();
+	if(IsDefined(self.mc_rsc))
+		self.mc_rsc Destroy();
 	
 	self.mc_streak = NewClientHudElem(self);
 	self.mc_streak.x = 110;
@@ -79,7 +83,7 @@ ShowKDRatio()
 	self.mc_kdratio.alpha = 1;
 	self.mc_kdratio.archived = true;
 	
-	if(level.gametype == "kc" || level.gametype == "sr" )
+	if(level.gametype == "kc" || level.gametype == "sr")
 	{
 		self.mc_kc = NewClientHudElem(self);
 		self.mc_kc.x = 110;
@@ -118,7 +122,7 @@ ShowKDRatio()
 			self.mc_rsc.archived = true;
 		}
 	}
-	color = (0,0,0);
+	color = (0, 0, 0);
 	first = true;
 	for(;;)
 	{
@@ -126,25 +130,29 @@ ShowKDRatio()
 			first = 0;
 		else 
 			wait .5;
-		if(!isDefined(self) || !isDefined(self.pers) || !isDefined(self.pers[ "hits" ]) || !isDefined(self.pers[ "kills" ]) || !isDefined(self.pers[ "deaths" ]) || !isDefined(self.pers[ "shoots" ]) || !isDefined(self.mc_kdratio) || !isDefined(self.mc_streak))
+		if(!isDefined(self) || !isDefined(self.pers) || !isDefined(self.pers["hits"]) || !isDefined(self.pers["kills"]) || !isDefined(self.pers["deaths"]) || !isDefined(self.pers["shoots"]) || !isDefined(self.mc_kdratio) || !isDefined(self.mc_streak))
 			return;	
-		if( IsDefined( self.pers[ "kills" ] ) && IsDefined( self.pers[ "deaths" ] ) )
+		if(IsDefined(self.pers["kills"]) && IsDefined( self.pers["deaths"]))
 		{
-			if( self.pers[ "deaths" ] < 1 ) ratio = self.pers[ "kills" ];
-			else ratio = int( self.pers[ "kills" ] / self.pers[ "deaths" ] * 100 ) / 100;				
+			if(self.pers["deaths"] < 1)
+				ratio = self.pers["kills"];
+			else 
+				ratio = int(self.pers["kills"] / self.pers["deaths"] * 100) / 100;				
 			self.mc_kdratio FadeOverTime(.5);
 			self.mc_kdratio setValue(ratio);
 		}	
 		self.mc_streak setValue(self GetStat(2304));
-		if( level.gametype == "sr" )
+		if(level.gametype == "sr")
 		{
-			if( IsDefined( self.mc_kc ) )self.mc_kc setValue( self.pers["gottags"] );
-			if( IsDefined( self.mc_rsc ) )self.mc_rsc setValue( self.pers["rescues"] );
+			if(isDefined(self.mc_kc))
+				self.mc_kc setValue(self.pers["gottags"]);
+			if(isDefined(self.mc_rsc))
+				self.mc_rsc setValue(self.pers["rescues"]);
 		}
-		if( level.gametype == "kc" )
+		if(level.gametype == "kc")
 		{
-			self.mc_kc setValue( self.pers["gottags"] );
+			self.mc_kc setValue(self.pers["gottags"]);
 		}
-		self common_scripts\utility::waittill_any("disconnect","death","weapon_fired","weapon_change","player_killed");
+		self common_scripts\utility::waittill_any("disconnect", "death", "weapon_fired", "weapon_change", "player_killed");
 	}
 }

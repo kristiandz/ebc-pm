@@ -11,10 +11,10 @@ NadeSwitchFix()
 	self endon("disconnect");
 	while(1) 
 	{
-		self waittill( "grenade_fire", nade );
+		self waittill("grenade_fire", nade);
 		grenade = nade;
 		startteam = self.sessionteam;
-		for(i=0;i<120;i++) 
+		for(i = 0; i < 120; i++) 
 		{
 			wait .05;
 			if(startteam != self.sessionteam) 
@@ -43,11 +43,11 @@ ElevatorFix()
 			{
 				for(i=0;i<340;i++) 
 				{
-					pos = BulletTrace( self.origin+((50*cos(i+10)),(50*sin(i+10)),0), self.origin+((50*cos(i+10)),(50*sin(i+10)),-200), 0, self)[ "position" ];
-					if(BulletTracePassed(self.origin+((50*cos(i)),(50*sin(i)),0),self.origin+((50*cos(i+20)),(50*sin(i+20)),0),0,self) && pos[2] < oldorigin[2]) 
+					pos = BulletTrace(self.origin + ((50*cos(i+10)), (50*sin(i+10)), 0), self.origin + ((50*cos(i+10)), (50*sin(i+10)), -200), 0, self)["position"];
+					if(BulletTracePassed(self.origin + ((50*cos(i)), (50*sin(i)), 0), self.origin + ((50*cos(i+20)), (50*sin(i+20)), 0), 0, self) && pos[2] < oldorigin[2]) 
 					{
  						self setOrigin(pos);
-						iPrintln("Elevator:^8",self.name, " ^7Get down!");
+						iPrintln("Elevator:^8", self.name, " ^7Get down!");
  						break;
  					}
  				}

@@ -4,17 +4,17 @@
 
 init()
 {	
-	[[level.on]]( "spawned", ::AFKMonitor );
+	[[level.on]]("spawned", ::AFKMonitor);
 }
 
 AFKMonitor()
 {
-	level endon ("vote started");
+	level endon("vote started");
     self endon("disconnect");
 	self endon("joined_spectators");
     self endon("game_ended");
 	self endon("isKnifing");
-	self endon( "inintro" );
+	self endon("inintro");
 	timer = 0;
 	while(isAlive(self))
 	{
@@ -33,7 +33,7 @@ AFKMonitor()
 			
 			if(timer >= 25)
 			{
-				if ( self.sessionstate == "playing" && (!isDefined( self.isPlanting ) || !self.isPlanting) && !level.gameEnded && isDefined( self.carryObject ) )
+				if(self.sessionstate == "playing" && (!isDefined(self.isPlanting) || !self.isPlanting) && !level.gameEnded && isDefined(self.carryObject))
 					self.carryObject thread maps\mp\gametypes\_gameobjects::setDropped();
 				self.sessionteam = "spectator";
 				self.sessionstate = "spectator";

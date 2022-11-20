@@ -4,9 +4,9 @@
 
 main()
 {
-	if( level.gametype == "sr")
+	if(level.gametype == "sr")
 		spawnTriggersSR();
-	else if( level.gametype == "sd" )
+	else if(level.gametype == "sd")
 		spawnTriggers();
 }
 
@@ -188,25 +188,25 @@ spawnTriggers()
 	}
 }
 
-AddBlockerWall(a,b,vis)
+AddBlockerWall(a, b, vis)
 {
-	speed = distance(a,b)/700;
- 	link = spawn("script_origin",a);
-	link MoveTo(b,speed); 
-	for(k=0;k<speed*20;k++)
+	speed = distance(a, b) / 700;
+ 	link = spawn("script_origin", a);
+	link MoveTo(b, speed); 
+	for(k = 0; k < speed * 20; k++)
 	{ 		
-		AddBlock(link.origin,25,100,vis);
+		AddBlock(link.origin, 25, 100, vis);
 		wait .05;
 	}
 	link delete();
 }
 
-Addfire( o )
+Addfire(o)
 {
 	level endon("game_ended"); // New
 	while(1) 
 	{
-		playFx( level.fx["smallfire"],  o );
+		playFx(level.fx["smallfire"], o);
 		wait 3;
     }
 }
@@ -215,8 +215,7 @@ addBlock(o, w, h,vis)
 {
 	if (! isDefined(h))
 		h = w;
-
 	a = spawn("trigger_radius", o, 0, w, h);
-	if(!isDefined(vis))thread Addfire( o );
+	if(!isDefined(vis))thread Addfire(o);
 	a setContents(1);
 }
