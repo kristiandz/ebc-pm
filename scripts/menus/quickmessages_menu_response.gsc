@@ -21,7 +21,7 @@ init()
 	level.saytext[18] = &"QUICKMESSAGE_SORRY";
 	level.saytext[19] = &"QUICKMESSAGE_GREAT_SHOT";
 	level.saytext[20] = &"QUICKMESSAGE_COME_ON";
-	for(i=0;i<21;i++)
+	for(i = 0; i < 21; i++)
 		precacheString(level.saytext[i]);
 	level.soundalias = strtok("followme|movein|fallback|suppressfire|attackleftflank|attackrightflank|holdposition|regroup|enemyspotted|enemiesspotted|iminposition|areasecure|watchsix|sniper|needreinforcements|yessir|nosir|onmyway|sorry|greatshot|comeon", "|");
 }
@@ -29,31 +29,30 @@ init()
 getSoundPrefixForTeam()
 {
 	a = "";
-	if ( self.pers["team"] == "allies" )
+	if(self.pers["team"] == "allies")
 	{
-		if ( game["allies"] == "sas" )
+		if(game["allies"] == "sas")
 			a = "UK";
 		else
 			a = "US";
 	}
 	else
 	{
-		if ( game["axis"] == "russian" )
+		if(game["axis"] == "russian")
 			a = "RU";
 		else
 			a = "AB";
 	}
-	return a+"_";
+	return a + "_";
 }
 
-doQuickMessage( t, i )
+doQuickMessage(t, i)
 {
-	if( self.sessionstate == "playing" && isdefined(self.pers["team"]) && self.pers["team"] != "spectator" && !isdefined(self.spamdelay) )
+	if(self.sessionstate == "playing" && isdefined(self.pers["team"]) && self.pers["team"] != "spectator" && !isdefined(self.spamdelay))
 	{
 		maxsize = 7;
 		offset = 8;
 		type = "stm";
-
 		if(t == "quickcommands")
 		{
 			maxsize = 8;
@@ -69,14 +68,13 @@ doQuickMessage( t, i )
 		if( i >= 0 && i < maxsize )
 		{
 			self.spamdelay = true;
-
-			self playSound( self getSoundPrefixForTeam()+"mp_"+type+"_"+level.soundalias[offset+i] );
+			self playSound(self getSoundPrefixForTeam() + "mp_" + type + "_" + level.soundalias[offset+i]);
 			saytext = level.saytext[offset+i];
 			if(isdefined(level.QuickMessageToAll) && level.QuickMessageToAll)
-				self sayAll( saytext );
+				self sayAll(saytext);
 			else
 			{
-				self sayTeam( saytext );
+				self sayTeam(saytext);
 				self pingPlayer();
 			}
 			wait 3;
@@ -87,8 +85,7 @@ doQuickMessage( t, i )
 
 quickpromod(response)
 {
-	self endon ( "disconnect" );
-
+	self endon("disconnect");
 	switch(response)
 	{
 		case "1":
@@ -98,7 +95,7 @@ quickpromod(response)
 			break;
 
 		case "2":
-			if ( self.sessionstate == "playing" && (!isDefined( self.isPlanting ) || !self.isPlanting) && !level.gameEnded && isDefined( self.carryObject ) )
+			if(self.sessionstate == "playing" && (!isDefined(self.isPlanting) || !self.isPlanting) && !level.gameEnded && isDefined(self.carryObject))
 				self.carryObject thread maps\mp\gametypes\_gameobjects::setDropped();
 			break;
 
@@ -108,9 +105,9 @@ quickpromod(response)
 
 		case "5":
 			a = "en";
-			if ( self promod\client::toggle("PROMOD_RECORD") )
+			if(self promod\client::toggle("PROMOD_RECORD"))
 				a = "dis";
-			self iprintln("Record reminder has been "+a+"abled");
+			self iprintln("Record reminder has been " + a + "abled");
 			break;
 
 		case "4":
@@ -118,9 +115,8 @@ quickpromod(response)
 			break;
 
 		case "silencer":
-			if ( self.pers["team"] != "axis" && self.pers["team"] != "allies" || !isDefined( self.pers["class"] ) || !getDvarInt( "attach_allow_" + self.pers["class"] + "_silencer" ) || self.pers[self.pers["class"]]["loadout_primary"] == "mp44" || self.pers["class"] == "sniper" || self.pers["class"] == "demolitions" )
+			if(self.pers["team"] != "axis" && self.pers["team"] != "allies" || !isDefined( self.pers["class"] ) || !getDvarInt( "attach_allow_" + self.pers["class"] + "_silencer" ) || self.pers[self.pers["class"]]["loadout_primary"] == "mp44" || self.pers["class"] == "sniper" || self.pers["class"] == "demolitions")
 				return;
-
 			attach = "none";
 			if(self.pers[self.pers["class"]]["loadout_primary_attachment"] == "none")
 			{
@@ -129,57 +125,49 @@ quickpromod(response)
 			}
 			else
 				self iprintln("Silencer detached");
-
 			self.pers[self.pers["class"]]["loadout_primary_attachment"] = attach;
-
-			self maps\mp\gametypes\_promod::menuAcceptClass( "go" );
+			self maps\mp\gametypes\_promod::menuAcceptClass("go");
 			break;
 
 		case "grenade":
-			if ( self.pers["team"] != "axis" && self.pers["team"] != "allies" || !isDefined( self.pers["class"] ) )
+			if(self.pers["team"] != "axis" && self.pers["team"] != "allies" || !isDefined(self.pers["class"]))
 				return;
-
 			classType = self.pers["class"];
-
-			if ( self.pers[classType]["loadout_grenade"] == "smoke_grenade" && getDvarInt( "weap_allow_flash_grenade" ) )
+			if(self.pers[classType]["loadout_grenade"] == "smoke_grenade" && getDvarInt("weap_allow_flash_grenade"))
 			{
 				self.pers[classType]["loadout_grenade"] = "flash_grenade";
 				self iprintln("Flash selected");
 			}
-			else if ( self.pers[classType]["loadout_grenade"] == "flash_grenade" && getDvarInt( "weap_allow_smoke_grenade" ) )
+			else if(self.pers[classType]["loadout_grenade"] == "flash_grenade" && getDvarInt("weap_allow_smoke_grenade"))
 			{
 				self.pers[classType]["loadout_grenade"] = "smoke_grenade";
 				self iprintln("Smoke selected");
 			}
 			else
 				return;
-
-			self maps\mp\gametypes\_promod::menuAcceptClass( "go" );
+			self maps\mp\gametypes\_promod::menuAcceptClass("go");
 			break;
 
 		case "assault":
 		case "specops":
 		case "demolitions":
 		case "sniper":
-			if ( ( self.pers["team"] != "axis" && self.pers["team"] != "allies" ) )
+			if((self.pers["team"] != "axis" && self.pers["team"] != "allies"))
 				return;
-
-			if ( !self maps\mp\gametypes\_promod::verifyClassChoice( self.pers["team"], response ) )
+			if(!self maps\mp\gametypes\_promod::verifyClassChoice(self.pers["team"], response))
 			{
-				self iprintln(chooseClassName(response)+" is unavailable");
+				self iprintln(chooseClassName(response) + " is unavailable");
 				return;
 			}
-
-			if ( !isDefined( self.pers["class"] ) || self.pers["class"] != response )
-				self iprintln(chooseClassName(response)+" selected");
-
-			self maps\mp\gametypes\_promod::setClassChoice( response );
+			if(!isDefined( self.pers["class"] ) || self.pers["class"] != response)
+				self iprintln(chooseClassName(response) + " selected");
+			self maps\mp\gametypes\_promod::setClassChoice(response);
 			self maps\mp\gametypes\_promod::menuAcceptClass();
 			break;
 
 		case "X":
-			if ( self.pers["team"] == "axis" || self.pers["team"] == "allies" )
-				self openMenu( game["menu_changeclass_" + self.pers["team"] ] );
+			if(self.pers["team"] == "axis" || self.pers["team"] == "allies")
+				self openMenu(game["menu_changeclass_" + self.pers["team"]]);
 			break;
 
 		case "controls":
@@ -198,7 +186,7 @@ quickpromod(response)
 
 quickpromodgfx(response)
 {
-	self endon ( "disconnect" );
+	self endon("disconnect");
 
 	switch(response)
 	{
@@ -228,13 +216,12 @@ quickpromodgfx(response)
 	}
 }
 
-
 chooseClassName( classname )
 {
-	if ( !isDefined( classname ) )
+	if(!isDefined(classname))
 		return "";
 
-	switch( classname )
+	switch(classname)
 	{
 		case "assault":
 			return "Assault";

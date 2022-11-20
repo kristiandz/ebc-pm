@@ -4,23 +4,22 @@
 circleTime(time)
 {		
 	level.hud_circleTimer = time; 
-	for(i = 1; i <= level.hud_circleTimer;i ++)
+	for(i = 1; i <= level.hud_circleTimer; i++)
 		createCircleHud(i);
 		
-	while( time > 0 && isDefined(level.hud_circleTime))
+	while(time > 0 && isDefined(level.hud_circleTime))
 	{
 		if(isDefined(level.hud_circleTime[time]))
 		{
-			level.hud_circleTime[time] thread fontPulse( level );
+			level.hud_circleTime[time] thread fontPulse level);
 			level.hud_circleTime[time].color = game["colors"]["blue"];
-			
 			if(isDefined(level.hud_circleTime[time+1]))
-				level.hud_circleTime[time+1].color = (1,1,1);
+				level.hud_circleTime[time+1].color = (1, 1, 1);
 		}
 		wait 1;
 		time--;
 	}
-	for( i = 1; i <= level.hud_circleTimer;i++)
+	for(i = 1; i <= level.hud_circleTimer; i++)
 	{
 		level.hud_circleTime[i] fadeOverTime(0.2);
 		level.hud_circleTime[i].alpha = 0;
@@ -31,15 +30,14 @@ circleTime(time)
 
 remapTime(time)
 {
-	remapped = remap(time,1,level.hud_circleTimer,0,180); // change 180 to 360 for full circle
+	remapped = remap(time, 1, level.hud_circleTimer, 0, 180); // change 180 to 360 for full circle
 	return remapped;
 }
 
 createCircleHud(time)
 {
 	if(!isDefined(level.hud_circleTime))
-		level.hud_circleTime = [];
-		
+		level.hud_circleTime = [];	
 	size = time;
 	level.hud_circleTime[size] = newHudElem();
 	level.hud_circleTime[size].horzAlign = "center";
@@ -67,11 +65,11 @@ move_in_circle(size)
 {
 	while(isDefined(self))
 	{
-	r = 60;
-	self moveOverTime(level.hud_circleTimer);
-	self.x = r * cos(remapTime(size+3));
-	self.y = /*0 - */r * sin(remapTime(size+3)); //remove comments for flip:D
-	wait level.hud_circleTimer;
+		r = 60;
+		self moveOverTime(level.hud_circleTimer);
+		self.x = r * cos(remapTime(size+3));
+		self.y = /*0 - */r * sin(remapTime(size+3)); //remove comments for flip:D
+		wait level.hud_circleTimer;
 	}
 }
 
@@ -91,41 +89,41 @@ fontPulse(player)
 	player endon("joined_team");
 	player endon("joined_spectators");	
 	scaleRange = self.maxFontScale - self.baseFontScale;
-	while ( self.fontScale < self.maxFontScale && isDefined(self) )	
+	while(self.fontScale < self.maxFontScale && isDefined(self))	
 	{
-		self.fontScale = min( self.maxFontScale, self.fontScale + (scaleRange / self.inFrames) );
+		self.fontScale = min( self.maxFontScale, self.fontScale + (scaleRange / self.inFrames));
 		wait 0.05;
 	}	
-	while ( self.fontScale > self.baseFontScale && isDefined(self) )	
+	while(self.fontScale > self.baseFontScale && isDefined(self))	
 	{
-		self.fontScale = max( self.baseFontScale, self.fontScale - (scaleRange / self.outFrames) );
+		self.fontScale = max(self.baseFontScale, self.fontScale - (scaleRange / self.outFrames));
 		wait 0.05;
 	}
 }
 
-setStarttime( time )
+setStarttime(time)
 {
 	self thread fontPulseInit();
-	self thread strTime( time );
+	self thread strTime(time);
 }
 
-strTime( time )
+strTime(time)
 {
 	self.alpha = 0;
 	self.x += 10;
-	while( isDefined( self ) && time > 0)
+	while(isDefined(self) && time > 0)
 	{
-		self setValue( time );
-		self thread fontPulse( self );
-		self fadeOverTime( 0.3 );
+		self setValue(time);
+		self thread fontPulse(self);
+		self fadeOverTime(0.3);
 		self.alpha = 1;
 		self.Color = (0.0, 0.8, 0.0);
 		self moveOverTime( 0.3 );
 		self.x -= 10;
 		wait 0.7;
-		self moveOverTime( 0.3 );
+		self moveOverTime(0.3);
 		self.x -= 10;
-		self fadeOverTime( 0.3 );
+		self fadeOverTime(0.3);
 		self.alpha = 0;
 		time --;
 		wait 0.3;

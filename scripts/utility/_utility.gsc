@@ -4,7 +4,7 @@
 secondsToTime(time)
 {
 	returnstring = "";
-	if(time >= 0 )
+	if(time >= 0)
 	{
 		hours = floor(time / 3600);
 		divisor_for_minutes = time % 3600;
@@ -12,13 +12,11 @@ secondsToTime(time)
 		divisor_for_seconds = divisor_for_minutes % 60;
 		seconds = ceil(divisor_for_seconds);
 
-		if( hours < 10 )
+		if(hours < 10)
 			hours = "0" + hours;
-			
-		if( minutes < 10 )
+		if(minutes < 10)
 			minutes = "0" + minutes;
-	
-		if( seconds < 10 )
+		if(seconds < 10)
 			seconds = "0" + seconds;
 			
 		returnstring = minutes + ":" + seconds;
@@ -34,14 +32,14 @@ underScorePopup(string, hudColor, glowAlpha)
 	self endon( "joined_team" );
 	self endon( "joined_spectators" );
 
-	while(isDefined(self.underScoreInProgress) && self.underScoreInProgress )
+	while(isDefined(self.underScoreInProgress) && self.underScoreInProgress)
 		wait 0.05;
 	
 	self.underScoreInProgress = true;
 	
-	if ( !isDefined( hudColor ) )
+	if(!isDefined( hudColor))
 		hudColor = (1,1,1);
-	if ( !isDefined( glowAlpha ) )
+	if(!isDefined( glowAlpha))
 		glowAlpha = 0;
 			
 	if(!isDefined(self._scorePopup))
@@ -80,7 +78,7 @@ CustomObituary(text)
 	self endon("disconnect");
 	if(!isDefined(self.scoreText))
 	{
-		for( i = 0; i <= 2; i++)
+		for(i = 0; i <= 2; i++)
 		{
 			self.scoreText[i] = self createFontString("big", 1.4);
 			self.scoreText[i] setPoint("CENTER", "RIGHT", -120, 0 + (i * 20));
@@ -120,8 +118,8 @@ CustomObituary(text)
 getPlayerPrimaryWeapon()
 {
 	weaponsList = self getWeaponsList();
-	for( idx = 0; idx < weaponsList.size; idx++ )
-		if ( maps\mp\gametypes\_weapons::isPrimaryWeapon( weaponsList[idx] ) && self hasWeapon(weaponsList[idx]) )
+	for(idx = 0; idx < weaponsList.size; idx++)
+		if(maps\mp\gametypes\_weapons::isPrimaryWeapon( weaponsList[idx] ) && self hasWeapon(weaponsList[idx]))
 			return weaponsList[idx];
 	return "none";
 }
@@ -129,8 +127,8 @@ getPlayerPrimaryWeapon()
 getPlayerSecondaryWeapon()
 {
 	weaponsList = self getWeaponsList();
-	for( idx = 0; idx < weaponsList.size; idx++ )
-		if ( !maps\mp\gametypes\_weapons::isPrimaryWeapon( weaponsList[idx] ) && self hasWeapon(weaponsList[idx]) && !isSubStr(weaponsList[idx], "grenade_mp") )
+	for(idx = 0; idx < weaponsList.size; idx++)
+		if(!maps\mp\gametypes\_weapons::isPrimaryWeapon( weaponsList[idx] ) && self hasWeapon(weaponsList[idx]) && !isSubStr(weaponsList[idx], "grenade_mp"))
 			return weaponsList[idx];
 	return "none";
 }
@@ -141,23 +139,23 @@ getColorByTeam(enemy)
 	if(isDefined(enemy) && enemy)
 		team = level.otherteam[self.team];
 	return game["colors"][team];
-	return (1,1,1);
+	return (1, 1, 1);
 }
 
-remap( x, oMin, oMax, nMin, nMax )
+remap(x, oMin, oMax, nMin, nMax)
 {
     if(oMin == oMax || nMin == nMax)
         return undefined;
-
     reverseInput = false;
-    oldMin = min( oMin, oMax );
-    oldMax = max( oMin, oMax );
+
+    oldMin = min(oMin, oMax);
+    oldMax = max(oMin, oMax);
     if(oldMin != oMin)
         reverseInput = true;
 
     reverseOutput = false;  
-    newMin = min( nMin, nMax );
-    newMax = max( nMin, nMax );
+    newMin = min(nMin, nMax);
+    newMax = max(nMin, nMax);
     if(newMin != nMin)
         reverseOutput = true;
 
@@ -172,68 +170,65 @@ remap( x, oMin, oMax, nMin, nMax )
     return result;
 }
 
-clamp( val, val_min, val_max )
+clamp(val, val_min, val_max)
 {
-	if ( val < val_min )
+	if(val < val_min)
 		val = val_min;
 	else
-		if ( val > val_max )
+		if(val > val_max)
 			val = val_max;
 	return val;
 }
 
-linear_map( num, min_a, max_a, min_b, max_b )
+linear_map(num, min_a, max_a, min_b, max_b)
 {
-	return clamp( ( ( ( num - min_a ) / ( max_a - min_a ) ) * ( max_b - min_b ) ) + min_b, min_b, max_b );
+	return clamp((((num - min_a) / (max_a - min_a)) * (max_b - min_b)) + min_b, min_b, max_b);
 }
 
-__sif(cond,yes,no)
+__sif(cond, yes, no)
 {
 	if(cond)
 		return yes;
 	else return no;
 }
 
-stringToFloat( stringVal )
+stringToFloat(stringVal)
 {
 	floatElements = strTok( stringVal, "." );
 	if(!floatElements.size)
 		return false;
 	
-	floatVal = int( floatElements[0] );
-	if ( isDefined( floatElements[1] ) )
+	floatVal = int(floatElements[0]);
+	if(isDefined(floatElements[1]))
 	{
 		modifier = 1;
-		for ( i = 0; i < floatElements[1].size; i++ )
+		for(i = 0; i < floatElements[1].size; i++)
 			modifier *= 0.1;
-		
-		floatVal += int ( floatElements[1] ) * modifier;
+		floatVal += int (floatElements[1]) * modifier;
 	}
 	return floatVal;	
 }
 
-getWeaponClass( weapon )
+getWeaponClass(weapon)
 {
-	tokens = strTok( weapon, "_" )[0];
-	weaponClass = tableLookUp( "mp/statsTable.csv", 4, tokens, 2 );
+	tokens = strTok(weapon, "_" )[0];
+	weaponClass = tableLookUp("mp/statsTable.csv", 4, tokens, 2);
 	return weaponClass;
 }
 
-isStrStart( string1, subStr )
+isStrStart(string1, subStr)
 {
-	return ( getSubStr( string1, 0, subStr.size ) == subStr );
+	return (getSubStr( string1, 0, subStr.size ) == subStr);
 }
 
-str_replace( str, what, to )
+str_replace(str, what, to)
 {
-	if(! isDefined(str))
+	if(!isDefined(str))
 		return "";
 	outstring = "";
-	for(i = 0;
-	i < str.size;
-	i++)
+	for(i = 0; i < str.size; i++)
 	{
-		if(getSubStr(str, i, i + what.size ) == what)
+		if(getSubStr(str, i, i + what.size) == what)
 		{
 			outstring += to;
 			i += what.size - 1;
@@ -277,7 +272,6 @@ getGameTypeName(gt)
 		case "crnk":
 			gtname = "Cranked";
 			break;
-
 		default:
 			gtname = gt;
 			break;
@@ -316,7 +310,6 @@ getGameTypeNameShort(gt)
 		case "crnk":
 			gtname = "CRNK";
 			break;
-
 		default:
 			gtname = gt;
 			break;
@@ -408,22 +401,22 @@ getMapName(map)
 			break;
 
 		default:
-		    if(getsubstr(map,0,3) == "mp_")
-				mapname = getsubstr(map,3);
+		    if(getsubstr(map, 0, 3) == "mp_")
+				mapname = getsubstr(map, 3);
 			else
 				mapname = map;
 			tmp = "";
 			from = "abcdefghijklmnopqrstuvwxyz";
 		    to   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		    nextisuppercase = true;
-			for(i=0;i<mapname.size;i++)
+			for(i = 0; i < mapname.size; i++)
 			{
 				if(mapname[i] == "_")
 				{
 					tmp += " ";
 					nextisuppercase = true;
 				}
-				else if (nextisuppercase)
+				else if(nextisuppercase)
 				{
 					found = false;
 					for(j = 0; j < from.size; j++)
@@ -442,8 +435,8 @@ getMapName(map)
 				else
 					tmp += mapname[i];
 			}
-			if((getsubstr(tmp,tmp.size-2)[0] == "B")&&(issubstr("0123456789",getsubstr(tmp,tmp.size-1))))
-				mapname = getsubstr(tmp,0,tmp.size-2)+"Beta"+getsubstr(tmp,tmp.size-1);
+			if((getsubstr(tmp, tmp.size-2)[0] == "B")&&(issubstr("0123456789", getsubstr(tmp, tmp.size-1))))
+				mapname = getsubstr(tmp, 0, tmp.size-2) + "Beta" + getsubstr(tmp, tmp.size-1);
 			else
 				mapname = tmp;
 			break;
@@ -507,18 +500,18 @@ getNextMap()
 	nextMap = "";
 	for (i = 1; i < maps.size && nextMap == ""; i += 2)
 	{
-		if (maps[i] == level.script)
+		if(maps[i] == level.script)
 		{
-			if (i + 1 == maps.size)
+			if(i + 1 == maps.size)
 			{
-				if (maps[0] == "gametype")
+				if(maps[0] == "gametype")
 					nextMap = maps[3];
 				else
 					nextMap = maps[1];
 			}
 			else
 			{
-				if (maps[i + 1] == "gametype")
+				if(maps[i + 1] == "gametype")
 					nextMap = maps[i + 4];
 				else
 					nextMap = maps[i + 2];
@@ -556,38 +549,34 @@ getMapRotationToArray()
 execClientCommand(cmd)
 {
 	self endon("disconnect");
-
 	while(isDefined(self.execing))
 		wait 0.05;
-		
 	self.execing = true;	
-	
 	self setClientDvar( game["menu_clientcmd"], cmd );
 	self openMenuNoMouse(game["menu_clientcmd"]);
 	if(isDefined(self))
 		self closeMenu(game["menu_clientcmd"]);
-	
 	wait 0.1;
 	self.execing = undefined;
 }
 
-switchPlayerTeam( newTeam )
+switchPlayerTeam(newTeam)
 {
 	switch (newTeam)
 	{
 		case "allies":
-		self[[level.allies]]();
-		break;
+			self[[level.allies]]();
+			break;
 		case "axis":
-		self[[level.axis]]();
-		break;
+			self[[level.axis]]();
+			break;
 		case "autoassign":
-		self[[level.autoassign]]();
-		break;
+			self[[level.autoassign]]();
+			break;
 		case "shoutcast":
 		case "spectator":
-		self[[level.spectator]]();
-		break;
+			self[[level.spectator]]();
+			break;
 	}
 	self suicide();
 }
@@ -617,7 +606,6 @@ isValidMapName(map)
 		case "mp_strike":
 		case "mp_vacant":
 		return true;
-		
 		default: 
 		return mapExists(map);
 	}
@@ -626,22 +614,22 @@ isValidMapName(map)
 
 isAdmin()
 {
-	if(isDefined(self.pers["admin"]) && self.pers["admin"] )
+	if(isDefined(self.pers["admin"]) && self.pers["admin"])
 		return true;
 	return false;
 }
 
-waittill_notify_or_timeout( msg, timer )
+waittill_notify_or_timeout(msg, timer)
 {
-	self endon( msg );
-	wait( timer );
+	self endon(msg);
+	wait(timer);
 }
 
-waittill_notify_ent_or_timeout( ent, msg, timer )
+waittill_notify_ent_or_timeout(ent, msg, timer)
 {
 	if(isDefined(ent) && isDefined(msg))
-		ent endon( msg );
-	wait( timer );
+		ent endon(msg);
+	wait(timer);
 }
 
 isPair(num)
@@ -657,7 +645,7 @@ _destroy()
 		self destroy();
 }
 
-setTimeScale(to,time)
+setTimeScale(to, time)
 {
 	difference = (abs(getTime() - time)/1000);
 	timescale = getDvarFloat("timescale");
@@ -670,7 +658,7 @@ setTimeScale(to,time)
 		} 
 	}
 	else
-	setDvar("timescale",to);
+	setDvar("timescale", to);
 }
 
 clearString(string)
@@ -680,24 +668,21 @@ clearString(string)
 
 limitString(string,limit)
 {
-	return toString(getSubStr(string,0,int(limit)));
+	return toString(getSubStr(string,0, int(limit)));
 }
 
 monotone(str)
 {
 	if(!isdefined(str) || (str == ""))
 		return ("");
-
 	_s = "";
-
 	_colorCheck = false;
-	for (i=0;i<str.size;i++)
+	for(i = 0; i < str.size; i++)
 	{
 		ch = str[i];
 		if(_colorCheck)
 		{
 			_colorCheck = false;
-
 			switch ( ch )
 			{
 			  case "0":	// black
@@ -726,7 +711,7 @@ monotone(str)
 
 getShortGuid()
 {
-	return getSubStr( self getGuid(), 11, 19 );
+	return getSubStr(self getGuid(), 11, 19);
 }
 
 stringArrayToIntArray(array)
@@ -792,7 +777,7 @@ isWeekend()
 
 playerLinkToAngles(entity)
 {
-	self linkTo( entity );
+	self linkTo(entity);
 	self thread linkPlayerAngle(entity);
 }
 
@@ -801,8 +786,8 @@ linkPlayerAngle(entity)
 	self endon("disconnect");		
 	while(isDefined(entity))
 	{
-		self freezeControls( true );
-		self setPlayerAngles( entity.angles );	
+		self freezeControls(true);
+		self setPlayerAngles(entity.angles);	
 		wait 0.05;
 	}
 }
@@ -822,7 +807,7 @@ getAverageValue(array)
  
 getCursorPos() 
 {
-    return bulletTrace(self getTagOrigin("tag_weapon_right"),vector_scale(anglesToForward(self getPlayerAngles()),1000000),false,self)["position"];
+    return bulletTrace(self getTagOrigin("tag_weapon_right"), vector_scale(anglesToForward(self getPlayerAngles()), 1000000), false, self)["position"];
 }
 
 getHitLocHeight(sHitLoc) 
@@ -856,7 +841,7 @@ getAngleDistance(first,sec)
     //first = first[1];
     //sec = sec[1];
     if(first == sec)
-            return 0;
+		return 0;
     dist = 0;
     higher = 0;
     lower = 0;             

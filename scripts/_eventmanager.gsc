@@ -1,41 +1,38 @@
 init()
 {
-	if(!isDefined( level.event )) //Singleton
+	if(!isDefined(level.event)) //Singleton
 	{
 		level.event = [];
-		level.event[ "connecting" ] = [];
-		level.event[ "connected" ] = [];
-		level.event[ "spawned" ] = [];
-		level.event[ "death" ] = [];
-		level.event[ "killed" ] = [];
-		level.event[ "disconnected" ] = [];
-		level.event[ "joined_team" ] = [];
-		level.event[ "joined_spectators" ] = [];
-		level.event[ "menu_response" ] = [];
-		level.event[ "weapon_fired" ] = [];
-		
+		level.event["connecting"] = [];
+		level.event["connected"] = [];
+		level.event["spawned"] = [];
+		level.event["death"] = [];
+		level.event["killed"] = [];
+		level.event["disconnected"] = [];
+		level.event["joined_team"] = [];
+		level.event["joined_spectators"] = [];
+		level.event["menu_response"] = [];
+		level.event["weapon_fired"] = [];
 		level.on = ::addEvent; //create callback pointer for addEvent( event, proces )
-
 		thread onPlayerConnecting();
 		thread onPlayerConnected();
 	}
 }
 
-addEvent( event, process )
+addEvent(event, process)
 {
-	if( !isdefined( level.event[ event ] ) || !isdefined( process ))
+	if(!isdefined(level.event[event]) || !isdefined(process))
 		return;
-	level.event[ event ][ level.event[ event ].size ] = process;
-	
+	level.event[event][level.event[event].size] = process;
 }
 
 onPlayerConnecting()
 {
 	while(1)
 	{
-		level waittill( "connecting", player );
-		for( i=0; i<level.event[ "connecting" ].size; i++ )
-			player thread [[level.event[ "connecting" ][i]]]();
+		level waittill("connecting", player);
+		for(i = 0; i < level.event["connecting"].size; i++)
+			player thread [[level.event["connecting"][i]]]();
 	}	
 }
 
@@ -43,7 +40,7 @@ onPlayerConnected()
 {
 	while(1)
 	{
-		level waittill( "connected", player );
+		level waittill("connected", player);
 		player thread onPlayerSpawned();
 		player thread onPlayerDeath();
 		player thread onPlayerKilled();
@@ -52,19 +49,19 @@ onPlayerConnected()
 		player thread onPlayerJoinedTeam();
 		player thread onPlayerMenuResponse();
 		player thread onPlayerWeaponFired();
-		for( i=0; i<level.event[ "connected" ].size; i++ )
-		player thread [[level.event[ "connected" ][i]]]();
+		for(i = 0; i < level.event["connected"].size; i++)
+			player thread [[level.event["connected"][i]]]();
 	}	
 }
 
 onPlayerSpawned()
 {
-	self endon( "disconnect" );
+	self endon("disconnect");
 	while(1)
 	{
-		self waittill( "spawned_player" );
-		for( i=0; i<level.event[ "spawned" ].size; i++ )
-			self thread [[level.event[ "spawned" ][i]]]();
+		self waittill("spawned_player");
+		for(i = 0; i < level.event[ "spawned" ].size; i++)
+			self thread [[level.event["spawned"][i]]]();
 	}
 }
 
@@ -74,8 +71,8 @@ onPlayerDeath()
 	while(1)
 	{
 		self waittill( "death" );
-		for( i=0; i<level.event[ "death" ].size; i++ )
-			self thread [[level.event[ "death" ][i]]]();
+		for(i = 0; i < level.event["death"].size; i++)
+			self thread [[level.event["death"][i]]]();
 	}
 }
 
@@ -84,9 +81,9 @@ onPlayerKilled()
 	self endon( "disconnect" );
 	while(1)
 	{
-		self waittill( "killed_player" );
-		for( i=0; i<level.event[ "killed" ].size; i++ )
-			self thread [[level.event[ "killed" ][i]]]();
+		self waittill("killed_player");
+		for(i = 0; i < level.event["killed"].size; i++)
+			self thread [[level.event["killed"][i]]]();
 	}
 }
 
@@ -95,28 +92,28 @@ onPlayerJoinedTeam()
 	self endon( "disconnect" );
 	while(1)
 	{
-		self waittill( "joined_team" );
-		for( i=0; i<level.event[ "joined_team" ].size; i++ )
-			self thread [[level.event[ "joined_team" ][i]]]();
+		self waittill("joined_team");
+		for(i = 0; i < level.event["joined_team"].size; i++)
+			self thread [[level.event["joined_team"][i]]]();
 	}
 }
 
 onPlayerJoinedSpectators()
 {
-	self endon( "disconnect" );
+	self endon("disconnect");
 	while(1)
 	{
-		self waittill( "joined_spectators" );
-		for( i=0; i<level.event[ "joined_spectators" ].size; i++ )
-			self thread [[level.event[ "joined_spectators" ][i]]]();
+		self waittill("joined_spectators");
+		for(i = 0; i < level.event["joined_spectators"].size; i++)
+			self thread [[level.event["joined_spectators"][i]]]();
 	}
 }
 
 onPlayerDisconnected()
 {
-	self waittill( "disconnect" );
-	for( i=0; i<level.event[ "disconnected" ].size; i++ ) //gives infinite loop error?
-		self thread [[level.event[ "disconnected" ][i]]]();
+	self waittill("disconnect");
+	for(i = 0; i < level.event["disconnected"].size; i++) //gives infinite loop error?
+		self thread [[level.event["disconnected"][i]]]();
 }
 
 onPlayerMenuResponse()
@@ -124,9 +121,9 @@ onPlayerMenuResponse()
 	self endon( "disconnect" );
 	while(1)
 	{
-		self waittill( "menuresponse", menu, response );
-		for( i=0; i<level.event[ "menu_response" ].size; i++ )
-			self thread [[level.event[ "menu_response" ][i]]]( menu, response );
+		self waittill("menuresponse", menu, response );
+		for(i = 0; i < level.event["menu_response"].size; i++)
+			self thread [[level.event["menu_response"][i]]](menu, response);
 	}
 }
 
@@ -136,7 +133,7 @@ onPlayerWeaponFired()
 	while(1)
 	{
 		self waittill("weapon_fired");
-		for( i=0; i<level.event[ "weapon_fired" ].size; i++ )
-			self thread [[level.event[ "weapon_fired" ][i]]]();
+		for(i = 0; i < level.event["weapon_fired"].size; i++)
+			self thread [[level.event["weapon_fired"][i]]]();
 	}
 }

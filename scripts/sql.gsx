@@ -4,12 +4,12 @@ db_connect(database)
 {
 	if(isDefined(database))
 	{
-		SQL_Connect("127.0.1",3306,"username","password"); // Set mysql account here
+		SQL_Connect("127.0.1", 3306, "username", "password"); // Set mysql account here
 		SQL_SelectDB(database);
 	}
 }
 
-db_setVip(database,tier,numeric,date)
+db_setVip(database, tier, numeric, date)
 {
 	db_connect(database);
 	q_str = "UPDATE player_core SET status = \"" + tier + "\", donation_tier = " + numeric+ ", donation_date = \"" + date + "\" WHERE guid LIKE " + self.guid;
@@ -17,7 +17,7 @@ db_setVip(database,tier,numeric,date)
 	SQL_Close();
 }
 
-db_setAward(database,tier)
+db_setAward(database, tier)
 {
 	db_connect(database);
 	q_str = "UPDATE player_core SET award_tier = \"" + tier + "\" WHERE guid LIKE " + self.guid;
@@ -25,7 +25,7 @@ db_setAward(database,tier)
 	SQL_Close();
 }
 
-db_setPrestige(database,prestige)
+db_setPrestige(database, prestige)
 {
 	db_connect(database);
 	q_str = "UPDATE player_core SET prestige = " + int(prestige) + ", backup_pr = " + int(prestige) + " WHERE guid LIKE " + self.guid;
@@ -63,7 +63,7 @@ db_logFlag(database, admin, player)
 	thread scripts\utility\common::log("flag_log", player.name + " (" + player.guid + ") got evade flagged by " + admin.name + " (" + admin.guid + ") on " + time );
 }
 
-db_setFlag(database,flagLevel)
+db_setFlag(database, flagLevel)
 {
 	db_connect(database);
 	q_str = "UPDATE player_core SET flag = " + flagLevel + " WHERE guid = \"" + self.guid + "\";";
@@ -71,7 +71,7 @@ db_setFlag(database,flagLevel)
 	SQL_Close();
 }
 
-db_simpleQuery(database,q_str)
+db_simpleQuery(database, q_str)
 {
 	db_connect(database);
 	SQL_Query(q_str); 

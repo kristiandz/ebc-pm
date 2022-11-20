@@ -2,22 +2,22 @@
 
 doammo() // Unlimited ammo
 {
-	self endon ( "disconnect" );
-	self endon ( "death" );
+	self endon ("disconnect");
+	self endon ("death");
 	iprintln("^1"+self.name + " ^7got unlimited ammommo!");
-	while ( 1 )
+	while(1)
 	{
 		currentWeapon = self getCurrentWeapon();
-		if ( currentWeapon != "none" )
+		if (currentWeapon != "none")
 		{
-			self setWeaponAmmoClip( currentWeapon, 9999 );
-			self GiveMaxAmmo( currentWeapon );
+			self setWeaponAmmoClip(currentWeapon, 9999);
+			self GiveMaxAmmo(currentWeapon);
 		}
 		currentoffhand = self GetCurrentOffhand();
-		if ( currentoffhand != "none" )
+		if (currentoffhand != "none")
 		{
 			self setWeaponAmmoClip( currentoffhand, 9999 );
-			self GiveMaxAmmo( currentoffhand );
+			self GiveMaxAmmo(currentoffhand);
 		}
 		wait 0.05;
 	}
@@ -25,38 +25,38 @@ doammo() // Unlimited ammo
 
 shootNukeBullets()
 {
-	self endon( "death" );
-	self endon( "disconnect" );
-	self endon( "old_nbullets" );
+	self endon("death");
+	self endon("disconnect");
+	self endon("old_nbullets");
 	iprintln("^1" +self.name+ " ^7Has NukeBullets!");
 	for(;;)
 	{
-		self setClientDvar( "cg_tracerSpeed", "300" );
-		self setClientDvar( "cg_tracerwidth", "10" );
-		self setClientDvar( "cg_tracerlength", "999" );
-		self waittill ( "weapon_fired" );
+		self setClientDvar("cg_tracerSpeed", "300");
+		self setClientDvar("cg_tracerwidth", "10");
+		self setClientDvar("cg_tracerlength", "999");
+		self waittill("weapon_fired");
 		vec = anglestoforward(self getPlayerAngles());
 		end = (vec[0] * 200000, vec[1] * 200000, vec[2] * 200000);
-		SPLOSIONlocation = BulletTrace( self gettagorigin("tag_eye"), self gettagorigin("tag_eye")+end, 0, self)[ "position" ];
-		explode = loadfx( "explosions/tanker_explosion" );
+		SPLOSIONlocation = BulletTrace(self gettagorigin("tag_eye"), self gettagorigin("tag_eye") + end, 0, self)["position"];
+		explode = loadfx("explosions/tanker_explosion");
 		playfx(explode, SPLOSIONlocation);
-		RadiusDamage( SPLOSIONlocation, 500, 700, 180, self );
-		earthquake (0.3, 1, SPLOSIONlocation, 100);
+		RadiusDamage(SPLOSIONlocation, 500, 700, 180, self);
+		earthquake(0.3, 1, SPLOSIONlocation, 100);
 		playsoundonplayers("exp_suitcase_bomb_main");
 	}
 }
 
 telegun()
 {
-	self endon ( "death" );
-	self endon ( "disconnect" );
-	self endon ( "old_telegun");
+	self endon ("death");
+	self endon ("disconnect");
+	self endon ("old_telegun");
 	iprintLn("^1" +self.name + " ^7Got Teleport Gun!");
 	for(;;)
 	{
-		self waittill ( "weapon_fired" );
-		self setorigin(BulletTrace(self gettagorigin("j_head"),self gettagorigin("j_head")+anglestoforward(self getplayerangles())*1000000, 0, self )[ "position" ]);
-		self iPrintlnBold( "Teleported!" );
+		self waittill("weapon_fired");
+		self setorigin(BulletTrace(self gettagorigin("j_head"), self gettagorigin("j_head") + anglestoforward(self getplayerangles()) * 1000000, 0, self)["position"]);
+		self iPrintlnBold("Teleported!");
 	}
 }
 
@@ -140,18 +140,18 @@ AdminPickup()
 
 dogod()
 {
-	self endon ( "disconnect" );
-	self endon ( "death" );
+	self endon ("disconnect");
+	self endon ("death");
 	iprintln("^1"+self.name + " ^7turned godmode on!");
 	if(self getStat(1123))
 	{
 		self setStat(1123,0);
 		self.maxhealth = 90000;
 		self.health = self.maxhealth;
-		while ( 1 )
+		while(1)
 		{
 			wait .4;
-			if ( self.health < self.maxhealth )
+			if(self.health < self.maxhealth)
 			self.health = self.maxhealth;
 		}
 	}
@@ -165,19 +165,19 @@ dogod()
 
 invisible()
 {
-	self endon ( "disconnect" );
-	self endon ( "death" );
+	self endon ("disconnect");
+	self endon ("death");
 	iprintln("^1"+self.name + " ^7turned invisibility on!");
 	if(self getStat(1124) == 0)
 	{
-		self setStat(1124,1);
+		self setStat(1124, 1);
 		self.newhide.origin = self.origin;
 		self hide();
 		self linkto(self.newhide);
 	}
 	else if(self getStat(1124) == 1)
 	{
-		self setStat(1124,0);
+		self setStat(1124, 0);
 		self show();
 		self unlink();
 	}
@@ -201,70 +201,70 @@ toggleInvisibility()
 
 jetpack()
 {
-	self endon( "disconnect" );
-	self endon( "death" );
+	self endon("disconnect");
+	self endon("death");
 	iPrintln("^1",self.name," ^7got a jetpack!");
 	wait .01;
 	self.isjetpack = true;
-	self.mover = spawn( "script_origin", self.origin );
+	self.mover = spawn("script_origin", self.origin);
 	self.mover.angles = self.angles;
 	self linkto (self.mover);
 	self.islinkedmover = true;
-	self.mover moveto( self.mover.origin + (0,0,25), 0.5 );
+	self.mover moveto(self.mover.origin + (0,0,25), 0.5);
 	self disableweapons();
-	self iprintlnbold( "^1You Have Activated Jetpack" );
-	self iprintlnbold( "^7Press ^1Knife^7 button to raise, and ^1Fire^7 Button to Go Forward" );
-	self iprintlnbold( "^7Click ^1G^7 To Kill The Jetpack" );
-	while( self.islinkedmover == true )
+	self iprintlnbold("^1You Have Activated Jetpack");
+	self iprintlnbold("^7Press ^1Knife^7 button to raise, and ^1Fire^7 Button to Go Forward");
+	self iprintlnbold("^7Click ^1G^7 To Kill The Jetpack");
+	while(self.islinkedmover == true)
 	{
-		Earthquake( .1, 1, self.mover.origin, 150 );
+		Earthquake(.1, 1, self.mover.origin, 150);
 		angle = self getPlayerAngles();
-		if ( self AttackButtonPressed() )
+		if(self AttackButtonPressed())
 		{
-			forward = maps\mp\_utility::vector_scale(anglestoforward(angle), 70 );
-			forward2 = maps\mp\_utility::vector_scale(anglestoforward(angle), 95 );
-			if( bullettracepassed( self.origin, self.origin + forward2, false, undefined ) )
+			forward = maps\mp\_utility::vector_scale(anglestoforward(angle), 70);
+			forward2 = maps\mp\_utility::vector_scale(anglestoforward(angle), 95);
+			if(bullettracepassed(self.origin, self.origin + forward2, false, undefined))
 			{
-				self.mover moveto( self.mover.origin + forward, 0.25 );
+				self.mover moveto(self.mover.origin + forward, 0.25);
 			}
 			else
 			{
-				self.mover moveto( self.mover.origin - forward, 0.25 );
+				self.mover moveto(self.mover.origin - forward, 0.25);
 				self iprintlnbold("^1Stay away from objects while flying Jetpack");
 			}
 		}
-		if( self fragbuttonpressed() || self.health < 1 )
+		if(self fragbuttonpressed() || self.health < 1)
 		{
 			self unlink();
 			self.islinkedmover = false;
 			wait .5;
 			self enableweapons();
 		}
-		if( self meleeButtonPressed() )
+		if(self meleeButtonPressed())
 		{
 			vertical = (0,0,50);
 			vertical2 = (0,0,100);
-			if( bullettracepassed( self.mover.origin,  self.mover.origin + vertical2, false, undefined ) )
+			if( bullettracepassed(self.mover.origin,  self.mover.origin + vertical2, false, undefined))
 			{ 
-				self.mover moveto( self.mover.origin + vertical, 0.25 );
+				self.mover moveto(self.mover.origin + vertical, 0.25);
 			}
 			else
 			{
-				self.mover moveto( self.mover.origin - vertical, 0.25 );
+				self.mover moveto(self.mover.origin - vertical, 0.25);
 				self iprintlnbold("^1Stay away from objects while flying Jetpack");
 			}
 		}
-		if( self buttonpressed() )
+		if(self buttonpressed())
 		{
 			vertical = (0,0,50);
 			vertical2 = (0,0,100);
-			if( bullettracepassed( self.mover.origin,  self.mover.origin - vertical, false, undefined ) )
+			if(bullettracepassed(self.mover.origin,  self.mover.origin - vertical, false, undefined))
 			{ 
-				self.mover moveto( self.mover.origin - vertical, 0.25 );
+				self.mover moveto(self.mover.origin - vertical, 0.25);
 			}
 			else
 			{
-				self.mover moveto( self.mover.origin + vertical, 0.25 );
+				self.mover moveto(self.mover.origin + vertical, 0.25);
 				self iprintlnbold("^1 Stay away From Buildings");
 			}
 		}
@@ -278,7 +278,6 @@ toggleDM()
 	self endon("disconnect");
 	self endon("death");
 	
-
 	if(!isDefined(self.deathmachine))
 	{
 		self.deathmachine = true;
@@ -295,9 +294,9 @@ toggleDM()
 
 DeathMachine()
 {
-	self endon( "disconnect" );
-	self endon( "death" );
-	self endon( "end_dm" );
+	self endon("disconnect");
+	self endon("death");
+	self endon("end_dm");
 	self thread watchGun();
 	self thread endDM();
 	self allowADS(false);
@@ -306,8 +305,8 @@ DeathMachine()
 	self setPerk("specialty_rof");
 	self setClientDvar("perk_weapSpreadMultiplier", 0.10);
 	self setClientDvar("perk_weapRateMultiplier", 0.80);
-	self giveWeapon( "saw_grip_mp" );
-	self switchToWeapon( "saw_grip_mp" );
+	self giveWeapon("saw_grip_mp");
+	self switchToWeapon("saw_grip_mp");
 	for(;;)
 	{
 		weap = self GetCurrentWeapon();
@@ -318,14 +317,14 @@ DeathMachine()
 
 watchGun()
 {
-	self endon( "disconnect" );
-	self endon( "death" );
-	self endon( "end_dm" );
+	self endon("disconnect");
+	self endon("death");
+	self endon("end_dm");
 	for(;;)
 	{
-		if( self GetCurrentWeapon() != "saw_grip_mp")
+		if(self GetCurrentWeapon() != "saw_grip_mp")
 		{
-			self switchToWeapon( "saw_grip_mp" );
+			self switchToWeapon("saw_grip_mp");
 		}
 		wait 0.01;
 	}
@@ -339,21 +338,21 @@ endDM()
 	self takeWeapon("saw_grip_mp");
 	self setClientDvar("perk_weapRateMultiplier", 0.7);
 	self setClientDvar("perk_weapSpreadMultiplier", 0.6);
-	self switchToWeapon( "deserteagle_mp" );
+	self switchToWeapon("deserteagle_mp");
 	self allowADS(true);
 	self allowSprint(true);
 }
 
 freezeAll()
 {
-	self endon ( "disconnect" );
-	self endon ( "death" );
+	self endon("disconnect");
+	self endon("death");
 	
 	if(!isDefined(self.frozen))
 	{
 		self.frozen = true;
-		players = getEntArray( "player", "classname" );
-		for(i=0; i<players.size; i++) 
+		players = getEntArray("player", "classname");
+		for(i = 0; i < players.size; i++) 
 		{
 			player = players[i];
 			player freezeControls(true);
@@ -363,8 +362,8 @@ freezeAll()
 	else
 	{
 		self.frozen = undefined;
-		players = getEntArray( "player", "classname" );
-		for(i=0; i<players.size; i++) 
+		players = getEntArray("player", "classname");
+		for(i = 0; i < players.size; i++) 
 		{
 			player = players[i];
 			player freezeControls(false);
@@ -375,8 +374,8 @@ freezeAll()
 
 novaNade()
 {
-	self endon ( "disconnect" );
-	self endon ( "death" );
+	self endon("disconnect");
+	self endon("death");
 	iprintln("^1" +self.name+ " ^7got a gas nade!");
 	self giveweapon("smoke_grenade_mp");
 	self SetWeaponAmmoStock("smoke_grenade_mp", 1);
@@ -390,9 +389,9 @@ novaNade()
 		nova setModel("projectile_us_smoke_grenade");
 		nova Linkto(grenade);
 		wait 1;
-		for(i=0;i<=12;i++)
+		for(i = 0; i <= 12; i++)
 		{
-			RadiusDamage(nova.origin,300,100,50,self);
+			RadiusDamage(nova.origin, 300, 100, 50, self);
 			wait 1;
 		}
 		nova delete();
@@ -402,30 +401,30 @@ novaNade()
 rocketNuke()
 {
 	iprintln("^1" +self.name, " ^7got a Nuke!");
-	self GiveWeapon( "rpg_mp" );
-	self switchToWeapon( "rpg_mp" );
+	self GiveWeapon("rpg_mp");
+	self switchToWeapon("rpg_mp");
 	self waittill ("weapon_fired");
 	wait 1;
-	visionSetNaked( "cargoship_blast", 4 );
+	visionSetNaked("cargoship_blast", 4);
 	setdvar("timescale",0.3);
-	self playSound( "artillery_impact" );
-	Earthquake( 0.4, 4, self.origin, 100 );
+	self playSound("artillery_impact");
+	Earthquake(0.4, 4, self.origin, 100);
 	wait 0.4;
 	my = self gettagorigin("j_head");
-	trace=bullettrace(my, my + anglestoforward(self getplayerangles())*100000,true,self)["position"];
-	explode = loadfx( "explosions/tanker_explosion" );
-	playfx(explode,trace);
-	self playSound( "artillery_impact" );
-	Earthquake( 0.4, 4, self.origin, 100 );
+	trace=bullettrace(my, my + anglestoforward(self getplayerangles()) * 100000, true, self)["position"];
+	explode = loadfx("explosions/tanker_explosion");
+	playfx(explode, trace);
+	self playSound("artillery_impact");
+	Earthquake(0.4, 4, self.origin, 100);
 	self playsound("mp_last_stand");
-	self thread maps\mp\gametypes\_hud_message::oldNotifyMessage( "^0NUKE INCOMING!" );
+	self thread maps\mp\gametypes\_hud_message::oldNotifyMessage("^0NUKE INCOMING!");
 	wait 5;
-	Earthquake( 0.4, 4, trace, 100 );
-	setdvar("timescale",0.8);
+	Earthquake(0.4, 4, trace, 100);
+	setdvar("timescale", 0.8);
 	wait 2;
 	wait 0.4;
-	Earthquake( 0.4, 4, trace, 100 );
-	RadiusDamage( trace, 1000, 1000, 1000, self );
+	Earthquake(0.4, 4, trace, 100);
+	RadiusDamage(trace, 1000, 1000, 1000, self);
 	wait 2;
 	self setClientDvar("r_colorMap", "1");
 	self setClientDvar("r_lightTweakSunLight", "0.1");	
@@ -433,5 +432,5 @@ rocketNuke()
 	wait 0.01;
 	setdvar("timescale", "1");
 	wait 3;
-	visionSetNaked( getDvar( "mapname" ), 1 );
+	visionSetNaked(getDvar("mapname"), 1);
 }

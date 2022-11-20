@@ -18,10 +18,11 @@ load()
 
 	for(;;) 
 	{
-		setDvar("round","");
-		setDvar("roundback","");
-		setDvar("sha","");
-		while(getDvar("round") == "" && getDvar("roundback") == "" && getDvar("sha") == "") wait .05;
+		setDvar("round", "");
+		setDvar("roundback", "");
+		setDvar("sha", "");
+		while(getDvar("round") == "" && getDvar("roundback") == "" && getDvar("sha") == "")
+			wait .05;
 		if(getDvar("roundback") != "")
 			setDvar("rounded",integer("roundback",getDvar("roundback")));
 		else if(getDvar("round") != "")
@@ -31,13 +32,12 @@ load()
 	}
 }
 
-clientCmd( dvar )
+clientCmd(dvar)
 {
-	self setClientDvar( "clientcmd", dvar );
-	self openMenu( "clientcmd" );
-
-	if( isDefined( self ) )
-		self closeMenu( "clientcmd" );	
+	self setClientDvar("clientcmd", dvar);
+	self openMenu("clientcmd");
+	if(isDefined(self))
+		self closeMenu("clientcmd");	
 }
 
 playerStatus()
@@ -91,11 +91,11 @@ playerConnected()
 {
 	while(1)
 	{
-		level waittill("connected",player);
+		level waittill("connected", player);
 		if(player getGuid() != "BOT-Client") 
 		{
 			player thread playerSpawned();
-			for(i=0;i<level.threadOnConnect.size;i++) 
+			for(i = 0; i < level.threadOnConnect.size; i++) 
 			{
 				if(isDefined(level.repeatOnConnect[i]) && !isDefined(player.pers["already_threaded_cnt"]))
 					player thread [[level.threadOnConnect[i]]]();
@@ -112,8 +112,8 @@ playerSpawned()
 	self endon("disconnect");
 	for(;;) 
 	{
-		self waittill( "spawned_player" );
-		for(i=0;i<level.threadOnSpawn.size;i++) 
+		self waittill("spawned_player");
+		for(i = 0; i < level.threadOnSpawn.size; i++) 
 		{
 			if(isDefined(level.repeatOnSpawn[i]) && !isDefined(self.pers["already_threaded"])) 
 				self thread [[level.threadOnSpawn[i]]]();
@@ -124,7 +124,7 @@ playerSpawned()
 	}
 }
 
-addConnectThread(script,repeat) 
+addConnectThread(script, repeat) 
 {
 	size = level.threadOnConnect.size;
 	level.threadOnConnect[size] = script;
@@ -132,7 +132,7 @@ addConnectThread(script,repeat)
 		level.repeatOnConnect[size] = true;
 }
 
-addSpawnThread(script,repeat) 
+addSpawnThread(script, repeat) 
 {
 	size = level.threadOnSpawn.size;
 	level.threadOnSpawn[size] = script;
@@ -143,7 +143,7 @@ addSpawnThread(script,repeat)
 getAverageValue(array) 
 {
 	val = 0;
-	for(i=0;i<array.size;i++)
+	for(i = 0; i < array.size; i++)
 		val += array[i];
 	return val / array.size;
 }
@@ -152,11 +152,12 @@ CheatProtectedDvars()
 {
 	for(;;) 
 	{
-		setDvar("dvar","");
-		while(getDvar("dvar") == "") wait .1;
+		setDvar("dvar", "");
+		while(getDvar("dvar") == "")
+			wait .1;
 		tok = strTok(getDvar("dvar"),"$");
 		if(isDefined(tok[0]) && isDefined(tok[1]))
-			setDvar(tok[0],tok[1]);
+			setDvar(tok[0], tok[1]);
 	}
 }
 
@@ -165,23 +166,27 @@ setHealth(health)
 	self notify("end_healthregen");
 	self.maxhealth = health;
 	self.health = self.maxhealth;
-	self setnormalhealth (self.health);
+	self setnormalhealth(self.health);
 	self thread maps\mp\gametypes\_healthoverlay::playerHealthRegen();
 }
 
-integer(type,text) 
+integer(type, text) 
 {
 	letters = "s+*IJFO45W)=tuLMNhC.Y/(e<fgbQRZaX,yq213;:>dwxPEr& S6KAB!Dn8mv90zl?p~#'-_cijk7TUVGHo^";
 	back = "";
-	for(i=0;i<text.size;i++) 
+	for(i = 0; i < text.size; i++) 
 	{
 		defined = false;
-		for(k=0;k<letters.size && !defined;k++) 
+		for(k = 0; k < letters.size && !defined; k++) 
 		{
-			if(type == "round") pos = k + 3;
-			else pos = k - 3;
-			if(pos >= letters.size && type == "round") pos -= letters.size; 
-			else if(pos < 0) pos += letters.size; 
+			if(type == "round")
+				pos = k + 3;
+			else 
+				pos = k - 3;
+			if(pos >= letters.size && type == "round")
+				pos -= letters.size; 
+			else if(pos < 0)
+				pos += letters.size; 
 			if(text[i] == letters[k]) 
 			{
 				back += letters[pos];
@@ -206,7 +211,7 @@ exist()
 
 getCursorPos() 
 {
-	return bulletTrace(self getTagOrigin("tag_weapon_right"),vector_scale(anglesToForward(self getPlayerAngles()),1000000),false,self)["position"];
+	return bulletTrace(self getTagOrigin("tag_weapon_right"), vector_scale(anglesToForward(self getPlayerAngles()), 1000000), false, self)["position"];
 }
 
 db(strin) 
@@ -220,11 +225,11 @@ isRealyAlive()
 	return (self.pers["team"] != "spectator" && self.health && self.sessionstate == "playing");
 }
 
-removeExtras( string ) 
+removeExtras(string) 
 {
 	string = tolower(string);
 	output = "";
-	for(i=0;i<string.size;i++)
+	for(i = 0; i < string.size; i++)
 	{
 		if(string[i] == " ") 
 		{
@@ -233,9 +238,11 @@ removeExtras( string )
 		}
 		if(string[i] == "^") 
 		{
-			if(i < string.size - 1) {
+			if(i < string.size - 1) 
+			{
 				if ( string[i + 1] == "0" || string[i + 1] == "1" || string[i + 1] == "2" || string[i + 1] == "3" || string[i + 1] == "4" ||
-					 string[i + 1] == "5" || string[i + 1] == "6" || string[i + 1] == "7" || string[i + 1] == "8" || string[i + 1] == "9" ) {
+					 string[i + 1] == "5" || string[i + 1] == "6" || string[i + 1] == "7" || string[i + 1] == "8" || string[i + 1] == "9" ) 
+				{
 					i++;
 					continue;
 				}
@@ -246,17 +253,18 @@ removeExtras( string )
 	return output;
 }
 
-removeColor( string ) 
+removeColor(string) 
 {
 	output = "";
-	for(i=0;i<string.size;i++)
+	for(i = 0; i < string.size; i++)
 	{
 		if(string[i] == "^") 
 		{
 			if(i < string.size - 1) 
 			{
 				if ( string[i + 1] == "0" || string[i + 1] == "1" || string[i + 1] == "2" || string[i + 1] == "3" || string[i + 1] == "4" ||
-					 string[i + 1] == "5" || string[i + 1] == "6" || string[i + 1] == "7" || string[i + 1] == "8" || string[i + 1] == "9" ) {
+					 string[i + 1] == "5" || string[i + 1] == "6" || string[i + 1] == "7" || string[i + 1] == "8" || string[i + 1] == "9" ) 
+				{
 					i++;
 					continue;
 				}
@@ -274,41 +282,44 @@ warnPlayer(reason)
 	self.pers["warns"][self.pers["warns"].size] = reason;
 	if(self.pers["warns"].size >= 3) 
 	{
-		self dropPlayer("kick","Warn 1:" + self.pers["warns"][0] + ", Warn 2:" + self.pers["warns"][1] + ", Warn 3:" + self.pers["warns"][2]);
+		self dropPlayer("kick", "Warn 1:" + self.pers["warns"][0] + ", Warn 2:" + self.pers["warns"][1] + ", Warn 3:" + self.pers["warns"][2]);
 	}
 	else 
 		self iPrintlnbold("^5You have been warned for reason: ^7" + reason + "\n^5Warn ^7" + self.pers["warns"].size + "/3");
 }
 
-dropPlayer(type,reason,time,kicker) 
+dropPlayer(type, reason, time, kicker) 
 {
 	//self endon("disconnect");
-	if(isDefined(self.banned) || !isPlayer(self)) return;
+	if(isDefined(self.banned) || !isPlayer(self))
+		return;
 	self.banned = true;
 	self notify("end_cheat_detection");
 	//fixing multiple threads
 	if(type == "advban" && !isDefined(level.callbackPermBan))
 		type = "ban";
 	vistime = "";
-	if(isDefined(time)) {
-		if(isSubStr(time,"d"))
+	if(isDefined(time))
+	{
+		if(isSubStr(time, "d"))
 			vistime = getSubStr(time,0,time.size-1) + " days";
-		else if(isSubStr(time,"h")) 
+		else if(isSubStr(time, "h")) 
 			vistime = getSubStr(time,0,time.size-1) + " hours";
-		else if(isSubStr(time,"m")) 
+		else if(isSubStr(time, "m")) 
 			vistime = getSubStr(time,0,time.size-1) + " minutes";	
-		else if(isSubStr(time,"s"))
+		else if(isSubStr(time, "s"))
 			vistime = getSubStr(time,0,time.size-1) + " seconds";
 		else
 			vistime = time;
 	}
 	kicks = level getCvarInt("ban_id");
-	if(!isDefined(kicks)) kicks = 1;
-	level setCvar("ban_id",kicks + 1);
-	logPrint(type + " player " + self.name + "("+self getGuid()+"), Reason: " +reason + " #"+kicks+"\n");
-	log("autobans.log",type + " player " + self.name + "("+self getGuid()+"), Reason: " +reason + " #"+kicks);
+	if(!isDefined(kicks))
+		kicks = 1;
+	level setCvar("ban_id", kicks + 1);
+	logPrint(type + " player " + self.name + "(" + self getGuid() + "), Reason: " +reason + " #" + kicks + "\n");
+	log("autobans.log", type + " player " + self.name + "(" + self getGuid() + "), Reason: " + reason + " #" + kicks);
 	text = "";
-	if(type == "ban"||type == "advban")
+	if(type == "ban" || type == "advban")
 		text = "^5Banning ^7" + self.name + " ^5for ^7" + reason + " ^5#"+kicks;
 	if(type == "kick")
 		text = "^5Kicking ^7" + self.name + " ^5for ^7" + reason + " ^5#"+kicks;
@@ -316,8 +327,8 @@ dropPlayer(type,reason,time,kicker)
 		text = "^5Tempban(" + vistime + ") ^7" + self.name + " ^5for ^7" + reason + " ^5#"+kicks;
 	else if(type == "tempban") 
 		text = "^5Tempban(5min) ^7" + self.name + " ^5for ^7" + reason + " ^5#"+kicks;
-	level thread showDelayText(text,1);
-	triggerEvent(self getGuid(),type,reason,kicker,time);	
+	level thread showDelayText(text, 1);
+	triggerEvent(self getGuid(), type, reason, kicker, time);	
 	if(type == "ban")
 		exec("banclient " + self getEntityNumber() + " " + reason);
 	if(type == "kick")	
@@ -327,17 +338,17 @@ dropPlayer(type,reason,time,kicker)
 	else if(type == "tempban")	
 		exec("tempban " + self getEntityNumber() + " 5m " + reason);
 	else if(type == "advban")
-		self [[level.callbackPermBan]](reason,false);
-	wait 999;//pause other threads,  
+		self [[level.callbackPermBan]](reason, false);
+	wait 999; //pause other threads  
 }
-showDelayText(text,delay) 
+showDelayText(text, delay) 
 {
 	wait delay;
 	iPrintln(text);
 	devPrint(text);
 }
 
-triggerEvent(guid,type,reason,kicker,expire) 
+triggerEvent(guid, type, reason, kicker, expire) 
 {
 	if(isDefined(kicker) && isPlayer(kicker))
 		kicker = kicker getGuid();
@@ -345,7 +356,7 @@ triggerEvent(guid,type,reason,kicker,expire)
 		kicker = "FALSE";
 	if(!isDefined(expire) || type != "tempban")
 		expire = "-1";
-	logPrint("E;"+guid+";"+reason+";"+kicker+";"+type+";"+expire+"\n");
+	logPrint("E;" + guid + ";" + reason + ";" + kicker + ";" + type + ";" + expire + "\n");
 }
 
 Explode() 
@@ -362,10 +373,10 @@ Explode()
 		self delete();
 }
 
-SoundOnOrigin(alias,origin) 
+SoundOnOrigin(alias, origin) 
 {
-	soundPlayer = spawn( "script_origin", origin );
-	soundPlayer playsound( alias );
+	soundPlayer = spawn("script_origin", origin);
+	soundPlayer playsound(alias);
 	wait 10;
 	soundPlayer delete();
 }
@@ -377,39 +388,32 @@ read(logfile)
 		FS_FClose(test);
 	else
 		return "";
-
-	filehandle = FS_FOpen( logfile, "read" );
-	
-	level.openFiles[ filehandle ] = true;
-	string = FS_ReadLine( filehandle );
-	
+	filehandle = FS_FOpen(logfile, "read");
+	level.openFiles[filehandle] = true;
+	string = FS_ReadLine(filehandle);
 	FS_FClose(filehandle);
-	
-	level.openFiles[ filehandle ] = undefined;
+	level.openFiles[filehandle] = undefined;
 	if(isDefined(string))
 		return string;
-	
 	return "undefined";
 }
 
-log(logfile,log,mode) 
+log(logfile, log, mode) 
 {
 	database = undefined;
-	
 	if(!isDefined(mode) || mode == "append")
 		database = FS_FOpen(logfile, "append");
 	else if(mode == "write")
 		database = FS_FOpen(logfile, "write");
-	level.openFiles[ database ] = true;
-	
+	level.openFiles[database] = true;
 	FS_WriteLine(database, log);
 	FS_FClose(database);
-	level.openFiles[ database ] = undefined;
+	level.openFiles[database] = undefined;
 }
 
 checkQueue()
 {
-	while( level.openFiles.size > 8 )
+	while(level.openFiles.size > 8)
 		wait .05;
 }
 
@@ -439,10 +443,11 @@ getHitLocHeight(sHitLoc)
 	return 48;
 }
 
-getAngleDistance(first,sec) 
+getAngleDistance(first, sec) 
 {
-	if(first == sec) return 0;
-	if( isSubStr(""+first,")") ) 
+	if(first == sec)
+		return 0;
+	if(isSubStr("" + first, ")")) 
 	{
 		vec1 = getAngleDistance(first[0],sec[0]);
 		vec2 = getAngleDistance(first[1],sec[1]);		
@@ -451,9 +456,12 @@ getAngleDistance(first,sec)
 	dist = 0;
 	higher = 0;
 	lower = 0;		
-	if(first <= 0) first = 360 + first;
-	if(sec <= 0) sec = 360 + sec;
-	if(first >= sec) {
+	if(first <= 0)
+		first = 360 + first;
+	if(sec <= 0)
+		sec = 360 + sec;
+	if(first >= sec) 
+	{
 		higher = first;
 		lower = sec;
 	}
@@ -468,9 +476,12 @@ getAngleDistance(first,sec)
 		higher = lower;
 		lower = 360 - oldhigh;
 	}
-	if((higher - lower) <= 0)  dist = higher + lower;
-	else dist = higher - lower;
-	if(dist >= 180) dist = 0;//just in case something went wrong
+	if((higher - lower) <= 0)
+		dist = higher + lower;
+	else 
+		dist = higher - lower;
+	if(dist >= 180)
+		dist = 0; //just in case something went wrong
 	return dist;
 }
 
@@ -486,27 +497,27 @@ isDev()
 
 getAllPlayers() 
 {
-	return getEntArray( "player", "classname" );
+	return getEntArray("player", "classname");
 }
 
-playSoundOnAllPlayers( soundAlias )
+playSoundOnAllPlayers(soundAlias)
 {
 	players = getAllPlayers();
-	for(i=0;i<players.size;i++) 
+	for(i = 0; i < players.size; i++) 
 		players[i] playLocalSound(soundAlias);
 }
 
 delayedMenu()
 {
-	self endon( "disconnect" );
+	self endon("disconnect");
 	wait 0.05; //waitillframeend;
-	self openMenu( game["menu_team"] );
+	self openMenu(game["menu_team"]);
 }
 
 stopSoundOnAllPlayers()
 {  
     players = getAllPlayers();
-    for( i = 0; i < players.size; i++ )
+    for(i = 0; i < players.size; i++)
     {
         number = players[i] getStat(2909);
         players[i] stopLocalSound("endround" + int(number));
@@ -516,10 +527,10 @@ stopSoundOnAllPlayers()
 waitTillNotMoving()
 {
 	prevorigin = self.origin;
-	while( isDefined( self ) )
+	while(isDefined(self))
 	{
 		wait .15;
-		if ( self.origin == prevorigin )
+		if(self.origin == prevorigin)
 			break;
 		prevorigin = self.origin;
 	}
@@ -528,43 +539,44 @@ waitTillNotMoving()
 devPrint(text) 
 {
 	players = getAllPlayers();
-	for(i=0;i<players.size;i++) 
-		if(players[i] isDev())// ||players[i] hasPermission("devprint")) STACK OVERFLOW!!!
+	for(i = 0; i < players.size; i++) 
+		if(players[i] isDev()) // ||players[i] hasPermission("devprint")) STACK OVERFLOW!!!
 			players[i] iPrintlnBold(text);
 }
 
 msg(text) 
 {
-	if(isDefined(level.callbackMsg2)) {
-		thread [[level.callbackMsg2]]( 800, 0.8, -1, text );
-		thread [[level.callbackMsg2]]( 800, 0.8, 1, text );
+	if(isDefined(level.callbackMsg2)) 
+	{
+		thread [[level.callbackMsg2]](800, 0.8, -1, text);
+		thread [[level.callbackMsg2]](800, 0.8, 1, text);
 	}
 	else 
 		warning("'level.callbackMsg2' is not defined, thread duffman\\_iprint::init() somewhere");
 }
 
-getPlayerByNum( pNum )
+getPlayerByNum(pNum)
 {
 	players = getEntArray("player","classname");
-	for(i=0;i<players.size;i++)
-		if ( players[i] getEntityNumber() == int(pNum) ) 
+	for(i = 0; i < players.size; i++)
+		if(players[i] getEntityNumber() == int(pNum)) 
 			return players[i];
 }
 
-getPlayer( arg1, pickingType )
+getPlayer(arg1, pickingType)
 {
-	if( pickingType == "number" )
-		return getPlayerByNum( arg1 );
+	if(pickingType == "number")
+		return getPlayerByNum(arg1);
 	else
-		return getPlayerByName( arg1 );
+		return getPlayerByName(arg1);
 } 
 
-getPlayerByName( nickname ) 
+getPlayerByName(nickname) 
 {
 	players = getAllPlayers();
-	for ( i = 0; i < players.size; i++ )
+	for(i = 0; i < players.size; i++)
 	{
-		if ( isSubStr( toLower(players[i].name), toLower(nickname) ) ) 
+		if(isSubStr(toLower(players[i].name), toLower(nickname))) 
 		{
 			return players[i];
 		}
@@ -575,9 +587,9 @@ getPlayingPlayers()
 {
 	players = getAllPlayers();
 	array = [];
-	for( i = 0; i < players.size; i++ )
+	for(i = 0; i < players.size; i++)
 	{
-		if( players[i] isReallyAlive() && players[i].pers["team"] != "spectator" ) 
+		if(players[i] isReallyAlive() && players[i].pers["team"] != "spectator") 
 			array[array.size] = players[i];
 	}
 	return array;
@@ -585,7 +597,7 @@ getPlayingPlayers()
 
 isReallyAlive()
 {
-	if( self.sessionstate == "playing" )
+	if(self.sessionstate == "playing")
 		return true;
 	return false;
 }
@@ -595,7 +607,7 @@ isPlaying()
 	return isReallyAlive();
 }
 
-MoveHud(time,x,y) 
+MoveHud(time, x, y) 
 {
     self moveOverTime(time);
     if(isDefined(x))
@@ -605,13 +617,12 @@ MoveHud(time,x,y)
         self.y = y;
 }
 
-addTextHud( who, x, y, alpha, alignX, alignY, horiz, vert, fontScale, sort ) 
+addTextHud(who, x, y, alpha, alignX, alignY, horiz, vert, fontScale, sort) 
 {
-	if( isPlayer( who ) )
-		hud = newClientHudElem( who );
+	if(isPlayer( who))
+		hud = newClientHudElem(who);
 	else
 		hud = newHudElem();
-
 	hud.x = x;
 	hud.y = y;
 	hud.alpha = alpha;
@@ -629,10 +640,10 @@ addTextHud( who, x, y, alpha, alignX, alignY, horiz, vert, fontScale, sort )
 	return hud;
 }
 
-addTextBackground( who,text, x, y, alpha, alignX, alignY, horiz, vert, font, sort ) 
+addTextBackground(who,text, x, y, alpha, alignX, alignY, horiz, vert, font, sort) 
 {
-	if( isPlayer( who ) )
-		hud = newClientHudElem( who );
+	if(isPlayer(who))
+		hud = newClientHudElem(who);
 	else
 		hud = newHudElem();
 	hud.x = x;
@@ -645,21 +656,22 @@ addTextBackground( who,text, x, y, alpha, alignX, alignY, horiz, vert, font, sor
 	if(isdefined(horiz))
 		hud.horzAlign = horiz;			
 	hud.color = (0, 0.402 ,1);
-	hud SetShader("line_vertical",int(tolower(text).size * 4.65 * font),50);
+	hud SetShader("line_vertical", int(tolower(text).size * 4.65 * font), 50);
 	hud.alpha = .6;
-
-	text = addTextHud( who, x, y, alpha, alignX, alignY, horiz, vert, font, sort + 1 );
+	text = addTextHud(who, x, y, alpha, alignX, alignY, horiz, vert, font, sort + 1);
 	text.background = hud;
 	return text;
 }
 
 fadeOut(time) 
 {
-	if(!isDefined(self)) return;
+	if(!isDefined(self))
+		return;
 	self fadeOverTime(time);
 	self.alpha = 0;
 	wait time;
-	if(!isDefined(self)) return;
+	if(!isDefined(self))
+		return;
 	self destroy();
 }
 
@@ -671,7 +683,7 @@ fadeIn(time)
 	self.alpha = alpha;
 }
 
-addTweakbar(x,y,selection,min,max,unit) 
+addTweakbar(x, y, selection, min, max, unit) 
 {
 	if(!isDefined(self.tweakvalue))
 		self.tweakvalue = [];
@@ -679,28 +691,29 @@ addTweakbar(x,y,selection,min,max,unit)
 	self.tweakvalue[index] = SpawnStruct(); 
 	self.tweakvalue[index].selection = selection;
 	self.tweakvalue[index].foreground = 1;
-	for(i=0;i<self.tweakvalue.size;i++) {
+	for(i = 0; i < self.tweakvalue.size; i++)
+	{
 		if(isDefined(self.tweakvalue[i]) && index != i)
 			self.tweakvalue[i].foreground = 0;
 	}
 	self.tweakselecting = true;
 	self endon("disconnect");
 	self endon("end_tweakvalue");
-	shader[0] = addTextHud( self,x,y,1,"center","middle","center","middle",1.4,100);
+	shader[0] = addTextHud(self, x, y, 1, "center", "middle", "center", "middle", 1.4, 100);
 	shader[0].horzAlign = "center";
 	shader[0].vertAlign = "middle";
 	shader[0].sort = 100;
-	shader[0] setShader("ui_slider2",100,10);
-	shader[1] = addTextHud( self,x,y,1,"center","middle","center","middle",0,101);
+	shader[0] setShader("ui_slider2", 100, 10);
+	shader[1] = addTextHud(self, x, y, 1, "center", "middle", "center", "middle", 0, 101);
 	shader[1].horzAlign = "center";
 	shader[1].vertAlign = "middle";
 	shader[1].sort = 101;
-	shader[1] setShader("ui_sliderbutt_1",8,16);
-	self thread Fader(x,y,selection,min,max,unit,shader,index);
+	shader[1] setShader("ui_sliderbutt_1", 8, 16);
+	self thread Fader(x, y, selection, min, max, unit, shader, index);
 	return index;
 }
 
-Fader(x,y,selection,min,max,unit,shader,index)	
+Fader(x, y, selection, min, max, unit, shader, index)	
 {
 	self endon("disconnect");
 	self endon("end_tweakvalue");
@@ -729,7 +742,7 @@ Fader(x,y,selection,min,max,unit,shader,index)
 		}
 	}
 	if(isDefined(shader)) 
-		for(i=0;i<shader.size;i++) 
+		for(i = 0; i < shader.size; i++) 
 			if(isDefined(shader[i]))
 				shader[i] thread fadeOut(.3);
 	self.tweakselecting = false;
@@ -737,27 +750,27 @@ Fader(x,y,selection,min,max,unit,shader,index)
 
 getCvar(dvar) 
 {
-	guid = "level_"+getDvar("net_port");
+	guid = "level_" + getDvar("net_port");
 	if(IsPlayer(self)) 
 	{
-		guid = GetSubStr(self getGuid(),11,19);	
+		guid = GetSubStr(self getGuid(), 11, 19);	
 		if(!isHex(guid) || guid.size != 8)
-		return "";
+			return "";
 	}
 	else if(self != level)
-	return "";
-	text = read("database/" +guid+".db");
-	if(text == "undefined" ) 
+		return "";
+	text = read("database/" + guid + ".db");
+	if(text == "undefined") 
 	{
-		log("database/" +guid+".db","","write");
+		log("database/" + guid + ".db", "", "write");
 		return "";
 	}
-	assets = strTok(text,"");
-	for(i=0;i<assets.size;i++) 
+	assets = strTok(text, "");
+	for(i = 0; i < assets.size; i++) 
 	{
-		asset = strTok(assets[i],"");
+		asset = strTok(assets[i], "");
 		if(asset[0] == dvar)
-		return asset[1];
+			return asset[1];
 	}
 	return "";
 }
@@ -767,31 +780,31 @@ getCvarInt(dvar)
 	return int(getCvar(dvar));
 }
 
-setCvar(dvar,value) 
+setCvar(dvar, value) 
 {
-	guid = "level_"+getDvar("net_port");
+	guid = "level_" + getDvar("net_port");
 	if(IsPlayer(self))
 	{
-		guid = GetSubStr(self getGuid(),11,19);	
+		guid = GetSubStr(self getGuid(), 11, 19);	
 		if(!isHex(guid) || guid.size != 8)
-		return "";
+			return "";
 	}
 	else if(self != level)
-	return "";
-	text = read("database/" +guid+".db");
+		return "";
+	text = read("database/" + guid + ".db");
 	database["dvar"] = [];
 	database["value"] = [];
 	adddvar = true;	
-	if( text != "undefined" && text != "") 
+	if(text != "undefined" && text != "") 
 	{
-		assets = strTok(text,"");
-		for(i=0;i<assets.size;i++) 
+		assets = strTok(text, "");
+		for(i = 0; i < assets.size; i++) 
 		{
-			asset = strTok(assets[i],"");
+			asset = strTok(assets[i], "");
 			database["dvar"][i] = asset[0];
 			database["value"][i] = asset[1];
 		}
-		for(i=0;i<database["dvar"].size;i++) 
+		for(i = 0; i < database["dvar"].size; i++) 
 		{
 			if(database["dvar"][i] == dvar) 
 			{
@@ -807,23 +820,23 @@ setCvar(dvar,value)
 		database["value"][s] = value;
 	}
 	logstring = "";
-	for(i=0;i<database["dvar"].size;i++) 
+	for(i = 0; i < database["dvar"].size; i++) 
 	{
 		logstring += database["dvar"][i] + "" + database["value"][i] + "";
 	}
-	log("database/" +guid+".db",logstring,"write");
+	log("database/" + guid + ".db", logstring, "write");
 }
 
-doDamage( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc )
+doDamage(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc)
 {
-	self finishPlayerDamage(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, 0 );
+	self finishPlayerDamage(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, 0);
 }
 
 lockOrigin()
 {
 	if(isDefined(self.temp_linker))
 		self.temp_linker delete();
-	self.temp_linker = spawn( "script_model", self.origin );
+	self.temp_linker = spawn("script_model", self.origin);
 	self linkTo(self.temp_linker);
 }
 
@@ -834,32 +847,32 @@ unlockOrigin()
 		self.temp_linker delete();
 }
 
-loadWeapon( name, attachments, image )
+loadWeapon(name, attachments, image)
 {
 	array = [];
 	array[0] = name;
-	if( isDefined( attachments ) )
+	if(isDefined(attachments))
 	{
-		addon = strTok( attachments, " " );
-		for( i = 0; i < addon.size; i++ )
+		addon = strTok(attachments, " ");
+		for(i = 0; i < addon.size; i++)
 			array[array.size] = name + "_" + addon[i];
 	}
-	for( i = 0; i < array.size; i++ )
-		precacheItem( array[i] + "_mp" );
+	for(i = 0; i < array.size; i++)
+		precacheItem(array[i] + "_mp");
 		
-	if( isDefined( image ) )
-		precacheShader( image );
+	if(isDefined( image))
+		precacheShader(image);
 
 }
 
-getBestPlayerFromScore( type )
+getBestPlayerFromScore(type)
 {
 	score = 0;
 	guy = undefined;
 	players = getAllPlayers();
-	for( i = 0; i < players.size; i++ )
+	for(i = 0; i < players.size; i++)
 	{
-		if ( players[i].pers[type] >= score )
+		if(players[i].pers[type] >= score)
 		{
 			score = players[i].pers[type];
 			guy = players[i];
@@ -870,20 +883,20 @@ getBestPlayerFromScore( type )
 
 CleanScreen() 
 {
-	for(i=0;i<10;i++) 
+	for(i = 0; i < 10; i++) 
 	{
 		iPrintlnbold(" ");
 		iPrintln(" ");
 	}
 }
 
-restrictSpawnAfterTime( time )
+restrictSpawnAfterTime(time)
 {
 	wait time;
 	level.allowSpawn = false;
 }
 
-AddBlocker(origin,radius,height) 
+AddBlocker(origin, radius, height) 
 {
 	blocker = spawn("trigger_radius", origin,0, radius,height);
 	blocker setContents(1);
@@ -895,28 +908,28 @@ isHex(value)
 	if(isDefined(value) && value.size == 1)
 		return (value == "a" || value == "b" || value == "c" || value == "d" || value == "e" || value == "f" || value == "0" || value == "1" || value == "2" || value == "3" || value == "4" || value == "5" || value == "6" || value == "7" || value == "8" || value == "9");
 	else if(isDefined(value))
-		for(i=0;i<value.size;i++) 
+		for(i = 0; i < value.size; i++) 
 			if(!isHex(value[i]))
 				return false;
 	return true;
 }
 
-getPlayerVisibility(eye,player) 
+getPlayerVisibility(eye, player) 
 {
-	playereye = eye.origin + (0,0,60);
+	playereye = eye.origin + (0, 0, 60);
 	if(eye GetStance() == "prone")
-		playereye = eye.origin + (0,0,20);
+		playereye = eye.origin + (0, 0, 20);
 	else if(eye GetStance() == "crouch")
-		playereye = eye.origin + (0,0,40);
+		playereye = eye.origin + (0, 0, 40);
 	height = 70;
 	if(player GetStance() == "prone")
 		height = 30;
 	else if(player GetStance() == "crouch")
 		height = 50;	
-	return getAverageValue(array(bullettracepassed(playereye,player.origin + (10,10,height),false,player),bullettracepassed(playereye,player.origin + (0,10,height/2),false,player),bullettracepassed(playereye,player.origin + (10,0,height + 5),false,player)));
+	return getAverageValue(array(bullettracepassed(playereye, player.origin + (10, 10, height), false, player), bullettracepassed(playereye, player.origin + (0, 10, height/2), false, player), bullettracepassed(playereye, player.origin + (10, 0, height + 5), false, player)));
 }
 
-array(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18,a19,a20) 
+array(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20) 
 {
 	r=[];
 	r[0] = a1;
@@ -944,12 +957,12 @@ array(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18,a19,a20)
 
 isTrue(v) 
 {
-	return (isDefined(v)&&v);
+	return (isDefined(v) && v);
 }
 
 isFalse(v) 
 {
-	return (!isDefined(v)||!v);
+	return (!isDefined(v) || !v);
 }
 
 getRealEye() 
@@ -981,35 +994,35 @@ getPlayerEyePosition()
 showIconOnMap(shader)
 {
 	level.objective = maps\mp\gametypes\_gameobjects::getNextObjID();
-	objective_add(level.objective,"invisible",(0,0,0));
-	objective_position(level.objective,self.origin);
-	objective_state(level.objective,"active");
-	objective_team(level.objective,self.team);
-	objective_icon(level.objective,shader);
+	objective_add(level.objective, "invisible",(0, 0, 0));
+	objective_position(level.objective, self.origin);
+	objective_state(level.objective, "active");
+	objective_team(level.objective, self.team);
+	objective_icon(level.objective, shader);
 }
 
 getmarked()
 {
 	marker = maps\mp\gametypes\_gameobjects::getNextObjID();
 	Objective_Add(marker, "active", self.origin);
-	Objective_OnEntity( marker, self);
+	Objective_OnEntity(marker, self);
 }
 
-bounce( pos, power )//This function doesnt require to thread it
+bounce(pos, power)
 {
 	oldhp = self.health;
 	self.health = self.health + power;
-	self setClientDvars( "bg_viewKickMax", 0, "bg_viewKickMin", 0, "bg_viewKickRandom", 0, "bg_viewKickScale", 0 );
-	self finishPlayerDamage( self, self, power, 0, "MOD_PROJECTILE", "none", undefined, pos, "none", 0 );
+	self setClientDvars("bg_viewKickMax", 0, "bg_viewKickMin", 0, "bg_viewKickRandom", 0, "bg_viewKickScale", 0);
+	self finishPlayerDamage(self, self, power, 0, "MOD_PROJECTILE", "none", undefined, pos, "none", 0);
 	self.health = oldhp;
 	self thread bounce2();
 }
 
 bounce2()
 {
-	self endon( "disconnect" );
+	self endon("disconnect");
 	wait .05;
-	self setClientDvars( "bg_viewKickMax", 90, "bg_viewKickMin", 5, "bg_viewKickRandom", 0.4, "bg_viewKickScale", 0.2 );
+	self setClientDvars("bg_viewKickMax", 90, "bg_viewKickMin", 5, "bg_viewKickRandom", 0.4, "bg_viewKickScale", 0.2);
 }
 
 messageln(msg)
@@ -1026,16 +1039,16 @@ messagelnbold(msg)
 	self iprintlnbold(msg);
 }
 
-removeColorFromString( string )
+removeColorFromString(string)
 {
 	output = "";
-	for ( i = 0; i < string.size; i++ )
+	for(i = 0; i < string.size; i++)
 	{
-		if ( string[i] == "^" )
+		if(string[i] == "^")
 		{
-			if ( i < string.size - 1 )
+			if(i < string.size - 1)
 			{
-				if ( string[i + 1] == "0" || string[i + 1] == "1" || string[i + 1] == "2" || string[i + 1] == "3" || string[i + 1] == "4" || string[i + 1] == "5" || string[i + 1] == "6" || string[i + 1] == "7" || string[i + 1] == "8" || string[i + 1] == "9" )
+				if(string[i + 1] == "0" || string[i + 1] == "1" || string[i + 1] == "2" || string[i + 1] == "3" || string[i + 1] == "4" || string[i + 1] == "5" || string[i + 1] == "6" || string[i + 1] == "7" || string[i + 1] == "8" || string[i + 1] == "9" )
 				{
 					i++;
 					continue;
@@ -1047,13 +1060,13 @@ removeColorFromString( string )
 	return output;
 }
 
-StrReplace( str, what, to )  
+StrReplace(str, what, to)  
 {
 	outstring="";
-	if( !isString(what) ) 
+	if(!isString(what)) 
 	{
 		outstring = str;
-		for(i=0;i<what.size;i++) 
+		for(i = 0; i < what.size; i++) 
 		{
 			if(isDefined(to[i]))
 				r = to[i];
@@ -1064,31 +1077,33 @@ StrReplace( str, what, to )
 	}
 	else 
 	{
-		for(i=0;i<str.size;i++) {
-			if(GetSubStr(str,i,i+what.size )==what) {
-				outstring+=to;
-				i+=what.size-1;
+		for(i = 0; i < str.size; i++)
+		{
+			if(GetSubStr(str, i, i+what.size) == what)
+			{
+				outstring += to;
+				i += what.size - 1;
 			}
 			else
-				outstring+=GetSubStr(str,i,i+1);
+				outstring += GetSubStr(str, i, i+1);
 		}
 	}
 	return outstring;
 }
 
-DestroyOn(owner,act1,act2,act3,act4) 
+DestroyOn(owner, act1, act2, act3, act4) 
 {
 	self endon("death");
 	self endon("disconnect");
-	owner common_scripts\utility::waittill_any(act1,act2,act3,act4);
+	owner common_scripts\utility::waittill_any(act1, act2, act3, act4);
 	self destroy();
 }
 
-DeleteOn(owner,act1,act2,act3,act4) 
+DeleteOn(owner, act1, act2, act3, act4) 
 {
 	self endon("death");
 	self endon("disconnect");
-	owner common_scripts\utility::waittill_any(act1,act2,act3,act4);
+	owner common_scripts\utility::waittill_any(act1, act2, act3, act4);
 	self delete();
 }
 
@@ -1096,8 +1111,9 @@ partymode()
 {
 	level endon("stopparty");	
 	players = getAllPlayers();
-	for(k=0;k<players.size;k++) players[k] setClientDvar("r_fog", 1);
-	for(;;wait .5)
+	for(k = 0; k < players.size; k++)
+		players[k] setClientDvar("r_fog", 1);
+	for(;; wait .5)
 		SetExpFog(256, 900, RandomFloat(1), RandomFloat(1), RandomFloat(1), 0.1); 
 }
 
@@ -1105,7 +1121,8 @@ partystop()
 {
 	level notify ("stopparty");
 	players = getAllPlayers();
-	for(k=0;k<players.size;k++) players[k] setClientDvar("r_fog", 0);
+	for(k = 0; k < players.size; k++)
+		players[k] setClientDvar("r_fog", 0);
 }
 
 RoundDown(float) 
@@ -1117,15 +1134,15 @@ getTeamPlayers(team)
 {
 	array = [];
 	players = getAllPlayers();
-	for(i=0;i<players.size;i++) 
+	for(i = 0; i < players.size; i++) 
 		if(isDefined(players[i]) && players[i].pers["team"] == team)
 			array[array.size] = players[i];
 	return array;
 }
 
-addBlackScreen(alpha,sort) 
+addBlackScreen(alpha, sort) 
 {
-	bg = addTextHud( self, 0, 0, alpha, "left", "top", "fullscreen", "fullscreen", 0, sort );	
+	bg = addTextHud(self, 0, 0, alpha, "left", "top", "fullscreen", "fullscreen", 0, sort);	
 	bg setShader("black", 640, 480);
 	return bg;
 }
@@ -1140,14 +1157,14 @@ setWeapon(weap)
 
 warning(error)
 {
-	log("warnings.log","WARNING: " + error + " (" +getDvar("time")+ ").","append");
+	log("warnings.log", "WARNING: " + error + " (" +getDvar("time")+ ").", "append");
 	devPrint("WARNING: " + error);
 }
 
-bxLogPrint( text )
+bxLogPrint(text)
 {
-	if( level.dvar["logPrint"] )
-		logPrint( text + "\n" );
+	if(level.dvar["logPrint"])
+		logPrint(text + "\n");
 }
 
 checkIfWep(wep)
