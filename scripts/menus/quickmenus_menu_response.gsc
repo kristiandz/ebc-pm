@@ -2,9 +2,9 @@
 #include maps\mp\_utility;
 #include maps\mp\gametypes\_hud_util;
 
-quickpromodfps(response)
+quickmenus(response)
 {	
-	self endon ( "disconnect" );
+	self endon("disconnect");
 	switch(response)
 	{
 		case "1":

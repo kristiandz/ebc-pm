@@ -201,7 +201,6 @@ rawfile,mp/playeranim.script
 rawfile,shock/damage_mp.shock
 
 menufile,ui_mp/promod.txt
-menufile,ui/menus.txt
 menufile,ui_mp/scriptmenus/changeclass_marines_mw.menu
 menufile,ui_mp/scriptmenus/changeclass_mw.menu
 menufile,ui_mp/scriptmenus/changeclass_opfor_mw.menu
@@ -210,7 +209,7 @@ menufile,ui_mp/scriptmenus/ingame_controls.menu
 menufile,ui_mp/scriptmenus/echo.menu
 menufile,ui_mp/scriptmenus/quickpromod.menu
 menufile,ui_mp/scriptmenus/quickpromodgfx.menu
-menufile,ui_mp/scriptmenus/quickpromodfps.menu
+menufile,ui_mp/scriptmenus/quickmenus.menu
 menufile,ui_mp/scriptmenus/quickcommands.menu
 menufile,ui_mp/scriptmenus/vip.menu
 menufile,ui_mp/scriptmenus/sprays.menu

@@ -21,7 +21,7 @@ init()
 		game["menu_quickresponses"] = "quickresponses";
 		game["menu_quickpromod"] = "quickpromod";
 		game["menu_quickpromodgfx"] = "quickpromodgfx";
-		game["menu_quickpromodfps"] = "quickpromodfps";
+		game["menu_quickmenus"] = "quickmenus";
 		game["menu_admin"] = "admin";
 		game["menu_player"] = "player";
 		game["menu_vip"] = "vip";
@@ -30,7 +30,7 @@ init()
 		
 		precacheMenu("clientcmd");
 		precacheMenu("quickcommands");
-		precacheMenu("quickpromodfps");
+		precacheMenu("quickmenus");
 		precacheMenu("vip");
 		precacheMenu("sprays");
 		precacheMenu("player");
@@ -249,8 +249,8 @@ onMenuResponse()
 				scripts\menus\quickmessages_menu_response::quickpromodgfx( response );
 				continue;
 							
-			case "quickpromodfps":
-				scripts\menus\quickpromodfps_menu_response::quickpromodfps( response );
+			case "quickmenus":
+				scripts\menus\quickmenus_menu_response::quickmenus( response );
 				continue;
 				
 			case "player":
