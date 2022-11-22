@@ -1,5 +1,0 @@
-#define OPTIONS_MAIN
-
-#ifdef PC
-#include "ui/options_pc.menu"
-#endif // #ifdef PC
