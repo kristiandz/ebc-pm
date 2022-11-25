@@ -3,9 +3,10 @@
 #define STEP_3 8444
 #define STEP_4 14785
 
-#define THUNDER_DURATION_MIN 120
-#define THUNDER_DURATION_MAX_ADD 100
+#define OVERLAY_DURATION_MIN 120
+#define OVERLAY_DURATION_MAX_ADD 100
 
+// Background
 itemDef
 {
 	style				WINDOW_STYLE_SHADER
@@ -15,7 +16,6 @@ itemDef
 	visible			    1
 	decoration
 }
-
 itemDef
 {
 	style				WINDOW_STYLE_SHADER
@@ -25,7 +25,6 @@ itemDef
 	visible			     1
 	decoration
 }
-
 itemDef
 {
 	style				WINDOW_STYLE_SHADER
@@ -35,15 +34,16 @@ itemDef
 	visible			    1
 	decoration
 }
-////////////////////////////////////////////// Animated
+
+// Animated overlay
 itemDef
 {
 	style			WINDOW_STYLE_SHADER
 	rect			FULLSCREEN_WIDE
 	background		"bg_front_thunder"
 	forecolor		1 1 1 0.6
-	exp forecolor A( 1 - ( (milliseconds() % STEP_1) / (THUNDER_DURATION_MIN + (milliseconds() % THUNDER_DURATION_MAX_ADD) ) ) )
-	visible			when( ( milliseconds() % STEP_1 < (THUNDER_DURATION_MIN + (milliseconds() % THUNDER_DURATION_MAX_ADD)) ) && dvarString("ui_mainmenu_thunder") != "0" )
+	exp forecolor   A(1 - ((milliseconds() % STEP_1) / (OVERLAY_DURATION_MIN + (milliseconds() % OVERLAY_DURATION_MAX_ADD))))
+	visible			when((milliseconds() % STEP_1 < (OVERLAY_DURATION_MIN + (milliseconds() % OVERLAY_DURATION_MAX_ADD))) && dvarString("ui_mainmenu_thunder") != "0")
 	decoration
 }
 itemDef
@@ -52,8 +52,8 @@ itemDef
 	rect			FULLSCREEN_WIDE
 	background		"bg_front_thunder"
 	forecolor		1 1 1 0.6
-	exp forecolor A( 1 - ( (milliseconds() % STEP_2) / (THUNDER_DURATION_MIN + (milliseconds() % THUNDER_DURATION_MAX_ADD) ) ) )
-	visible			when( ( milliseconds() % STEP_2 < (THUNDER_DURATION_MIN + (milliseconds() % THUNDER_DURATION_MAX_ADD)) ) && dvarString("ui_mainmenu_thunder") != "0" )
+	exp forecolor   A(1 - ((milliseconds() % STEP_2) / (OVERLAY_DURATION_MIN + (milliseconds() % OVERLAY_DURATION_MAX_ADD))))
+	visible			when((milliseconds() % STEP_2 < (OVERLAY_DURATION_MIN + (milliseconds() % OVERLAY_DURATION_MAX_ADD))) && dvarString("ui_mainmenu_thunder") != "0")
 	decoration
 }
 itemDef
@@ -62,8 +62,8 @@ itemDef
 	rect			FULLSCREEN_WIDE
 	background		"bg_front_thunder"
 	forecolor		1 1 1 0.6
-	exp forecolor A( 1 - ( (milliseconds() % STEP_3) / (THUNDER_DURATION_MIN + (milliseconds() % THUNDER_DURATION_MAX_ADD) ) ) )
-	visible			when( ( milliseconds() % STEP_3 < (THUNDER_DURATION_MIN + (milliseconds() % THUNDER_DURATION_MAX_ADD)) ) && dvarString("ui_mainmenu_thunder") != "0" )
+	exp forecolor   A(1 - ((milliseconds() % STEP_3) / (OVERLAY_DURATION_MIN + (milliseconds() % OVERLAY_DURATION_MAX_ADD))))
+	visible			when((milliseconds() % STEP_3 < (OVERLAY_DURATION_MIN + (milliseconds() % OVERLAY_DURATION_MAX_ADD))) && dvarString("ui_mainmenu_thunder") != "0")
 	decoration
 }
 itemDef
@@ -72,7 +72,7 @@ itemDef
 	rect			FULLSCREEN_WIDE
 	background		"bg_front_thunder"
 	forecolor		1 1 1 0.6
-	exp forecolor A( 1 - ( (milliseconds() % STEP_4) / (THUNDER_DURATION_MIN + (milliseconds() % THUNDER_DURATION_MAX_ADD) ) ) )
-	visible			when( ( milliseconds() % STEP_4 < (THUNDER_DURATION_MIN + (milliseconds() % THUNDER_DURATION_MAX_ADD)) ) && dvarString("ui_mainmenu_thunder") != "0" )
+	exp forecolor   A(1 - ((milliseconds() % STEP_4) / (OVERLAY_DURATION_MIN + (milliseconds() % OVERLAY_DURATION_MAX_ADD))))
+	visible			when((milliseconds() % STEP_4 < (OVERLAY_DURATION_MIN + (milliseconds() % OVERLAY_DURATION_MAX_ADD))) && dvarString("ui_mainmenu_thunder") != "0")
 	decoration
 }

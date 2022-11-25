@@ -7,10 +7,10 @@
 #define	MINIMAP_H			89.5
 
 #define COMPASS_SIZE_MP		125
-#define MINIMAP_X_MP			0
-#define MINIMAP_Y_MP			12
-#define MINIMAP_W_MP			102
-#define	MINIMAP_H_MP			102
+#define MINIMAP_X_MP		0
+#define MINIMAP_Y_MP		12
+#define MINIMAP_W_MP		102
+#define	MINIMAP_H_MP		102
 
 #define FULLSCREEN			0 0 640 480
 #define FULLSCREEN_WIDE		-107 0 854 480
@@ -34,11 +34,11 @@
 #define TEXTSIZE_BOLD		TEXTSIZE_DEFAULT
 #define TEXTSIZE_BIG		TEXTSIZE_TITLE
 
-#define COLOR_TITLE			1 1 1 0.8//1 0.8 0.4 1
-#define COLOR_FOCUSED		0.6 0.6 0.6 1 //1 1 1 1
-#define COLOR_UNFOCUSED		0.8 0.6 0.6 1 //0.4823 0.4823 0.4823 1
+#define COLOR_TITLE			1 1 1 0.8
+#define COLOR_FOCUSED		0.6 0.6 0.6 1
+#define COLOR_UNFOCUSED		0.8 0.6 0.6 1
 #define COLOR_DISABLED		0.35 0.35 0.35 1
-#define COLOR_SAFEAREA		0.5 0.5 0.5 1 //0 0 1 1
+#define COLOR_SAFEAREA		0.5 0.5 0.5 1
 
 #define	BUTTON_A			1
 #define	BUTTON_B			2

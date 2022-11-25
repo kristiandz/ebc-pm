@@ -124,7 +124,7 @@
 #define FEEDER_LOBBY_MEMBERS_STAT	0x24	// last round stats for lobby members
 #define FEEDER_MYTEAM_MEMBERS_STAT	0x25	// last round stats for marine team members
 #define FEEDER_ENEMY_MEMBERS_STAT	0x26	// last round stats for opfor team members
-#define FEEDER_ONLINEFRIENDS			0x27	// list of your online friends
+#define FEEDER_ONLINEFRIENDS		0x27	// list of your online friends
 #define FEEDER_LOBBY_MEMBERS_RANK	0x28	// rank icon
 #define FEEDER_PARTY_MEMBERS_RANK	0x29	// rank icon
 #define FEEDER_ENEMY_MEMBERS_RANK	0x30	// rank icon
@@ -316,7 +316,7 @@
 #define UI_LOGGEDINUSER				272
 #define UI_RESERVEDSLOTS			273
 #define UI_PLAYLISTNAME				274
-#define UI_PLAYLISTDESCRIPTION			275
+#define UI_PLAYLISTDESCRIPTION		275
 #define UI_USERNAME					276
 #define UI_CINEMATIC				277
 
