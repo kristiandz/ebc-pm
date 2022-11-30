@@ -240,7 +240,7 @@ getTeamBalance()
 			AxisPlayers[AxisPlayers.size] = players[i]; //[AxisPlayers.size]
 	}
 	
-	if((AlliedPlayers.size == (AxisPlayers.size + 1)) || (AxisPlayers.size == (AlliedPlayers.size + 1)) || AlliedPlayers.size == AxisPlayers.size)
+	if((AlliedPlayers.size == (AxisPlayers.size + 1)) || (AxisPlayers.size == (AlliedPlayers.size + 1)) || AlliedPlayers.size == AxisPlayers.size || level.bombPlanted)
 		return false;
 	else
 		return true;
@@ -305,7 +305,8 @@ changeTeam( team )
 		self.joining_team = team;
 		self.leaving_team = self.pers["team"];
 		// Suicide the player so they can't hit escape and fail the team balance
-		self suicide();
+		if(level.gametype != "sd" && level.gametype != "sr")
+			self suicide();
 	}
 
 	self.pers["team"] = team;
