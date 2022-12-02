@@ -156,7 +156,6 @@ updateTeamTime()
 {
 	if(game["state"] != "playing")
 		return;
-
 	self.pers["teamTime"] = getTime();
 }
 
@@ -258,9 +257,7 @@ balanceTeams(roundEnd)
 			// Move the player that's been on the team the shortest ammount of time (highest teamTime value)
 			for(j = 0; j < AlliedPlayers.size; j++)
 			{
-				if(!isdefined(mostRecentPlayer))
-					mostRecentPlayer = AlliedPlayers[j];
-				else if(AlliedPlayers[j].pers["teamTime"] > mostRecentPlayer.pers["teamTime"])
+				if(AlliedPlayers[j].pers["teamTime"] > mostRecentPlayer.pers["teamTime"] || !isDefined(mostRecentPlayer))
 					mostRecentPlayer = AlliedPlayers[j];
 			}
 			mostRecentPlayer changeTeam("axis", roundEnd);
@@ -270,9 +267,7 @@ balanceTeams(roundEnd)
 			// Move the player that's been on the team the shortest ammount of time (highest teamTime value)
 			for(j = 0; j < AxisPlayers.size; j++)
 			{
-				if(!isdefined(mostRecentPlayer))
-					mostRecentPlayer = AxisPlayers[j];
-				else if(AxisPlayers[j].pers["teamTime"] > mostRecentPlayer.pers["teamTime"])
+				if(AxisPlayers[j].pers["teamTime"] > mostRecentPlayer.pers["teamTime"] || !isDefined(mostRecentPlayer))
 					mostRecentPlayer = AxisPlayers[j];
 			}
 			mostRecentPlayer changeTeam("allies", roundEnd);
