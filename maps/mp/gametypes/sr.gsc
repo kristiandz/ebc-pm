@@ -175,7 +175,7 @@ sd_endGame(winningTeam,endReasonText)
 onDeadEvent(team)
 {
 	if(maps\mp\gametypes\_teams::getTeamBalance() == true)
-	 level maps\mp\gametypes\_teams::balanceTeams();
+	 level maps\mp\gametypes\_teams::balanceTeams(true);
 	
 	if(level.bombExploded || level.bombDefused) return;
 	if(team == "all")
@@ -194,7 +194,7 @@ onDeadEvent(team)
 onTimeLimit()
 {
 	if(maps\mp\gametypes\_teams::getTeamBalance() == true)
-	 level maps\mp\gametypes\_teams::balanceTeams();
+	 level maps\mp\gametypes\_teams::balanceTeams(true);
 	if(level.teamBased) sd_endGame(game["defenders"],game["strings"]["time_limit_reached"]);
 	else sd_endGame(undefined,game["strings"]["time_limit_reached"]);
 }

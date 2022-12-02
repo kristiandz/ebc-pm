@@ -290,7 +290,7 @@ adminCommands(cmd, pickingType)
 				if(maps\mp\gametypes\_teams::getTeamBalance() == false) 
 					player iPrintlnBold("^1Teams are already Balanced");
 				else
-					level maps\mp\gametypes\_teams::balanceTeams();
+					level maps\mp\gametypes\_teams::balanceTeams(false);
 			}
 			break;
 				

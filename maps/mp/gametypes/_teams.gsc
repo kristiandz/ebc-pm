@@ -197,7 +197,7 @@ updateTeamBalance()
 
 		if( isDefined( game["BalanceTeamsNextRound"] ) )
 		{
-			level balanceTeams();
+			level balanceTeams(false);
 			game["BalanceTeamsNextRound"] = undefined;
 		}
 		else if( !getTeamBalance() )
@@ -216,7 +216,7 @@ updateTeamBalance()
 				    wait 15.0;
 
 					if( !getTeamBalance() )
-						level balanceTeams();
+						level balanceTeams(false);
 				}
 				wait 59.0;
 			}
@@ -246,7 +246,7 @@ getTeamBalance()
 		return true;
 }
 
-balanceTeams()
+balanceTeams(roundEnd)
 {
 	AlliedPlayers = [];
 	AxisPlayers = [];
@@ -268,14 +268,14 @@ balanceTeams()
 			// Move the player that's been on the team the shortest ammount of time (highest teamTime value)
 			for(j = 0; j < AlliedPlayers.size; j++)
 				SPlayer = AlliedPlayers[j];
-			SPlayer changeTeam("axis");
+			SPlayer changeTeam("axis", roundEnd);
 		}
 		else if(AxisPlayers.size > (AlliedPlayers.size + 1))
 		{
 			// Move the player that's been on the team the shortest ammount of time (highest teamTime value)
 			for(j = 0; j < AxisPlayers.size; j++)
 				SPlayer = AxisPlayers[j];
-			SPlayer changeTeam("allies");
+			SPlayer changeTeam("allies", roundEnd);
 		}
 		
 		SPlayer = undefined;
@@ -296,7 +296,7 @@ balanceTeams()
 }
 
 
-changeTeam( team )
+changeTeam(team, roundEnd)
 {
 	if (self.sessionstate != "dead")
 	{
@@ -305,7 +305,7 @@ changeTeam( team )
 		self.joining_team = team;
 		self.leaving_team = self.pers["team"];
 		// Suicide the player so they can't hit escape and fail the team balance
-		if(level.gametype != "sd" && level.gametype != "sr")
+		if(self.sessionstate == "playing" && level.gametype != "sd" && level.gametype != "sr" && roundEnd == false)
 			self suicide();
 	}
 
