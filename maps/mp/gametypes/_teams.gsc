@@ -257,7 +257,9 @@ balanceTeams(roundEnd)
 			// Move the player that's been on the team the shortest ammount of time (highest teamTime value)
 			for(j = 0; j < AlliedPlayers.size; j++)
 			{
-				if(AlliedPlayers[j].pers["teamTime"] > mostRecentPlayer.pers["teamTime"] || !isDefined(mostRecentPlayer))
+				if(!isDefined(mostRecentPlayer))
+					mostRecentPlayer = AlliedPlayers[j];
+				if(AlliedPlayers[j].pers["teamTime"] > mostRecentPlayer.pers["teamTime"])
 					mostRecentPlayer = AlliedPlayers[j];
 			}
 			mostRecentPlayer changeTeam("axis", roundEnd);
@@ -267,7 +269,9 @@ balanceTeams(roundEnd)
 			// Move the player that's been on the team the shortest ammount of time (highest teamTime value)
 			for(j = 0; j < AxisPlayers.size; j++)
 			{
-				if(AxisPlayers[j].pers["teamTime"] > mostRecentPlayer.pers["teamTime"] || !isDefined(mostRecentPlayer))
+				if(!isDefined(mostRecentPlayer))
+					mostRecentPlayer = AxisPlayers[j];
+				if(AxisPlayers[j].pers["teamTime"] > mostRecentPlayer.pers["teamTime"])
 					mostRecentPlayer = AxisPlayers[j];
 			}
 			mostRecentPlayer changeTeam("allies", roundEnd);
