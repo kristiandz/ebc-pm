@@ -229,7 +229,7 @@ getTeamBalance()
 			AxisPlayers[AxisPlayers.size] = players[i];
 	}
 	
-	if((AlliedPlayers.size == (AxisPlayers.size + 1)) || (AxisPlayers.size == (AlliedPlayers.size + 1)) || AlliedPlayers.size == AxisPlayers.size || level.bombPlanted)
+	if((AlliedPlayers.size == (AxisPlayers.size + 1)) || (AxisPlayers.size == (AlliedPlayers.size + 1)) || AlliedPlayers.size == AxisPlayers.size || (level.bombPlanted && (AlliedPlayers.size + AxisPlayers.size == 2 )))
 		return false;
 	else
 		return true;
