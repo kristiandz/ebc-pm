@@ -356,6 +356,7 @@ setPlayerModels()
 	else
 		game["axis_soldiertype"] = axisCharSet;
 
+	// Do we really need to custom classes to be defined on promod ??
 	if(game["allies_soldiertype"] == "desert")
 	{
 		mptype\mptype_ally_cqb::precache();

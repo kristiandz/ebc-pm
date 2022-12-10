@@ -30,7 +30,7 @@ init()
 			break;
 	}
 
-	if ( game["attackers"] == "allies" && game["defenders"] == "axis" )
+	if(game["attackers"] == "allies" && game["defenders"] == "axis")
 	{
 		setdvar("g_TeamName_Allies", "Attack");
 		setdvar("g_TeamName_Axis", "Defence");

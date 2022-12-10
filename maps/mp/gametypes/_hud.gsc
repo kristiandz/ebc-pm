@@ -40,10 +40,10 @@ init()
 fontPulseInit( maxFontScale )
 {
 	self.baseFontScale = self.fontScale;
-	if ( isDefined( maxFontScale ) )
-		self.maxFontScale = min( maxFontScale, 6.3 );
+	if(isDefined(maxFontScale))
+		self.maxFontScale = min(maxFontScale, 6.3);
 	else
-		self.maxFontScale = min( self.fontScale * 2, 6.3 );
+		self.maxFontScale = min(self.fontScale * 2, 6.3);
 	self.inFrames = 2;
 	self.outFrames = 4;
 }
@@ -56,12 +56,12 @@ fontPulse(player)
 	player endon("joined_team");
 	player endon("joined_spectators");
 	scaleRange = self.maxFontScale - self.baseFontScale;
-	while (self.fontScale < self.maxFontScale)
+	while(self.fontScale < self.maxFontScale)
 	{
 		self.fontScale = min(self.maxFontScale, self.fontScale + (scaleRange / self.inFrames));
 		wait 0.05;
 	}
-	while (self.fontScale > self.baseFontScale)
+	while(self.fontScale > self.baseFontScale)
 	{
 		self.fontScale = max(self.baseFontScale, self.fontScale - (scaleRange / self.outFrames));
 		wait 0.05;

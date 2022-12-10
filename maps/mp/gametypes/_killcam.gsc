@@ -4,14 +4,13 @@ init()
 {
 	precacheString(&"PLATFORM_PRESS_TO_SKIP");
 	precacheString(&"PLATFORM_PRESS_TO_RESPAWN");
+	level.killcam = maps\mp\gametypes\_tweakables::getTweakableValue("game", "allowkillcam");
 
-	level.killcam = maps\mp\gametypes\_tweakables::getTweakableValue( "game", "allowkillcam" );
-
-	if( level.killcam )
+	if(level.killcam)
 		setArchive(true);
 }
 
-killcam( attackerNum, killcamentity, sWeapon, predelay, offsetTime, respawn, maxtime, perks, attacker )
+killcam(attackerNum, killcamentity, sWeapon, predelay, offsetTime, respawn, maxtime, perks, attacker)
 {
 	self endon("disconnect");
 	self endon("spawned");
@@ -19,32 +18,30 @@ killcam( attackerNum, killcamentity, sWeapon, predelay, offsetTime, respawn, max
 
 	if(attackerNum < 0)
 		return;
-
-	if ( !respawn )
+	if(!respawn)
 		camtime = 5;
-	else if (sWeapon == "frag_grenade_mp" || sWeapon == "frag_grenade_short_mp")
+	else if(sWeapon == "frag_grenade_mp" || sWeapon == "frag_grenade_short_mp")
 		camtime = 4.5;
 	else
 		camtime = 2.5;
-
-	if (isdefined(maxtime))
+	
+	if(isdefined(maxtime))
 	{
-		if (camtime > maxtime)
+		if(camtime > maxtime)
 			camtime = maxtime;
-		if (camtime < 0.05)
+		if(camtime < 0.05)
 			camtime = 0.05;
 	}
 
 	postdelay = 2;
-
 	killcamlength = camtime + postdelay;
 
-	if (isdefined(maxtime) && killcamlength > maxtime)
+	if(isdefined(maxtime) && killcamlength > maxtime)
 	{
-		if (maxtime < 2)
+		if(maxtime < 2)
 			return;
 
-		if (maxtime - camtime >= 1)
+		if(maxtime - camtime >= 1)
 			postdelay = maxtime - camtime;
 		else
 		{
@@ -54,11 +51,9 @@ killcam( attackerNum, killcamentity, sWeapon, predelay, offsetTime, respawn, max
 
 		killcamlength = camtime + postdelay;
 	}
-
 	killcamoffset = camtime + predelay;
-
-	self notify ( "begin_killcam", getTime() );
-
+	self notify ("begin_killcam", getTime());
+	
 	self.sessionstate = "spectator";
 	self.spectatorclient = attackerNum;
 	self.killcamentity = killcamentity;
@@ -73,7 +68,7 @@ killcam( attackerNum, killcamentity, sWeapon, predelay, offsetTime, respawn, max
 
 	wait 0.05;
 
-	if ( self.archivetime <= predelay )
+	if(self.archivetime <= predelay)
 	{
 		self.sessionstate = "dead";
 		self.spectatorclient = -1;
@@ -82,10 +77,10 @@ killcam( attackerNum, killcamentity, sWeapon, predelay, offsetTime, respawn, max
 		self.psoffsettime = 0;
 		return;
 	}
-
+	
 	self.killcam = true;
-
-	if ( !isdefined( self.kc_skiptext ) )
+	
+	if(!isdefined(self.kc_skiptext))
 	{
 		self.kc_skiptext = newClientHudElem(self);
 		self.kc_skiptext.archived = false;
@@ -100,17 +95,17 @@ killcam( attackerNum, killcamentity, sWeapon, predelay, offsetTime, respawn, max
 		self.kc_skiptext.y = 40;
 		self.kc_skiptext.fontscale = 1.4;
 	}
-	if ( respawn )
+	if(respawn)
 		self.kc_skiptext setText(&"PLATFORM_PRESS_TO_RESPAWN");
 	else
 		self.kc_skiptext setText(&"PLATFORM_PRESS_TO_SKIP");
 
 	self.kc_skiptext.alpha = 1;
 
-	if ( !isdefined( self.kc_timer ) )
+	if(!isdefined(self.kc_timer))
 	{
-		self.kc_timer = createFontString( "objective", 1.5 );
-		self.kc_timer setPoint( "BOTTOM", undefined, 0, 0 );
+		self.kc_timer = createFontString("objective", 1.5);
+		self.kc_timer setPoint("BOTTOM", undefined, 0, 0);
 		self.kc_timer.archived = false;
 		self.kc_timer.foreground = true;
 	}
@@ -124,7 +119,6 @@ killcam( attackerNum, killcamentity, sWeapon, predelay, offsetTime, respawn, max
 	self thread waitKillcamTime();
 
 	self waittill("end_killcam");
-
 	self endKillcam();
 
 	self.sessionstate = "dead";
@@ -138,7 +132,6 @@ waitKillcamTime()
 {
 	self endon("disconnect");
 	self endon("end_killcam");
-
 	wait(self.killcamlength - 0.05);
 	self notify("end_killcam");
 }
@@ -165,7 +158,6 @@ endKillcam()
 		self.kc_timer.alpha = 0;
 
 	self.killcam = undefined;
-
 	self thread maps\mp\gametypes\_spectating::setSpectatePermissions();
 }
 
@@ -173,19 +165,17 @@ spawnedKillcamCleanup()
 {
 	self endon("end_killcam");
 	self endon("disconnect");
-
 	self waittill("spawned");
 	self endKillcam();
 }
 
-spectatorKillcamCleanup( attacker )
+spectatorKillcamCleanup(attacker)
 {
 	self endon("end_killcam");
 	self endon("disconnect");
-	attacker endon ( "disconnect" );
-
-	attacker waittill ( "begin_killcam", attackerKcStartTime );
-	waitTime = max( 0, (attackerKcStartTime - self.deathTime) - 50 );
+	attacker endon("disconnect");
+	attacker waittill ("begin_killcam", attackerKcStartTime);
+	waitTime = max(0, (attackerKcStartTime - self.deathTime) - 50);
 	wait waitTime;
 	self endKillcam();
 }
@@ -194,7 +184,6 @@ endedKillcamCleanup()
 {
 	self endon("end_killcam");
 	self endon("disconnect");
-
 	level waittill("game_ended");
 	self endKillcam();
 }

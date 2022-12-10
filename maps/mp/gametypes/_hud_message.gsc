@@ -2,10 +2,10 @@
 
 init()
 {
-	precacheString( &"MP_FIRSTPLACE_NAME" );
-	precacheString( &"MP_SECONDPLACE_NAME" );
-	precacheString( &"MP_THIRDPLACE_NAME" );
-	precacheString( &"MP_MATCH_BONUS_IS" );
+	precacheString(&"MP_FIRSTPLACE_NAME");
+	precacheString(&"MP_SECONDPLACE_NAME");
+	precacheString(&"MP_THIRDPLACE_NAME");
+	precacheString(&"MP_MATCH_BONUS_IS");
 	game["strings"]["draw"] = &"MP_DRAW";
 	game["strings"]["round_draw"] = &"MP_ROUND_DRAW";
 	game["strings"]["round_win"] = &"MP_ROUND_WIN";
@@ -18,7 +18,6 @@ init()
 	game["strings"]["intermission"] = &"MP_INTERMISSION";
 	game["strings"]["side_switch"] = &"MP_SWITCHING_SIDES";
 	game["strings"]["match_bonus"] = &"MP_MATCH_BONUS_IS";
-	
 	level thread onPlayerConnect();
 }
 
@@ -26,19 +25,19 @@ onPlayerConnect()
 {
 	for(;;)
 	{
-		level waittill( "connecting", player );
+		level waittill("connecting", player);
 		player thread hintMessageDeathThink();
 		player thread lowerMessageThink();
 		player thread initNotifyMessage();
 	}
 }
 
-hintMessage( hintText )
+hintMessage(hintText)
 {
 	notifyData = spawnstruct();
 	notifyData.notifyText = hintText;
 	notifyData.glowColor = (0.5, 0.2, 0.2);
-	notifyMessage( notifyData );
+	notifyMessage(notifyData);
 }
 
 initNotifyMessage()
@@ -52,35 +51,35 @@ initNotifyMessage()
 	yOffset = 30;
 	xOffset = 0;
 
-	self.notifyTitle = createFontString( font, titleSize );
-	self.notifyTitle setPoint( point, undefined, xOffset, yOffset );
-	self.notifyTitle.glowColor = (0.6, 0.2, 0.2); // 0.6, 0.2, 0.2
+	self.notifyTitle = createFontString(font, titleSize);
+	self.notifyTitle setPoint(point, undefined, xOffset, yOffset);
+	self.notifyTitle.glowColor = (0.6, 0.2, 0.2); // 0.2, 0.2, 0.6
 	self.notifyTitle.glowAlpha = 1;
 	self.notifyTitle.hideWhenInMenu = true;
 	self.notifyTitle.archived = false;
 	self.notifyTitle.alpha = 0;
 
-	self.notifyText = createFontString( font, textSize );
-	self.notifyText setParent( self.notifyTitle );
-	self.notifyText setPoint( point, relativePoint, 0, 0 );
+	self.notifyText = createFontString(font, textSize);
+	self.notifyText setParent(self.notifyTitle);
+	self.notifyText setPoint(point, relativePoint, 0, 0);
 	self.notifyText.glowColor = (0.6, 0.2, 0.2);
 	self.notifyText.glowAlpha = 1;
 	self.notifyText.hideWhenInMenu = true;
 	self.notifyText.archived = false;
 	self.notifyText.alpha = 0;
 
-	self.notifyText2 = createFontString( font, textSize );
-	self.notifyText2 setParent( self.notifyTitle );
-	self.notifyText2 setPoint( point, relativePoint, 0, 0 );
+	self.notifyText2 = createFontString(font, textSize);
+	self.notifyText2 setParent(self.notifyTitle);
+	self.notifyText2 setPoint(point, relativePoint, 0, 0);
 	self.notifyText2.glowColor = (0.6, 0.2, 0.2);
 	self.notifyText2.glowAlpha = 1;
 	self.notifyText2.hideWhenInMenu = true;
 	self.notifyText2.archived = false;
 	self.notifyText2.alpha = 0;
 
-	self.notifyIcon = createIcon( "white", iconSize, iconSize );
-	self.notifyIcon setParent( self.notifyText2 );
-	self.notifyIcon setPoint( point, relativePoint, 0, 0 );
+	self.notifyIcon = createIcon("white", iconSize, iconSize);
+	self.notifyIcon setParent(self.notifyText2);
+	self.notifyIcon setPoint(point, relativePoint, 0, 0);
 	self.notifyIcon.hideWhenInMenu = true;
 	self.notifyIcon.archived = false;
 	self.notifyIcon.alpha = 0;
@@ -89,7 +88,7 @@ initNotifyMessage()
 	self.notifyQueue = [];
 }
 
-oldNotifyMessage( titleText, notifyText, iconName, glowColor, sound, duration )
+oldNotifyMessage(titleText, notifyText, iconName, glowColor, sound, duration)
 {
 	notifyData = spawnstruct();
 	notifyData.titleText = titleText;
@@ -98,161 +97,161 @@ oldNotifyMessage( titleText, notifyText, iconName, glowColor, sound, duration )
 	notifyData.glowColor = glowColor;
 	notifyData.sound = sound;
 	notifyData.duration = duration;
-	notifyMessage( notifyData );
+	notifyMessage(notifyData);
 }
 
-notifyMessage( notifyData )
+notifyMessage(notifyData)
 {
-	self endon ( "death" );
-	self endon ( "disconnect" );
-	if ( !self.doingNotify )
+	self endon ("death");
+	self endon ("disconnect");
+	if(!self.doingNotify)
 	{
-		self thread showNotifyMessage( notifyData );
+		self thread showNotifyMessage(notifyData);
 		return;
 	}
 	self.notifyQueue[ self.notifyQueue.size ] = notifyData;
 }
 
-showNotifyMessage( notifyData )
+showNotifyMessage(notifyData)
 {
 	self endon("disconnect");
 	self.doingNotify = true;
-	waitRequireVisibility( 0 );
+	waitRequireVisibility(0);
 	
-	if ( isDefined( notifyData.duration ) )
+	if(isDefined(notifyData.duration))
 		duration = notifyData.duration;
-	else if ( level.gameEnded )
+	else if(level.gameEnded)
 		duration = 2;
 	else
 		duration = 4;
 
 	self thread resetOnCancel();
 
-	if ( isDefined( notifyData.sound ) )
-		self playLocalSound( notifyData.sound );
+	if(isDefined(notifyData.sound))
+		self playLocalSound(notifyData.sound);
 	
-	if ( isDefined( notifyData.glowColor ) )
+	if(isDefined(notifyData.glowColor))
 		glowColor = notifyData.glowColor;
 	else
 		glowColor = (0.6, 0.2, 0.2);
 
 	anchorElem = self.notifyTitle;
 
-	if ( isDefined( notifyData.titleText ) )
+	if(isDefined(notifyData.titleText))
 	{
-		if ( isDefined( notifyData.titleLabel ) )
+		if(isDefined(notifyData.titleLabel))
 			self.notifyTitle.label = notifyData.titleLabel;
 		else
 			self.notifyTitle.label = &"";
 
-		if ( isDefined( notifyData.titleLabel ) && !isDefined( notifyData.titleIsString ) )
-			self.notifyTitle setValue( notifyData.titleText );
+		if(isDefined(notifyData.titleLabel) && !isDefined(notifyData.titleIsString))
+			self.notifyTitle setValue(notifyData.titleText);
 		else
-			self.notifyTitle setText( notifyData.titleText );
-		self.notifyTitle setPulseFX( 100, int(duration*1000), 1000 );
+			self.notifyTitle setText(notifyData.titleText);
+		self.notifyTitle setPulseFX(100, int(duration*1000), 1000);
 		self.notifyTitle.glowColor = glowColor;
 		self.notifyTitle.alpha = 1;
 	}
 
-	if ( isDefined( notifyData.notifyText ) )
+	if(isDefined(notifyData.notifyText))
 	{
-		if ( isDefined( notifyData.textLabel ) )
+		if(isDefined(notifyData.textLabel))
 			self.notifyText.label = notifyData.textLabel;
 		else
 			self.notifyText.label = &"";
 
-		if ( isDefined( notifyData.textLabel ) && !isDefined( notifyData.textIsString ) )
-			self.notifyText setValue( notifyData.notifyText );
+		if(isDefined(notifyData.textLabel) && !isDefined(notifyData.textIsString))
+			self.notifyText setValue(notifyData.notifyText);
 		else
-			self.notifyText setText( notifyData.notifyText );
-		self.notifyText setPulseFX( 100, int(duration*1000), 1000 );
+			self.notifyText setText(notifyData.notifyText);
+		self.notifyText setPulseFX(100, int(duration*1000), 1000);
 		self.notifyText.glowColor = glowColor;
 		self.notifyText.alpha = 1;
 		anchorElem = self.notifyText;
 	}
 
-	if ( isDefined( notifyData.notifyText2 ) )
+	if(isDefined(notifyData.notifyText2))
 	{
-		self.notifyText2 setParent( anchorElem );
+		self.notifyText2 setParent(anchorElem);
 
-		if ( isDefined( notifyData.text2Label ) )
+		if(isDefined(notifyData.text2Label))
 			self.notifyText2.label = notifyData.text2Label;
 		else
 			self.notifyText2.label = &"";
 
-		self.notifyText2 setText( notifyData.notifyText2 );
-		self.notifyText2 setPulseFX( 100, int(duration*1000), 1000 );
+		self.notifyText2 setText(notifyData.notifyText2);
+		self.notifyText2 setPulseFX(100, int(duration*1000), 1000);
 		self.notifyText2.glowColor = glowColor;
 		self.notifyText2.alpha = 1;
 		anchorElem = self.notifyText2;
 	}
 
-	if ( isDefined( notifyData.iconName ) )
+	if(isDefined(notifyData.iconName))
 	{
-		self.notifyIcon setParent( anchorElem );
-		self.notifyIcon setShader( notifyData.iconName, 60, 60 );
+		self.notifyIcon setParent(anchorElem);
+		self.notifyIcon setShader(notifyData.iconName, 60, 60);
 		self.notifyIcon.alpha = 0;
-		self.notifyIcon fadeOverTime( 1 );
+		self.notifyIcon fadeOverTime(1);
 		self.notifyIcon.alpha = 1;
-		waitRequireVisibility( duration );
-		self.notifyIcon fadeOverTime( 0.75 );
+		waitRequireVisibility(duration);
+		self.notifyIcon fadeOverTime(0.75);
 		self.notifyIcon.alpha = 0;
 	}
 	else
-		waitRequireVisibility( duration );
+		waitRequireVisibility(duration);
 
-	self notify ( "notifyMessageDone" );
+	self notify ("notifyMessageDone");
 	self.doingNotify = false;
 
-	if ( self.notifyQueue.size > 0 )
+	if(self.notifyQueue.size > 0)
 	{
 		nextNotifyData = self.notifyQueue[0];
 		newQueue = [];
-		for ( i = 1; i < self.notifyQueue.size; i++ )
+		for (i = 1; i < self.notifyQueue.size; i++)
 			self.notifyQueue[i-1] = self.notifyQueue[i];
 		self.notifyQueue[i-1] = undefined;
-		self thread showNotifyMessage( nextNotifyData );
+		self thread showNotifyMessage(nextNotifyData);
 	}
 }
 
-waitRequireVisibility( waitTime )
+waitRequireVisibility(waitTime)
 {
 	self endon("disconnect");
 	interval = 0.05;
-	while ( !self canReadText() )
+	while(!self canReadText())
 		wait interval;
 
-	while ( waitTime > 0 )
+	while(waitTime > 0)
 	{
 		wait interval;
-		if ( self canReadText() )
+		if(self canReadText())
 			waitTime -= interval;
 	}
 }
 
 canReadText()
 {
-	if ( self maps\mp\_flashgrenades::isFlashbanged() )
+	if(self maps\mp\_flashgrenades::isFlashbanged())
 		return false;
 	return true;
 }
 
 resetOnDeath()
 {
-	self endon ( "notifyMessageDone" );
-	self endon ( "disconnect" );
-	level endon ( "game_ended" );
-	self waittill ( "death" );
+	self endon ("notifyMessageDone");
+	self endon ("disconnect");
+	level endon ("game_ended");
+	self waittill ("death");
 	resetNotify();
 }
 
 resetOnCancel()
 {
-	self notify ( "resetOnCancel" );
-	self endon ( "resetOnCancel" );
-	self endon ( "notifyMessageDone" );
-	self endon ( "disconnect" );
-	level waittill ( "cancel_notify" );
+	self notify ("resetOnCancel");
+	self endon ("resetOnCancel");
+	self endon ("notifyMessageDone");
+	self endon ("disconnect");
+	level waittill ("cancel_notify");
 	resetNotify();
 }
 
@@ -266,44 +265,44 @@ resetNotify()
 
 hintMessageDeathThink()
 {
-	self endon ( "disconnect" );
+	self endon ("disconnect");
 	for(;;)
 	{
-		self waittill ( "death" );
-		if ( isDefined( self.hintMessage ) )
+		self waittill ("death");
+		if(isDefined(self.hintMessage))
 			self.hintMessage destroyElem();
 	}
 }
 
 lowerMessageThink()
 {
-	self endon ( "disconnect" );
-	self.lowerMessage = createFontString( "default", level.lowerTextFontSize );
-	self.lowerMessage setPoint( "CENTER", level.lowerTextYAlign, 0, level.lowerTextY );
-	self.lowerMessage setText( "" );
+	self endon ("disconnect");
+	self.lowerMessage = createFontString("default", level.lowerTextFontSize);
+	self.lowerMessage setPoint("CENTER", level.lowerTextYAlign, 0, level.lowerTextY);
+	self.lowerMessage setText("");
 	self.lowerMessage.archived = false;
 	timerFontSize = 1.5;
-	self.lowerTimer = createFontString( "default", timerFontSize );
-	self.lowerTimer setParent( self.lowerMessage );
-	self.lowerTimer setPoint( "TOP", "BOTTOM", 0, 0 );
-	self.lowerTimer setText( "" );
+	self.lowerTimer = createFontString("default", timerFontSize);
+	self.lowerTimer setParent(self.lowerMessage);
+	self.lowerTimer setPoint("TOP", "BOTTOM", 0, 0);
+	self.lowerTimer setText("");
 	self.lowerTimer.archived = false;
 }
 
-teamOutcomeNotify( winner, isRound, endReasonText, delay )
+teamOutcomeNotify(winner, isRound, endReasonText, delay)
 {
-	self endon ( "disconnect" );
-	self notify ( "reset_outcome" );
+	self endon ("disconnect");
+	self notify ("reset_outcome");
 	team = self.pers["team"];
-	if ( !isDefined( team ) || (team != "allies" && team != "axis") )
+	if(!isDefined(team) || (team != "allies" && team != "axis"))
 		team = "allies";
 
-	while ( self.doingNotify )
+	while(self.doingNotify)
 		wait 0.05;
-	if ( isDefined ( delay ) )
+	if(isDefined(delay))
 		wait delay;
 
-	self endon ( "reset_outcome" );
+	self endon ("reset_outcome");
 	titleSize = 3;
 	textSize = 2;
 	iconSize = 70;
@@ -311,151 +310,151 @@ teamOutcomeNotify( winner, isRound, endReasonText, delay )
 	font = "objective";
 	duration = 60000;
 
-	outcomeTitle = createFontString( font, titleSize );
-	outcomeTitle setPoint( "TOP", undefined, 0, 30 );
+	outcomeTitle = createFontString(font, titleSize);
+	outcomeTitle setPoint("TOP", undefined, 0, 30);
 	outcomeTitle.glowAlpha = 1;
 	outcomeTitle.hideWhenInMenu = false;
 	outcomeTitle.archived = false;
 
-	outcomeText = createFontString( font, 2 );
-	outcomeText setParent( outcomeTitle );
-	outcomeText setPoint( "TOP", "BOTTOM", 0, 0 );
+	outcomeText = createFontString(font, 2);
+	outcomeText setParent(outcomeTitle);
+	outcomeText setPoint("TOP", "BOTTOM", 0, 0);
 	outcomeText.glowAlpha = 1;
 	outcomeText.hideWhenInMenu = false;
 	outcomeText.archived = false;
 
-	if ( winner == "halftime" )
+	if(winner == "halftime")
 	{
 		outcomeTitle.glowColor = (0.6, 0.2, 0.2);
-		outcomeTitle setText( game["strings"]["halftime"] );
+		outcomeTitle setText(game["strings"]["halftime"]);
 		outcomeTitle.color = (1, 1, 1);
 	}
-	else if ( winner == "intermission" )
+	else if(winner == "intermission")
 	{
 		outcomeTitle.glowColor = (0.6, 0.2, 0.2);
-		outcomeTitle setText( game["strings"]["intermission"] );
+		outcomeTitle setText(game["strings"]["intermission"]);
 		outcomeTitle.color = (1, 1, 1);
 	}
-	else if ( winner == "roundend" )
+	else if(winner == "roundend")
 	{
 		outcomeTitle.glowColor = (0.6, 0.2, 0.2);
-		outcomeTitle setText( game["strings"]["roundend"] );
+		outcomeTitle setText(game["strings"]["roundend"]);
 		outcomeTitle.color = (1, 1, 1);
 	}
-	else if ( winner == "overtime" )
+	else if(winner == "overtime")
 	{
 		outcomeTitle.glowColor = (0.6, 0.2, 0.2);
-		outcomeTitle setText( game["strings"]["overtime"] );
+		outcomeTitle setText(game["strings"]["overtime"]);
 		outcomeTitle.color = (1, 1, 1);
 	}
-	else if ( winner == "tie" )
+	else if(winner == "tie")
 	{
 		outcomeTitle.glowColor = (0.6, 0.2, 0.2);
-		if ( isRound )
-			outcomeTitle setText( game["strings"]["round_draw"] );
+		if(isRound)
+			outcomeTitle setText(game["strings"]["round_draw"]);
 		else
-			outcomeTitle setText( game["strings"]["draw"] );
+			outcomeTitle setText(game["strings"]["draw"]);
 		outcomeTitle.color = (1, 1, 1);
 	}
-	else if ( isDefined( self.pers["team"] ) && winner == team )
+	else if(isDefined(self.pers["team"]) && winner == team)
 	{
 		outcomeTitle.glowColor = (0, 0, 0);
-		if ( isRound )
-			outcomeTitle setText( game["strings"]["round_win"] );
+		if(isRound)
+			outcomeTitle setText(game["strings"]["round_win"]);
 		else
-			outcomeTitle setText( game["strings"]["victory"] );
+			outcomeTitle setText(game["strings"]["victory"]);
 		outcomeTitle.color = (0.2, 0.5, 0.2);
 	}
 	else
 	{
 		outcomeTitle.glowColor = (0, 0, 0);
-		if ( isRound )
-			outcomeTitle setText( game["strings"]["round_loss"] );
+		if(isRound)
+			outcomeTitle setText(game["strings"]["round_loss"]);
 		else
-			outcomeTitle setText( game["strings"]["defeat"] );
+			outcomeTitle setText(game["strings"]["defeat"]);
 		outcomeTitle.color = (0.8, 0.2, 0.2);
 	}
 
 	outcomeText.glowColor = (0.6, 0.2, 0.2);
-	outcomeText setText( endReasonText );
-	outcomeTitle setPulseFX( 100, duration, 1000 );
-	outcomeText setPulseFX( 100, duration, 1000 );
+	outcomeText setText(endReasonText);
+	outcomeTitle setPulseFX(100, duration, 1000);
+	outcomeText setPulseFX(100, duration, 1000);
 
-	leftIcon = createIcon( game["icons"][team], iconSize, iconSize );
-	leftIcon setParent( outcomeText );
-	leftIcon setPoint( "TOP", "BOTTOM", -60, spacing );
+	leftIcon = createIcon(game["icons"][team], iconSize, iconSize);
+	leftIcon setParent(outcomeText);
+	leftIcon setPoint("TOP", "BOTTOM", -60, spacing);
 	leftIcon.hideWhenInMenu = false;
 	leftIcon.archived = false;
 	leftIcon.alpha = 0;
-	leftIcon fadeOverTime( 0.5 );
+	leftIcon fadeOverTime(0.5);
 	leftIcon.alpha = 1;
 
-	rightIcon = createIcon( game["icons"][level.otherTeam[team]], iconSize, iconSize );
-	rightIcon setParent( outcomeText );
-	rightIcon setPoint( "TOP", "BOTTOM", 60, spacing );
+	rightIcon = createIcon(game["icons"][level.otherTeam[team]], iconSize, iconSize);
+	rightIcon setParent(outcomeText);
+	rightIcon setPoint("TOP", "BOTTOM", 60, spacing);
 	rightIcon.hideWhenInMenu = false;
 	rightIcon.archived = false;
 	rightIcon.alpha = 0;
-	rightIcon fadeOverTime( 0.5 );
+	rightIcon fadeOverTime(0.5);
 	rightIcon.alpha = 1;
 
-	leftScore = createFontString( font, titleSize );
-	leftScore setParent( leftIcon );
-	leftScore setPoint( "TOP", "BOTTOM", 0, spacing );
+	leftScore = createFontString(font, titleSize);
+	leftScore setParent(leftIcon);
+	leftScore setPoint("TOP", "BOTTOM", 0, spacing);
 	leftScore.glowColor = game["colors"][team];
 	leftScore.glowAlpha = 1;
-	leftScore setValue( getTeamScore( team ) );
+	leftScore setValue(getTeamScore(team)); // Debug
 	leftScore.hideWhenInMenu = false;
 	leftScore.archived = false;
-	leftScore setPulseFX( 100, duration, 1000 );
+	leftScore setPulseFX(100, duration, 1000);
 
-	rightScore = createFontString( font, titleSize );
-	rightScore setParent( rightIcon );
-	rightScore setPoint( "TOP", "BOTTOM", 0, spacing );
+	rightScore = createFontString(font, titleSize);
+	rightScore setParent(rightIcon);
+	rightScore setPoint("TOP", "BOTTOM", 0, spacing);
 	rightScore.glowColor = game["colors"][level.otherTeam[team]];
 	rightScore.glowAlpha = 1;
-	rightScore setValue( getTeamScore( level.otherTeam[team] ) );
+	rightScore setValue(getTeamScore(level.otherTeam[team])); // Debug
 	rightScore.hideWhenInMenu = false;
 	rightScore.archived = false;
-	rightScore setPulseFX( 100, duration, 1000 );
+	rightScore setPulseFX(100, duration, 1000);
 
-	if ( winner == "halftime" )
+	if(winner == "halftime")
 	{
-		leftIcon MoveOverTime( 2.5 );
-		leftIcon setPoint( "TOP", "BOTTOM", 60, spacing );
-		rightIcon MoveOverTime( 2.5 );
-		rightIcon setPoint( "TOP", "BOTTOM", -60, spacing );
-		leftScore MoveOverTime( 2.5 );
-		leftScore setPoint( "TOP", "BOTTOM", -120, spacing );
-		rightScore MoveOverTime( 2.5 );
-		rightScore setPoint( "TOP", "BOTTOM", 120, spacing );
+		leftIcon MoveOverTime(2.5);
+		leftIcon setPoint("TOP", "BOTTOM", 60, spacing);
+		rightIcon MoveOverTime(2.5);
+		rightIcon setPoint("TOP", "BOTTOM", -60, spacing);
+		leftScore MoveOverTime(2.5);
+		leftScore setPoint("TOP", "BOTTOM", -120, spacing);
+		rightScore MoveOverTime(2.5);
+		rightScore setPoint("TOP", "BOTTOM", 120, spacing);
 	}
 	matchBonus = undefined;
-	if ( isDefined( self.matchBonus ) )
+	if(isDefined(self.matchBonus))
 	{
-		matchBonus = createFontString( font, 2 );
-		matchBonus setParent( outcomeText );
-		matchBonus setPoint( "TOP", "BOTTOM", 0, iconSize + (spacing * 3) + leftScore.height );
+		matchBonus = createFontString(font, 2);
+		matchBonus setParent(outcomeText);
+		matchBonus setPoint("TOP", "BOTTOM", 0, iconSize + (spacing * 3) + leftScore.height);
 		matchBonus.glowAlpha = 1;
 		matchBonus.hideWhenInMenu = false;
 		matchBonus.archived = false;
 		matchBonus.label = game["strings"]["match_bonus"];
-		matchBonus setValue( self.matchBonus );
+		matchBonus setValue(self.matchBonus);
 	}
-	self thread resetTeamOutcomeNotify( outcomeTitle, outcomeText, leftIcon, rightIcon, leftScore, rightScore, matchBonus );
+	self thread resetTeamOutcomeNotify(outcomeTitle, outcomeText, leftIcon, rightIcon, leftScore, rightScore, matchBonus);
 }
 
-outcomeNotify( winner, endReasonText, delay )
+outcomeNotify(winner, endReasonText, delay)
 {
-	self endon ( "disconnect" );
-	self notify ( "reset_outcome" );
-	while ( self.doingNotify )
+	self endon ("disconnect");
+	self notify ("reset_outcome");
+	while(self.doingNotify)
 		wait 0.05;
 
-	if ( isDefined ( delay ) )
+	if(isDefined (delay))
 		wait delay;
 
-	self endon ( "reset_outcome" );
+	self endon ("reset_outcome");
 	titleSize = 3;
 	winnerSize = 2;
 	otherSize = 1.5;
@@ -464,157 +463,157 @@ outcomeNotify( winner, endReasonText, delay )
 	font = "objective";
 	duration = 60000;
 	players = level.placement["all"];
-	outcomeTitle = createFontString( font, titleSize );
-	outcomeTitle setPoint( "TOP", undefined, 0, spacing );
+	outcomeTitle = createFontString(font, titleSize);
+	outcomeTitle setPoint("TOP", undefined, 0, spacing);
 	
-	if ( isDefined( players[1] ) && players[0].score == players[1].score && players[0].deaths == players[1].deaths && (self == players[0] || self == players[1]) )
+	if(isDefined(players[1]) && players[0].score == players[1].score && players[0].deaths == players[1].deaths && (self == players[0] || self == players[1]))
 	{
-		outcomeTitle setText( game["strings"]["tie"] );
+		outcomeTitle setText(game["strings"]["tie"]);
 		outcomeTitle.glowColor = (0.6, 0.2, 0.2);
 	}
-	else if ( isDefined( players[2] ) && players[0].score == players[2].score && players[0].deaths == players[2].deaths && self == players[2] )
+	else if(isDefined(players[2]) && players[0].score == players[2].score && players[0].deaths == players[2].deaths && self == players[2])
 	{
-		outcomeTitle setText( game["strings"]["tie"] );
+		outcomeTitle setText(game["strings"]["tie"]);
 		outcomeTitle.glowColor = (0.6, 0.2, 0.2);
 	}
-	else if ( isDefined( players[0] ) && self == players[0] )
+	else if(isDefined(players[0]) && self == players[0])
 	{
-		outcomeTitle setText( game["strings"]["victory"] );
+		outcomeTitle setText(game["strings"]["victory"]);
 		outcomeTitle.glowColor = (0.6, 0.2, 0.2);
 	}
 	else
 	{
-		outcomeTitle setText( game["strings"]["defeat"] );
+		outcomeTitle setText(game["strings"]["defeat"]);
 		outcomeTitle.glowColor = (0.8, 0.2, 0.2);
 	}
 	outcomeTitle.glowAlpha = 1;
 	outcomeTitle.hideWhenInMenu = false;
 	outcomeTitle.archived = false;
-	outcomeTitle setPulseFX( 100, duration, 1000 );
+	outcomeTitle setPulseFX(100, duration, 1000);
 
-	outcomeText = createFontString( font, 2 );
-	outcomeText setParent( outcomeTitle );
-	outcomeText setPoint( "TOP", "BOTTOM", 0, 0 );
+	outcomeText = createFontString(font, 2);
+	outcomeText setParent(outcomeTitle);
+	outcomeText setPoint("TOP", "BOTTOM", 0, 0);
 	outcomeText.glowAlpha = 1;
 	outcomeText.hideWhenInMenu = false;
 	outcomeText.archived = false;
 	outcomeText.glowColor = (0.2, 0.2, 0.6);
-	outcomeText setText( endReasonText );
+	outcomeText setText(endReasonText);
 
-	firstTitle = createFontString( font, winnerSize );
-	firstTitle setParent( outcomeText );
-	firstTitle setPoint( "TOP", "BOTTOM", 0, spacing );
+	firstTitle = createFontString(font, winnerSize);
+	firstTitle setParent(outcomeText);
+	firstTitle setPoint("TOP", "BOTTOM", 0, spacing);
 	firstTitle.glowColor = (0.6, 0.2, 0.2);
 	firstTitle.glowAlpha = 1;
 	firstTitle.hideWhenInMenu = false;
 	firstTitle.archived = false;
-	if ( isDefined( players[0] ) )
+	if(isDefined(players[0]))
 	{
 		firstTitle.label = &"MP_FIRSTPLACE_NAME";
-		firstTitle setPlayerNameString( players[0] );
-		firstTitle setPulseFX( 100, duration, 1000 );
+		firstTitle setPlayerNameString(players[0]);
+		firstTitle setPulseFX(100, duration, 1000);
 	}
-	secondTitle = createFontString( font, otherSize );
-	secondTitle setParent( firstTitle );
-	secondTitle setPoint( "TOP", "BOTTOM", 0, spacing );
+	secondTitle = createFontString(font, otherSize);
+	secondTitle setParent(firstTitle);
+	secondTitle setPoint("TOP", "BOTTOM", 0, spacing);
 	secondTitle.glowColor = (0.6, 0.2, 0.2);
 	secondTitle.glowAlpha = 1;
 	secondTitle.hideWhenInMenu = false;
 	secondTitle.archived = false;
-	if ( isDefined( players[1] ) )
+	if(isDefined(players[1]))
 	{
 		secondTitle.label = &"MP_SECONDPLACE_NAME";
-		secondTitle setPlayerNameString( players[1] );
-		secondTitle setPulseFX( 100, duration, 1000 );
+		secondTitle setPlayerNameString(players[1]);
+		secondTitle setPulseFX(100, duration, 1000);
 	}
-	thirdTitle = createFontString( font, otherSize );
-	thirdTitle setParent( secondTitle );
-	thirdTitle setPoint( "TOP", "BOTTOM", 0, spacing );
-	thirdTitle setParent( secondTitle );
+	thirdTitle = createFontString(font, otherSize);
+	thirdTitle setParent(secondTitle);
+	thirdTitle setPoint("TOP", "BOTTOM", 0, spacing);
+	thirdTitle setParent(secondTitle);
 	thirdTitle.glowColor = (0.6, 0.2, 0.2);
 	thirdTitle.glowAlpha = 1;
 	thirdTitle.hideWhenInMenu = false;
 	thirdTitle.archived = false;
-	if ( isDefined( players[2] ) )
+	if(isDefined(players[2]))
 	{
 		thirdTitle.label = &"MP_THIRDPLACE_NAME";
-		thirdTitle setPlayerNameString( players[2] );
-		thirdTitle setPulseFX( 100, duration, 1000 );
+		thirdTitle setPlayerNameString(players[2]);
+		thirdTitle setPulseFX(100, duration, 1000);
 	}
-	matchBonus = createFontString( font, 2 );
-	matchBonus setParent( thirdTitle );
-	matchBonus setPoint( "TOP", "BOTTOM", 0, spacing );
+	matchBonus = createFontString(font, 2);
+	matchBonus setParent(thirdTitle);
+	matchBonus setPoint("TOP", "BOTTOM", 0, spacing);
 	matchBonus.glowAlpha = 1;
 	matchBonus.hideWhenInMenu = false;
 	matchBonus.archived = false;
-	if ( isDefined( self.matchBonus ) )
+	if(isDefined(self.matchBonus))
 	{
 		matchBonus.label = game["strings"]["match_bonus"];
-		matchBonus setValue( self.matchBonus );
+		matchBonus setValue(self.matchBonus);
 	}
-	self thread updateOutcome( firstTitle, secondTitle, thirdTitle );
-	self thread resetOutcomeNotify( outcomeTitle, outcomeText, firstTitle, secondTitle, thirdTitle, matchBonus );
+	self thread updateOutcome(firstTitle, secondTitle, thirdTitle);
+	self thread resetOutcomeNotify(outcomeTitle, outcomeText, firstTitle, secondTitle, thirdTitle, matchBonus);
 }
 
-resetOutcomeNotify( outcomeTitle, outcomeText, firstTitle, secondTitle, thirdTitle, matchBonus )
+resetOutcomeNotify(outcomeTitle, outcomeText, firstTitle, secondTitle, thirdTitle, matchBonus)
 {
-	self endon ( "disconnect" );
-	self waittill ( "reset_outcome" );
-	if ( isDefined( outcomeTitle ) )
+	self endon ("disconnect");
+	self waittill ("reset_outcome");
+	if(isDefined(outcomeTitle))
 		outcomeTitle destroyElem();
-	if ( isDefined( outcomeText ) )
+	if(isDefined(outcomeText))
 		outcomeText destroyElem();
-	if ( isDefined( firstTitle ) )
+	if(isDefined(firstTitle))
 		firstTitle destroyElem();
-	if ( isDefined( secondTitle ) )
+	if(isDefined(secondTitle))
 		secondTitle destroyElem();
-	if ( isDefined( thirdTitle ) )
+	if(isDefined(thirdTitle))
 		thirdTitle destroyElem();
-	if ( isDefined( matchBonus ) )
+	if(isDefined(matchBonus))
 		matchBonus destroyElem();
 }
 
-resetTeamOutcomeNotify( outcomeTitle, outcomeText, leftIcon, rightIcon, LeftScore, rightScore, matchBonus )
+resetTeamOutcomeNotify(outcomeTitle, outcomeText, leftIcon, rightIcon, LeftScore, rightScore, matchBonus)
 {
-	self endon ( "disconnect" );
-	self waittill ( "reset_outcome" );
-	if ( isDefined( outcomeTitle ) )
+	self endon ("disconnect");
+	self waittill ("reset_outcome");
+	if(isDefined(outcomeTitle))
 		outcomeTitle destroyElem();
-	if ( isDefined( outcomeText ) )
+	if(isDefined(outcomeText))
 		outcomeText destroyElem();
-	if ( isDefined( leftIcon ) )
+	if(isDefined(leftIcon))
 		leftIcon destroyElem();
-	if ( isDefined( rightIcon ) )
+	if(isDefined(rightIcon))
 		rightIcon destroyElem();
-	if ( isDefined( leftScore ) )
+	if(isDefined(leftScore))
 		leftScore destroyElem();
-	if ( isDefined( rightScore ) )
+	if(isDefined(rightScore))
 		rightScore destroyElem();
-	if ( isDefined( matchBonus ) )
+	if(isDefined(matchBonus))
 		matchBonus destroyElem();
 }
 
-updateOutcome( firstTitle, secondTitle, thirdTitle )
+updateOutcome(firstTitle, secondTitle, thirdTitle)
 {
-	self endon( "disconnect" );
-	self endon( "reset_outcome" );
+	self endon("disconnect");
+	self endon("reset_outcome");
 	for(;;)
 	{
-		self waittill( "update_outcome" );
+		self waittill("update_outcome");
 		players = level.placement["all"];
-		if ( isDefined( firstTitle ) && isDefined( players[0] ) )
-			firstTitle setPlayerNameString( players[0] );
-		else if ( isDefined( firstTitle ) )
+		if(isDefined(firstTitle) && isDefined(players[0]))
+			firstTitle setPlayerNameString(players[0]);
+		else if(isDefined(firstTitle))
 			firstTitle.alpha = 0;
 
-		if ( isDefined( secondTitle ) && isDefined( players[1] ) )
-			secondTitle setPlayerNameString( players[1] );
-		else if ( isDefined( secondTitle ) )
+		if(isDefined(secondTitle) && isDefined(players[1]))
+			secondTitle setPlayerNameString(players[1]);
+		else if(isDefined(secondTitle))
 			secondTitle.alpha = 0;
 
-		if ( isDefined( thirdTitle ) && isDefined( players[2] ) )
-			thirdTitle setPlayerNameString( players[2] );
-		else if ( isDefined( thirdTitle ) )
+		if(isDefined(thirdTitle) && isDefined(players[2]))
+			thirdTitle setPlayerNameString(players[2]);
+		else if(isDefined(thirdTitle))
 			thirdTitle.alpha = 0;
 	}
 }

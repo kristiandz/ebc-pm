@@ -1,9 +1,9 @@
 CodeCallback_ScriptCommand(command, arguments)
 {
 	if(self.name != "")
-		Callback_ScriptCommandPlayer( command, arguments );
+		Callback_ScriptCommandPlayer(command, arguments);
 	else
-		Callback_ScriptCommand( command, arguments );
+		Callback_ScriptCommand(command, arguments);
 }
 
 Callback_ScriptCommandPlayer(command, arguments)
@@ -51,16 +51,15 @@ CodeCallback_PlayerKilled(eInflictor, eAttacker, iDamage, sMeansOfDeath, sWeapon
 	[[level.callbackPlayerKilled]](eInflictor, eAttacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, timeOffset, deathAnimDuration);
 }
 
-CodeCallback_PlayerLastStand(eInflictor, eAttacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, timeOffset, deathAnimDuration )
+CodeCallback_PlayerLastStand(eInflictor, eAttacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, timeOffset, deathAnimDuration)
 {
 	self endon("disconnect");
-	[[level.callbackPlayerLastStand]](eInflictor, eAttacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, timeOffset, deathAnimDuration );
+	[[level.callbackPlayerLastStand]](eInflictor, eAttacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, timeOffset, deathAnimDuration);
 }
 
 SetupCallbacks()
 {
 	SetDefaultCallbacks();
-	
 	level.iDFLAGS_RADIUS			= 1;
 	level.iDFLAGS_NO_ARMOR			= 2;
 	level.iDFLAGS_NO_KNOCKBACK		= 4;

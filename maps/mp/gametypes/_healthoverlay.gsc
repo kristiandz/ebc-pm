@@ -70,8 +70,7 @@ onPlayerDisconnect()
 playerHealthRegen()
 {
 	self endon("end_healthregen");
-
-	if ( self.health <= 0 )
+	if(self.health <= 0)
 		return;
 
 	maxhealth = self.health;
@@ -85,51 +84,49 @@ playerHealthRegen()
 	lastSoundTime_Recover = 0;
 	hurtTime = 0;
 	newHealth = 0;
-	
 	for(;;)
 	{
 		wait 0.05;
-		if (player.health == maxhealth)
+		if(player.health == maxhealth)
 		{
 			veryHurt = false;
 			self.atBrinkOfDeath = false;
 			continue;
 		}
-		if (player.health <= 0)
+		if(player.health <= 0)
 			return;
-
 		wasVeryHurt = veryHurt;
 		ratio = player.health / maxHealth;
-		if (ratio <= level.healthOverlayCutoff)
+		if(ratio <= level.healthOverlayCutoff)
 		{
 			veryHurt = true;
 			self.atBrinkOfDeath = true;
-			if (!wasVeryHurt)
+			if(!wasVeryHurt)
 				hurtTime = gettime();
 		}
-		if (player.health >= oldhealth)
+		if(player.health >= oldhealth)
 		{
-			if (gettime() - hurttime < level.playerHealth_RegularRegenDelay || level.healthRegenDisabled)
+			if(gettime() - hurttime < level.playerHealth_RegularRegenDelay || level.healthRegenDisabled)
 				continue;
 
-			if (gettime() - lastSoundTime_Recover > level.playerHealth_RegularRegenDelay)
+			if(gettime() - lastSoundTime_Recover > level.playerHealth_RegularRegenDelay)
 			{
 				lastSoundTime_Recover = gettime();
 				self playLocalSound("breathing_better");
 			}
-			if (veryHurt)
+			if(veryHurt)
 			{
 				newHealth = ratio;
-				if (gettime() > hurtTime + 3000)
+				if(gettime() > hurtTime + 3000)
 					newHealth += regenRate;
 			}
 			else
 				newHealth = 1;
 
-			if ( newHealth >= 1.0 )
+			if(newHealth >= 1.0)
 				newHealth = 1.0;
 
-			if (newHealth <= 0)
+			if(newHealth <= 0)
 				return;
 
 			player setnormalhealth (newHealth);
@@ -151,9 +148,9 @@ playerBreathingSound(healthcap)
 	for(;;)
 	{
 		wait 0.2;
-		if ( player.health <= 0 )
+		if(player.health <= 0)
 			return;
-		if ( player.health >= healthcap || level.healthRegenDisabled && gettime() > player.breathingStopTime )
+		if(player.health >= healthcap || level.healthRegenDisabled && gettime() > player.breathingStopTime)
 			continue;
 		player playLocalSound("breathing_hurt");
 		wait 0.784;

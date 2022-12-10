@@ -70,17 +70,17 @@ onMenuResponse()
 	for(;;)
 	{
 		self waittill("menuresponse", menu, response);
-		
-		if ( !isDefined( self.pers["team"] ) )
+
+		if(!isDefined(self.pers["team"]))
 			continue;
 
-		if( getSubStr( response, 0, 7 ) == "loadout" )
+		if(getSubStr(response, 0, 7) == "loadout")
 		{
-			self maps\mp\gametypes\_promod::processLoadoutResponse( response );
+			self maps\mp\gametypes\_promod::processLoadoutResponse(response);
 			continue;
 		}
 		///////////////////////////////////////////////////////////////////////////
-		if (response == "prestige") 
+		if(response == "prestige") 
 		{	
 			self closeMenu();
 			self closeInGameMenu();
@@ -88,7 +88,7 @@ onMenuResponse()
 			if(!self maps\mp\gametypes\_rank::canPrestigeUp())
 				continue;
 			
-			if(self GetStat(2326) < 29 && isDefined(self) )
+			if(self GetStat(2326) < 29 && isDefined(self))
 			{
 				self maps\mp\gametypes\_rank::prestigeUp();
 				wait 0.1;
@@ -100,51 +100,49 @@ onMenuResponse()
 			}
 		}
 		///////////////////////////////////////////////////////////////////////////
-		if( self isDev() && isSubStr(response,"atier:"))
+		if(self isDev() && isSubStr(response, "atier:"))
 		{
-			at = strTok(response,":")[1];
-			am = strTok(response,":")[2];
+			at = strTok(response, ":")[1];
+			am = strTok(response, ":")[2];
 			player = getPlayerByNum(at);
-			player SetStat(3252,int(am));
-			self iprintLnBold("You have set award tier:^8 "+am+"^7 to client ID:^8 "+at);
-			player iprintLnBold("Leader has set your award tier to:^8 " + am );
+			player SetStat(3252, int(am));
+			self iprintLnBold("You have set award tier:^8 " + am + "^7 to client ID:^8 " + at);
+			player iprintLnBold("Leader has set your award tier to:^8 " + am);
 		}
-		
 		///////////////////////////////////////////////////////////////////////////
-		if( self isDev() && isSubStr(response,"statcheck:"))
+		if(self isDev() && isSubStr(response,"statcheck:"))
 		{
-			at = strTok(response,":")[1];
-			am = strTok(response,":")[2];
+			at = strTok(response, ":")[1];
+			am = strTok(response, ":")[2];
 			player = getPlayerByNum(at);
 			temp = player GetStat(int(am));
 			self iprintLnBold("Stat: " + am + " for player " + player.name + "is: " + temp);
 		}
 		///////////////////////////////////////////////////////////////////////////
-		if( self isDev() && isSubStr(response,"statset:"))
+		if(self isDev() && isSubStr(response,"statset:"))
 		{
-			at = strTok(response,":")[1];
-			am = strTok(response,":")[2];
-			stat = strTok(response,":")[3];
+			at = strTok(response, ":")[1];
+			am = strTok(response, ":")[2];
+			stat = strTok(response, ":")[3];
 			player = getPlayerByNum(at);
-			player SetStat(int(am),int(stat));
+			player SetStat(int(am), int(stat));
 			self iprintLnBold("Stat: " + am + " for player " + player.name + "is set to: " + stat);
 		}
 		///////////////////////////////////////////////////////////////////////////
-		switch( response )
+		switch(response)
 		{
 			case "back":
-				if ( self.pers["team"] == "none" )
+				if(self.pers["team"] == "none")
 					continue;
 
-				if( menu == game["menu_changeclass"] && ( self.pers["team"] == "axis" || self.pers["team"] == "allies" ) )
+				if(menu == game["menu_changeclass"] && (self.pers["team"] == "axis" || self.pers["team"] == "allies"))
 				{
-					if( isDefined(self.pers["class"]) )
+					if(isDefined(self.pers["class"]))
 					{
-						self maps\mp\gametypes\_promod::setClassChoice( self.pers["class"] );
-						self maps\mp\gametypes\_promod::menuAcceptClass( "go" );
+						self maps\mp\gametypes\_promod::setClassChoice(self.pers["class"]);
+						self maps\mp\gametypes\_promod::menuAcceptClass("go");
 					}
-
-					self openMenu( game["menu_changeclass_"+self.pers["team"]] );
+					self openMenu(game["menu_changeclass_"+self.pers["team"]]);
 				}
 				else
 				{
@@ -161,24 +159,25 @@ onMenuResponse()
 
 			case "changeclass_marines":
 			case "changeclass_opfor":
-				if ( self.pers["team"] == "axis" || self.pers["team"] == "allies" )
+				if(self.pers["team"] == "axis" || self.pers["team"] == "allies")
 				{
 					self closeMenu();
 					self closeInGameMenu();
-					self openMenu( game["menu_changeclass_"+self.pers["team"]] );
+					self openMenu(game["menu_changeclass_"+self.pers["team"]]);
 				}
 				continue;
 		}
 
-		switch( menu )
+		switch(menu)
 		{
 			case "echo":
 				k = strtok(response, "_");
 				buf = k[0];
-				for(i=1;i<k.size;i++)
-					buf += " "+k[i];
+				for(i = 1; i < k.size; i++)
+					buf += " " + k[i];
 				self iprintln(buf);
 				continue;
+				
 			case "team_marinesopfor":
 			case "team_marinesopfor_flipped":
 				switch(response)
@@ -186,75 +185,71 @@ onMenuResponse()
 					case "allies":
 						self [[level.allies]]();
 						break;
-
 					case "axis":
 						self [[level.axis]]();
 						break;
-
 					case "autoassign":
 						self [[level.autoassign]]();
 						break;
-
 					case "shoutcast":
 						self [[level.spectator]]();
 						break;
 				}
 				continue;
+				
 			case "changeclass_marines_mw":
 			case "changeclass_opfor_mw":
-				if ( response == "killspec" )
+				if(response == "killspec")
 				{
 					self [[level.killspec]]();
 					continue;
 				}
-
-				if ( scripts\menus\quickmessages_menu_response::chooseClassName( response ) == "" || !self maps\mp\gametypes\_promod::verifyClassChoice( self.pers["team"], response ) )
+				if(scripts\menus\quickmessages_menu_response::chooseClassName(response) == "" || !self maps\mp\gametypes\_promod::verifyClassChoice(self.pers["team"], response))
 					continue;
-
-				self maps\mp\gametypes\_promod::setClassChoice( response );
+				
+				self maps\mp\gametypes\_promod::setClassChoice(response);
 				self closeMenu();
 				self closeInGameMenu();
-				self openMenu( game["menu_changeclass"] );
+				self openMenu(game["menu_changeclass"]);
 				continue;
 
 			case "changeclass_mw":
-				self maps\mp\gametypes\_promod::menuAcceptClass( response );
+				self maps\mp\gametypes\_promod::menuAcceptClass(response);
 				continue;
 
 			case "quickcommands":
 			case "quickstatements":
 			case "quickresponses":
-				scripts\menus\quickmessages_menu_response::doQuickMessage( menu, int(response)-1 );
+				scripts\menus\quickmessages_menu_response::doQuickMessage(menu, int(response)-1);
 				continue;
 
 			case "quickpromod":
-				scripts\menus\quickmessages_menu_response::quickpromod( response );
+				scripts\menus\quickmessages_menu_response::quickpromod(response);
 				continue;
 
 			case "quickpromodgfx":
-				scripts\menus\quickmessages_menu_response::quickpromodgfx( response );
+				scripts\menus\quickmessages_menu_response::quickpromodgfx(response);
 				continue;
 							
 			case "quickmenus":
-				scripts\menus\quickmenus_menu_response::quickmenus( response );
+				scripts\menus\quickmenus_menu_response::quickmenus(response);
 				continue;
 				
 			case "player":
-				scripts\menus\player_menu_response::player( response );
+				scripts\menus\player_menu_response::player(response);
 				continue;
 			
 			case "sprays":
-				scripts\menus\sprays_menu_response::player( response );
+				scripts\menus\sprays_menu_response::player(response);
 				continue;
 				
 			case "vip":
-				scripts\menus\vip_menu_response::player( response );
+				scripts\menus\vip_menu_response::player(response);
 				continue;
 				
 			case "admin":
-				scripts\menus\admin_menu_response::player( response );
+				scripts\menus\admin_menu_response::player(response);
 				continue;
 		}
-		
 	}
 }
