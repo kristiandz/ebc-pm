@@ -5,12 +5,14 @@
 
 main()
 {
-	if (getdvar("mapname") == "mp_background") return;
+	if (getdvar("mapname") == "mp_background")
+		return;
 	maps\mp\gametypes\_globallogic::init();
 	maps\mp\gametypes\_callbacksetup::SetupCallbacks();
 	maps\mp\gametypes\_globallogic::SetupCallbacks();
 	level.teamBased = true;
 	level.overrideTeamScore = true;
+	
 	level.onPrecacheGameType = ::onPrecacheGameType;
 	level.onStartGameType = ::onStartGameType;
 	level.onSpawnPlayer = ::onSpawnPlayer;
@@ -45,18 +47,18 @@ onPrecacheGameType()
 	precacheShader("compass_waypoint_defuse");
 	precacheShader("compass_waypoint_defuse_a");
 	precacheShader("compass_waypoint_defuse_b");
-	precacheString( &"MP_EXPLOSIVES_RECOVERED_BY");
-	precacheString( &"MP_EXPLOSIVES_DROPPED_BY");
-	precacheString( &"MP_EXPLOSIVES_PLANTED_BY");
-	precacheString( &"MP_EXPLOSIVES_DEFUSED_BY");
-	precacheString( &"PLATFORM_HOLD_TO_PLANT_EXPLOSIVES");
-	precacheString( &"PLATFORM_HOLD_TO_DEFUSE_EXPLOSIVES");
-	precacheString( &"MP_CANT_PLANT_WITHOUT_BOMB");
-	precacheString( &"MP_PLANTING_EXPLOSIVE");
-	precacheString( &"MP_DEFUSING_EXPLOSIVE");
+	precacheString(&"MP_EXPLOSIVES_RECOVERED_BY");
+	precacheString(&"MP_EXPLOSIVES_DROPPED_BY");
+	precacheString(&"MP_EXPLOSIVES_PLANTED_BY");
+	precacheString(&"MP_EXPLOSIVES_DEFUSED_BY");
+	precacheString(&"PLATFORM_HOLD_TO_PLANT_EXPLOSIVES");
+	precacheString(&"PLATFORM_HOLD_TO_DEFUSE_EXPLOSIVES");
+	precacheString(&"MP_CANT_PLANT_WITHOUT_BOMB");
+	precacheString(&"MP_PLANTING_EXPLOSIVE");
+	precacheString(&"MP_DEFUSING_EXPLOSIVE");
 	
-	precacheModel( "skull_dogtag" );
-	precacheModel( "cross_dogtag" );
+	precacheModel("skull_dogtag");
+	precacheModel("cross_dogtag");
 }
 
 onRoundSwitch()
@@ -70,21 +72,30 @@ getBetterTeam()
 	kills["axis"] = 0;
 	deaths["allies"] = 0;
 	deaths["axis"] = 0;
-	for( i=0; i<level.players.size; i++ )
+	
+	for(i = 0; i < level.players.size; i++)
 	{
 		player = level.players[i];
 		team = player.pers["team"];
-		if( isDefined(team) && (team == "allies" || team == "axis" ))
+		if(isDefined(team) && (team == "allies" || team == "axis"))
 		{
 			kills[team] += player.kills;
 			deaths[team] += player.deaths;
 		}
 	}
-	if(kills["allies"] > kills["axis"]) return "allies";
-	else if(kills["axis"] > kills["allies"]) return "axis";
-	if(deaths["allies"] < deaths["axis"]) return "allies";
-	else if(deaths["axis"] < deaths["allies"]) return "axis";
-	if(randomint(2) == 0) return "allies";
+	
+	if(kills["allies"] > kills["axis"])
+		return "allies";
+	else if(kills["axis"] > kills["allies"])
+		return "axis";
+	
+	if(deaths["allies"] < deaths["axis"])
+		return "allies";
+	else if(deaths["axis"] < deaths["allies"])
+		return "axis";
+	
+	if(randomint(2) == 0)
+		return "allies";
 	return "axis";
 }
 
@@ -122,10 +133,13 @@ onSpawnPlayer()
 {
 	self.isPlanting = false;
 	self.isDefusing = false;
-	if( self.pers["team"] == game["attackers"]) spawnPointName = "mp_sd_spawn_attacker";
-	else spawnPointName = "mp_sd_spawn_defender";
+	if(self.pers["team"] == game["attackers"])
+		spawnPointName = "mp_sd_spawn_attacker";
+	else
+		spawnPointName = "mp_sd_spawn_defender";
 	self setclientdvar("ui_drawbombicon", 0);
-	if( level.multiBomb && !isDefined(self.carryIcon) && self.pers["team"] == game["attackers"] && !level.bombPlanted)
+	
+	if(level.multiBomb && !isDefined(self.carryIcon) && self.pers["team"] == game["attackers"] && !level.bombPlanted)
 	{
 		self.carryIcon = createIcon("hud_suitcase_bomb", 50, 50);
 		self.carryIcon setPoint("CENTER", "CENTER", 223, 167);
@@ -142,7 +156,6 @@ onSpawnPlayer()
 protection()
 {
 	self endon("disconnect");
-	
 	self.isSpawnProtected = true;
 	self iPrintln(">Spawnprotection ^2enabled");
 	timer = 0;
@@ -162,41 +175,47 @@ rescuereset()
 {
 	wait 0.5;
     players = getAllPlayers();
-    for( i = 0; i < players.size; i++ )
-		players[i] SetStat(2801, 0 );
+    for(i = 0; i < players.size; i++)
+		players[i] SetStat(2801, 0);
 }
 
 sd_endGame(winningTeam,endReasonText)
 {	
-	if(isdefined(winningTeam))[[level._setTeamScore]](winningTeam,[[level._getTeamScore]](winningTeam)+1);
+	if(isdefined(winningTeam))[[level._setTeamScore]](winningTeam,[[level._getTeamScore]](winningTeam) + 1);
 	thread maps\mp\gametypes\_globallogic::endGame(winningTeam, endReasonText);
 }
 
 onDeadEvent(team)
 {
 	if(maps\mp\gametypes\_teams::getTeamBalance() == true)
-	 level maps\mp\gametypes\_teams::balanceTeams(true);
+	 level maps\mp\gametypes\_teams::balanceTeams();
 	
 	if(level.bombExploded || level.bombDefused) return;
 	if(team == "all")
 	{
-		if(level.bombPlanted) sd_endGame(game["attackers"], game["strings"][game["defenders"] + "_eliminated"]);
-		else sd_endGame(game["defenders"],game["strings"][game["attackers"] + "_eliminated"]);
+		if(level.bombPlanted)
+			sd_endGame(game["attackers"], game["strings"][game["defenders"] + "_eliminated"]);
+		else
+			sd_endGame(game["defenders"],game["strings"][game["attackers"] + "_eliminated"]);
 	}
 	else if(team == game["attackers"])
 	{
-		if(level.bombPlanted) return;
+		if(level.bombPlanted)
+			return;
 		sd_endGame(game["defenders"], game["strings"][game["attackers"] + "_eliminated"]);
 	}
-	else if(team == game["defenders"]) sd_endGame(game["attackers"], game["strings"][game["defenders"] + "_eliminated"]);
+	else if(team == game["defenders"])
+		sd_endGame(game["attackers"], game["strings"][game["defenders"] + "_eliminated"]);
 }
 
 onTimeLimit()
 {
 	if(maps\mp\gametypes\_teams::getTeamBalance() == true)
-	 level maps\mp\gametypes\_teams::balanceTeams(true);
-	if(level.teamBased) sd_endGame(game["defenders"],game["strings"]["time_limit_reached"]);
-	else sd_endGame(undefined,game["strings"]["time_limit_reached"]);
+	 level maps\mp\gametypes\_teams::balanceTeams();
+	if(level.teamBased)
+		sd_endGame(game["defenders"],game["strings"]["time_limit_reached"]);
+	else
+		sd_endGame(undefined,game["strings"]["time_limit_reached"]);
 }
 
 updateGametypeDvars()
@@ -212,12 +231,16 @@ bombs()
 	level.bombPlanted = false;
 	level.bombDefused = false;
 	level.bombExploded = false;
+	
 	trigger = getEnt("sd_bomb_pickup_trig", "targetname");
-	if(!isDefined(trigger)) return;
+	if(!isDefined(trigger))
+		return;
 	visuals[0] = getEnt("sd_bomb", "targetname");
-	if(!isDefined(visuals[0])) return;
+	if(!isDefined(visuals[0]))
+		return;
 	precacheModel("prop_suitcase_bomb");
 	visuals[0] setModel("prop_suitcase_bomb");
+	
 	if(!level.multiBomb&&!game["PROMOD_KNIFEROUND"]&&isDefined(game["PROMOD_MATCH_MODE"])&&game["PROMOD_MATCH_MODE"]!="strat")
 	{
 		level.sdBomb = maps\mp\gametypes\_gameobjects::createCarryObject(game["attackers"],trigger, visuals, (0, 0, 32));
@@ -234,18 +257,20 @@ bombs()
 		trigger delete();
 		visuals[0] delete();
 	}
+
 	level.bombZones = [];
 	bombZones = getEntArray("bombzone", "targetname");
-	for( i=0; i < bombZones.size; i++ )
+	for(i = 0; i < bombZones.size; i++)
 	{
 		trigger = bombZones[i];
 		visuals = getEntArray(bombZones[i].target, "targetname");
 		bombZone = maps\mp\gametypes\_gameobjects::createUseObject(game["defenders"], trigger, visuals, (0, 0, 64));
 		bombZone maps\mp\gametypes\_gameobjects::allowUse("enemy");
 		bombZone maps\mp\gametypes\_gameobjects::setUseTime(level.plantTime);
-		bombZone maps\mp\gametypes\_gameobjects::setUseText( &"MP_PLANTING_EXPLOSIVE");
-		bombZone maps\mp\gametypes\_gameobjects::setUseHintText( &"PLATFORM_HOLD_TO_PLANT_EXPLOSIVES");
-		if(!level.multiBomb) bombZone maps\mp\gametypes\_gameobjects::setKeyObject(level.sdBomb);
+		bombZone maps\mp\gametypes\_gameobjects::setUseText(&"MP_PLANTING_EXPLOSIVE");
+		bombZone maps\mp\gametypes\_gameobjects::setUseHintText(&"PLATFORM_HOLD_TO_PLANT_EXPLOSIVES");
+		if(!level.multiBomb)
+			bombZone maps\mp\gametypes\_gameobjects::setKeyObject(level.sdBomb);
 		label = bombZone maps\mp\gametypes\_gameobjects::getLabel();
 		bombZone.label = label;
 		bombZone maps\mp\gametypes\_gameobjects::set2DIcon("friendly", "compass_waypoint_defend" + label);
@@ -255,7 +280,8 @@ bombs()
 		bombZone.onEndUse = ::onEndUse;
 		bombZone.onUse = ::onUsePlantObject;
 		bombZone.onCantUse = ::onCantUse;
-		for( j=0; j < visuals.size; j++ )
+		
+		for(j = 0; j < visuals.size; j++)
 		{
 			if(isDefined(visuals[j].script_exploder))
 			{
@@ -268,12 +294,13 @@ bombs()
 		bombZone.bombDefuseTrig.origin += (0, 0, -10000);
 		bombZone.bombDefuseTrig.label = label;
 	}
-	for( i=0; i < level.bombZones.size; i++)
+	for(i = 0; i < level.bombZones.size; i++)
 	{
 		array = [];
-		for( j=0; j < level.bombZones.size; j++)
+		for(j = 0; j < level.bombZones.size; j++)
 		{
-			if(j!=i) array[array.size] = level.bombZones[j];
+			if(j != i)
+				array[array.size] = level.bombZones[j];
 		}
 		level.bombZones[i].otherBombZones = array;
 	}
@@ -285,7 +312,8 @@ onBeginUse(player)
 	{
 		player playSound("mp_bomb_defuse");
 		player.isDefusing = true;
-		if(isDefined(level.sdBombModel)) level.sdBombModel hide();
+		if(isDefined(level.sdBombModel))
+			level.sdBombModel hide();
 	}
 	else
 	{
@@ -293,7 +321,8 @@ onBeginUse(player)
 		player.isPlanting = true;
 		if(level.multibomb)
 		{
-			for( i=0; i < self.otherBombZones.size; i++) self.otherBombZones[i] maps\mp\gametypes\_gameobjects::disableObject();
+			for(i = 0; i < self.otherBombZones.size; i++)
+				self.otherBombZones[i] maps\mp\gametypes\_gameobjects::disableObject();
 		}
 	}
 }
@@ -307,13 +336,14 @@ onEndUse(team, player, result)
 	}
 	if(self maps\mp\gametypes\_gameobjects::isFriendlyTeam(player.pers["team"]))
 	{
-		if(isDefined(level.sdBombModel) && !result) level.sdBombModel show();
+		if(isDefined(level.sdBombModel) && !result)
+			level.sdBombModel show();
 	}
 	else
 	{
 		if(level.multibomb && !result)
 		{
-			for( i=0; i < self.otherBombZones.size; i++) 
+			for(i=0; i < self.otherBombZones.size; i++) 
 				self.otherBombZones[i] maps\mp\gametypes\_gameobjects::enableObject();
 		}
 	}
@@ -321,22 +351,29 @@ onEndUse(team, player, result)
 
 onCantUse(player)
 {
-	player iPrintLnBold( &"MP_CANT_PLANT_WITHOUT_BOMB");
+	player iPrintLnBold(&"MP_CANT_PLANT_WITHOUT_BOMB");
 }
 
 onUsePlantObject(player)
 {
-	if(level.gameEnded) return;
+	if(level.gameEnded)
+		return;
 	if(!self maps\mp\gametypes\_gameobjects::isFriendlyTeam(player.pers["team"]))
 	{
-		if(!level.hardcoreMode) iPrintLn( &"MP_EXPLOSIVES_PLANTED_BY", player.name);
+		if(!level.hardcoreMode)
+			iPrintLn(&"MP_EXPLOSIVES_PLANTED_BY", player.name);
+		
 		maps\mp\gametypes\_globallogic::givePlayerScore("plant", player);
-		for( i=0; i < level.bombZones.size; i++)
+		
+		for(i = 0; i < level.bombZones.size; i++)
 		{
-			if(level.bombZones[i] == self) continue;
+			if(level.bombZones[i] == self)
+				continue;
 			level.bombZones[i] maps\mp\gametypes\_gameobjects::disableObject();
 		}
-		for( i=0; i < level.players.size; i++) level.players[i] playLocalSound("promod_planted");
+		for(i = 0; i < level.players.size; i++)
+			level.players[i] playLocalSound("promod_planted");
+		
 		player thread[[level.onXPEvent]]("plant");
 		level thread bombPlanted(self, player);
 		logPrint("P_P;"+player getGuid()+";"+player getEntityNumber()+";"+player.name+"\n");
@@ -345,11 +382,16 @@ onUsePlantObject(player)
 
 onUseDefuseObject(player)
 {
-	if(level.gameEnded || level.bombExploded) return;
+	if(level.gameEnded || level.bombExploded)
+		return;
+	
 	level thread bombDefused();
 	self maps\mp\gametypes\_gameobjects::disableObject();
 	playSoundOnPlayers("promod_defused");
-	if(!level.hardcoreMode) iPrintLn( &"MP_EXPLOSIVES_DEFUSED_BY", player.name);
+	
+	if(!level.hardcoreMode)
+		iPrintLn(&"MP_EXPLOSIVES_DEFUSED_BY", player.name);
+	
 	maps\mp\gametypes\_globallogic::givePlayerScore("defuse", player);
 	player thread[[level.onXPEvent]]("defuse");
 	logPrint("P_D;"+player getGuid()+";"+player getEntityNumber()+";"+player.name+"\n");
@@ -360,10 +402,12 @@ onDrop(player)
 	if(!level.bombPlanted)
 	{
 		if(isDefined(player) && isDefined(player.name))
-			printOnTeamArg( &"MP_EXPLOSIVES_DROPPED_BY", game["attackers"], player);
+			printOnTeamArg(&"MP_EXPLOSIVES_DROPPED_BY", game["attackers"], player);
 	}
+	
 	self maps\mp\gametypes\_gameobjects::set3DIcon("friendly", "waypoint_bomb");
-	if (!level.bombPlanted) playSoundOnPlayers(game["bomb_dropped_sound"], game["attackers"]);
+	if(!level.bombPlanted)
+		playSoundOnPlayers(game["bomb_dropped_sound"], game["attackers"]);
 }
 
 onPickup(player)
@@ -372,7 +416,7 @@ onPickup(player)
 	if(!level.bombDefused)
 	{
 		if(isDefined(player) && isDefined(player.name)) 
-			printOnTeamArg( &"MP_EXPLOSIVES_RECOVERED_BY", game["attackers"], player);
+			printOnTeamArg(&"MP_EXPLOSIVES_RECOVERED_BY", game["attackers"], player);
 	}
 	playSoundOnPlayers(game["bomb_recovered_sound"], game["attackers"]);
 }
@@ -395,9 +439,10 @@ bombPlanted(destroyedObj, player)
 	}
 	else
 	{
-		for( i=0; i < level.players.size; i++)
+		for(i = 0; i < level.players.size; i++)
 		{
-			if(isDefined(level.players[i].carryIcon)) level.players[i].carryIcon destroyElem();
+			if(isDefined(level.players[i].carryIcon))
+				level.players[i].carryIcon destroyElem();
 		}
 		trace = bulletTrace(player.origin + (0, 0, 20), player.origin - (0, 0, 2000), false, player);
 		tempAngle = randomfloat(360);
@@ -414,11 +459,12 @@ bombPlanted(destroyedObj, player)
 	trigger = destroyedObj.bombDefuseTrig;
 	trigger.origin = level.sdBombModel.origin;
 	visuals = [];
+	
 	defuseObject = maps\mp\gametypes\_gameobjects::createUseObject(game["defenders"], trigger, visuals, (0, 0, 32));
 	defuseObject maps\mp\gametypes\_gameobjects::allowUse("friendly");
 	defuseObject maps\mp\gametypes\_gameobjects::setUseTime(level.defuseTime);
-	defuseObject maps\mp\gametypes\_gameobjects::setUseText( &"MP_DEFUSING_EXPLOSIVE");
-	defuseObject maps\mp\gametypes\_gameobjects::setUseHintText( &"PLATFORM_HOLD_TO_DEFUSE_EXPLOSIVES");
+	defuseObject maps\mp\gametypes\_gameobjects::setUseText(&"MP_DEFUSING_EXPLOSIVE");
+	defuseObject maps\mp\gametypes\_gameobjects::setUseHintText(&"PLATFORM_HOLD_TO_DEFUSE_EXPLOSIVES");
 	defuseObject maps\mp\gametypes\_gameobjects::setVisibleTeam("any");
 	defuseObject maps\mp\gametypes\_gameobjects::set2DIcon("friendly", "compass_waypoint_defuse" + label);
 	defuseObject maps\mp\gametypes\_gameobjects::set2DIcon("enemy", "compass_waypoint_defend" + label);
@@ -429,17 +475,26 @@ bombPlanted(destroyedObj, player)
 	BombTimerWait();
 	setDvar("ui_bomb_timer", 0);
 	destroyedObj.visuals[0] maps\mp\gametypes\_globallogic::stopTickingSound();
-	if(level.gameEnded || level.bombDefused) return;
+	
+	if(level.gameEnded || level.bombDefused)
+		return;
 	level.bombExploded = true;
 	explosionOrigin = level.sdBombModel.origin;
 	level.sdBombModel hide();
-	if(isdefined(player))destroyedObj.visuals[0] radiusDamage(explosionOrigin, 512, 200, 20, player);
-	else destroyedObj.visuals[0] radiusDamage(explosionOrigin, 512, 200, 20);
+	
+	if(isdefined(player))
+		destroyedObj.visuals[0] radiusDamage(explosionOrigin, 512, 200, 20, player);
+	else 
+		destroyedObj.visuals[0] radiusDamage(explosionOrigin, 512, 200, 20);
+	
 	rot = randomfloat(360);
 	explosionEffect = spawnFx(level.fx["bombexplosion"], explosionOrigin + (0, 0, 50), (0, 0, 1), (cos(rot), sin(rot), 0));
 	triggerFx(explosionEffect);
 	thread playSoundinSpace("exp_suitcase_bomb_main", explosionOrigin);
-	for(i=0; i < level.bombZones.size; i++) level.bombZones[i] maps\mp\gametypes\_gameobjects::disableObject();
+	
+	for(i = 0; i < level.bombZones.size; i++)
+		level.bombZones[i] maps\mp\gametypes\_gameobjects::disableObject();
+	
 	defuseObject maps\mp\gametypes\_gameobjects::disableObject();
 	setGameEndTime(0);
 	playSoundOnPlayers("promod_destroyed");
@@ -477,124 +532,129 @@ bombDefused()
 intoSpawn(originA, anglesA)
 {
 	self endon("disconnect");
-	if(isDefined(self.pers["gotani"]))
+	if(isDefined(self.pers["firstSpawn"]))
 		return;
-	self.pers["gotani"] = true;
-	self playLocalSound( "ui_camera_whoosh_in" );
+	self.pers["firstSpawn"] = true;
+	
+	self playLocalSound("ui_camera_whoosh_in");
 	wait 0.1;
-	self freezeControls( true );
+	self freezeControls(true);
 	zoomHeight = 6500;
 	slamzoom = true;
-	self.origin = originA + ( 0, 0, zoomHeight );
-	ent = spawn( "script_model", self.origin );
-	if(isDefined(self)) self thread ispawnang(ent);
+	self.origin = originA + (0, 0, zoomHeight);
+	ent = spawn("script_model", self.origin);
+	
+	if(isDefined(self))
+		self thread ispawnang(ent);
+	
 	ent.angles = anglesA;
-	ent setmodel( "tag_origin" );
-	self linkto( ent );
-	ent.angles = ( ent.angles[ 0 ] + 89, ent.angles[ 1 ], ent.angles[ 2 ] );
-	ent moveto ( originA + (0,0,0), 2, 0, 2 );
+	ent setmodel("tag_origin");
+	self linkto(ent);
+	ent.angles = (ent.angles[0] + 89, ent.angles[1], ent.angles[2]);
+	ent moveto(originA + (0,0,0), 2, 0, 2);
 	wait 1.6;
-	ent rotateto( ( ent.angles[ 0 ] - 89, ent.angles[ 1 ], ent.angles[ 2 ]  ), 0.5, 0.3, 0.2 );
+	ent rotateto((ent.angles[0] - 89, ent.angles[1], ent.angles[2]), 0.5, 0.3, 0.2);
 	wait 0.6;
 	if(isDefined(self))
 	{
 		self unlink();
-		self freezeControls( false );
+		self freezeControls(false);
 	}
-	if(isDefined(ent))ent delete();
+	if(isDefined(ent))
+		ent delete();
 }
 
 ispawnang(ent)
 {
 	while(isDefined(ent) && isDefined(self))
 	{
-		self SetPlayerAngles( ent.angles );
+		self SetPlayerAngles(ent.angles);
 		wait 0.05;
 	}
 }
 
-onPlayerKilled( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, psOffsetTime, deathAnimDuration )
+onPlayerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, psOffsetTime, deathAnimDuration)
 {
-	if( isPlayer( attacker ) && attacker != self && (self GetStat(2801) < 1))
-		self thread spawnDogTags( attacker );
+	if(isPlayer(attacker) && attacker != self && (self GetStat(2801) < 1))
+		self thread spawnDogTags(attacker);
 } 
 
-spawnDogTags( attacker )
+spawnDogTags(attacker)
 {
 	if(isDefined(attacker) && self.pers["team"] != "spectator" && attacker != self) 
 	{
-		basePosition = playerPhysicsTrace( self.origin + ( 0, 0, 10 ), self.origin + ( 0, 0, -99999 ) );
+		basePosition = playerPhysicsTrace(self.origin + (0, 0, 10), self.origin + (0, 0, -99999));
 		
-		trigger = spawn( "trigger_radius", basePosition, 0, 20, 50 );
-		trigger endon( "picked_up" );
-		trigger endon( "timed_out" );
+		trigger = spawn("trigger_radius", basePosition, 0, 20, 50);
+		trigger endon("picked_up");
+		trigger endon("timed_out");
 		trigger.owner = attacker;
 		trigger.team = attacker.pers["team"];
 		
-		friendlyTag = spawn( "script_model", basePosition + ( 0, 0, 20 ) );
-		friendlyTag endon( "picked_up" );
-		friendlyTag endon( "timed_out" );
-		friendlyTag setModel( "cross_dogtag" );
+		friendlyTag = spawn("script_model", basePosition + (0, 0, 20));
+		friendlyTag endon("picked_up");
+		friendlyTag endon("timed_out");
+		friendlyTag setModel("cross_dogtag");
 		friendlyTag.team = self.pers["team"];
 		friendlyTag.owner = self;
 		
-		enemyTag = spawn( "script_model", basePosition + ( 0, 0, 20 ) );
-		enemyTag endon( "picked_up" );
-		enemyTag endon( "timed_out" );
-		enemyTag setModel( "skull_dogtag" );
+		enemyTag = spawn("script_model", basePosition + (0, 0, 20));
+		enemyTag endon("picked_up");
+		enemyTag endon("timed_out");
+		enemyTag setModel("skull_dogtag");
 		enemyTag.team = attacker.pers["team"];
 		enemyTag.owner = self;
 		
-		self thread onJoinedDisconnect( enemyTag, friendlyTag, trigger );
+		self thread onJoinedDisconnect(enemyTag, friendlyTag, trigger);
 		friendlyTag thread bounce();
 		enemyTag thread bounce();
 		friendlyTag thread showTagToTeam();
 		enemyTag thread showTagToTeam();
-		trigger thread onUseTag( friendlyTag, enemyTag, trigger );
+		trigger thread onUseTag(friendlyTag, enemyTag, trigger);
 	}
 }
 
-onUseTag( friendlyTag, enemyTag, trigger )
+onUseTag(friendlyTag, enemyTag, trigger)
 { 
 	//self endon("disconnect"); Test the proper entity
-	trigger endon( "timed_out" );
-	friendlyTag endon( "timed_out" );
-	enemyTag endon( "timed_out" );
-	trigger waittill( "trigger", taker );
+	trigger endon("timed_out");
+	friendlyTag endon("timed_out");
+	enemyTag endon("timed_out");
+	trigger waittill("trigger", taker);
 	for(;;)
 	{
-		trigger waittill( "trigger", taker );
-		if( !isdefined(taker) || !isAlive(taker) || !isDefined(taker.pers["team"]) )
+		trigger waittill("trigger", taker);
+		if(!isdefined(taker) || !isAlive(taker) || !isDefined(taker.pers["team"]))
 			continue;
 		else break;
 	}
 
-	if( taker.pers["team"] == friendlyTag.team ) 
+	if(taker.pers["team"] == friendlyTag.team) 
 	{
 		tagowner = friendlyTag.owner;
 		event = "tags_retrieved";
 		splash = "Rescued";
-		taker thread onPickupDogTag( event, splash );	
+		taker thread onPickupDogTag(event, splash);	
 		taker.pers["rescues"]++;
 		temp = taker GetStat(3001);
 		taker SetStat(3001, temp+1);
-		if ( isDefined( tagowner ) )
+		if (isDefined(tagowner))
 		{
 			taker clearLowerMessage();
 			tagowner thread maps\mp\gametypes\_globallogic::spawnPlayer();
-			tagowner setweaponammoclip("frag_grenade_mp",0);
-			tagowner setweaponammostock("frag_grenade_mp",0);
-			tagowner setweaponammoclip("flash_grenade_mp",0);
-			tagowner setweaponammostock("flash_grenade_mp",0);			
-			tagowner setweaponammoclip("smoke_grenade_mp",0);
-			tagowner setweaponammostock("smoke_grenade_mp",0);			
+			tagowner setweaponammoclip("frag_grenade_mp", 0);
+			tagowner setweaponammostock("frag_grenade_mp", 0);
+			tagowner setweaponammoclip("flash_grenade_mp", 0);
+			tagowner setweaponammostock("flash_grenade_mp", 0);			
+			tagowner setweaponammoclip("smoke_grenade_mp", 0);
+			tagowner setweaponammostock("smoke_grenade_mp", 0);			
 			tagowner iprintLnBold("^1You were rescued!");
 			temp = tagowner GetStat(2801);
-			tagowner SetStat( 2801, int(temp) + 1 ); // Rescue limit
+			tagowner SetStat(2801, int(temp) + 1); // Rescue limit
 			tagowner thread protection();
 		}
 	}
-	if ( taker.pers["team"] == enemyTag.team ) 
+	if (taker.pers["team"] == enemyTag.team) 
 	{
 		tagowner = enemyTag.owner;
 		event = "kill_confirmed";
@@ -602,17 +662,20 @@ onUseTag( friendlyTag, enemyTag, trigger )
 		taker.pers["gottags"]++;
 		temp = taker GetStat(3002);
 		taker SetStat(3002, temp+1);
-		taker thread onPickupDogTag( event, splash );
-		if ( isDefined( tagowner ) )
-			tagowner thread underScorePopup( "Eliminated" );
+		taker thread onPickupDogTag(event, splash);
+		if (isDefined(tagowner))
+			tagowner thread underScorePopup("Eliminated");
 	}
-	trigger playSound( "dogtag_kc_pickup" );
-	trigger notify( "picked_up" );
-	friendlyTag notify( "picked_up" );
-	enemyTag notify( "picked_up" );
-	if(isDefined(trigger)) trigger delete();
-	if(isDefined(friendlyTag)) friendlyTag delete();
-	if(isDefined(enemyTag)) enemyTag delete();
+	trigger playSound("dogtag_kc_pickup");
+	trigger notify("picked_up");
+	friendlyTag notify("picked_up");
+	enemyTag notify("picked_up");
+	if(isDefined(trigger))
+		trigger delete();
+	if(isDefined(friendlyTag))
+		friendlyTag delete();
+	if(isDefined(enemyTag))
+		enemyTag delete();
 }
 
 waittill_any_or_time(x,y,z,time,r)
@@ -621,76 +684,75 @@ waittill_any_or_time(x,y,z,time,r)
 	
 	if(isDefined(x))
 		self endon(x);
-
 	if(isDefined(y))
 		self endon(y);
-
 	if(isDefined(z))
 		self endon(z);
-	
 	if(isDefined(r))
 		self endon(r);
-
 	if(isDefined(time))
 		wait time;
 }
 
-onJoinedDisconnect( enemyTag, friendlyTag, trigger )
+onJoinedDisconnect(enemyTag, friendlyTag, trigger)
 {
-	self endon( "spawned_player" );
-	self endon( "game_ended" );
+	self endon("spawned_player");
+	self endon("game_ended");
 
-	self waittill_any_or_time( "disconnect", "joined_team", "joined_spectators", 22, "pickup");
+	self waittill_any_or_time("disconnect", "joined_team", "joined_spectators", 22, "pickup");
 
-	trigger notify( "picked_up" );
-	friendlyTag notify( "picked_up" );
-	enemyTag notify( "picked_up" );
+	trigger notify("picked_up");
+	friendlyTag notify("picked_up");
+	enemyTag notify("picked_up");
 
-	trigger notify( "timed_out" );
-	friendlyTag notify( "timed_out" );
-	enemyTag notify( "timed_out" );
+	trigger notify("timed_out");
+	friendlyTag notify("timed_out");
+	enemyTag notify("timed_out");
 
-	if(isDefined(trigger))trigger delete();
-	if(isDefined(friendlyTag))friendlyTag delete();
-	if(isDefined(enemyTag))enemyTag delete();
+	if(isDefined(trigger))
+		trigger delete();
+	if(isDefined(friendlyTag))
+		friendlyTag delete();
+	if(isDefined(enemyTag))
+		enemyTag delete();
 }
 
-onPickupDogTag( event, splash )
+onPickupDogTag(event, splash)
 {
 	if(isPlayer(self))
 	{
 		self thread underScorePopup(splash);
-		self thread maps\mp\gametypes\_rank::giveRankXP( event );
+		self thread maps\mp\gametypes\_rank::giveRankXP(event);
 		self.pers["score"] += 2;
-		self maps\mp\gametypes\_persistence::statAdd( "score", self.pers["score"] );
+		self maps\mp\gametypes\_persistence::statAdd("score", self.pers["score"]);
 		self.score = self.pers["score"];
 	}
 }
 
 bounce()
 {
-	self endon( "picked_up" );
-	self endon( "timed_out" );
-	while( isDefined(self) )
+	self endon("picked_up");
+	self endon("timed_out");
+	while(isDefined(self))
 	{
-		self rotateYaw( 360, 3, 0.3, 0.3 );
-		self moveZ( 20, 1.5, 0.3, 0.3 );
+		self rotateYaw(360, 3, 0.3, 0.3);
+		self moveZ(20, 1.5, 0.3, 0.3);
 		wait 1.5;
-		self moveZ( -20, 1.5, 0.3, 0.3 );
+		self moveZ(-20, 1.5, 0.3, 0.3);
 		wait 1.5;	
 	}
 }
 
 showTagToTeam()
 {
-	while( isDefined( self ) ) // use while() in case player changes team
+	while(isDefined(self)) // use while() in case player changes team
 	{
 		self hide();
-		for( i = 0 ; i < level.players.size ; i ++ )
+		for(i = 0 ; i < level.players.size ; i ++)
 		{
 			player = level.players[i];
-			if ( player.pers["team"] == self.team )
-				self showToPlayer( player );
+			if (player.pers["team"] == self.team)
+				self showToPlayer(player);
 		}
 		wait 0.05;
 	}

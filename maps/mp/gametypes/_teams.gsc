@@ -186,7 +186,7 @@ updateTeamBalance()
 
 		if(isDefined(game["BalanceTeamsNextRound"]))
 		{
-			level balanceTeams(false);
+			level balanceTeams();
 			game["BalanceTeamsNextRound"] = undefined;
 		}
 		else if(!getTeamBalance())
@@ -205,7 +205,7 @@ updateTeamBalance()
 				    wait 15.0;
 
 					if(!getTeamBalance())
-						level balanceTeams(false);
+						level balanceTeams();
 				}
 				wait 59.0;
 			}
@@ -235,7 +235,7 @@ getTeamBalance()
 		return true;
 }
 
-balanceTeams(roundEnd)
+balanceTeams()
 {
 	AlliedPlayers = [];
 	AxisPlayers = [];
@@ -262,7 +262,7 @@ balanceTeams(roundEnd)
 				if(AlliedPlayers[j].pers["teamTime"] > mostRecentPlayer.pers["teamTime"])
 					mostRecentPlayer = AlliedPlayers[j];
 			}
-			mostRecentPlayer changeTeam("axis", roundEnd);
+			mostRecentPlayer changeTeam("axis");
 		}
 		else if(AxisPlayers.size > (AlliedPlayers.size + 1))
 		{
@@ -274,7 +274,7 @@ balanceTeams(roundEnd)
 				if(AxisPlayers[j].pers["teamTime"] > mostRecentPlayer.pers["teamTime"])
 					mostRecentPlayer = AxisPlayers[j];
 			}
-			mostRecentPlayer changeTeam("allies", roundEnd);
+			mostRecentPlayer changeTeam("allies");
 		}
 		
 		mostRecentPlayer = undefined;
@@ -294,7 +294,7 @@ balanceTeams(roundEnd)
 	iPrintLn("^1Teams are balancing!");
 }
 
-changeTeam(team, roundEnd)
+changeTeam(team)
 {
 	if(self.sessionstate != "dead")
 	{
@@ -303,7 +303,7 @@ changeTeam(team, roundEnd)
 		self.joining_team = team;
 		self.leaving_team = self.pers["team"];
 		// Suicide the player so they can't hit escape and fail the team balance, don't balance if SD/SR and its round end
-		if(self.sessionstate == "playing" && level.gametype != "sd" && level.gametype != "sr" && roundEnd == false)
+		if(self.sessionstate == "playing" && level.gametype != "sd" && level.gametype != "sr")
 			self suicide();
 	}
 
