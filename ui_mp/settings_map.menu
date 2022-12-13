@@ -3,12 +3,9 @@
 
 #define CHOICE_SIZE_X			150
 #define CHOICE_SIZE_Y			22
-
 #define CHOICE_X_START			0
 #define CHOICE_Y_START			34
-
 #define CHOICE_SEP_OFFSET_Y		-2
-
 #define CHOICE_GROUP			"map_selection"
 
 #include "ui_mp/menustyle.inc"
@@ -16,10 +13,10 @@
 
 #undef A_BUTTON_SIZE
 #define A_BUTTON_SIZE			0.3
-
 #undef A_BUTTON_OFFSET_X
 #define A_BUTTON_OFFSET_X		-2
-// ------------------- end preprocessing definitions ----------------------
+
+// ------------------- End preprocessing definitions ----------------------
 {
 	menuDef
 	{
@@ -45,7 +42,7 @@
 		}
 		
 		// ------------------  statics ------------------------
-#include "ui/blurredbg.inc"
+		#include "ui/blurredbg.inc"
 
 		CHOICE_MENU_TITLE( "@MENU_CHOOSE_MAP_CAP" )
 		
@@ -68,7 +65,6 @@
 			LOCAL_MAP_SELECTION( 16, "@MPUI_CARGOSHIP", "mp_cargoship" )
 			
 		#define MAP_TABLE	"mp/mapsTable.csv"
-		
 		#include "ui_mp/map_info.inc"
 	}
 }

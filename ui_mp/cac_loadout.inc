@@ -1,12 +1,12 @@
-#define LOADOUT_WIDTH 			270
+#define LOADOUT_WIDTH 270
 
 #ifdef PC
-	#define ORIGIN_LOADOUT			((-(LOADOUT_WIDTH - RIGHTITEM_OFFSET))-80) 38
+	#define ORIGIN_LOADOUT ((-(LOADOUT_WIDTH - RIGHTITEM_OFFSET))-80) 38
 #else
-	#define ORIGIN_LOADOUT			(-(LOADOUT_WIDTH - RIGHTITEM_OFFSET)) 38
+	#define ORIGIN_LOADOUT (-(LOADOUT_WIDTH - RIGHTITEM_OFFSET)) 38
 #endif
 
-#define RATEBAR_FRAME_BORDER		0//WINDOW_BORDER_SUNKEN
+#define RATEBAR_FRAME_BORDER		0
 #define RATEBAR_FRAME_BORDERSIZE	2
 #define RATEBAR_FRAME_BORDERCOLOR	0 0 0.9 1
 
@@ -28,10 +28,8 @@
 /* ================================================================================= */
 /* ================================ LOADOUT DISPLAY ================================ */
 /* ================================================================================= */
-// UI art: Julian version 2 - first pass
 
 // CAC loadout main frame =================
-
 	#define LOADOUT_ALIGN 	RIGHTITEM_ALIGN VERTICAL_ALIGN_TOP
 	#define PERK_ALIGN		
 	
@@ -45,8 +43,8 @@
 		//PREPROC_SHADER_DRAW_ALIGNED( (px-4) (py-24) pw 16 palign, porigin, "gradient_bottom", 1 0 1 0.4, 0, 0, 0 0 0 0 visible when( vis_gradient_top ) )
 	// background frame --------
 	PREPROC_SHADER_DRAW_ALIGNED( -4 12 (LOADOUT_WIDTH+8) 326 LOADOUT_ALIGN, ORIGIN_LOADOUT, "gradient_center", 0.3 0.2 0.2 0.6, 0, 0, 0 0 0 0 )
-//	PREPROC_SHADER_DRAW_ALIGNED( -4 12 (LOADOUT_WIDTH+8) 326 LOADOUT_ALIGN, ORIGIN_LOADOUT, "gradient_center", 1 1 1 0.425, 0, 0, 0 0 0 0 )
-//	PREPROC_SHADER_DRAW_ALIGNED( -4 12 (LOADOUT_WIDTH+8) 326 LOADOUT_ALIGN, ORIGIN_LOADOUT, "white", 0 0 0 0.65, 0, 0, 0 0 0 0 )
+	//PREPROC_SHADER_DRAW_ALIGNED( -4 12 (LOADOUT_WIDTH+8) 326 LOADOUT_ALIGN, ORIGIN_LOADOUT, "gradient_center", 1 1 1 0.425, 0, 0, 0 0 0 0 )
+	//PREPROC_SHADER_DRAW_ALIGNED( -4 12 (LOADOUT_WIDTH+8) 326 LOADOUT_ALIGN, ORIGIN_LOADOUT, "white", 0 0 0 0.65, 0, 0, 0 0 0 0 )
 
 #ifdef PC
 	PREPROC_SHADER_DRAW_ALIGNED( -24 -4 -20 358 LOADOUT_ALIGN, ORIGIN_LOADOUT, "gradient", 1 1 1 0.65, 0, 0, 0 0 0 0 )
@@ -65,6 +63,7 @@
 	/* bottom bar */		LOADOUT_PLATING( 346, 16, 1, 0 )
 	/* weapon divider */   LOADOUT_PLATING( 104, 8, 1, 1 )
 	/* perk plate */ 		LOADOUT_PLATING( 192, 16, 1, 1 )
+	
 	// perks //
 	PREPROC_TEXT_DRAW_ALIGNED_EXP( -4 181 (LOADOUT_WIDTH+8) 20 LOADOUT_ALIGN, ORIGIN_LOADOUT, "@MPUI_PERKS_AND_INVENTORY", TEXTSIZE_SMALL, 0, 0, ITEM_ALIGN_MIDDLE_CENTER, CHOICE_TEXTCOLOR )
 	

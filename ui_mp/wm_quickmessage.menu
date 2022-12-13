@@ -1,15 +1,15 @@
 #include "ui/menudef.h"
 #include "ui_mp/common_macro.inc"
 
-#define CHOICE_GROUP            "quickmessage"
+#define CHOICE_GROUP "quickmessage"
 
 #include "ui_mp/menustyle.inc"
 #include "ui/choices_setup_common.menu"
 
 #undef CHOICE_SIZE_X
-#define CHOICE_SIZE_X           186
+#define CHOICE_SIZE_X 186
 
-#define ORIGIN_QUICKMESSAGEWINDOW       0 16
+#define ORIGIN_QUICKMESSAGEWINDOW 0 16
 
 {
     menuDef
@@ -21,10 +21,21 @@
         foreColor                 1 1 1 1
 		popup                     
         visible 				  0    
-        onOpen                    { setDvar cl_bypassMouseInput 1 ;  }
-        onClose                   { setDvar cl_bypassMouseInput 0  }
-        onESC                     { play mouse_click ; close self ;  }
+        onOpen                    
+		{
+			setDvar cl_bypassMouseInput 1;
+		}
+        onClose                   
+		{
+			setDvar cl_bypassMouseInput 0
+		}
+        onESC                     
+		{
+			play mouse_click;
+			close self;
+		}
 
+		// Quickmessages initial menu
 		itemDef
         {
             rect                      10 10 130 145 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
@@ -151,7 +162,7 @@
             text            "6. Menus"
             decoration
         }
-        execKey "6" { close quickmessage; open quickpromodfps }
+        execKey "6" { close quickmessage; open quickmenus }
 
         itemDef
         {

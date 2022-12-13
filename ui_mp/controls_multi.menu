@@ -1,8 +1,8 @@
 #include "ui/menudef.h"
 #include "ui_mp/common_macro.inc"
-#define 	OPTIONS_STYLE			1
-#define 	CHOICE_SEP_1			24
-#define		CHOICE_SEP_2			31
+#define  OPTIONS_STYLE  1
+#define  CHOICE_SEP_1  24
+#define	 CHOICE_SEP_2  31
 #include "ui_mp/menustyle.inc"
 #include "ui/choices_setup_common.menu"
 
@@ -16,7 +16,6 @@
 		onOpen
 		{
 			exec "setfromdvar ui_name name";
-			
 			close options_look;
 			close options_move;
 			close options_shoot;
@@ -30,7 +29,6 @@
 			close options_graphics_defaults;
 			close options_graphics_texture;
 			close options_control_defaults;
-
 			setLocalVarBool ui_hideBack 1;
 		}
 		onClose
@@ -41,11 +39,9 @@
 		{ 
 			close self;		
 		}
-
-		#include "ui_mp/leftside_controls.inc"
 		
+		#include "ui_mp/leftside_controls.inc"
 		CHOICE_SECTION_TITLE( 21, "@MENU_MULTIPLAYER_CONTROLS" )
-
 		CHOICE_BIND( 22, "@MENU_CHAT", "chatmodepublic", ; )
 		CHOICE_BIND( 23, "@MENU_TEAM_CHAT", "chatmodeteam", ; )
 		CHOICE_BIND( 24, "@MENU_QUICK_CHAT", "mp_QuickMessage", ; )
@@ -64,7 +60,6 @@
 		CHOICE_BIND( 35, "Toggle Film Tweaks", "openscriptmenu quickpromodgfx 2", ; )
 		CHOICE_BIND( 36, "Toggle Normal Map", "openscriptmenu quickpromodgfx 4", ; )
 		CHOICE_BIND( 37, "Toggle FOV Scale", "openscriptmenu quickpromodgfx 5", ; )
-
 		CHOICE_KEYBINDHELP
 	}
 }

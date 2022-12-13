@@ -1,5 +1,5 @@
-#define MAP_OFFSET				0 0
-#define FULL_SCREEN				0 30 640 420
+#define MAP_OFFSET	0 0
+#define FULL_SCREEN	0 30 640 420
 
 itemDef
 {
@@ -19,7 +19,7 @@ itemDef
 	rect			FULL_SCREEN
 	origin			MAP_OFFSET
 	forecolor		1 1 1 1
-	exp				material( tableLookup( "mp/mapsTable.csv", 0, dvarString( mapname ), 7 ) )
+	exp				material(tableLookup("mp/mapsTable.csv", 0, dvarString( mapname ), 7))
 	visible			1
 	decoration
 }

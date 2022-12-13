@@ -1,24 +1,28 @@
-#define CHOICE_X_START			0
-#define CHOICE_Y_START			34
+#define CHOICE_X_START 0
+#define CHOICE_Y_START 34
 
 #include "ui_mp/menustyle.inc"
 #include "ui/choices_setup_common.menu"
 
 #undef BUTTON_BG_COLOR
-#define BUTTON_BG_COLOR		0 0 0 0.25
+#define BUTTON_BG_COLOR 0 0 0 0.25
 
-#define ORIGIN_STATUS			390 64
-#define MENU_FONT_COLOR2		1 1 1 0.5
+#define ORIGIN_STATUS 390 64
+#define MENU_FONT_COLOR2 1 1 1 0.5
 
 #include "ui_mp/stats_info.inc"
 
-menuDef	{
+menuDef	
+{
 	name			CAC_MENU_NAME
 	rect			0 0 640 480
 	focuscolor		COLOR_FOCUSED
 	style			WINDOW_STYLE_EMPTY
 	blurWorld		7
-	onESC { scriptMenuResponse "back"; }
+	onESC
+	{
+		scriptMenuResponse "back";
+	}
 
 	itemDef
 	{
@@ -28,23 +32,7 @@ menuDef	{
 		visible			1
 		decoration
 	}
-	/*itemDef
-	{
-		style			WINDOW_STYLE_SHADER
-		rect			0 0 854 75 HORIZONTAL_ALIGN_FULLSCREEN 0
-		background		"gradient_top"
-		visible			1
-		decoration
-	}
-	itemDef
-	{
-		style			WINDOW_STYLE_SHADER
-		rect			0 405 854 75 HORIZONTAL_ALIGN_FULLSCREEN 0
-		background		"gradient_bottom"
-		visible			1
-		decoration
-	}*/
-
+	
 	CHOICE_MENU_TITLE( "INVENTORY" )
 
 	#define BACK_OPEN;
@@ -107,7 +95,6 @@ menuDef	{
 	#define STAT_CAC_CAMO					tableLookup("mp/attachmentTable.csv", 4, dvarString( loadout_camo ), 11)
 
 	#include "ui_mp/cac_loadout_ingame.inc"
-	//#include "ui_mp/cac_loadout.inc"
 }
 
 #define PREPROC_ATTACH_CLOSEALL \
@@ -275,6 +262,7 @@ menuDef	{ \
 	execKey "1" { LOCAL_ATTACHMENT_ACTION( 1, "none", 1, "specops" ); }\
 	execKey "2" { LOCAL_ATTACHMENT_ACTION( 2, "silencer", 1, "specops" ); }\
 }
+
 menuDef	{
 	IMPROVED_POPUP_SETUP_ONOPEN( "ocd_attachment_popup_pistol", 6, (CHOICE_X( 2 )-2), (CHOICE_Y( 2 )), ;, execnow "set "UI_FOCUSFIRST" "REF_ATTACHMENT_NONE"; set ui_inside_popup attachment";, 0 )
 	onClose{execnow "set ui_inside_popup 0";}

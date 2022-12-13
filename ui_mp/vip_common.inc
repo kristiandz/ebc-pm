@@ -7,6 +7,7 @@
 #define DR_BUTTON_ALIGN HORIZONTAL_ALIGN_FULLSCREEN VERTICAL_ALIGN_FULLSCREEN
 #endif
 
+// Donation rank sprays
 #define DR_SPRAY( row, column, itemID ) \
 itemDef \
 { \
@@ -55,6 +56,7 @@ itemDef \
 	} \
 } 
 
+// Donation rank skins
 #define DR_CHARACTER( row, column, itemID ) \
 itemDef \
 { \
@@ -103,6 +105,7 @@ itemDef \
 	} \
 } 
 
+// Award tier sprays
 #define RW_SPRAY( row, column, itemID ) \
 itemDef \
 { \
@@ -165,6 +168,7 @@ itemDef \
 	} \
 } 
 
+// Award tier skins
 #define RW_CHARACTER( row, column, itemID ) \
 itemDef \
 { \

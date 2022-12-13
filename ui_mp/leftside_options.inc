@@ -1,15 +1,5 @@
-/*
-#ifndef PC_IN_GAME
-	#include "ui/bg.inc"
-#endif
-*/
 blurWorld		7.0
-
 PREPROC_SHADER_DRAW( -120 0 880 480, 0 0, "white", 0 0 0 0.75, 0, 1, 0 0 0 0 )
-
-//PREPROC_SHADER_DRAW( 0 0 640 480, 0 0, "white", 0 0 0 0.75, 0, 1, 0 0 0 0 )
-//PREPROC_SHADER_DRAW( ORIGIN_OPTIONS_FRAME 100 480, 0 0, "gradient_fadein", 0 0 0 0.1, 0, 1, 0 0 0 0 )
-//PREPROC_SHADER_DRAW( ORIGIN_OPTIONS_FRAME 600 480, 100 0, "gradient_fadein", 0 0 0 0.5, 0, 1, 0 0 0 0 )
 
 #undef BACK_OPEN
 #define BACK_OPEN exec "wait";
@@ -42,9 +32,6 @@ CHOICE_DBUTTON_VIS( 7, "@MENU_CHEATS_LOWCASE", when( ( !dvarBool( sv_running ) |
 CHOICE_BUTTON_VIS( 8, "@MENU_RESET_SYSTEM_DEFAULTS", LOCAL_CLOSE_ALL open options_graphics_defaults, when( ( !dvarint( sv_running ) || dvarInt( ui_allow_graphic_change ) ) && dvarInt( arcademode ) == 0 ); )
 CHOICE_DBUTTON_VIS( 8, "@MENU_RESET_SYSTEM_DEFAULTS", when( ( dvarint( sv_running ) && dvarInt(ui_allow_graphic_change)==0 ) || dvarBool( arcademode ) ); )
 
-// ---
-
-
 #undef TEXTSIZE_BUTTON_PC
 #define TEXTSIZE_BUTTON_PC	0.33
 
@@ -57,4 +44,3 @@ CHOICE_DBUTTON_VIS( 8, "@MENU_RESET_SYSTEM_DEFAULTS", when( ( dvarint( sv_runnin
 
 #undef  SECTION_X_OFFSET
 #define SECTION_X_OFFSET 	60
-// ---

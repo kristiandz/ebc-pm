@@ -1,6 +1,6 @@
 {
 	loadMenu { "ui_mp/hud.menu" }
-        loadMenu { "ui_mp/options.menu" }
+    loadMenu { "ui_mp/options.menu" }
 	loadMenu { "ui_mp/mods.menu" }
 	loadMenu { "ui_mp/connect.menu" }
 	loadMenu { "ui_mp/controls_multi.menu" }

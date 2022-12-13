@@ -1,10 +1,4 @@
-/*
-#ifndef PC_IN_GAME
-#include "ui/bg.inc"
-#endif
-*/
 blurWorld		7.0
-
 PREPROC_SHADER_DRAW( -120 0 880 480, 0 0, "white", 0 0 0 0.75, 0, 1, 0 0 0 0 )
 
 #undef BACK_OPEN
@@ -30,18 +24,8 @@ CHOICE_BUTTON_VIS( 6, "@MENU_MULTIPLAYER_CONTROLS", LOCAL_CLOSE_ALL open control
 CHOICE_DBUTTON_VIS( 6, "@MENU_MULTIPLAYER_CONTROLS", when( !dvarint( ui_multiplayer ) ); )
 CHOICE_BUTTON( 7, "@MENU_SET_DEFAULT_CONTROLS", LOCAL_CLOSE_ALL open options_control_defaults )		
 
-// ---
-/*
-#undef TEXTSIZE_BUTTON_PC
-#define TEXTSIZE_BUTTON_PC	0.33
-
-#undef CHOICE_SIZE_Y
-#define CHOICE_SIZE_Y 		20
-*/
-
 #undef	CHOICE_SIZE_X
 #define CHOICE_SIZE_X		180
 
 #undef  SECTION_X_OFFSET
 #define SECTION_X_OFFSET 	60
-// ---
