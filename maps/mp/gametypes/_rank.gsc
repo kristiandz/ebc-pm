@@ -17,8 +17,8 @@ init()
 	registerScoreInfo("win", 50);
 	registerScoreInfo("loss", 30);
 	registerScoreInfo("tie", 40);
-	registerScoreInfo("plant", 8);
-	registerScoreInfo("defuse", 6);
+	registerScoreInfo("plant", 10);
+	registerScoreInfo("defuse", 8);
 	registerScoreInfo("ninja_defuse", 10);
 	registerScoreInfo("capture", 3);
 	registerScoreInfo("assault", 3);
@@ -27,7 +27,7 @@ init()
 	registerScoreInfo("defend_assist", 1);
 	registerScoreInfo("kill_denied", 2);
 	registerScoreInfo("gottags", 2);
-	registerScoreInfo("kill_confirmed", 2);	
+	registerScoreInfo("kill_confirmed", 3);	
 	registerScoreInfo("headshot_splash", 5);
 	registerScoreInfo("execution", 5);
 	registerScoreInfo("avenger", 5);
@@ -43,7 +43,7 @@ init()
 	registerScoreInfo("assistedsuicide", 5);
 	registerScoreInfo("wallbang", 5);
 	registerScoreInfo("fieldorders", 10);
-	registerScoreInfo("tags_retrieved", 2);
+	registerScoreInfo("tags_retrieved", 4);
 
 	level.maxRank = int(tableLookup("mp/rankTable.csv", 0, "maxrank", 1));
 	level.maxPrestige = int(tableLookup("mp/rankIconTable.csv", 0, "maxprestige", 1));
