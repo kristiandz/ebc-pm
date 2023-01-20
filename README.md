@@ -3,7 +3,7 @@
 This repository contains live code from the promod server.
 The mod is stable and has all known issues solved, you can use it for your needs freely, just leave credits. Feel free to contribute to the project.
 
-Visit us at [Explicit Bouncers](https://explicitbouncers.com) or join the [server](https://www.explicitbouncers.com/joinpromod)
+Visit us at [Explicit Bouncers](https://www.explicitbouncers.com) or join the [server](https://www.explicitbouncers.com/joinpromod)
 
 ## Features
 
