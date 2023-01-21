@@ -723,7 +723,12 @@ onPickupDogTag(event, splash)
 	{
 		self thread underScorePopup(splash);
 		self thread maps\mp\gametypes\_rank::giveRankXP(event);
-		self.pers["score"] += 2;
+		if(event == "kill_confirmed")
+			self.pers["score"] += 3;
+		else if(event == "tags_retrieved")
+			self.pers["score"] += 4;
+		else
+			self.pers["score"] += 2;
 		self maps\mp\gametypes\_persistence::statAdd("score", self.pers["score"]);
 		self.score = self.pers["score"];
 	}
