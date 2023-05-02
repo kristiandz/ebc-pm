@@ -301,8 +301,8 @@ calcPostDelay()
 
 addKillcamKiller(attacker, victim, attacker_name, victim_name)
 {
-	self.villain = createFontString("default", 1.7);
-	self.villain setPoint("CENTER", "BOTTOM", -510, -55); 
+	self.villain = createFontString("objective", 1.5);
+	self.villain setPoint("CENTER", "BOTTOM", -510, -59); 
 	self.villain.alignX = "right";
 	self.villain.archived = false;
 	if(isDefined(attacker))	
@@ -316,9 +316,9 @@ addKillcamKiller(attacker, victim, attacker_name, victim_name)
 	self.villain moveOverTime(4);
 	self.villain.x = -30;  
 
-	self.versus = createFontString("default", 1.7);
+	self.versus = createFontString("objective", 1.5);
 	self.versus.alpha = 0;
-	self.versus setPoint("CENTER", "BOTTOM", 0, -55);  
+	self.versus setPoint("CENTER", "BOTTOM", 0, -59);  
 	self.versus.archived = false;
 	self.versus setText("vs");
 	self.versus.foreground = true;    
@@ -326,8 +326,8 @@ addKillcamKiller(attacker, victim, attacker_name, victim_name)
 	self.versus fadeOverTime(4);
 	self.versus.alpha = 1;
   
-	self.victim = createFontString("default", 1.7);
-	self.victim setPoint("CENTER", "BOTTOM", 510, -55);
+	self.victim = createFontString("objective", 1.5);
+	self.victim setPoint("CENTER", "BOTTOM", 510, -59);
 	self.victim.alignX = "left";  
 	self.victim.archived = false;
 	if(isDefined(victim)) 
@@ -350,8 +350,8 @@ text()
     names = level.name;
 	if(isDefined(names) && level.gametype != "dm")
 	{
-		self.sname = createFontString("default", 1);
-		self.sname setPoint("LEFT", "BOTTOM", 0, 10);  
+		self.sname = createFontString("default", 1.4);
+		self.sname setPoint("LEFT", "BOTTOM", -395, 8);  
 		self.sname.archived = false;
 		self.sname setText(names);
 		self.sname.foreground = true; 
