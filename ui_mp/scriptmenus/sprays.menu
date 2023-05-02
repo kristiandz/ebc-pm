@@ -6,7 +6,7 @@
 menuDef
 	{
 		name			"sprays"
-		rect			10 30 640 480
+		rect			10 40 640 480
 		focuscolor		COLOR_FOCUSED
 		style			WINDOW_STYLE_EMPTY
 		blurWorld		3
@@ -24,7 +24,7 @@ menuDef
 		itemDef
 		{
 			style			WINDOW_STYLE_FILLED
-			rect			-340 -210 660 370 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect			-340 -210 660 358 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			backcolor		0 0 0 0.7
 			visible			1
 		}
@@ -139,7 +139,7 @@ menuDef
 		}
 		itemDef
 		{
-			rect 			-340 88 660 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect 			-340 90 660 18 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			style			WINDOW_STYLE_FILLED
 			backcolor		0 0 0 0.4
 			visible			1
@@ -148,7 +148,7 @@ menuDef
 		itemDef
 		{
 			visible			1
-			origin		    65 343
+			origin		    60 346
 			forecolor		0.95 0.95 0.95 1 
 			exp				text( "Selected Spray:^8 " + (Stat(979)+1))
 			textfont		UI_FONT_NORMAL
@@ -159,7 +159,7 @@ menuDef
 		itemDef
 		{
 			visible			1
-			origin		    495 343
+			origin		    495 346
 			forecolor		0.95 0.95 0.95 1 
 			exp				text( "Selected Skin:^8 " + Stat(980))
 			textfont		UI_FONT_NORMAL
@@ -169,7 +169,7 @@ menuDef
 		}
 		itemDef
 		{
-			rect 			-340 105.5 660 0.5 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect 			-340 108.5 660 0.5 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			style			WINDOW_STYLE_FILLED
 			backcolor		0.9 0.3 0.2 0.8
 			visible			1
@@ -177,7 +177,7 @@ menuDef
 		}
 		itemDef
 		{
-			rect 			-340 106 660 37 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect 			-340 109 660 37 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			style			WINDOW_STYLE_FILLED
 			backcolor		0 0 0 0.7
 			visible			1
@@ -186,9 +186,9 @@ menuDef
 		itemDef
 		{
 			visible			1
-			origin		    317 365
+			origin		    317 368
 			forecolor		0.95 0.95 0.95 1 
-			exp				text( "Welcome to the winter season. If your prestige was higher than 20, you are eligible for season awards.\n                      Check your awards in the VIP menu! Winter season lasts untill 1.5.2023")
+			exp				text( "Welcome to the summer season. If your prestige was higher than 20, you are eligible for season awards.\n                      Check your awards in the VIP menu! Summer season lasts untill 1.11.2023")
 			textfont		UI_FONT_NORMAL
 			textalign		ITEM_ALIGN_CENTER
 			textscale		0.3
@@ -196,57 +196,19 @@ menuDef
 		}
 		itemDef
 		{
-			rect 			-340 143 660 0.5 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			rect 			-340 146 660 0.5 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
 			style			WINDOW_STYLE_FILLED
 			backcolor		0.9 0.3 0.2 0.8
 			visible			1
 			decoration
 		}
-		itemDef
-		{
-			rect 			-340 143.5 660 17 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
-			style			WINDOW_STYLE_FILLED
-			backcolor		0 0 0 0.4
-			visible			1
-			decoration
-		}
 		itemdef
 		{
-			rect			28 399 0 0
-			forecolor		1 1 1 1
-			textfont		UI_FONT_NORMAL
-			textscale		0.28
-			exp text        ("Winter Season Prestige:^8 "+ stat(3251))     
-			visible         1
-			decoration
-		}
-		itemdef
-		{
-			rect			220 399 0 0
+			rect			273 346 0 0
 			forecolor		1 1 1 1
 			textfont		UI_FONT_NORMAL
 			textscale		0.28
 			exp text        ("Reward Tier:^8 "+ stat(3252))     
-			visible         1
-			decoration
-		}
-		itemdef
-		{
-			rect			370 399 0 0
-			forecolor		1 1 1 1
-			textfont		UI_FONT_NORMAL
-			textscale		0.28
-			exp text        ("Current Prestige:^8 "+ stat(2326))     
-			visible         1
-			decoration
-		}
-		itemdef
-		{
-			rect			525 399 0 0
-			forecolor		1 1 1 1
-			textfont		UI_FONT_NORMAL
-			textscale		0.28
-			exp text        ("Current Rank:^8 "+int(tablelookup("mp/ranktable.csv",0,stat(252),14)))     
 			visible         1
 			decoration
 		}
