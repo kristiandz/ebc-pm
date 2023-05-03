@@ -34,7 +34,6 @@ init()
 	level.lowerTextYAlign = "CENTER";
 	level.lowerTextY = 70;
 	level.lowerTextFontSize = 2;
-	level.SongsSize = 1.5;
 }
 
 fontPulseInit( maxFontScale )
