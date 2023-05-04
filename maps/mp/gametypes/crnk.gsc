@@ -54,7 +54,7 @@ onStartGameType()
 		level.displayRoundEndText = true;
 		level.onEndGame = ::onEndGame;
 	}
-	level.onPlayerKilled = onPlayerKilled();
+	level.onPlayerKilled = ::onPlayerKilled;
 }
 
 onRoundSwitch()
