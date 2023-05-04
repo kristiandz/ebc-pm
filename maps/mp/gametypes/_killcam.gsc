@@ -104,8 +104,8 @@ killcam(attackerNum, killcamentity, sWeapon, predelay, offsetTime, respawn, maxt
 
 	if(!isdefined(self.kc_timer))
 	{
-		self.kc_timer = createFontString("objective", 1.5);
-		self.kc_timer setPoint("BOTTOM", undefined, 0, 0);
+		self.kc_timer = createFontString( "objective", 1.4 );
+		self.kc_timer setPoint( "TOP", undefined, 360, 0 );
 		self.kc_timer.archived = false;
 		self.kc_timer.foreground = true;
 	}
