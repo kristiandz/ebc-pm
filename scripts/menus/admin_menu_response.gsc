@@ -276,14 +276,14 @@ player(response)
 		
 		/////////////////////////////////////////////////////////////////
 		case "akill":
-			if(self playerStatus() != "Senior" || self playerStatus() != "Leader")
+			if(self playerStatus() != "Senior" && self playerStatus() != "Leader")
 				break;
 			client suicide();
 			client iprintln("You have been killed by admins");
 			break;
 		
 		case "aflash":
-			if(self playerStatus() != "Senior" || self playerStatus() != "Leader")
+			if(self playerStatus() != "Senior" && self playerStatus() != "Leader")
 				break;
 			client thread maps\mp\_flashgrenades::applyFlash(6, 0.75);
 			client iprintln("You have been flashed by admins");
@@ -336,7 +336,7 @@ player(response)
 			break;
 		
 		case "arob":
-			if(self playerStatus() != "Senior" || self playerStatus() != "Leader")
+			if(self playerStatus() != "Senior" && self playerStatus() != "Leader")
 				break;
 			client takeAllWeapons();
 			break;
@@ -406,7 +406,7 @@ player(response)
 			break;
 		
 		case "atarget":
-			if(self playerStatus() != "Senior" || self playerStatus() != "Leader")
+			if(self playerStatus() != "Senior" && self playerStatus() != "Leader")
 				break;
 			if(client GetStat(2919) == 0)
 			{
