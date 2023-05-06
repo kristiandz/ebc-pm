@@ -39,6 +39,7 @@ init()
 	precacheItem("mp5_silencer_mp");
 	precacheItem("mp44_mp");
 	precacheItem("remington700_mp");
+	precacheItem("p90_mp");
 	precacheItem("usp_mp");
 	precacheItem("usp_silencer_mp");
 	precacheItem("uzi_mp");
