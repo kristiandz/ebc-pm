@@ -47,8 +47,6 @@ init()
 	level.inFinalKillcam = false;
 	
 	registerDvars();
-	setDvar("ui_scorelimit", level.scoreLimit);
-	setDvar("ui_timelimit", level.timelimit);
 	level.randomcolour = (RandomFloat(1), RandomFloat(1), RandomFloat(1));
 
 	precacheModel("tag_origin");
@@ -98,6 +96,9 @@ init()
 		setDvar("scr_player_maxhealth",30);
 	else 
 		setDvar("scr_player_maxhealth",100);
+	
+	setDvar("ui_scorelimit", level.scoreLimit);
+	setDvar("ui_timelimit", level.timelimit);
 	
 	thread admin_list();
 	thread list_cleaner();
@@ -2461,8 +2462,11 @@ newseason(pl_season)
 		self iprintlnBold("This is your first visit in the new season.\n^1 Welcome to the " + level.season + " season!");
 		wait 4;
 		self iprintlnBold("Your previous seaon prestige was: " + int(cp) + ".\n Everyone is starting from zero again." );
-		wait 4;
-		self iprintlnBold("You have been awarded with season award tier:^1 " + award_tier );
+		if(award_tier >= 1)
+		{
+			wait 4;
+			self iprintlnBold("You have been awarded with season award tier:^1 " + award_tier );
+		}
 	}
 	else if(cp == 0 && int(pp) == 0)
 	{
@@ -2513,7 +2517,10 @@ award_check(prestige)
 		self SetStat(3252, 5 );
 	else if(int(prestige) < 20)
 		self SetStat(3252, 0);
-	return self GetStat(3252);
+	
+	waittillframeend;
+	return 
+		self GetStat(3252);
 }
 
 prcheck(storedpr, backup)
@@ -2828,7 +2835,7 @@ Callback_PlayerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDi
 		sMeansOfDeath = "MOD_HEAD_SHOT";
 	if(attacker.classname == "script_vehicle" && isDefined(attacker.owner))
 		attacker = attacker.owner;
-	if(level.teamBased && isDefined(attacker.pers) && self.team == attacker.team && sMeansOfDeath == "MOD_GRENADE" && !level.friendlyfire)
+	if(level.teamBased && isDefined(attacker.pers) && self.team == attacker.team && sMeansOfDeath == "MOD_GRENADE" && !level.friendlyfire && !level.inFinalKillcam)
 		obituary(self, self, sWeapon, sMeansOfDeath);
 	else if(!isDefined(attacker.isKnifing))
 		obituary(self, attacker, sWeapon, sMeansOfDeath);
@@ -3000,7 +3007,8 @@ Callback_PlayerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDi
 	if(sMeansOfDeath == "MOD_MELEE")
 		scWeapon = "knife_mp";
 	else 
-		scWeapon = sWeapon;sHeadshot = int(sMeansOfDeath == "MOD_HEAD_SHOT");
+		scWeapon = sWeapon;
+	sHeadshot = int(sMeansOfDeath == "MOD_HEAD_SHOT");
 	if(!isDefined(attacker.isKnifing))
 	{
 		logPrint("K;" + self getGuid() + ";" + self getEntityNumber() + ";" + self.pers["team"] + ";"+self.name + ";" + lpattackguid + ";" + lpattacknum + ";" + lpattackerteam + ";" + lpattackname + ";" + sWeapon + ";" + iDamage + ";" + sMeansOfDeath + ";" + sHitLoc + "\n");
