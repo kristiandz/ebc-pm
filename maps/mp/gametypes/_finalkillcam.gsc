@@ -316,7 +316,7 @@ addKillcamKiller(attacker, victim, attacker_name, victim_name)
 	self.villain moveOverTime(4);
 	self.villain.x = -30;  
 
-	self.versus = createFontString("objective", 1.5);
+	self.versus = createFontString("objective", 1.4);
 	self.versus.alpha = 0;
 	self.versus setPoint("CENTER", "BOTTOM", 0, -59);  
 	self.versus.archived = false;
@@ -351,7 +351,7 @@ text()
 	if(isDefined(names) && level.gametype != "dm")
 	{
 		self.sname = createFontString("default", 1.4);
-		self.sname setPoint("LEFT", "BOTTOM", -395, 8);  
+		self.sname setPoint("LEFT", "BOTTOM", -410, 8);  
 		self.sname.archived = false;
 		self.sname setText(names);
 		self.sname.foreground = true; 
