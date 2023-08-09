@@ -3,7 +3,7 @@
 init() 
 {
 	//       |  NAME |  INDEX |  COLOR |  ALPHA |  SHADER |  W |  H |  ALIGNY |  Y
-	height = 202;
+	height = 213;
 	//----------------------DEFAULT-------------------------
 	addDesign("Default", 0, (0.3, 0.3, 0.3), 0.6, "white", 250, 38, "middle", height);
 	addDesign("Default", 1, (1, 0, 0), 0.8, "nightvision_overlay_goggles", 250, 38, "middle", height);
@@ -114,11 +114,13 @@ getDesign(index)
 
 setDesign(theme,cancel) 
 {
+	scripts\sql::critical_enter("mysql");
 	self notify("new_emblem");
-	scripts\sql::db_connect("ebc_b3_pm");
 	q_str = "UPDATE player_core SET style= \"" + theme + "\" WHERE guid LIKE " + self GetGuid();
-	SQL_Query(q_str);
-	SQL_Close();
+	request = SQL_Query(q_str);
+	scripts\sql::AsyncWait(request);
+	SQL_Free(request);
+	scripts\sql::critical_leave("mysql");
 	self.pers["design"] = theme;	
 	if(isDefined(self.killcard))
 		for(i = 0; i < self.killcard.size; i++)
@@ -172,12 +174,12 @@ KillCard(from, weap, alternatewep)
 		alternatewep = "Define Weapon";
 	shader[2] setWeaponIcon(weap,alternatewep);
 	shader[2].x = 80;
-	shader[2].y = 204;	
+	shader[2].y = 212;	
 	shader[2].alignX = "center";
 	shader[2].alignY = "middle";
 	shader[3] setValue(self getKillStat(from GetEntityNumber()));
 	shader[3].x = -7;
-	shader[3].y = 190;	
+	shader[3].y = 199;	
 	shader[3].alignX = "right";
 	shader[3].font = "objective";
 	shader[3].fontscale = 2;	
@@ -195,21 +197,21 @@ KillCard(from, weap, alternatewep)
 	shader[5].label = &"K/D Ratio: ^1&&1";
 	shader[5].alignX = "left";
 	shader[5].x = -115;
-	shader[5].y = 187;
+	shader[5].y = 196;
 	if(from.pers["deaths"])
 		shader[5] setValue(int(from.pers["kills"] / from.pers["deaths"] * 100) / 100);
 	else 
 		shader[5] setValue(from.pers["kills"]);
 	shader[6].label = &"Killstreak: ^1&&1";
 	shader[6].x = -115;
-	shader[6].y = 202;
+	shader[6].y = 212;
 	shader[6].alignX = "left";
 	shader[6] setValue(from GetStat(2304));
 
 	for(i = 0; i < shader.size; i++) 
 	{
 		old = shader[i].y;
-		shader[i].y = 304;
+		shader[i].y = 313;
 		shader[i] MoveOverTime(.3);
 		shader[i].y = old;
 	}
@@ -220,7 +222,7 @@ KillCard(from, weap, alternatewep)
 	for(i = 0; i < shader.size; i++) 
 	{
 		shader[i] MoveOverTime(.3);
-		shader[i].y = 304;
+		shader[i].y = 313;
 	}
 	wait .5;
 	for(i = 0; i < shader.size; i++) 
@@ -232,7 +234,7 @@ KillCard(from, weap, alternatewep)
 setWeaponIcon(wep, alternate) 
 {
 	x = 75;
-	y = 35;
+	y = 36;
 	s = "white";
 	wep = strTok(wep,"_")[0];
 	switch(wep) 
@@ -249,11 +251,11 @@ setWeaponIcon(wep, alternate)
 			break;
 		case "c4": s = "hud_icon_c4"; x = 40;
 			break;
-		case "colt45": s = "weapon_colt_45";  x = 45; y = 45;
+		case "colt45": s = "weapon_colt_45";  x = 45; y = 40;
 			break;
-		case "deserteagle": s = "weapon_desert_eagle"; x = 45; y = 45;
+		case "deserteagle": s = "weapon_desert_eagle"; x = 45; y = 40;
 			break;
-		case "deserteaglegold": s = "weapon_desert_eagle_gold"; x = 45; y = 45;
+		case "deserteaglegold": s = "weapon_desert_eagle_gold"; x = 45; y = 40;
 			break;
 		case "dragunov": s = "weapon_dragunovsvd";
 			break;
@@ -275,7 +277,7 @@ setWeaponIcon(wep, alternate)
 			break;
 		case "m60e4": s = "weapon_m60e4";
 			break;
-		case "beretta": s = "weapon_m9beretta"; x = 45; y = 45;
+		case "beretta": s = "weapon_m9beretta"; x = 45; y = 40;
 			break;
 		case "uzi": s = "weapon_mini_uzi";
 			break;
@@ -297,15 +299,15 @@ setWeaponIcon(wep, alternate)
 			break;
 		case "winchester1200": s = "weapon_winchester1200";
 			break;
-		case "frag": s = "hud_us_grenade"; x = 40; y = 40;
+		case "frag": s = "hud_us_grenade"; x = 36; y = 36;
 			break; 
 		case "stun": s = "hud_us_stungrenade"; x = 40;
 			break;
 		case "flash": s = "weapon_concgrenade"; x = 40;
 			break;
-		case "knife": s = "killiconmelee"; x = 33; y = 33;
+		case "knife": s = "killiconmelee"; x = 32; y = 36;
 			break;
-		default: s = "killiconsuicide"; x = 36; y = 36;
+		default: s = "killiconsuicide"; x = 36; y = 39;
 			break;
 	}
 	self setShader(s, int(x), int(y));

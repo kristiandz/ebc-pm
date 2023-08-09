@@ -46,8 +46,8 @@ init()
 	level.firstblood = false;
 	level.inFinalKillcam = false;
 	
-	registerDvars();
 	level.randomcolour = (RandomFloat(1), RandomFloat(1), RandomFloat(1));
+	registerDvars();
 
 	precacheModel("tag_origin");
 	precacheShader("faction_128_usmc");
@@ -225,9 +225,11 @@ default_onScoreLimit()
 			winner = "tie";
 		else if(game["teamScores"]["axis"] > game["teamScores"]["allies"])
 			winner = "axis";
-		else winner = "allies";
+		else 
+			winner = "allies";
 	}
-	else winner = getHighestScoringPlayer();
+	else 
+		winner = getHighestScoringPlayer();
 	makeDvarServerInfo("ui_text_endreason", game["strings"]["score_limit_reached"]);
 	setDvar("ui_text_endreason", game["strings"]["score_limit_reached"]);
 	level.forcedEnd = true;
@@ -390,6 +392,7 @@ spawnPlayer()
 	prof_end("spawnPlayer_preUTS");
 	level thread updateTeamStatus();
 	prof_begin("spawnPlayer_postUTS");
+	
 	if(isDefined(game["PROMOD_KNIFEROUND"]) && game["PROMOD_KNIFEROUND"] && isDefined(level.strat_over) && level.strat_over)
 		self thread removeWeapons(1);
 	if(isDefined(self.class)) 
@@ -735,6 +738,8 @@ endGame(winner,endReasonText)
 				roundEndWait(level.roundEndDelay);
 		}
 		game["roundsplayed"]++;
+		//WIP: Debug to catch the extra rounds
+		logPrint("\nDEBUG: Rounds played: " + game["roundsplayed"] + " Allies score: " + getTeamScore("allies") + " Axis score: " + getTeamScore(level.otherTeam["allies"]) + "\nDEBUG:\n");
 		roundSwitching = false;
 		if(!hitRoundLimit() && !hitScoreLimit())
 			roundSwitching = checkRoundSwitch();
@@ -829,7 +834,7 @@ endGame(winner,endReasonText)
 		}
 		if(isDefined(game["PROMOD_KNIFEROUND"]) && game["PROMOD_KNIFEROUND"])
 		{
-			if(isDefined(game["PROMOD_MATCH_MODE"]) && game["PROMOD_MATCH_MODE"] == "match") ////
+			if(isDefined(game["PROMOD_MATCH_MODE"]) && game["PROMOD_MATCH_MODE"] == "match") // Check
 			{
 				game["promod_do_readyup"] = 1;
 				game["promod_first_readyup_done"] = 0;
@@ -894,7 +899,7 @@ endGame(winner,endReasonText)
 	}
 	roundEndWait(level.postRoundTime);
 	level.intermission = true;
-	if (isOneRound())
+	if(isOneRound())
 	{
 		setDvar("scr_gameended", 1);
 		maps\mp\gametypes\_globallogic_utils::executePostRoundEvents();
@@ -1571,6 +1576,7 @@ incPersStat(dataName,increment)
 
 updateTeamStatus()
 {
+	//TODO: This function sometimes gets called way too often, probably even overlaps for the same event, hence throwing errors.
 	level notify("updating_team_status");
 	level endon("updating_team_status");
 	level endon("game_ended");
@@ -1588,7 +1594,7 @@ updateTeamStatus()
 	level.alivePlayers["allies"] = [];
 	level.alivePlayers["axis"] = [];
 	level.activePlayers = [];
-	for(i = 0; i < level.players.size && isDefined(level.players[i]); i++) // Check for runtime
+	for(i = 0; i < level.players.size && isDefined(level.players[i]); i++) // Check for runtime errors
 	{
 		player = level.players[i];
 		team = player.team;
@@ -1606,8 +1612,8 @@ updateTeamStatus()
 					level.activeplayers[level.activeplayers.size] = player;
 				}
 			}
-			else if(player maySpawn())
-				level.playerLives[team]++;
+			else if(isDefined(player) && player maySpawn())
+				level.playerLives[team]++; // Default code doesn't have this check but the error is thrown, maybe the root cause is something else
 		}
 	}
 	if(level.aliveCount["allies"] + level.aliveCount["axis"] > level.maxPlayerCount)
@@ -1616,7 +1622,7 @@ updateTeamStatus()
 		level.everExisted["allies"] = true;
 	if(level.aliveCount["axis"])
 		level.everExisted["axis"] = true;
-	for(i = 0; i < level.players.size && isDefined(level.players[i]); i++) // Check for runtime
+	for(i = 0; i < level.players.size && isDefined(level.players[i]); i++) // Check for runtime errors
 		if(level.players[i].pers["team"] == "allies" || level.players[i].pers["team"] == "axis")
 			level.players[i]setClientDvars("self_alive", level.aliveCount[level.players[i].pers["team"]], "opposing_alive", level.aliveCount[maps\mp\gametypes\_gameobjects::getEnemyTeam(level.players[i].pers["team"])]);
 	prof_end("updateTeamStatus");
@@ -2085,8 +2091,6 @@ Callback_StartGameType()
 			level.prematchPeriod = int(13);
 		else 
 			level.prematchPeriod = int(5);
-
-		scripts\sql::db_setLastMap("ebc_b3_pm");
 		
 		setDvar("bg_bobMax", 0);
 		setDvar("player_sustainAmmo", 0);
@@ -2102,7 +2106,11 @@ Callback_StartGameType()
 		game["axis_specops_count"] = 0;
 		game["axis_demolitions_count"] = 0;
 		game["axis_sniper_count"] = 0;
+		
+		//Start and configure mysql connection at the start of map only.
+		thread scripts\sql::init();
 	}
+	
 	if(!isdefined(game["timepassed"]))
 		game["timepassed"] = 0;
 	if(!isdefined(game["roundsplayed"]))
@@ -2191,6 +2199,9 @@ Callback_StartGameType()
 	thread startGame();
 	level thread updateGameTypeDvars();
 	level.openFiles = [];
+	// Wait one frame before the first query
+	wait 0.05;
+	thread scripts\sql::db_setLastMap();
 }
 
 deletePickups()
@@ -2348,41 +2359,49 @@ Callback_PlayerConnect()
 	if(!isDefined(self.pers["verified"]))
 	{
 		// Wait till spawned for some of these as more players connect in the same time rather than spawn ?
-		prof_begin("SQL");
-		scripts\sql::db_connect("ebc_b3_pm");
+		scripts\sql::critical_enter("mysql");
 		q_str = "SELECT guid, prestige, backup_pr, season, status, style, award_tier, donation_tier FROM player_core WHERE guid LIKE " + self.guid;
-		SQL_Query(q_str); 
-		row = SQL_AffectedRows();
+		request = SQL_Query(q_str); 
+		scripts\sql::AsyncWait(request);
+		row = SQL_AffectedRows(request);
 		if(row == 0)
 		{
+			// Clear previous request
+			SQL_Free(request);
+			scripts\sql::critical_leave("mysql");
 			name = GetSubStr(self.name, 0, 25);
 			atier = self GetStat(3252);
 			dtier = self GetStat(3253);
 			backup_pr = 0;
-			q_str = "INSERT INTO player_core (guid, name, prestige, backup_pr, season, award_tier, donation_tier) VALUES (" + self.guid + ",\"" + name + "\"," + self.prestige + "," + backup_pr + ",\"" + level.season + "\"," + atier + "," + dtier + ")";
-			SQL_Query(q_str);
-			SQL_Close();
+			scripts\sql::critical_enter("mysql");
+			q_str = "INSERT INTO player_core (guid,name,prestige,backup_pr,season,award_tier,donation_tier) VALUES ("+self.guid+",\""+name+"\","+self.prestige+","+backup_pr+",\""+ level.season +"\","+atier+","+dtier+")";
+			request = SQL_Query(q_str);
+			scripts\sql::AsyncWait(request);
+			SQL_Free(request);
+			scripts\sql::critical_leave("mysql");
 		}
 		else
 		{
-			row = SQL_FetchRow();
-			SQL_Close();
+			row = SQL_FetchRow(request);
+			SQL_Free(request);
+			scripts\sql::critical_leave("mysql");
 			self thread prcheck(row[1], row[2]);
 			self thread newseason(row[3]);
 			self.pers["status"] = row[4];
 			self.pers["design"] = row[5];
+			// Test critical sections
 			self SetStat(3252, int(row[6]));
 			self SetStat(3253, int(row[7]));
-			if(self GetStat(3253) > 0)
-				self thread checkDonationExpiry();
+			//if(self GetStat(3253) > 0)
+			//	self thread checkDonationExpiry(); Not tested yet
 		}
-		prof_end("SQL");
 		self.pers["verified"] = true;
 	}
 }
 
 checkSeason()
 {
+	// Check edge cases
 	season = undefined;
 	cur = getRealTime();
 	month = TimeToString(cur, 1, "%m");
@@ -2390,7 +2409,7 @@ checkSeason()
 		season = "summer";
 	else
 		season = "winter";
-	return season;
+	return "summer" //season;
 }
 
 checkDonationExpiry()
@@ -2399,9 +2418,8 @@ checkDonationExpiry()
 	currentTime = getRealTime();
 	currentMonth = TimeToString(currentTime, 1, "%m");
 	currentYear = TimeToString(currentTime, 1, "%Y");
-	prof_begin("SQL");
 	q_str = "SELECT donation_tier, donation_date FROM player_core WHERE guid LIKE " + self.guid;
-	row = scripts\sql::db_simpleQuery("ebc_b3_pm", q_str); 
+	row = scripts\sql::db_simpleQuery(q_str); 
 	if(row != 0 && row[0] != 0) // Fix data type comparison
 	{
 		storedData = strtok(row[1], "/");
@@ -2426,7 +2444,7 @@ checkDonationExpiry()
 		self duffman\killcard::setDesign("Default");
 		self iprintlnBold("Your ^8VIP Status^7 has expired, you got it on ^8" + storedDay + "-" + storedMonth + "-" + storedYear);
 		wait 1;
-		self iprintlnBold("Thank you for your contribution");
+		self iprintlnBold("Thank you for your contribution^1!");
 	}
 	else if(storedYear < currentYear && (currentMonth + (12 - storedMonth) > donationExpiry ))
 	{
@@ -2435,9 +2453,8 @@ checkDonationExpiry()
 		self duffman\killcard::setDesign("Default");
 		self iprintlnBold("Your ^8VIP Status^7 has expired, you got it on ^8" + storedDay + "-" + storedMonth + "-" + storedYear);
 		wait 1;
-		self iprintlnBold("Thank you for your contribution");
+		self iprintlnBold("Thank you for your contribution^5!");
 	}
-	prof_end("SQL");
 }
 
 newseason(pl_season)
@@ -2450,10 +2467,12 @@ newseason(pl_season)
 	if(cp != 0 && pl_season != level.season && pp != 0)
 	{
 		award_tier = self award_check(cp);
-		scripts\sql::db_connect("ebc_b3_pm");
+		scripts\sql::critical_enter("mysql");
 		q_str = "UPDATE player_core SET season = \"" + level.season + "\", prestige = 0, backup_pr = 0, "+pl_season+"prestige = " + cp + ", award_tier = " + award_tier + " WHERE guid LIKE "+self.guid;
-		SQL_Query(q_str);
-		SQL_Close();
+		request = SQL_Query(q_str);
+		scripts\sql::AsyncWait(request);
+		SQL_Free(request);
+		scripts\sql::critical_leave("mysql");
 		self SetStat(3250, 1);
 		self SetStat(3251, int(cp));
 		self thread maps\mp\gametypes\_rank::resetEverything();
@@ -2470,10 +2489,12 @@ newseason(pl_season)
 	}
 	else if(cp == 0 && int(pp) == 0)
 	{
-		scripts\sql::db_connect("ebc_b3_pm");
-		q_str = "UPDATE player_core SET season=\"" + level.season + "\",prestige=0 WHERE guid LIKE " + self.guid;
-		SQL_Query(q_str);
-		SQL_Close();
+		scripts\sql::critical_enter("mysql");
+		q_str = "UPDATE player_core SET season=\""+level.season+"\",prestige=0 WHERE guid LIKE "+self.guid;
+		request = SQL_Query(q_str);
+		scripts\sql::AsyncWait(request);
+		SQL_Free(request);
+		scripts\sql::critical_leave("mysql");
 		self SetStat(3250 , 1);
 		self SetStat(3252 , 0);
 		self thread maps\mp\gametypes\_rank::resetEverything();
@@ -2485,10 +2506,12 @@ newseason(pl_season)
 	}
 	else if(cp != 0 && pl_season != level.season)
 	{
-		scripts\sql::db_connect("ebc_b3_pm");
-		q_str = "UPDATE player_core SET season=\"" + level.season + "\",prestige=0 WHERE guid LIKE " + self.guid;
-		SQL_Query(q_str);
-		SQL_Close();
+		scripts\sql::critical_enter("mysql");
+		q_str = "UPDATE player_core SET season=\""+level.season+"\",prestige=0 WHERE guid LIKE "+self.guid;
+		request = SQL_Query(q_str);
+		scripts\sql::AsyncWait(request);
+		SQL_Free(request);
+		scripts\sql::critical_leave("mysql");
 		self SetStat(3250 , 1);
 		self SetStat(3252 , 0);
 		self thread maps\mp\gametypes\_rank::resetEverything();
@@ -2502,7 +2525,7 @@ newseason(pl_season)
 
 award_check(prestige)
 {
-	// Switch case
+	// Update to swwitch case
 	if(int(prestige) >= 20 && int(prestige) <= 25)
 		self SetStat(3252, 1 );
 	else if(int(prestige) == 26)
@@ -2682,7 +2705,8 @@ Callback_PlayerDamage(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sW
 						self.pers["friendly_damage_taken"] += min(iDamage, self.health);
 						eAttacker.pers["friendly_damage_done"] += min(iDamage, self.health);
 					}
-					self finishPlayerDamageWrapper(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, psOffsetTime);
+					if(isDefined(self))
+						self finishPlayerDamageWrapper(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, psOffsetTime);
 				}
 				if((level.friendlyfire & 2) > 0)
 					eAttacker finishPlayerDamageWrapper(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, psOffsetTime);
@@ -3020,9 +3044,8 @@ Callback_PlayerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDi
 			attacker SetStat(2304, attacker.cur_kill_streak);
 			attacker GetStat(2304 );
 		}
+		level thread updateTeamStatus(); // Check for multiple threads overflowing
 	}
-	if(!isDefined(attacker.isKnifing))
-		level thread updateTeamStatus();
 	self clonePlayer(deathAnimDuration);
 	self thread[[level.onPlayerKilled]](eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, psOffsetTime, deathAnimDuration);
 	if(sWeapon == "none")

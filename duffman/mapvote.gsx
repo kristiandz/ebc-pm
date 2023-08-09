@@ -8,7 +8,7 @@ init()
 	level.maps4vote    = 7;
 	maprotation = strTok(getDvar("sv_maprotation"), " ");
 	level.voteablemaps = [];
-	level.lastmap = scripts\sql::db_getLastMap("ebc_b3_pm");
+	level.lastmap = scripts\sql::db_getLastMap();
 	tries = 0;
 	i = 0;
 	
