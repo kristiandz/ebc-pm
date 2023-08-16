@@ -2409,7 +2409,7 @@ checkSeason()
 		season = "summer";
 	else
 		season = "winter";
-	return "summer" //season;
+	return "summer"; //season;
 }
 
 checkDonationExpiry()
