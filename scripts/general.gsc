@@ -13,4 +13,6 @@ init()
 	
 	thread duffman\_antiafk::init();
 	thread duffman\_walls::main();
+	
+	//level thread scripts\info::init();
 }
