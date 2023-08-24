@@ -34,7 +34,7 @@ spawnTriggers()
 			addBlockerWall((2658,2117,80),(2666,1363,80));
 			addBlockerWall((2666,1363,80),(2294,1377,80));
 			break;
-			
+
 		case "mp_crash_snow":
 			addBlockerWall((2294,1377,80),(2291,1550,80));
 			addBlockerWall((2291,1550,80),(2134,1551,80));
@@ -203,7 +203,7 @@ AddBlockerWall(a, b, vis)
 
 Addfire(o)
 {
-	level endon("game_ended"); // New
+	level endon("game_ended");
 	while(1) 
 	{
 		playFx(level.fx["smallfire"], o);
@@ -215,6 +215,7 @@ addBlock(o, w, h,vis)
 {
 	if (! isDefined(h))
 		h = w;
+	
 	a = spawn("trigger_radius", o, 0, w, h);
 	if(!isDefined(vis))thread Addfire(o);
 	a setContents(1);

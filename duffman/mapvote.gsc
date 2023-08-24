@@ -15,12 +15,11 @@ init()
 	while(level.voteablemaps.size < level.maps4vote && tries < 100) 
 	{
 		tries++;
-		// Better parsing, dont use huge ass loop just to parse [0][1][2] .. kek @ duff
 		i = randomint(maprotation.size);
 		while(maprotation[i] != "gametype")
 			i = randomint(maprotation.size);
 		i+=2;
-		if((i+1) < maprotation.size && maprotation[i] == "map" && isLegal(maprotation[i+1] + ";" + maprotation[i-1]) && maprotation[i+1] != level.lastmap)
+		if((i+1) < maprotation.size && maprotation[i] == "map" && isLegal(maprotation[i+1] + ";" + maprotation[i-1]))
 			level.voteablemaps[level.voteablemaps.size] = maprotation[i+1] + ";" + maprotation[i-1];
 	}
 	
