@@ -151,7 +151,7 @@ printStats()
 			self.pers["shots"] = 0;
 		if(!isDefined(self.pers["hits"]))
 			self.pers["hits"] = 0;
-		
+	
 		if(self.pers["damage_done"]>0 || self.pers["damage_taken"]>0 || self.pers["shots"]>0 || self.pers["hits"]>0)
 			logPrint("P_A;" + self getGuid() + ";" + self getEntityNumber() + ";" + self.name + ";" + self.pers["shots"] + ";" + self.pers["hits"] + ";" + self.pers["damage_done"] + ";" + self.pers["damage_taken"] + ";" + "\n");
 		self iprintln("^7"+self.name+"^8:");
@@ -190,7 +190,9 @@ dropWeaponForDeath()
 		case "m14_mp":
 		case "m14_silencer_mp":
 		case "mp44_mp":
-			break;
+			if(!getDvarInt("class_assault_allowdrop"))
+				return;
+		break;
 		
 		case "mp5_mp":
 		case "mp5_silencer_mp":
@@ -198,20 +200,25 @@ dropWeaponForDeath()
 		case "uzi_silencer_mp":
 		case "ak74u_mp":
 		case "ak74u_silencer_mp":
-			break;
+			if(!getDvarInt("class_specops_allowdrop"))
+				return;
+		break;
 		
 		case "m40a3_mp":
 		case "remington700_mp":
-			break;
+			if(!getDvarInt("class_sniper_allowdrop"))
+				return;
+		break;
 		
 		case "winchester1200_mp":
 		case "m1014_mp":
-			break;
+			if(!getDvarInt("class_demolitions_allowdrop"))
+				return;
+		break;
 		
 		default:
 			return;
 	}
-	
 	clipAmmo = self GetWeaponAmmoClip(weapon);
 	stockAmmo = self GetWeaponAmmoStock(weapon);
 	if(!clipAmmo || !stockAmmo)
