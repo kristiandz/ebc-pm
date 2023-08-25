@@ -166,7 +166,7 @@ updateVotes(arraymaps, map)
 					else 
 					{
 						level.voteablemapstring = getSubStr(level.voteablemapstring, 0, level.voteablemapstring.size-2);
-						level.voteablemapstring += (" and " + (array[arraymaps[i]].size-k+1) + " more..");
+						level.voteablemapstring += (" and " + (array[arraymaps[i]].size-k+1) + " more.. ");
 						k = 999;
 					} 
 				}

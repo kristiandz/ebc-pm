@@ -12,7 +12,6 @@ main()
 	maps\mp\gametypes\_globallogic::SetupCallbacks();
 	level.teamBased = true;
 	level.overrideTeamScore = true;
-	
 	level.onPrecacheGameType = ::onPrecacheGameType;
 	level.onStartGameType = ::onStartGameType;
 	level.onSpawnPlayer = ::onSpawnPlayer;

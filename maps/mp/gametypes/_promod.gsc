@@ -215,6 +215,7 @@ initLoadoutForClass(classType)
 			self.pers[classType]["loadout_camo"] = getDvar("class_" + classType + "_camo");
 	}
 }
+
 validClass(classType, preServed, type)
 {
 	if(preServed == "")
@@ -328,13 +329,11 @@ processLoadoutResponse(respString)
 	if(!isDefined(self.pers["class"]))
 		return;
 	commandTokens = strTok(respString, ",");
-	
 	for(i = 0; i < commandTokens.size; i++)
 	{
 		subTokens = strTok(commandTokens[i], ":");
 		if(subTokens.size < 2)
 			return;
-		
 		switch(subTokens[0])
 		{
 			case "loadout_primary":
@@ -419,12 +418,10 @@ verifyWeaponChoice(weaponName, classType)
 			if(tableLookup("mp/statsTable.csv", 4, weaponName, 2) == "weapon_"+classType)
 				return true;
 		break;
-		
 		case "specops":
 			if(tableLookup("mp/statsTable.csv", 4, weaponName, 2) == "weapon_smg")
 				return true;
 		break;
-		
 		case "demolitions":
 			if(tableLookup("mp/statsTable.csv", 4, weaponName, 2) == "weapon_shotgun")
 				return true;

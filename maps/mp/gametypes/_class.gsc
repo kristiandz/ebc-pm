@@ -77,20 +77,20 @@ sidearmWeapon()
 	sidearmWeapon = self.pers[class]["loadout_secondary"];
 	if(!isDefined(sideArmWeapon))
 		return; //
-	if (sidearmWeapon != "none" && sidearmWeapon != "deserteaglegold" && sidearmWeapon != "deserteagle" && sidearmWeapon != "colt45" && sidearmWeapon != "usp" && sidearmWeapon != "beretta")
+	if(sidearmWeapon != "none" && sidearmWeapon != "deserteaglegold" && sidearmWeapon != "deserteagle" && sidearmWeapon != "colt45" && sidearmWeapon != "usp" && sidearmWeapon != "beretta")
 		sidearmWeapon = getDvar("class_" + class + "_secondary");
 
-	if (sideArmWeapon != "none")
+	if(sideArmWeapon != "none")
 	{
 		s = "";
-		if (self.pers[class]["loadout_secondary_attachment"] == "silencer")
+		if(self.pers[class]["loadout_secondary_attachment"] == "silencer")
 			s = "_silencer";
 		else
 			self.pers[class]["loadout_secondary_attachment"] = "none";
 
 		sidearmWeapon += s + "_mp";
 
-		if (isDefined(level.strat_over) && level.strat_over && (!isDefined(game["PROMOD_KNIFEROUND"]) || !game["PROMOD_KNIFEROUND"]) || !isDefined(level.strat_over))
+		if(isDefined(level.strat_over) && level.strat_over && (!isDefined(game["PROMOD_KNIFEROUND"]) || !game["PROMOD_KNIFEROUND"]) || !isDefined(level.strat_over))
 		{
 			self giveWeapon(sidearmWeapon);
 			self giveMaxAmmo(sidearmWeapon);
@@ -244,6 +244,7 @@ onPlayerConnecting()
 		player.class = player.pers["class"];
 	}
 }
+
 setClass(newClass)
 {
 	self setClientDvar("loadout_curclass", newClass);

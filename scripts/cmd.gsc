@@ -874,7 +874,7 @@ adminCommands(cmd, pickingType)
 		case "promod":
 			player = getPlayer(arg1, pickingType);
 			if(isDefined(player))
-				player scripts\utility\common::clientCmd("wait 300; disconnect; wait 300; connect 145.239.150.240:28950");
+				player scripts\utility\common::clientCmd("wait 300; disconnect; wait 300; connect explicitbouncers.com:28950");
 			break;
 			
 		case "mixmod":

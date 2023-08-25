@@ -48,7 +48,7 @@ onJoinedSpectators()
 
 updateSpectateSettings()
 {
-	level endon ("game_ended");
+	level endon("game_ended");
 	for(i = 0; i < level.players.size; i++)
 		level.players[i] setSpectatePermissions();
 }

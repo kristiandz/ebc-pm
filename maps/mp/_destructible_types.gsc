@@ -188,7 +188,11 @@ vehicle_80s_wagon1(color)
 	destructible_state(tag+"_d","vehicle_80s_wagon1_"+color+"_light_RB_dam"); 
 	destructible_part("tag_bumper_front","vehicle_80s_wagon1_"+color+"_bumper_F",undefined,undefined,undefined,undefined,1); 
 	destructible_part("tag_bumper_back","vehicle_80s_wagon1_"+color+"_bumper_B",undefined,undefined,undefined,undefined,1); 
-	}vehicle_80s_hatch1(color){destructible_create("vehicle_80s_hatch1_"+color,200,undefined,32,"no_melee"); 
+}
+
+vehicle_80s_hatch1(color)
+{
+	destructible_create("vehicle_80s_hatch1_"+color,200,undefined,32,"no_melee"); 
 	destructible_loopfx("tag_hood_fx","smoke/car_damage_whitesmoke",0.4); 
 	destructible_state(undefined,"vehicle_80s_hatch1_"+color+"_destructible_mp",200,undefined,32,"no_melee"); 
 	destructible_loopfx("tag_hood_fx","smoke/car_damage_blacksmoke",0.4); 
@@ -257,7 +261,11 @@ vehicle_80s_wagon1(color)
 	destructible_fx(tag,"props/car_glass_brakelight"); 
 	destructible_sound("veh_glass_break_small"); 
 	destructible_state(tag+"_d","vehicle_80s_hatch1_"+color+"_light_RB_dam"); 
-	}vehicle_small_wagon(color){destructible_create("vehicle_small_wagon_"+color,200,undefined,32,"no_melee"); 
+}
+
+vehicle_small_wagon(color)
+{
+	destructible_create("vehicle_small_wagon_"+color,200,undefined,32,"no_melee"); 
 	destructible_loopfx("tag_hood_fx","smoke/car_damage_whitesmoke",0.4); 
 	destructible_state(undefined,"vehicle_small_wagon_"+color+"_destructible_mp",200,undefined,32,"no_melee"); 
 	destructible_loopfx("tag_hood_fx","smoke/car_damage_blacksmoke",0.4); 
@@ -327,7 +335,11 @@ vehicle_80s_wagon1(color)
 	destructible_fx(tag,"props/car_glass_brakelight"); 
 	destructible_sound("veh_glass_break_small"); 
 	destructible_state(tag+"_d","vehicle_small_wagon_"+color+"_light_RB_dam"); 
-	}vehicle_small_hatch(color){destructible_create("vehicle_small_hatch_"+color,200,undefined,32,"no_melee"); 
+}
+
+vehicle_small_hatch(color)
+{
+	destructible_create("vehicle_small_hatch_"+color,200,undefined,32,"no_melee"); 
 	destructible_loopfx("tag_hood_fx","smoke/car_damage_whitesmoke",0.4); 
 	destructible_state(undefined,"vehicle_small_hatch_"+color+"_destructible_mp",200,undefined,32,"no_melee"); 
 	destructible_loopfx("tag_hood_fx","smoke/car_damage_blacksmoke",0.4); 

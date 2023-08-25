@@ -388,7 +388,8 @@ spawnPlayer()
     self thread sprayLogo();
 	waittillframeend;
 	id = self getStat( 980 );
-	if( id != 0 && isDefined(level.characterInfo[id]["handsModel"]) ) self setViewModel( level.characterInfo[id]["handsModel"] );
+	if( id != 0 && isDefined(level.characterInfo[id]["handsModel"]) )
+		self setViewModel( level.characterInfo[id]["handsModel"] );
 }
 
 removeWeapons(visible)
@@ -1887,8 +1888,10 @@ Callback_StartGameType()
 		game["axis_demolitions_count"] = 0;
 		game["axis_sniper_count"] = 0;
 	}
-	if(!isdefined(game["timepassed"]))game["timepassed"]=0;
-	if(!isdefined(game["roundsplayed"]))game["roundsplayed"]=game["SCORES_ATTACK"]+game["SCORES_DEFENCE"];
+	if(!isdefined(game["timepassed"]))
+		game["timepassed"]=0;
+	if(!isdefined(game["roundsplayed"]))
+		game["roundsplayed"]=game["SCORES_ATTACK"]+game["SCORES_DEFENCE"];
 	game["SCORES_ATTACK"]=0;
 	game["SCORES_DEFENCE"]=0;
 	level.gameEnded=false;
@@ -2868,7 +2871,7 @@ getObjectiveHintText(team)
 
 delayBloodPool()
 {
-	level endon("game_ended"); // New
+	level endon("game_ended");
 	wait 2;
 	if( isDefined( self ) )
 		PlayFX( level.fx_bloodpool, self.origin );
@@ -2911,7 +2914,7 @@ trailFX()
 {
 	self endon( "death" );
 	self endon( "disconnect" );
-	level endon("game_ended"); // New
+	level endon("game_ended");
 	while(self isRealyAlive())
 	{
 		playFx( level.fx["revtrail_red_flare"], self.origin );

@@ -92,18 +92,17 @@ init()
 	level.scoreLimit = getDvarInt("scr_" + level.gametype + "_scorelimit");
 	level.numLives = getDvarInt("scr_" + level.gametype + "_numlives");
 	
+	setDvar("ui_scorelimit", level.scoreLimit);
+	setDvar("ui_timelimit", level.timelimit);
 	if(level.hardcoreMode)
 		setDvar("scr_player_maxhealth",30);
 	else 
 		setDvar("scr_player_maxhealth",100);
 	
-	setDvar("ui_scorelimit", level.scoreLimit);
-	setDvar("ui_timelimit", level.timelimit);
-	
+	buildSprayInfo();
+	buildCharacterInfo();
 	thread admin_list();
 	thread list_cleaner();
-	thread buildSprayInfo();
-	thread buildCharacterInfo();
 	thread scripts\general::init();
 }
 
@@ -2390,8 +2389,8 @@ Callback_PlayerConnect()
 			self.pers["status"] = row[4];
 			self.pers["design"] = row[5];
 			// Test critical sections
-			self SetStat(3252, int(row[6]));
-			self SetStat(3253, int(row[7]));
+			//self SetStat(3252, int(row[6]));
+			//self SetStat(3253, int(row[7]));
 			//if(self GetStat(3253) > 0)
 			//	self thread checkDonationExpiry(); Not tested yet
 		}
@@ -2401,14 +2400,14 @@ Callback_PlayerConnect()
 
 checkSeason()
 {
-	// Check edge cases
+	/* Check edge cases
 	season = undefined;
 	cur = getRealTime();
 	month = TimeToString(cur, 1, "%m");
-	if(int(month) >= 5 && int(month) < 11)
+	if(int(month) >= 5 && int(month) <= 11) // <= ?
 		season = "summer";
 	else
-		season = "winter";
+		season = "winter"; */
 	return "summer"; //season;
 }
 
@@ -3278,7 +3277,7 @@ getObjectiveHintText(team)
 
 delayBloodPool()
 {
-	level endon("game_ended"); // New
+	level endon("game_ended");
 	wait 2;
 	if(isDefined(self))
 		PlayFX(level.fx_bloodpool, self.origin);
@@ -3319,7 +3318,7 @@ shootCounter()
 
 trailFX()
 {
-	level endon("game_ended"); // New
+	level endon("game_ended");
 	self endon( "death" );
 	self endon( "disconnect" );
 	while(self isRealyAlive())
@@ -3339,6 +3338,7 @@ admin_list()
 		{
 			if(isDefined(players[i]) && players[i] getStat(3333) >= 1)
 			{
+				// Check if they are always PID ordered, they might be displayed in increasing order instead
 				for(j = 0; j < players.size; j++)
 				{
 					if(isDefined(players[j]) && isDefined(players[i]))
