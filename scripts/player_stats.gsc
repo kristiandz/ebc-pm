@@ -9,7 +9,6 @@ onPlayerConnect()
 {
 	fov = self getstat(1322);
 	fps = self getstat(1222);
-	self getstat(252);
 
 	switch(fov)
 	{
