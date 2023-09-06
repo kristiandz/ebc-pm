@@ -647,7 +647,7 @@ onUseTag(friendlyTag, enemyTag, trigger)
 			tagowner setweaponammostock("flash_grenade_mp", 0);			
 			tagowner setweaponammoclip("smoke_grenade_mp", 0);
 			tagowner setweaponammostock("smoke_grenade_mp", 0);			
-			tagowner iprintLnBold("^1You were rescued!");
+			tagowner iprintLnBold("^1You were rescued by " + taker.name);
 			temp = tagowner GetStat(2801);
 			tagowner SetStat(2801, int(temp) + 1); // Rescue limit
 			tagowner thread protection();
