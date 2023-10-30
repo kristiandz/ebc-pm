@@ -81,23 +81,30 @@ material,gfx_spray27
 material,gfx_spray28
 material,gfx_spray29
 
-material,gfx_aaa
-material,gfx_calculationmath
-material,gfx_catjam
-material,gfx_dropitlikeitshot
-material,gfx_homersimpson
-material,gfx_muslimcircle
-material,gfx_russianbochk
-material,gfx_traumatized
-
-material,aaa_menu
-material,calculationmath_menu
-material,catjam_menu
-material,dropitlikeitshot_menu
-material,homersimpson_menu
-material,muslimcircle_menu
-material,russianbochk_menu
-material,traumatized_menu
+material, gfx_catweed
+material, catweed_menu
+fx, catweed
+material, gfx_gigachad
+material, gigachad_menu
+fx, gigachad
+material, gfx_kekwtf
+material, kekwtf_menu
+fx, kekwtf
+material, gfx_okay
+material, okay_menu
+fx, okay
+material, gfx_waiting
+material, waiting_menu
+fx, waiting
+material, gfx_wenye
+material, wenye_menu
+fx, wenye
+material, gfx_wideputin
+material, wideputin_menu
+fx, wideputin
+material, gfx_cowboy
+material, cowboy_menu
+fx, cowboy
 
 material,spray0_menu
 material,spray1_menu
@@ -170,15 +177,6 @@ fx,deathrun/spray26
 fx,deathrun/spray27
 fx,deathrun/spray28
 fx,deathrun/spray29
-
-fx,deathrun/aaa
-fx,deathrun/calculationmath
-fx,deathrun/catjam
-fx,deathrun/dropitlikeitshot
-fx,deathrun/homersimpson
-fx,deathrun/muslimcircle
-fx,deathrun/russianbochk
-fx,deathrun/traumatized
 
 fx,deathrun/revtrail_red_flare
 
