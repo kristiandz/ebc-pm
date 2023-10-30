@@ -188,7 +188,7 @@ menuDef
 			visible			1
 			origin		    317 368
 			forecolor		0.95 0.95 0.95 1 
-			exp				text( "Welcome to the summer season. If your prestige was higher than 20, you are eligible for season awards.\n                      Check your awards in the VIP menu! Summer season lasts untill 1.11.2023")
+			exp				text( "Welcome to the winter season. If your prestige was higher than 20, you are eligible for season awards.\n                      Check your awards in the VIP menu! Winter season lasts untill 01.05.2024")
 			textfont		UI_FONT_NORMAL
 			textalign		ITEM_ALIGN_CENTER
 			textscale		0.3
