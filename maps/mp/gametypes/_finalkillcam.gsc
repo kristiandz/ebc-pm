@@ -387,11 +387,11 @@ getsongname(songnum)
 		break;
 		case 10: level.name = "Classified Donk";
 		break;
-		case 11: level.name = "Dr.Dre - The Next Episode";
+		case 11: level.name = "D.O.D - So Much In Love";
 		break;
-		case 12: level.name = "Disclosure - You and Me";
+		case 12: level.name = "Riva - Run Away (HU Biss Re-Work)";
 		break;
-		case 13: level.name = "Daft Punk - Derezzed";
+		case 13: level.name = "NERUS & DJ KAKA - Blow";
 		break;
 		case 14: level.name = "Justice - Stress";
 		break;

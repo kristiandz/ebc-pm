@@ -81,29 +81,29 @@ material,gfx_spray27
 material,gfx_spray28
 material,gfx_spray29
 
-material, gfx_catweed
-material, catweed_menu
+material,gfx_catweed
+material,catweed_menu
 fx,deathrun/catweed
-material, gfx_gigachad
-material, gigachad_menu
+material,gfx_gigachad
+material,gigachad_menu
 fx,deathrun/gigachad
-material, gfx_kekwtf
-material, kekwtf_menu
+material,gfx_kekwtf
+material,kekwtf_menu
 fx,deathrun/kekwtf
-material, gfx_okay
-material, okay_menu
+material,gfx_okay
+material,okay_menu
 fx,deathrun/okay
-material, gfx_waiting
-material, waiting_menu
+material,gfx_waiting
+material,waiting_menu
 fx,deathrun/waiting
-material, gfx_wenye
-material, wenye_menu
+material,gfx_wenye
+material,wenye_menu
 fx,deathrun/wenye
-material, gfx_wideputin
-material, wideputin_menu
+material,gfx_wideputin
+material,wideputin_menu
 fx,deathrun/wideputin
-material, gfx_cowboy
-material, cowboy_menu
+material,gfx_cowboy
+material,cowboy_menu
 fx,deathrun/cowboy
 
 material,spray0_menu
