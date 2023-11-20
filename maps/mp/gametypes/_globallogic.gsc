@@ -2631,14 +2631,17 @@ Callback_PlayerKilled(eInflictor,attacker,iDamage,sMeansOfDeath,sWeapon,vDir,sHi
 		if ( !isdefined( killcamentitystarttime ) )
 			killcamentitystarttime = 0;
 	}
-	if(sMeansOfDeath=="MOD_MELEE")scWeapon="knife_mp";
-	else scWeapon=sWeapon;sHeadshot=int(sMeansOfDeath=="MOD_HEAD_SHOT");
-
 	if(!isDefined(attacker.isKnifing))
 	{
 		logPrint("K;"+self getGuid()+";"+self getEntityNumber()+";"+self.pers["team"]+";"+self.name+";"+lpattackguid+";"+lpattacknum+";"+lpattackerteam+";"+lpattackname+";"+sWeapon+";"+iDamage+";"+sMeansOfDeath+";"+sHitLoc+"\n");
 		self.cur_kill_streak = 0;
 		self SetStat( 2304, 0);
+		
+		if(sMeansOfDeath == "MOD_MELEE")
+			attacker.pers["meleeKills"]++;
+		else if( isExplosive( sMeansOfDeath ) )
+			attacker.pers[ "explosiveKills" ]++;
+		
 		if(isDefined(attacker) && isPlayer(attacker))
 		{
 			attacker.cur_kill_streak++;		
