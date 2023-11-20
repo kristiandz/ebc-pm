@@ -7,7 +7,7 @@ init()
 	level.movingEnding setModel("tag_origin");
 	level.movingEnding hide();
 	
-	time = 30;
+	time = 40;
 	waittillframeend;
 	
 	players = level.players;

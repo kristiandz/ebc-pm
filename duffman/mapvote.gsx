@@ -23,24 +23,98 @@ init()
 			level.voteablemaps[level.voteablemaps.size] = maprotation[i+1] + ";" + maprotation[i-1];
 	}
 	
-	level.mapvote = true;
-	thread scripts\ending::init();
 	thread StopSoundOnAllPlayers();
 	players = getAllPlayers();
 	for(i = 0; i < players.size; i++) 
 	{
+		if(isDefined(players[i]) && isFalse(players[i].pers["isBot"]))
+		{
+			players[i].sessionteam = "spectator";
+			players[i].sessionstate = "spectator";
+			players[i] [[level.spawnSpectator]]();
+		}
         if(players[i] getstat(1224) == 0)
             continue;
 		number = (1 + randomInt(5));
 		Musicplay("endmap" + number);
-	}	
+	}
 	
-	arraymaps = level.voteablemaps;
-	//center
+	level.mapvote = true;
+	thread scripts\ending::init();
+	addConnectThread(::setSpectatorMode);
+	
+	// Center
 	hud[0] = addTextHud(level, 0, 0, .8, "center", "middle", "center", "middle", 0, 100);
 	hud[0] setShader("white", level.windowwidth, level.windowheight);
 	hud[0].color = (0, 0, 0);
 	hud[0] thread fadeIn(.3);
+	// Top BG
+	hud[3] = addTextHud(level, 0, level.windowheight/-2+3, .8, "center", "bottom", "center", "middle", 1.6, 101);
+	hud[3].color = (0, 0 ,0);
+	hud[3] SetShader("white", level.windowwidth, 35);
+	hud[3] thread fadeIn(.3);
+	//////////// New code
+	//text
+	hud[1] = addTextHud(level, 0, level.windowheight/-2-4, 1, "center", "bottom", "center", "middle", 1.6, 102);
+	hud[1] setText("Map statistics / Best Players");
+	hud[1] thread fadeIn(.3);
+	// Stats
+	huds = [];
+	y = -61;
+	array = getScores();
+	for(i = 0; i < array.size; i++)
+	{
+		huds[i] = addTextHud(level, 0, level.windowheight/-2-4, 1, "center", "bottom", "center", "middle", 1.55, 102);
+		if(array[i][1] > 0)
+		{
+			switch(i)
+			{
+				case 0:
+					huds[i] setText("Most kills by ^8" + array[i][0] + "^7 with ^8" + array[i][1] + "^7 kills");
+					break;
+				case 1:
+					huds[i] setText("Most deaths by ^8" + array[i][0] + "^7 with ^8" + array[i][1] + "^7 deaths");
+					break;
+				case 2:
+					huds[i] setText("Most melees by ^8" + array[i][0] + "^7 with ^8" + array[i][1] + "^7 melees");
+					break;
+				case 3:
+					huds[i] setText("Most explosions kills by ^8" + array[i][0] + "^7 with ^8" + array[i][1] + "^7 booms");
+					break;
+				case 4:
+					huds[i] setText("Most plants by ^8" + array[i][0] + "^7 with ^8" + array[i][1] + "^7 plants");
+					break;
+				case 5:
+					huds[i] setText("Most defuses by ^8" + array[i][0] + "^7 with ^8" + array[i][1] + "^7 defuses");
+					break;
+				case 6:
+					huds[i] setText("Most rescues from ^8" + array[i][0] + "^7 with ^8" + array[i][1] + "^7 rescues");
+					break;
+				case 7:
+					huds[i] setText("Most eliminations by ^8" + array[i][0] + "^7 with ^8" + array[i][1] + "^7 eliminations");
+					break;
+			}
+		}
+		else
+			huds[i] setText("There was no score set in this category...");
+			
+		huds[i].x = 0;
+		huds[i].y = y + (i * 20);
+	}
+	wait 14;
+	for( i = 0; i < array.size; i++ )
+	{
+		huds[ i ] fadeOverTime( 1 );
+		huds[ i ].alpha = 0;
+	}
+	wait 1;
+	for( i = 0; i < huds.size; i++ )
+		huds[ i ] destroy();
+	
+	hud[1] thread fadeOut(.3);
+	hud[1] destroy();
+	/////////////
+	arraymaps = level.voteablemaps;
 	//text
 	hud[1] = addTextHud(level, 0, level.windowheight/-2-4, 1, "center", "bottom", "center", "middle", 1.6, 102);
 	hud[1] setText("Vote for the next map!");
@@ -49,11 +123,7 @@ init()
 	hud[2] = addTextHud(level, level.windowwidth/2-32, level.windowheight/-2-3, 1, "center", "bottom", "center", "middle", 1.6, 102);
 	hud[2] SetTenthsTimer(20);
 	hud[2] thread fadeIn(.3);
-	//top bg
-	hud[3] = addTextHud(level, 0, level.windowheight/-2+3, .8, "center", "bottom", "center", "middle", 1.6, 101);
-	hud[3].color = (0, 0 ,0);
-	hud[3] SetShader("white", level.windowwidth, 35);
-	hud[3] thread fadeIn(.3);
+
 	//voting results ... + names
 	map = [];
 	for(i = 0; i < arraymaps.size; i++) 
@@ -68,15 +138,15 @@ init()
 	for(i = 0; i < players.size; i++) 
 	{
 		if(isDefined(players[i]) && isFalse(players[i].pers["isBot"]))
-			players[i] thread PlayerVote();
+			players[i] thread playerVote();
 	}
-	addConnectThread(::PlayerVote);
+	addConnectThread(::playerVote);
 	wait .1;
 	level thread updateVotes(arraymaps, map);
 
 	for(y = 20; y > 0; y--) 
 	{
-		if(!(y%2) || y<6)
+		if((!(y%2) || y<6) && (y < 11))
 			level thread playSoundOnAllPlayers("ui_mp_timer_countdown");
 		hud[2] fadeOverTime(.9);
 		hud[2].alpha = .5;
@@ -137,7 +207,7 @@ updateVotes(arraymaps, map)
 	{
 		array = [];
 		mostvotes = 0;
-		level.winning = getDvar("mapname") + ";" +getDvar("g_gametype"); //Just in case
+		level.winning = getDvar("mapname") + ";" + getDvar("g_gametype"); //Just in case
 		players = getAllPlayers();
 		for(i = 0; i < players.size; i++) 
 		{
@@ -166,7 +236,7 @@ updateVotes(arraymaps, map)
 					else 
 					{
 						level.voteablemapstring = getSubStr(level.voteablemapstring, 0, level.voteablemapstring.size-2);
-						level.voteablemapstring += (" and " + (array[arraymaps[i]].size-k+1) + " more.. ");
+						level.voteablemapstring += (" and " + (array[arraymaps[i]].size-k+1) + " more..");
 						k = 999;
 					} 
 				}
@@ -195,13 +265,17 @@ changeMap()
 	exitLevel(false);
 }
 
-PlayerVote() 
+setSpectatorMode()
 {
-	self endon("disconnect");
-	level endon("end_vote");
 	self.sessionteam = "spectator";
 	self.sessionstate = "spectator";
 	self [[level.spawnSpectator]]();
+}
+
+playerVote() 
+{
+	self endon("disconnect");
+	level endon("end_vote");
 	ads = self AdsButtonPressed();
 	selected = -1;
 	offset = 23;

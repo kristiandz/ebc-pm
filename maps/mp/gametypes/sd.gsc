@@ -348,6 +348,7 @@ onUsePlantObject(player)
 		for(i = 0; i < level.players.size; i++)
 			level.players[i] playLocalSound("promod_planted");
 		
+		player.pers["plants"]++;
 		player thread[[level.onXPEvent]]("plant");
 		level thread bombPlanted(self, player);
 		logPrint("P_P;" + player getGuid() + ";" + player getEntityNumber() + ";" + player.name + "\n");
@@ -365,6 +366,7 @@ onUseDefuseObject(player)
 	if(!level.hardcoreMode)
 		iPrintLn(&"MP_EXPLOSIVES_DEFUSED_BY", player.name);
 	
+	player.pers["defuses"]++;
 	maps\mp\gametypes\_globallogic::givePlayerScore("defuse", player);
 	player thread[[level.onXPEvent]]("defuse");
 	logPrint("P_D;" + player getGuid() + ";" + player getEntityNumber() + ";" + player.name + "\n");

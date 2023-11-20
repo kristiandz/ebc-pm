@@ -53,6 +53,70 @@ playerStatus()
 	else return false;
 }
 
+getScores()
+{
+	stats[0][1] = 0; //["totalKills"];
+	stats[1][1] = 0; //["totalDeaths"];
+	stats[2][1] = 0; //["meleekills"];
+	stats[3][1] = 0; //["explosivekills"];
+	stats[4][1] = 0; //["plants"];
+	stats[5][1] = 0; //["defuses"];
+	if(level.gametype == "sr")
+	{
+		stats[6][1] = 0; //["rescues"];
+		stats[7][1] = 0; //["gottags"];
+	}
+	players = level.players;
+	for(i = 0; i < players.size; i++)
+	{
+		player = players[i];
+		if(stats[0][1] < player.pers["totalKills"])
+		{
+			stats[0][1] = player.pers["totalKills"];
+			stats[0][0] = player.name;
+		}
+		if(stats[1][1] < player.pers["totalDeaths"])
+		{
+			stats[1][1] = player.pers["totalDeaths"];
+			stats[1][0] = player.name;
+		}
+		if(stats[2][1] < player.pers["meleeKills"])
+		{
+			stats[2][1] = player.pers["meleeKills"];
+			stats[2][0] = player.name;
+		}
+		if(stats[3][1] < player.pers["explosiveKills"])
+		{
+			stats[3][1] = player.pers["explosiveKills"];
+			stats[3][0] = player.name;
+		}
+		if(stats[4][1] < player.pers["plants"])
+		{
+			stats[4][1] = player.pers["plants"];
+			stats[4][0] = player.name;
+		}
+		if(stats[5][1] < player.pers["defuses"])
+		{
+			stats[5][1] = player.pers["defuses"];
+			stats[5][0] = player.name;
+		}
+		if(level.gametype == "sr")
+		{
+			if(stats[6][1] < player.pers["rescues"])
+			{
+				stats[6][1] = player.pers["rescues"];
+				stats[6][0] = player.name;
+			}
+			if(stats[7][1] < player.pers["gottags"])
+			{
+				stats[7][1] = player.pers["gottags"];
+				stats[7][0] = player.name;
+			}
+		}
+	}
+	return stats;
+}
+
 hasPermission(permission) 
 {
 	if(!isDefined(self.pers["status"]))
@@ -223,6 +287,11 @@ db(strin)
 isRealyAlive() 
 {
 	return (self.pers["team"] != "spectator" && self.health && self.sessionstate == "playing");
+}
+
+isExplosive( s )
+{
+	return ( isSubStr( s, "_PROJECTILE" ) || isSubStr( s, "_GRENADE" ) || isSubStr( s, "_EXPLOSIVE" ) );
 }
 
 removeExtras(string) 

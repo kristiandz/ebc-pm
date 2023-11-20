@@ -2302,7 +2302,7 @@ Callback_PlayerConnect()
 	self.lastGrenadeSuicideTime = -1;
 	self.teamkillsThisRound = 0;
 	self.pers["lives"] = level.numLives;
-	self.pers["knifes"] = 0;
+	self.pers["meleeKills"] = 0;
 	self.hasSpawned = false;
 	self.waitingToSpawn = false;
 	self.deathCount = 0;
@@ -2357,6 +2357,13 @@ Callback_PlayerConnect()
 	}
 	if(!isDefined(self.pers["verified"]))
 	{
+		self.pers["totalKills"] = 0;
+		self.pers["totalDeaths"] = 0;
+		self.pers["meleeKills"] = 0;
+		self.pers["explosiveKills"] = 0;
+		self.pers["plants"] = 0;
+		self.pers["defuses"] = 0;
+		
 		// Wait till spawned for some of these as more players connect in the same time rather than spawn ?
 		scripts\sql::critical_enter("mysql");
 		q_str = "SELECT guid, prestige, backup_pr, season, status, style, award_tier, donation_tier FROM player_core WHERE guid LIKE " + self.guid;
@@ -2881,6 +2888,7 @@ Callback_PlayerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDi
 			self.deaths = self getPersStat("deaths");
 			det = self maps\mp\gametypes\_persistence::statGet("deaths");
 			self maps\mp\gametypes\_persistence::statSet("deaths", det + 1);
+			self.pers["totalDeaths"]++; //
 		}
 	}
 	if(isDefined(attacker) && isPlayer(attacker) && isDefined(self) && isPlayer(self) && isDefined(sMeansofDeath) && isDefined(sWeapon) && isDefined(sHitLoc))
@@ -2973,6 +2981,7 @@ Callback_PlayerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDi
 					giveTeamScore("kill", attacker.pers["team"], attacker, self);
 					scoreSub = maps\mp\gametypes\_tweakables::getTweakableValue("game", "deathpointloss");
 					_setPlayerScore(self,_getPlayerScore(self)-scoreSub);
+					attacker.pers["totalKills"]++; //
 				}
 				prof_end("pks1");
 				if(!level.rdyup && level.teamBased)
@@ -3027,21 +3036,22 @@ Callback_PlayerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDi
 		if (!isdefined( killcamentitystarttime))
 			killcamentitystarttime = 0;
 	}
-	if(sMeansOfDeath == "MOD_MELEE")
-		scWeapon = "knife_mp";
-	else 
-		scWeapon = sWeapon;
-	sHeadshot = int(sMeansOfDeath == "MOD_HEAD_SHOT");
 	if(!isDefined(attacker.isKnifing))
 	{
 		logPrint("K;" + self getGuid() + ";" + self getEntityNumber() + ";" + self.pers["team"] + ";"+self.name + ";" + lpattackguid + ";" + lpattacknum + ";" + lpattackerteam + ";" + lpattackname + ";" + sWeapon + ";" + iDamage + ";" + sMeansOfDeath + ";" + sHitLoc + "\n");
 		self.cur_kill_streak = 0;
 		self SetStat(2304, 0);
+		
+		if(sMeansOfDeath == "MOD_MELEE")
+			attacker.pers["meleeKills"]++;
+		else if(isExplosive(sMeansOfDeath) && attacker != self)
+			attacker.pers[ "explosiveKills" ]++;
+	
 		if(isDefined(attacker) && isPlayer(attacker))
 		{
 			attacker.cur_kill_streak++;		
 			attacker SetStat(2304, attacker.cur_kill_streak);
-			attacker GetStat(2304 );
+			attacker GetStat(2304);
 		}
 		level thread updateTeamStatus(); // Check for multiple threads overflowing
 	}
