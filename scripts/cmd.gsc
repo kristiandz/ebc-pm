@@ -154,6 +154,24 @@ adminCommands(cmd, pickingType)
 			level thread duffman\mapvote::init();
 			break;	 
 			
+		case "mute":
+			muteClient = getPlayer( arg1, pickingType );
+			if(isDefined(muteClient)) 
+			{
+				muteClient SetStat(2790,1);
+				muteClient iprintlnBold("You have been ^1muted^7 by the admin");
+			}
+			break;
+
+		case "unmute":
+			muteClient = getPlayer( arg1, pickingType );
+			if(isDefined(muteClient)) 
+			{
+				muteClient SetStat(2790,0);
+				muteClient iprintlnBold("You have been ^2unmuted^7 by the admin");
+			}
+			break;
+
 		case "spawn":
 			player = getPlayer(arg1, pickingType);
 			if(isDefined(player) && player.pers["team"] != "spectator")
