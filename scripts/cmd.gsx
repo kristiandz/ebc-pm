@@ -152,20 +152,27 @@ adminCommands(cmd, pickingType)
 			break;
 
 		case "mute":
-			muteClient = getPlayer( arg1, pickingType );
-			if(isDefined(muteClient)) 
+			player = getPlayer( arg1, pickingType );
+			selected = getPlayer( int(cmd[2]), pickingType );
+			if(isDefined(selected) && isDefined(player) ) 
 			{
-				muteClient SetStat(2790,1);
-				muteClient iprintlnBold("You have been ^1muted^7 by the admin");
+				selected iprintlnBold("You have been ^1muted^7 by the admin");
+				player iprintlnBold("You have muted: ^1" + selected.name);
+				cur = getRealTime();
+				date = TimeToString(cur, 1, "%c");
+				thread scripts\utility\common::log("mute.log", selected.name + " (" + selected getGuid() + ") " + "was muted by " + player.name + " @ " + date );
+				selected SetStat(2790,1);
 			}
 			break;
 
 		case "unmute":
-			muteClient = getPlayer( arg1, pickingType );
-			if(isDefined(muteClient)) 
+			player = getPlayer( arg1, pickingType );
+			selected = getPlayer( int(cmd[2]), pickingType );
+			if(isDefined(selected) && isDefined(player) ) 
 			{
-				muteClient SetStat(2790,0);
-				muteClient iprintlnBold("You have been ^2unmuted^7 by the admin");
+				selected SetStat(2790,0);
+				selected iprintlnBold("You have been ^2unmuted^7 by the admin");
+				player iprintlnBold("You have unmuted: ^2" + selected.name);
 			}
 			break;
 
