@@ -17,8 +17,8 @@ init()
 	registerScoreInfo("win", 50);
 	registerScoreInfo("loss", 30);
 	registerScoreInfo("tie", 40);
-	registerScoreInfo("plant", 10);
-	registerScoreInfo("defuse", 8);
+	registerScoreInfo("plant", 13);
+	registerScoreInfo("defuse", 10);
 	registerScoreInfo("ninja_defuse", 10);
 	registerScoreInfo("capture", 3);
 	registerScoreInfo("assault", 3);

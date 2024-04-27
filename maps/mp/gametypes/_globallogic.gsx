@@ -2302,7 +2302,6 @@ Callback_PlayerConnect()
 	self.lastGrenadeSuicideTime = -1;
 	self.teamkillsThisRound = 0;
 	self.pers["lives"] = level.numLives;
-	self.pers["meleeKills"] = 0;
 	self.hasSpawned = false;
 	self.waitingToSpawn = false;
 	self.deathCount = 0;
@@ -2395,9 +2394,8 @@ Callback_PlayerConnect()
 			self thread newseason(row[3]);
 			self.pers["status"] = row[4];
 			self.pers["design"] = row[5];
-			// Test critical sections
-			//self SetStat(3252, int(row[6]));
-			//self SetStat(3253, int(row[7]));
+			self SetStat(3252, int(row[6]));
+			self SetStat(3253, int(row[7]));
 			//if(self GetStat(3253) > 0)
 			//	self thread checkDonationExpiry(); Not tested yet
 		}
@@ -2501,8 +2499,8 @@ newseason(pl_season)
 		scripts\sql::AsyncWait(request);
 		SQL_Free(request);
 		scripts\sql::critical_leave("mysql");
-		self SetStat(3250 , 1);
-		self SetStat(3252 , 0);
+		self SetStat(3250, 1);
+		self SetStat(3252, 0);
 		self thread maps\mp\gametypes\_rank::resetEverything();
 		self waittill("spawned");
 		wait 1;
@@ -2518,8 +2516,8 @@ newseason(pl_season)
 		scripts\sql::AsyncWait(request);
 		SQL_Free(request);
 		scripts\sql::critical_leave("mysql");
-		self SetStat(3250 , 1);
-		self SetStat(3252 , 0);
+		self SetStat(3250, 1);
+		self SetStat(3252, 0);
 		self thread maps\mp\gametypes\_rank::resetEverything();
 		self waittill("spawned");
 		wait 1;
@@ -2531,7 +2529,7 @@ newseason(pl_season)
 
 award_check(prestige)
 {
-	// Update to swwitch case
+	// Update to switch case
 	if(int(prestige) >= 20 && int(prestige) <= 25)
 		self SetStat(3252, 1 );
 	else if(int(prestige) == 26)
@@ -3029,11 +3027,11 @@ Callback_PlayerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDi
 	if(isDefined(killcamentity))
 	{
 		killcamentityindex = killcamentity getEntityNumber(); 
-		if(isdefined( killcamentity.startTime))
+		if(isdefined(killcamentity.startTime))
 			killcamentitystarttime = killcamentity.startTime;
 		else
 			killcamentitystarttime = killcamentity.birthtime;
-		if (!isdefined( killcamentitystarttime))
+		if(!isdefined(killcamentitystarttime))
 			killcamentitystarttime = 0;
 	}
 	if(!isDefined(attacker.isKnifing))
@@ -3045,7 +3043,7 @@ Callback_PlayerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDi
 		if(sMeansOfDeath == "MOD_MELEE")
 			attacker.pers["meleeKills"]++;
 		else if(isExplosive(sMeansOfDeath) && attacker != self)
-			attacker.pers[ "explosiveKills" ]++;
+			attacker.pers["explosiveKills"]++;
 	
 		if(isDefined(attacker) && isPlayer(attacker))
 		{

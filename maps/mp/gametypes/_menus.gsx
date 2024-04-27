@@ -99,11 +99,9 @@ onMenuResponse()
 				request = SQL_Query(q_str);
 				scripts\sql::AsyncWait(request);
 				SQL_Free(request);
-				scripts\sql::critical_leave("mysql");
 				// Update prestige_log
 				cur = getRealTime();
 				time = TimeToString(cur, 1, "%c");
-				scripts\sql::critical_enter("mysql");
 				q_str = "INSERT INTO prestige_log (guid, name, prestige, time) VALUES ( \"" + guid + "\", \"" + self.name + "\", " + temp + ", \"" + time + "\");";
 				request = SQL_Query(q_str);
 				scripts\sql::AsyncWait(request);
