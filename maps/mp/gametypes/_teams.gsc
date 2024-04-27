@@ -228,8 +228,8 @@ getTeamBalance()
 		else if((isdefined(players[i].pers["team"])) && (players[i].pers["team"] == "axis"))
 			AxisPlayers[AxisPlayers.size] = players[i];
 	}
-	
-	if((AlliedPlayers.size == (AxisPlayers.size + 1)) || (AxisPlayers.size == (AlliedPlayers.size + 1)) || AlliedPlayers.size == AxisPlayers.size || (level.bombPlanted && (AlliedPlayers.size + AxisPlayers.size == 2 )))
+	// Alive players below, not team sizes, or diff, or simply check it from SD/SR if plant, then balancer after defused
+	if((AlliedPlayers.size == (AxisPlayers.size + 1)) || (AxisPlayers.size == (AlliedPlayers.size + 1)) || AlliedPlayers.size == AxisPlayers.size /*|| (level.bombPlanted && (AlliedPlayers.size + AxisPlayers.size == 2 ))*/)
 		return false;
 	else
 		return true;
@@ -240,7 +240,6 @@ balanceTeams()
 	AlliedPlayers = [];
 	AxisPlayers = [];
 	mostRecentPlayer = undefined;
-	
 	players = getEntArray("player", "classname");
 	for(i = 0; i < players.size; i++) // fills players teams array
 	{
@@ -358,7 +357,7 @@ setPlayerModels()
 	else
 		game["axis_soldiertype"] = axisCharSet;
 
-	// Do we really need to custom classes to be defined on promod ??
+	// Do we really need custom classes to be defined on promod ??
 	if(game["allies_soldiertype"] == "desert")
 	{
 		mptype\mptype_ally_cqb::precache();
