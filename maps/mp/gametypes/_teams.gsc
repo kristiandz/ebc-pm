@@ -258,7 +258,7 @@ balanceTeams()
 			{
 				if(!isDefined(mostRecentPlayer))
 					mostRecentPlayer = AlliedPlayers[j];
-				if(isDefined(AlliedPlayers[j]) && isDefined(mostRecentPlayer))
+				if(isDefined(AlliedPlayers[j].pers["teamTime"]) && isDefined(mostRecentPlayer.pers["teamTime"]))
 					if(AlliedPlayers[j].pers["teamTime"] > mostRecentPlayer.pers["teamTime"])
 						mostRecentPlayer = AlliedPlayers[j];
 			}
@@ -271,7 +271,7 @@ balanceTeams()
 			{
 				if(!isDefined(mostRecentPlayer))
 					mostRecentPlayer = AxisPlayers[j];
-				if(isDefined(AxisPlayers[j]) && isDefined(mostRecentPlayer))
+				if(isDefined(AxisPlayers[j].pers["teamTime"]) && isDefined(mostRecentPlayer.pers["teamTime"]))
 					if(AxisPlayers[j].pers["teamTime"] > mostRecentPlayer.pers["teamTime"])
 						mostRecentPlayer = AxisPlayers[j];
 			}
