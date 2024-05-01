@@ -174,7 +174,7 @@ KillCard(from, weap, alternatewep)
 		alternatewep = "Define Weapon";
 	shader[2] setWeaponIcon(weap,alternatewep);
 	shader[2].x = 80;
-	shader[2].y = 212;	
+	shader[2].y = 213;	
 	shader[2].alignX = "center";
 	shader[2].alignY = "middle";
 	shader[3] setValue(self getKillStat(from GetEntityNumber()));
@@ -188,7 +188,7 @@ KillCard(from, weap, alternatewep)
 	shader[4].label = &"-&&1";
 	shader[4] setValue(from getKillStat(self GetEntityNumber()));
 	shader[4].x = -6.6;
-	shader[4].y = 190;	
+	shader[4].y = 199;	
 	shader[4].alignX = "left";
 	shader[4].font = "objective";
 	shader[4].fontscale = 2;

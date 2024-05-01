@@ -23,6 +23,8 @@ init()
 			level.voteablemaps[level.voteablemaps.size] = maprotation[i+1] + ";" + maprotation[i-1];
 	}
 	
+	level.mapvote = true;
+	thread scripts\ending::init();
 	thread StopSoundOnAllPlayers();
 	players = getAllPlayers();
 	for(i = 0; i < players.size; i++) 
@@ -38,9 +40,6 @@ init()
 		number = (1 + randomInt(5));
 		Musicplay("endmap" + number);
 	}
-	
-	level.mapvote = true;
-	thread scripts\ending::init();
 	addConnectThread(::setSpectatorMode);
 	
 	// Center
@@ -53,8 +52,7 @@ init()
 	hud[3].color = (0, 0 ,0);
 	hud[3] SetShader("white", level.windowwidth, 35);
 	hud[3] thread fadeIn(.3);
-	//////////// New code
-	//text
+	// Text
 	hud[1] = addTextHud(level, 0, level.windowheight/-2-4, 1, "center", "bottom", "center", "middle", 1.6, 102);
 	hud[1] setText("Map statistics / Best Players");
 	hud[1] thread fadeIn(.3);
@@ -102,29 +100,28 @@ init()
 		huds[i].y = y + (i * 20);
 	}
 	wait 14;
-	for( i = 0; i < array.size; i++ )
+	for(i = 0; i < array.size; i++)
 	{
-		huds[ i ] fadeOverTime( 1 );
-		huds[ i ].alpha = 0;
+		huds[i] fadeOverTime(1);
+		huds[i].alpha = 0;
 	}
 	wait 1;
-	for( i = 0; i < huds.size; i++ )
-		huds[ i ] destroy();
+	for(i = 0; i < huds.size; i++)
+		huds[i] destroy();
 	
 	hud[1] thread fadeOut(.3);
 	hud[1] destroy();
-	/////////////
-	arraymaps = level.voteablemaps;
-	//text
+	// Text
 	hud[1] = addTextHud(level, 0, level.windowheight/-2-4, 1, "center", "bottom", "center", "middle", 1.6, 102);
 	hud[1] setText("Vote for the next map!");
 	hud[1] thread fadeIn(.3);
-	//timer
+	// Timer
 	hud[2] = addTextHud(level, level.windowwidth/2-32, level.windowheight/-2-3, 1, "center", "bottom", "center", "middle", 1.6, 102);
 	hud[2] SetTenthsTimer(20);
 	hud[2] thread fadeIn(.3);
-
-	//voting results ... + names
+	
+	arraymaps = level.voteablemaps;
+	// Voting results ... + names
 	map = [];
 	for(i = 0; i < arraymaps.size; i++) 
 	{
@@ -134,13 +131,15 @@ init()
 		map[arraymaps[i]] = hud[index];
 		hud[index] thread fadeIn(.3);
 	}
+	
 	players = getAllPlayers();
 	for(i = 0; i < players.size; i++) 
 	{
 		if(isDefined(players[i]) && isFalse(players[i].pers["isBot"]))
-			players[i] thread playerVote();
+			players[i] thread PlayerVote();
 	}
-	addConnectThread(::playerVote);
+	
+	addConnectThread(::PlayerVote);
 	wait .1;
 	level thread updateVotes(arraymaps, map);
 
@@ -163,8 +162,10 @@ init()
 	level notify("end_vote");
 	for(i = 0; i < arraymaps.size; i++)
 		map[arraymaps[i]] thread fadeOut(.5);
+	
 	hud[2] thread fadeOut(.5);
 	level.mapvotes thread fadeOut(.5);
+	
 	players = getAllPlayers();
 	for(i = 0; i < players.size; i++)
 		if(isDefined(players[i]) && isDefined(players[i].mapvote_selection))
@@ -176,16 +177,18 @@ init()
 	hud[2].glowalpha = 1;
 	hud[2].glowcolor = (0, 0, 0);
 	hud[2] thread fadeIn(.5);
+	
 	hud[4] = addTextHud(level, 0, 10, 1, "center", "middle", "center", "middle", 2, 102);
 	hud[4] setText(getMapNameString(strTok(level.winning, ";")[0]) + " " + getGameTypeString(strTok(level.winning, ";")[1]));
 	hud[4].glowalpha = 1;
 	hud[4].glowcolor = (0, 0, 0);
 	hud[4] thread fadeIn(.5);
 	wait 3;
+	
 	blackscreen = addTextHud(level, 0, 0, 1, "center", "middle", "center", "middle", 2, 9999999);
 	blackscreen setShader("white", 1000, 1000);
 	blackscreen.color = (0, 0, 0);
-	blackscreen1 = addTextHud( level, 0, 0, 1, "center", "middle", "center", "middle", 2, 9999999);
+	blackscreen1 = addTextHud(level, 0, 0, 1, "center", "middle", "center", "middle", 2, 9999999);
 	blackscreen1 setShader("white", 1000, 1000);
 	blackscreen1.color = (0, 0, 0);	
 	blackscreen thread fadeIn(1.5);
@@ -236,7 +239,7 @@ updateVotes(arraymaps, map)
 					else 
 					{
 						level.voteablemapstring = getSubStr(level.voteablemapstring, 0, level.voteablemapstring.size-2);
-						level.voteablemapstring += (" and " + (array[arraymaps[i]].size-k+1) + " more..");
+						level.voteablemapstring += (" and " + (array[arraymaps[i]].size - k + 1) + " more..");
 						k = 999;
 					} 
 				}
@@ -254,7 +257,7 @@ updateVotes(arraymaps, map)
 		level.mapvotes setText(string);
 		wait 1;
 		level.mapvotes destroy();
-		level.mapvotes = addTextHud( level, level.windowwidth/-2 +5 , level.windowheight/-2+6, 1, "left", "top", "center", "middle", 1.9, 102 );
+		level.mapvotes = addTextHud(level, level.windowwidth/-2 + 5, level.windowheight/-2 + 6, 1, "left", "top", "center", "middle", 1.9, 102);
 	}
 }
 
@@ -272,16 +275,16 @@ setSpectatorMode()
 	self [[level.spawnSpectator]]();
 }
 
-playerVote() 
+PlayerVote() 
 {
 	self endon("disconnect");
 	level endon("end_vote");
 	ads = self AdsButtonPressed();
 	selected = -1;
 	offset = 23;
-	self.mapvote_selection = addTextHud(self, 0, level.windowheight/-2 +11 +(selected*offset-7), 1, "center", "top", "center", "middle", 1.5, 101);
+	self.mapvote_selection = addTextHud(self, 0, level.windowheight/-2 + 11 +(selected * offset - 7), 1, "center", "top", "center", "middle", 1.5, 101);
 	self.mapvote_selection setShader("line_vertical", level.windowwidth, 21);
-	self.mapvote_selection.color = (0.5, 0 ,0);
+	self.mapvote_selection.color = (0.5, 0, 0);
 	self.mapvote_selection thread fadeIn(.3);
 	self.mapvote_selection.alpha = 0;
 	maps = level.voteablemaps;
@@ -296,7 +299,7 @@ playerVote()
 				selected = maps.size-1;
 			self.votedmap = maps[selected];
 			self.mapvote_selection MoveOverTime(.1);
-			self.mapvote_selection.y = level.windowheight/-2 + 8 + (selected*offset);
+			self.mapvote_selection.y = level.windowheight/-2 + 8 + (selected * offset);
 		}
 		if(self AttackButtonPressed()) 
 		{
@@ -306,7 +309,7 @@ playerVote()
 				selected = 0;
 			self.votedmap = maps[selected];
 			self.mapvote_selection MoveOverTime(.1);
-			self.mapvote_selection.y = level.windowheight/-2 + 8 + (selected*offset);
+			self.mapvote_selection.y = level.windowheight/-2 + 8 + (selected * offset);
 			for(k = 0; k < 8 && self attackButtonPressed(); k++)
 				wait .05;
 		}
