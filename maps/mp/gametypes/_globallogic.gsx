@@ -696,8 +696,6 @@ endGame(winner,endReasonText)
 		return;
 	if(isDefined(level.onEndGame))
 		[[level.onEndGame]](winner);
-	if(isDefined(game["PROMOD_MATCH_MODE"]) && game["PROMOD_MATCH_MODE"] == "match")
-		setDvar("g_deadChat", 1);
 	game["state"] = "postgame";
 	if(isDefined(level.ended))
         return;
@@ -833,26 +831,6 @@ endGame(winner,endReasonText)
 		}
 		if(isDefined(game["PROMOD_KNIFEROUND"]) && game["PROMOD_KNIFEROUND"])
 		{
-			if(isDefined(game["PROMOD_MATCH_MODE"]) && game["PROMOD_MATCH_MODE"] == "match") // Check
-			{
-				game["promod_do_readyup"] = 1;
-				game["promod_first_readyup_done"] = 0;
-				for(i = 0; i < level.players.size; i++)
-				{
-					level.players[i].pers["kills"] = 0;
-					level.players[i].pers["deaths"] = 0;
-					level.players[i].pers["assists"] = 0;
-					level.players[i].pers["score"] = 0;
-					waittillframeend;
-				}  
-				////
-				game["roundsplayed"]--;
-				[[level._setTeamScore]]("allies", 0);
-				[[level._setTeamScore]]("axis", 0);
-				for(i = 0; i < level.players.size; i++)
-				if(level.players[i].pers["team"] == "spectator")
-					level.players[i]setClientDvars("shout_scores_attack", game["teamScores"][game["attackers"]], "shout_scores_defence", game["teamScores"][game["defenders"]]);
-			}
 			game["PROMOD_KNIFEROUND"] = 0;
 			for(i = 0; i < level.players.size; i++)
 			{
@@ -926,11 +904,6 @@ endGame(winner,endReasonText)
 		player setClientDvar("ui_hud_hardcore", 0);
 	}
 	wait 4;
-	if(isDefined(game["PROMOD_MATCH_MODE"]) && game["PROMOD_MATCH_MODE"] == "match")
-	{
-		map_restart(false);
-		return;
-	}
 	exitLevel(false);
 }
 
@@ -1184,7 +1157,7 @@ menuAllies()
 		self.switching = false;
 	if(self.pers["team"] != "allies")
 	{
-		if(isDefined(game["PROMOD_MATCH_MODE"]) && game["PROMOD_MATCH_MODE"] != "match" && level.teamBased && !self.switching && !maps\mp\gametypes\_teams::getJoinTeamPermissions("allies"))
+		if(level.teamBased && !self.switching && !maps\mp\gametypes\_teams::getJoinTeamPermissions("allies"))
 		{
 			self openMenu(game["menu_team"]);
 			return;
@@ -1250,7 +1223,7 @@ menuAxis()
 		self.switching = false;
 	if(self.pers["team"] != "axis")
 	{
-		if(isDefined(game["PROMOD_MATCH_MODE"]) && game["PROMOD_MATCH_MODE"] != "match" && level.teamBased && !self.switching && !maps\mp\gametypes\_teams::getJoinTeamPermissions("allies"))
+		if(level.teamBased && !self.switching && !maps\mp\gametypes\_teams::getJoinTeamPermissions("allies"))
 		{
 			self openMenu(game["menu_team"]);
 			return;
@@ -1761,7 +1734,8 @@ startGame()
 	thread maps\mp\gametypes\_spawnlogic::spawnPerFrameUpdate();
 	prematchPeriod();
 	thread openMainMenu();
-	if((isDefined(game["PROMOD_MATCH_MODE"]) && game["PROMOD_MATCH_MODE"] == "match" || getDvarInt("promod_allow_strattime") && isDefined(game["CUSTOM_MODE"]) && game["CUSTOM_MODE"]) && (level.gametype == "sd" || level.gametype == "sr")) promod\strattime::main();
+	if((getDvarInt("promod_allow_strattime") && isDefined(game["CUSTOM_MODE"]) && game["CUSTOM_MODE"]) && (level.gametype == "sd" || level.gametype == "sr"))
+		promod\strattime::main();
 	if(isDefined(game["PROMOD_MATCH_MODE"])&&game["PROMOD_MATCH_MODE"]=="strat")
 	{
 		thread disableBombsites();
@@ -1797,7 +1771,7 @@ disableBombsites()
 prematchPeriod()
 {
 	level endon("game_ended");
-	if(level.prematchPeriod > 0 && isDefined(game["PROMOD_MATCH_MODE"]) && game["PROMOD_MATCH_MODE"] != "match" && game["PROMOD_MATCH_MODE"] != "strat")
+	if(level.prematchPeriod > 0 && game["PROMOD_MATCH_MODE"] != "strat")
 	{
 		if(getDvarInt("promod_allow_strattime") && isDefined(game["CUSTOM_MODE"]) && game["CUSTOM_MODE"] && (level.gametype == "sd" || level.gametype == "sr"))
 			matchStartTimerSkip();
@@ -2281,10 +2255,8 @@ Callback_PlayerConnect()
 	if(!isdefined(self.pers["score"]))
 		iPrintLn(&"MP_CONNECTED", self.name);
 	logPrint("J;" + self getGuid() + ";" + self getEntityNumber() + ";" + self.name + "\n");
-	if(isDefined(game["PROMOD_MATCH_MODE"]) && game["PROMOD_MATCH_MODE"] == "match")
-		self setClientDvar("promod_hud_website", "");
-	else 
-		self setClientDvar("promod_hud_website", getDvar("promod_hud_website"));
+
+	self setClientDvar("promod_hud_website", getDvar("promod_hud_website"));
 	self setClientDvars("cg_hudGrenadeIconMaxRangeFrag", int(!level.hardcoreMode)*250, "cg_drawcrosshair", int(!level.hardcoreMode), "cg_drawSpectatorMessages", 1, "ui_hud_hardcore", level.hardcoreMode, "fx_drawClouds", 0, "ui_showmenuonly", "", "self_ready", "");
 	self initPersStat("score");
 	self.score = self.pers["score"];
@@ -2686,7 +2658,7 @@ Callback_PlayerDamage(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sW
 	friendly = false;
 	if(!(iDFlags & level.iDFLAGS_NO_PROTECTION))
 	{
-		if((isSubStr(sMeansOfDeath, "MOD_GRENADE") || isSubStr(sMeansOfDeath, "MOD_EXPLOSIVE") || isSubStr(sMeansOfDeath, "MOD_PROJECTILE")) && isDefined(eInflictor) && game["PROMOD_MATCH_MODE"] != "match" && eInflictor.classname == "grenade" && ((self.lastSpawnTime + 3500) > getTime() && distance(eInflictor.origin, self.lastSpawnPoint.origin) < 250 || !isDefined(eAttacker.pers["class"])))
+		if((isSubStr(sMeansOfDeath, "MOD_GRENADE") || isSubStr(sMeansOfDeath, "MOD_EXPLOSIVE") || isSubStr(sMeansOfDeath, "MOD_PROJECTILE")) && isDefined(eInflictor) && eInflictor.classname == "grenade" && ((self.lastSpawnTime + 3500) > getTime() && distance(eInflictor.origin, self.lastSpawnPoint.origin) < 250 || !isDefined(eAttacker.pers["class"])))
 			return;
 		if(level.teamBased && isPlayer(eAttacker) && self != eAttacker && self.pers["team"] == eAttacker.pers["team"])
 		{
@@ -3062,9 +3034,7 @@ Callback_PlayerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDi
 	wait 0.25;
 	self.cancelKillcam = false;
 	self thread cancelKillCamOnUse();
-	if(isDefined(game["PROMOD_MATCH_MODE"]) && game["PROMOD_MATCH_MODE"] == "match" && level.gametype == "sd" || level.gametype == "sr")
-		postDeathDelay = waitForTimeOrNotifies(0.75);
-	else postDeathDelay = waitForTimeOrNotifies(1.75);
+	postDeathDelay = waitForTimeOrNotifies(1.75);
 	self notify("death_delay_finished");
 	level thread maps\mp\gametypes\_finalkillcam::startFinalKillcam(lpattacknum, self getEntityNumber(), killcamentityindex, sWeapon, self.deathTime, 0, psOffsetTime, attacker, self, attacker.name, self.name);
 	if(!isDefined(game["state"]) || game["state"] != "playing")
