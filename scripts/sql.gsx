@@ -36,12 +36,48 @@ AsyncWait(request)
 
 // You can find the table structure @ ebc-b3 source on github
 
+db_verifyConnectedPlayer()
+{
+		critical_enter_debug("mysql","playerConnect()");
+		q_str = "SELECT guid, prestige, backup_pr, season, status, style, award_tier, donation_tier FROM player_core WHERE guid LIKE " + self.guid;
+		request = SQL_Query(q_str); 
+		AsyncWait(request);
+		row = SQL_AffectedRows(request);
+		if(row == 0)
+		{
+			// Clear previous request
+			SQL_Free(request);
+			name = GetSubStr(self.name, 0, 25);
+			atier = self GetStat(3252);
+			dtier = self GetStat(3253);
+			q_str = "INSERT INTO player_core (guid,name,prestige,backup_pr,season,award_tier,donation_tier) VALUES ("+self.guid+",\""+name+"\","+self.prestige+","+0+",\""+ level.season +"\","+atier+","+dtier+")";
+			request = SQL_Query(q_str);
+			AsyncWait(request);
+			SQL_Free(request);
+			critical_leave_debug("mysql");
+		}
+		else
+		{
+			row = SQL_FetchRow(request);
+			SQL_Free(request);
+			critical_leave_debug("mysql");
+			self thread maps\mp\gametypes\_globallogic::prcheck(row[1], row[2]);
+			self thread maps\mp\gametypes\_globallogic::newseason(row[3]);
+			self.pers["status"] = row[4];
+			self.pers["design"] = row[5];
+			self SetStat(3252, int(row[6]));
+			self SetStat(3253, int(row[7]));
+			//if(self GetStat(3253) > 0)
+			//	self thread checkDonationExpiry(); Not tested yet
+		}
+}
+
 db_setVip(tier,numeric,date)
 {
 	critical_enter("mysql");
 	q_str = "UPDATE player_core SET status = \"" + tier + "\", donation_tier = " + numeric+ ", donation_date = \"" + date + "\" WHERE guid LIKE " + self.guid;
 	request = SQL_Query(q_str);
-	status = AsyncWait(request);
+	AsyncWait(request);
 	SQL_Free(request);
 	critical_leave("mysql");
 }

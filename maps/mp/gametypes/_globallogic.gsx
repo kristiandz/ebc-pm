@@ -2334,40 +2334,8 @@ Callback_PlayerConnect()
 		self.pers["explosiveKills"] = 0;
 		self.pers["plants"] = 0;
 		self.pers["defuses"] = 0;
-		
-		// Wait till spawned for some of these as more players connect in the same time rather than spawn ?
-		scripts\sql::critical_enter("mysql");
-		q_str = "SELECT guid, prestige, backup_pr, season, status, style, award_tier, donation_tier FROM player_core WHERE guid LIKE " + self.guid;
-		request = SQL_Query(q_str); 
-		scripts\sql::AsyncWait(request);
-		row = SQL_AffectedRows(request);
-		if(row == 0)
-		{
-			// Clear previous request
-			SQL_Free(request);
-			name = GetSubStr(self.name, 0, 25);
-			atier = self GetStat(3252);
-			dtier = self GetStat(3253);
-			backup_pr = 0;
-			q_str = "INSERT INTO player_core (guid,name,prestige,backup_pr,season,award_tier,donation_tier) VALUES ("+self.guid+",\""+name+"\","+self.prestige+","+backup_pr+",\""+ level.season +"\","+atier+","+dtier+")";
-			request = SQL_Query(q_str);
-			scripts\sql::AsyncWait(request);
-			SQL_Free(request);
-		}
-		else
-		{
-			row = SQL_FetchRow(request);
-			SQL_Free(request);
-			self thread prcheck(row[1], row[2]);
-			self thread newseason(row[3]);
-			self.pers["status"] = row[4];
-			self.pers["design"] = row[5];
-			self SetStat(3252, int(row[6]));
-			self SetStat(3253, int(row[7]));
-			//if(self GetStat(3253) > 0)
-			//	self thread checkDonationExpiry(); Not tested yet
-		}
-		scripts\sql::critical_leave("mysql");
+		//Verify the connected player, check the databse, set new player if player does not exist.
+		self thread scripts\sql::db_verifyConnectedPlayer();
 		self.pers["verified"] = true;
 	}
 }
