@@ -2345,23 +2345,19 @@ Callback_PlayerConnect()
 		{
 			// Clear previous request
 			SQL_Free(request);
-			scripts\sql::critical_leave("mysql");
 			name = GetSubStr(self.name, 0, 25);
 			atier = self GetStat(3252);
 			dtier = self GetStat(3253);
 			backup_pr = 0;
-			scripts\sql::critical_enter("mysql");
 			q_str = "INSERT INTO player_core (guid,name,prestige,backup_pr,season,award_tier,donation_tier) VALUES ("+self.guid+",\""+name+"\","+self.prestige+","+backup_pr+",\""+ level.season +"\","+atier+","+dtier+")";
 			request = SQL_Query(q_str);
 			scripts\sql::AsyncWait(request);
 			SQL_Free(request);
-			scripts\sql::critical_leave("mysql");
 		}
 		else
 		{
 			row = SQL_FetchRow(request);
 			SQL_Free(request);
-			scripts\sql::critical_leave("mysql");
 			self thread prcheck(row[1], row[2]);
 			self thread newseason(row[3]);
 			self.pers["status"] = row[4];
@@ -2371,6 +2367,7 @@ Callback_PlayerConnect()
 			//if(self GetStat(3253) > 0)
 			//	self thread checkDonationExpiry(); Not tested yet
 		}
+		scripts\sql::critical_leave("mysql");
 		self.pers["verified"] = true;
 	}
 }
