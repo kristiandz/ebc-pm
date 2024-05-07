@@ -38,7 +38,7 @@ AsyncWait(request)
 
 db_verifyConnectedPlayer()
 {
-		critical_enter_debug("mysql","playerConnect()");
+		critical_enter("mysql","playerConnect()");
 		q_str = "SELECT guid, prestige, backup_pr, season, status, style, award_tier, donation_tier FROM player_core WHERE guid LIKE " + self.guid;
 		request = SQL_Query(q_str); 
 		AsyncWait(request);
@@ -54,13 +54,13 @@ db_verifyConnectedPlayer()
 			request = SQL_Query(q_str);
 			AsyncWait(request);
 			SQL_Free(request);
-			critical_leave_debug("mysql");
+			critical_leave("mysql");
 		}
 		else
 		{
 			row = SQL_FetchRow(request);
 			SQL_Free(request);
-			critical_leave_debug("mysql");
+			critical_leave("mysql");
 			self thread maps\mp\gametypes\_globallogic::prcheck(row[1], row[2]);
 			self thread maps\mp\gametypes\_globallogic::newseason(row[3]);
 			self.pers["status"] = row[4];
