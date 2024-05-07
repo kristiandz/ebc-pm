@@ -160,7 +160,7 @@ db_getLastMap()
 	if(isDefined(row[0]))
 		return row[0];
 	else
-		logPrint("\nDEBUG: db_getLastMap() query failed\n")
+		logPrint("\nDEBUG: db_getLastMap() query failed\n");
 }
 
 db_setLastMap()
