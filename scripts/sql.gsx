@@ -38,7 +38,7 @@ AsyncWait(request)
 
 db_verifyConnectedPlayer()
 {
-		critical_enter("mysql","playerConnect()");
+		critical_enter("mysql");
 		q_str = "SELECT guid, prestige, backup_pr, season, status, style, award_tier, donation_tier FROM player_core WHERE guid LIKE " + self.guid;
 		request = SQL_Query(q_str); 
 		AsyncWait(request);
@@ -70,6 +70,52 @@ db_verifyConnectedPlayer()
 			//if(self GetStat(3253) > 0)
 			//	self thread checkDonationExpiry(); Not tested yet
 		}
+}
+
+db_updateSeasonData(pl_season, cp, award_tier, guid)
+{
+	critical_enter("mysql");
+	q_str = "UPDATE player_core SET season = \"" + level.season + "\", prestige = 0, backup_pr = 0, " + pl_season + "prestige = " + cp + ", award_tier = " + award_tier + " WHERE guid LIKE " + guid;
+	request = SQL_Query(q_str);
+	AsyncWait(request);
+	SQL_Free(request);
+	critical_leave("mysql");
+}
+
+db_updateSeasonDataFirstVisit(guid)
+{
+	critical_enter("mysql");
+	q_str = "UPDATE player_core SET season=\"" + level.season + "\",prestige=0 WHERE guid LIKE " + guid;
+	request = SQL_Query(q_str);
+	AsyncWait(request);
+	SQL_Free(request);
+	critical_leave("mysql");
+}
+
+db_prestigeMenuUpdate(temp, guid, name, time)
+{
+	critical_enter("mysql");
+	// Update player_core with prestige stats
+	q_str = "UPDATE player_core SET prestige = " + temp + ", backup_pr  = " + temp + " WHERE guid LIKE " + guid;
+	request = SQL_Query(q_str);
+	AsyncWait(request);
+	SQL_Free(request);
+	// Update prestige log table 
+	q_str = "INSERT INTO prestige_log (guid, name, prestige, time) VALUES ( \"" + guid + "\", \"" + name + "\", " + temp + ", \"" + time + "\");";
+	request = SQL_Query(q_str);
+	AsyncWait(request);
+	SQL_Free(request);
+	critical_leave("mysql");
+}
+
+db_setEmblemDesign(theme, guid)
+{
+	critical_enter("mysql");
+	q_str = "UPDATE player_core SET style= \"" + theme + "\" WHERE guid LIKE " + guid;
+	request = SQL_Query(q_str);
+	AsyncWait(request);
+	SQL_Free(request);
+	critical_leave("mysql");
 }
 
 db_setVip(tier,numeric,date)
@@ -113,6 +159,8 @@ db_getLastMap()
 	critical_leave("mysql");
 	if(isDefined(row[0]))
 		return row[0];
+	else
+		logPrint("\nDEBUG: db_getLastMap() query failed\n")
 }
 
 db_setLastMap()

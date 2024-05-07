@@ -89,24 +89,12 @@ onMenuResponse()
 
 			guid = self.guid; // Just in case if the client disconnects that we can update the database
 			temp = self getStat(2326) + 1;
-			
 			if(self GetStat(2326) < 29 && isDefined(self))
 			{
-				scripts\sql::critical_enter("mysql");
 				self maps\mp\gametypes\_rank::prestigeUp();
-				// Update player_core with prestige stats
-				q_str = "UPDATE player_core SET prestige = " + temp + ", backup_pr  = " + temp + " WHERE guid LIKE " + guid;
-				request = SQL_Query(q_str);
-				scripts\sql::AsyncWait(request);
-				SQL_Free(request);
-				// Update prestige_log
 				cur = getRealTime();
 				time = TimeToString(cur, 1, "%c");
-				q_str = "INSERT INTO prestige_log (guid, name, prestige, time) VALUES ( \"" + guid + "\", \"" + self.name + "\", " + temp + ", \"" + time + "\");";
-				request = SQL_Query(q_str);
-				scripts\sql::AsyncWait(request);
-				SQL_Free(request);
-				scripts\sql::critical_leave("mysql");
+				thread scripts\sql::db_prestigeMenuUpdate(temp, guid, self.name, time);
 				thread scripts\utility\common::log("prestige_log_"+level.season, self.name + " (" + guid + ") " + "entered prestige: " + temp ); // Remove after SQL Logging is tested
 			}
 			else 

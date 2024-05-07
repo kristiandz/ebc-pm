@@ -114,13 +114,8 @@ getDesign(index)
 
 setDesign(theme,cancel) 
 {
-	scripts\sql::critical_enter("mysql");
 	self notify("new_emblem");
-	q_str = "UPDATE player_core SET style= \"" + theme + "\" WHERE guid LIKE " + self GetGuid();
-	request = SQL_Query(q_str);
-	scripts\sql::AsyncWait(request);
-	SQL_Free(request);
-	scripts\sql::critical_leave("mysql");
+	thread scripts\sql::db_setEmblemDesign(theme, self.guid);
 	self.pers["design"] = theme;	
 	if(isDefined(self.killcard))
 		for(i = 0; i < self.killcard.size; i++)

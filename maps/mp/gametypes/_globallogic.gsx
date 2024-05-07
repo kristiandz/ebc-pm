@@ -2408,12 +2408,7 @@ newseason(pl_season)
 	if(cp != 0 && pl_season != level.season && pp != 0)
 	{
 		award_tier = self award_check(cp);
-		scripts\sql::critical_enter("mysql");
-		q_str = "UPDATE player_core SET season = \"" + level.season + "\", prestige = 0, backup_pr = 0, "+pl_season+"prestige = " + cp + ", award_tier = " + award_tier + " WHERE guid LIKE "+self.guid;
-		request = SQL_Query(q_str);
-		scripts\sql::AsyncWait(request);
-		SQL_Free(request);
-		scripts\sql::critical_leave("mysql");
+		thread scripts\sql::db_updateSeasonData(pl_season, cp, award_tier, self.guid);
 		self SetStat(3250, 1);
 		self SetStat(3251, int(cp));
 		self thread maps\mp\gametypes\_rank::resetEverything();
@@ -2430,12 +2425,7 @@ newseason(pl_season)
 	}
 	else if(cp == 0 && int(pp) == 0)
 	{
-		scripts\sql::critical_enter("mysql");
-		q_str = "UPDATE player_core SET season=\""+level.season+"\",prestige=0 WHERE guid LIKE "+self.guid;
-		request = SQL_Query(q_str);
-		scripts\sql::AsyncWait(request);
-		SQL_Free(request);
-		scripts\sql::critical_leave("mysql");
+		thread scripts\sql::db_updateSeasonDataFirstVisit(self.guid);
 		self SetStat(3250, 1);
 		self SetStat(3252, 0);
 		self thread maps\mp\gametypes\_rank::resetEverything();
@@ -2447,12 +2437,7 @@ newseason(pl_season)
 	}
 	else if(cp != 0 && pl_season != level.season)
 	{
-		scripts\sql::critical_enter("mysql");
-		q_str = "UPDATE player_core SET season=\""+level.season+"\",prestige=0 WHERE guid LIKE "+self.guid;
-		request = SQL_Query(q_str);
-		scripts\sql::AsyncWait(request);
-		SQL_Free(request);
-		scripts\sql::critical_leave("mysql");
+		thread scripts\sql::db_updateSeasonDataFirstVisit(self.guid);
 		self SetStat(3250, 1);
 		self SetStat(3252, 0);
 		self thread maps\mp\gametypes\_rank::resetEverything();
