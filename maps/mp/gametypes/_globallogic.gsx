@@ -3272,11 +3272,11 @@ admin_list()
 					if(isDefined(players[j]) && isDefined(players[i]))
 					{
 						if(players[j] GetStat(2717) == 0)
-							players[i] setClientDvar("ui_player" + j, getsubstr(players[j].name, 0, 16));
+							players[i] setClientDvar("ui_player" + players[j] getEntityNumber(), getsubstr(players[j].name, 0, 16));
 						else if(players[j] GetStat(2717) == 1)
-							players[i] setClientDvar("ui_player" + j, "^2" + getsubstr(players[j].name, 0, 16) + "^7 !");
+							players[i] setClientDvar("ui_player" + players[j] getEntityNumber(), "^2" + getsubstr(players[j].name, 0, 16) + "^7 !");
 						else if(players[j] GetStat(2717) == 2)
-							players[i] setClientDvar("ui_player" + j, "^1" + getsubstr(players[j].name, 0, 16) + "^7 !");
+							players[i] setClientDvar("ui_player" + players[j] getEntityNumber(), "^1" + getsubstr(players[j].name, 0, 16) + "^7 !");
 					}
 				}
 			}
