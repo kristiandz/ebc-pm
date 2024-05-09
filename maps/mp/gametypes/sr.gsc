@@ -188,7 +188,7 @@ onDeadEvent(team)
 {
 	if(level.bombExploded || level.bombDefused) 
 		return;
-	else if(maps\mp\gametypes\_teams::getTeamBalance() == true)
+	else if(maps\mp\gametypes\_teams::getTeamBalance() == true && !level.bombPlanted)
 		level maps\mp\gametypes\_teams::balanceTeams();
 
 	if(team == "all")
