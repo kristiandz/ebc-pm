@@ -157,7 +157,7 @@ sd_endGame(winningTeam,endReasonText)
 
 onDeadEvent(team)
 {
-	if(maps\mp\gametypes\_teams::getTeamBalance() == true)
+	if(maps\mp\gametypes\_teams::getTeamBalance() == true && !level.bombPlanted)
 		level maps\mp\gametypes\_teams::balanceTeams();
 	
 	if(level.bombExploded || level.bombDefused) 
@@ -181,7 +181,7 @@ onDeadEvent(team)
 
 onTimeLimit()
 {
-	if(maps\mp\gametypes\_teams::getTeamBalance() == true)
+	if(maps\mp\gametypes\_teams::getTeamBalance() == true && !level.bombPlanted)
 		level maps\mp\gametypes\_teams::balanceTeams();
 	if(level.teamBased)
 		sd_endGame(game["defenders"],game["strings"]["time_limit_reached"]);
@@ -501,6 +501,9 @@ bombDefused()
 	setDvar("ui_bomb_timer", 0);
 	wait 0.05;
 	sd_endGame(game["defenders"], game["strings"]["bomb_defused"]);
+	// Balance after the bomb has been defused
+	if(maps\mp\gametypes\_teams::getTeamBalance() == true && !level.bombPlanted)
+		level maps\mp\gametypes\_teams::balanceTeams();
 }
 
 intoSpawn(originA, anglesA)

@@ -229,7 +229,7 @@ getTeamBalance()
 			AxisPlayers[AxisPlayers.size] = players[i];
 	}
 	// Alive players below, not team sizes, or diff, or simply check it from SD/SR if plant, then balancer after defused
-	if((AlliedPlayers.size == (AxisPlayers.size + 1)) || (AxisPlayers.size == (AlliedPlayers.size + 1)) || AlliedPlayers.size == AxisPlayers.size /*|| (level.bombPlanted && (AlliedPlayers.size + AxisPlayers.size == 2 ))*/)
+	if((AlliedPlayers.size == (AxisPlayers.size + 1)) || (AxisPlayers.size == (AlliedPlayers.size + 1)) || AlliedPlayers.size == AxisPlayers.size)
 		return false;
 	else
 		return true;
