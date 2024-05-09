@@ -278,9 +278,12 @@ explodeCranked()
 
 screenflash()
 {
- 	self.screenflash.alpha = 1;
-	wait 0.05;
-	self.screenflash.alpha = 0;
+	if(isDefined(self.screenflash))
+	{
+ 		self.screenflash.alpha = 1;
+		wait 0.05;
+		self.screenflash.alpha = 0;
+	}
 }
 
 timerColor()
