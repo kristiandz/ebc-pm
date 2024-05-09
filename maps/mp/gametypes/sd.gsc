@@ -157,11 +157,11 @@ sd_endGame(winningTeam,endReasonText)
 
 onDeadEvent(team)
 {
-	if(maps\mp\gametypes\_teams::getTeamBalance() == true && !level.bombPlanted)
-		level maps\mp\gametypes\_teams::balanceTeams();
-	
 	if(level.bombExploded || level.bombDefused) 
 		return;
+	else if(maps\mp\gametypes\_teams::getTeamBalance() == true)
+		level maps\mp\gametypes\_teams::balanceTeams();
+
 	if(team == "all")
 	{
 		if(level.bombPlanted)
@@ -181,7 +181,7 @@ onDeadEvent(team)
 
 onTimeLimit()
 {
-	if(maps\mp\gametypes\_teams::getTeamBalance() == true && !level.bombPlanted)
+	if(maps\mp\gametypes\_teams::getTeamBalance() == true)
 		level maps\mp\gametypes\_teams::balanceTeams();
 	if(level.teamBased)
 		sd_endGame(game["defenders"],game["strings"]["time_limit_reached"]);
@@ -462,6 +462,10 @@ bombPlanted(destroyedObj, player)
 	else 
 		destroyedObj.visuals[0] radiusDamage(explosionOrigin, 512, 200, 20);
 	
+	// Balance after bomb exploded
+	if(maps\mp\gametypes\_teams::getTeamBalance() == true)
+		level maps\mp\gametypes\_teams::balanceTeams();
+
 	rot = randomfloat(360);
 	explosionEffect = spawnFx(level.fx["bombexplosion"], explosionOrigin + (0, 0, 50), (0, 0, 1), (cos(rot), sin(rot), 0));
 	triggerFx(explosionEffect);
