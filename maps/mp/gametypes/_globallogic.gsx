@@ -2061,7 +2061,7 @@ Callback_StartGameType()
 		game["teamScores"]["axis"] = game["SCORES_DEFENCE"];
 		
 		if(isDefined(game["PROMOD_KNIFEROUND"]) && game["PROMOD_KNIFEROUND"])
-			level.prematchPeriod = int(13);
+			level.prematchPeriod = int(15);
 		else 
 			level.prematchPeriod = int(5);
 		
