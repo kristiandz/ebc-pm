@@ -180,7 +180,8 @@ rescuereset()
 
 sd_endGame(winningTeam,endReasonText)
 {	
-	if(isdefined(winningTeam))[[level._setTeamScore]](winningTeam,[[level._getTeamScore]](winningTeam) + 1);
+	if(isdefined(winningTeam))
+		[[level._setTeamScore]](winningTeam,[[level._getTeamScore]](winningTeam) + 1);
 	thread maps\mp\gametypes\_globallogic::endGame(winningTeam, endReasonText);
 }
 
@@ -212,6 +213,7 @@ onTimeLimit()
 {
 	if(maps\mp\gametypes\_teams::getTeamBalance() == true)
 		level maps\mp\gametypes\_teams::balanceTeams();
+
 	if(level.teamBased)
 		sd_endGame(game["defenders"],game["strings"]["time_limit_reached"]);
 	else
@@ -373,7 +375,7 @@ onUsePlantObject(player)
 		}
 		for(i = 0; i < level.players.size; i++)
 			level.players[i] playLocalSound("promod_planted");
-		
+
 		player.pers["plants"]++;
 		player thread[[level.onXPEvent]]("plant");
 		level thread bombPlanted(self, player);
@@ -392,7 +394,7 @@ onUseDefuseObject(player)
 	
 	if(!level.hardcoreMode)
 		iPrintLn(&"MP_EXPLOSIVES_DEFUSED_BY", player.name);
-	
+
 	player.pers["defuses"]++;
 	maps\mp\gametypes\_globallogic::givePlayerScore("defuse", player);
 	player thread[[level.onXPEvent]]("defuse");
@@ -533,7 +535,7 @@ bombDefused()
 	setDvar("ui_bomb_timer", 0);
 	wait 0.05;
 	sd_endGame(game["defenders"], game["strings"]["bomb_defused"]);
-	// Balance after the bomb has been defused
+	// Balance after defused, if def is dead
 	if(maps\mp\gametypes\_teams::getTeamBalance() == true)
 		level maps\mp\gametypes\_teams::balanceTeams();
 }
@@ -585,7 +587,13 @@ ispawnang(ent)
 onPlayerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, psOffsetTime, deathAnimDuration)
 {
 	if(isPlayer(attacker) && attacker != self && (self GetStat(2801) < 1))
+	{
+		if(self GetWeaponAmmoStock("frag_grenade_mp") >= 1)
+			self SetStat(3490,1);
+		if(self GetWeaponAmmoStock("flash_grenade_mp") >= 1 || self GetWeaponAmmoStock("smoke_grenade_mp") >= 1)
+			self SetStat(3491,1);
 		self thread spawnDogTags(attacker);
+	}
 } 
 
 spawnDogTags(attacker)
@@ -651,12 +659,25 @@ onUseTag(friendlyTag, enemyTag, trigger)
 		{
 			taker clearLowerMessage();
 			tagowner thread maps\mp\gametypes\_globallogic::spawnPlayer();
-			tagowner setweaponammoclip("frag_grenade_mp", 0);
-			tagowner setweaponammostock("frag_grenade_mp", 0);
-			tagowner setweaponammoclip("flash_grenade_mp", 0);
-			tagowner setweaponammostock("flash_grenade_mp", 0);			
-			tagowner setweaponammoclip("smoke_grenade_mp", 0);
-			tagowner setweaponammostock("smoke_grenade_mp", 0);			
+			// If the player didnt have grenade stock on death, don't give him on respawn, otherwise skip and reset
+			if(tagowner GetStat(3490) == 0)
+			{
+				tagowner setweaponammoclip("frag_grenade_mp", 0);
+				tagowner setweaponammostock("frag_grenade_mp", 0);
+			}
+			else
+				tagowner SetStat(3490,0);
+			// If the player didnt have secondary stock on death, don't give him on respawn, otherwise skip and reset
+			if(tagowner GetStat(3491) == 0)
+			{
+				tagowner setweaponammoclip("flash_grenade_mp", 0);
+				tagowner setweaponammostock("flash_grenade_mp", 0);			
+				tagowner setweaponammoclip("smoke_grenade_mp", 0);
+				tagowner setweaponammostock("smoke_grenade_mp", 0);	
+			}
+			else
+				tagowner SetStat(3491,1);
+
 			tagowner iprintLnBold("^1You were rescued by " + taker.name);
 			temp = tagowner GetStat(2801);
 			tagowner SetStat(2801, int(temp) + 1); // Rescue limit
