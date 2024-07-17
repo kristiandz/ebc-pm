@@ -46,7 +46,7 @@ player(response)
 			self setStat(2712, 8);
 			break;		
 		case "player9":
-			self setClientDvar("ui_selected_id", 8);
+			self setClientDvar("ui_selected_id", 9);
 			self setStat(2712, 9);
 			break;		
 		case "player10":
