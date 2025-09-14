@@ -265,7 +265,7 @@ changeMap()
 { 	
 	setDvar("timescale", 1);
 	setDvar("sv_maprotationcurrent", "gametype " + strTok(level.winning, ";")[1] + " map " + strTok(level.winning, ";")[0]);
-	exitLevel(false);
+	levelExit(false);
 }
 
 setSpectatorMode()

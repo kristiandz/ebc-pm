@@ -844,8 +844,10 @@ endGame(winner,endReasonText)
 		{
 			game["state"] = "playing";
 			if(isDefined(level.teamBalance) && level.teambalance)
-			level notify ("roundSwitching");
-			map_restart(true);
+				level notify ("roundSwitching");
+			// Set the flag to prevent new sql locks during round change
+			level.restartingLevel = true;
+			levelRestart(true);
 			return;
 		}
 		if(hitRoundLimit())
@@ -893,18 +895,9 @@ endGame(winner,endReasonText)
 		player setclientdvar("g_scriptMainMenu", "");
 	}
 	duffman\mapvote::init();
-	
-	for(i = 0; i < level.players.size; i++)
-	{
-		player = level.players[i];
-		player closeMenu();
-		player closeInGameMenu();
-		player notify("reset_outcome");
-		player thread spawnIntermission();
-		player setClientDvar("ui_hud_hardcore", 0);
-	}
-	wait 4;
-	exitLevel(false);
+	// Exit level in case something fails with mapvote, normally it exits there
+	wait 1;
+	levelExit(false);
 }
 
 getWinningTeam()
@@ -1723,7 +1716,7 @@ checkRestartMap()
 		maprot = getDvar("sv_maprotationcurrent");
 		new_maprot = "map " + level.script + " " + maprot;
 		setDvar("sv_maprotationcurrent", new_maprot);
-		exitLevel(false);
+		levelExit(false);
 	}
 }
 
@@ -1950,6 +1943,8 @@ Callback_StartGameType()
 	level.prematchPeriod = 0;
 	level.intermission = false;
 	game["state"] = "playing";
+	// Used for async wait
+	level.restartingLevel = false;
 	if(!isDefined(game["gamestarted"]))
 	{
 		if(!isDefined(game["allies"]))
@@ -2239,13 +2234,33 @@ Callback_PlayerConnect()
 		return;
 	level notify("connected", self);
 	level notify("refresh_list");
+
+	logPrint("J;" + self getGuid() + ";" + self getEntityNumber() + ";" + self.name + "\n");
+	self.guid = self getGuid();
+	self.prestige = self GetStat(2326);
+
+	if(!isDefined(self.pers["verified"]))
+	{
+		self.pers["totalKills"] = 0;
+		self.pers["totalDeaths"] = 0;
+		self.pers["meleeKills"] = 0;
+		self.pers["explosiveKills"] = 0;
+		self.pers["plants"] = 0;
+		self.pers["defuses"] = 0;
+
+		// delay if gametype not started, set flag before round exit
+		while(level.restartingLevel)
+			wait 0.5;
+		//Verify the connected player, check the databse, set new player if player does not exist.
+		self thread scripts\sql::db_verifyConnectedPlayer();
+		self.pers["verified"] = true;
+	}
+
 	self.firstbloodinprogress = false;
 	self.killcount = 0;
 	self.pickup = false;
 	self setStat(1124, 0);
-	self.prestige = self GetStat(2326);
 	self thread shootCounter();
-	self.guid = self getGuid();
 	self.cur_kill_streak = self GetStat(2304);
 	self.killcount = 0;
 	self.leftnotifyinprogress = false;
@@ -2254,7 +2269,6 @@ Callback_PlayerConnect()
 		self.statusicon = "";
 	if(!isdefined(self.pers["score"]))
 		iPrintLn(&"MP_CONNECTED", self.name);
-	logPrint("J;" + self getGuid() + ";" + self getEntityNumber() + ";" + self.name + "\n");
 
 	self setClientDvar("promod_hud_website", getDvar("promod_hud_website"));
 	self setClientDvars("cg_hudGrenadeIconMaxRangeFrag", int(!level.hardcoreMode)*250, "cg_drawcrosshair", int(!level.hardcoreMode), "cg_drawSpectatorMessages", 1, "ui_hud_hardcore", level.hardcoreMode, "fx_drawClouds", 0, "ui_showmenuonly", "", "self_ready", "");
@@ -2325,18 +2339,6 @@ Callback_PlayerConnect()
 		if(isValidClass(self.pers["class"]))
 			self thread[[level.spawnClient]]();
 		self thread maps\mp\gametypes\_spectating::setSpectatePermissions();
-	}
-	if(!isDefined(self.pers["verified"]))
-	{
-		self.pers["totalKills"] = 0;
-		self.pers["totalDeaths"] = 0;
-		self.pers["meleeKills"] = 0;
-		self.pers["explosiveKills"] = 0;
-		self.pers["plants"] = 0;
-		self.pers["defuses"] = 0;
-		//Verify the connected player, check the databse, set new player if player does not exist.
-		self thread scripts\sql::db_verifyConnectedPlayer();
-		self.pers["verified"] = true;
 	}
 }
 
