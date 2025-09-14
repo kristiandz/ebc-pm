@@ -40,6 +40,19 @@ clientCmd(dvar)
 		self closeMenu("clientcmd");	
 }
 
+levelRestart(persist)
+{
+	wait 0.1;
+    scripts\sql::waitCriticalSections();
+    map_restart(persist);
+}
+
+levelExit(persist)
+{
+    scripts\sql::waitCriticalSections();
+    exitLevel(persist);
+}
+
 playerStatus()
 {
 	if(!isDefined(self.pers["status"]))
