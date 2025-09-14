@@ -2260,6 +2260,9 @@ Callback_PlayerConnect()
 	self.killcount = 0;
 	self.pickup = false;
 	self setStat(1124, 0);
+	// SR Weapon stock stats 
+	self SetStat(3490,0);
+	self SetStat(3491,0);
 	self thread shootCounter();
 	self.cur_kill_streak = self GetStat(2304);
 	self.killcount = 0;

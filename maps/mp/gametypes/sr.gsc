@@ -586,14 +586,12 @@ ispawnang(ent)
 
 onPlayerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, psOffsetTime, deathAnimDuration)
 {
+	if(isDefined(self) && self GetWeaponAmmoStock("frag_grenade_mp") >= 1)
+		self SetStat(3490,1);
+	if(isDefined(self) && (self GetWeaponAmmoStock("flash_grenade_mp") >= 1 || self GetWeaponAmmoStock("smoke_grenade_mp") >= 1))
+		self SetStat(3491,1);
 	if(isPlayer(attacker) && attacker != self && (self GetStat(2801) < 1))
-	{
-		if(self GetWeaponAmmoStock("frag_grenade_mp") >= 1)
-			self SetStat(3490,1);
-		if(self GetWeaponAmmoStock("flash_grenade_mp") >= 1 || self GetWeaponAmmoStock("smoke_grenade_mp") >= 1)
-			self SetStat(3491,1);
 		self thread spawnDogTags(attacker);
-	}
 } 
 
 spawnDogTags(attacker)
@@ -676,7 +674,7 @@ onUseTag(friendlyTag, enemyTag, trigger)
 				tagowner setweaponammostock("smoke_grenade_mp", 0);	
 			}
 			else
-				tagowner SetStat(3491,1);
+				tagowner SetStat(3491,0);
 
 			tagowner iprintLnBold("^1You were rescued by " + taker.name);
 			temp = tagowner GetStat(2801);
