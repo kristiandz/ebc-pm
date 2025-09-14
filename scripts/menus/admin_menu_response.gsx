@@ -7,6 +7,12 @@ player(response)
 	id = self GetStat(2712);
 	client = selected_player(id);
 	
+	if(!isDefined(client))
+	{
+		self iprintln("Player not defined, check selection");
+		return;
+	}
+
 	switch(response)
 	{
  		case "player0":
