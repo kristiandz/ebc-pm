@@ -8,3 +8,4 @@ qconsole.log.old
 q3config_server.cfg
 *.jpg
 *.cfg
+.vscode/settings.json
