@@ -16,6 +16,7 @@ AFKMonitor()
 	self endon("isKnifing");
 	self endon("inintro");
 	timer = 0;
+
 	while(isAlive(self))
 	{
 		ori = self.origin;
@@ -29,19 +30,31 @@ AFKMonitor()
 				timer = 0;
 			
 			if(timer == 15)
-				self iPrintlnBOld("^7You Appear To Be ^1AFK!");
+			{
+				if(self.pers["afk_count"] == 1)
+					self iPrintlnBOld("^7You will be ^1redirected^7 if you remain afk next round!");
+				else
+					self iPrintlnBOld("^7You Appear To Be ^1AFK!");
+			}
 			
 			if(timer >= 25)
 			{
+				if(self.pers["afk_count"] == 2){
+					self scripts\utility\common::clientCmd( "wait 300; disconnect; wait 300; connect explicitbouncers.com:28952");
+				}
+				self.pers["afk_count"]++;
+
 				if(self.sessionstate == "playing" && (!isDefined(self.isPlanting) || !self.isPlanting) && !level.gameEnded && isDefined(self.carryObject))
 					self.carryObject thread maps\mp\gametypes\_gameobjects::setDropped();
+
 				self.sessionteam = "spectator";
 				self.sessionstate = "spectator";
 				self [[level.spawnSpectator]]();
-				iPrintln("" +self.name + " ^7Appears To Be ^1AFK!");
+				iPrintln("" + self.name + " ^7Appears To Be ^1AFK!");
 				return;
 			}
 		}
-		else timer = 0;
+		else 
+			timer = 0;
 	}
 }

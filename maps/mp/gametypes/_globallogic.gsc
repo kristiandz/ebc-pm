@@ -1772,6 +1772,7 @@ Callback_StartGameType()
 {
 	level.prematchPeriod=0;
 	level.intermission=false;
+	level.challengeActive = false;
 	game["state"]="playing";
 	if(!isDefined(game["gamestarted"]))
 	{
@@ -2118,6 +2119,7 @@ Callback_PlayerConnect()
 		//self thread newseason();
 		//self thread prcheck();
 		self.pers["verified"] = true;
+		self.pers["afk_count"] = 0;
 	}
 }
 
