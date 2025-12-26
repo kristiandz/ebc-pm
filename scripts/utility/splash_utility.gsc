@@ -65,7 +65,7 @@ playerCardSplashNotify(splash, owner)
 		self.leftnotify[3].horzAlign = "left";
 		self.leftnotify[3] setText(owner.name);
 		self.leftnotify[3].sort = 903;
-		self.leftnotify[3].color = selfgetColorByTeam();
+		self.leftnotify[3].color = self getColorByTeam();
 		self.leftnotify[3].hideWhenInMenu = true;
 		self.leftnotify[3].archived = false;
 		
