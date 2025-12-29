@@ -67,7 +67,7 @@ onPlayerSpawned()
 
 onPlayerDeath()
 {
-	self endon( "disconnect" );
+	self endon("disconnect");
 	while(1)
 	{
 		self waittill( "death" );
@@ -78,7 +78,7 @@ onPlayerDeath()
 
 onPlayerKilled()
 {
-	self endon( "disconnect" );
+	self endon("disconnect");
 	while(1)
 	{
 		self waittill("killed_player");
@@ -89,7 +89,7 @@ onPlayerKilled()
 
 onPlayerJoinedTeam()
 {
-	self endon( "disconnect" );
+	self endon("disconnect");
 	while(1)
 	{
 		self waittill("joined_team");
@@ -118,7 +118,7 @@ onPlayerDisconnected()
 
 onPlayerMenuResponse()
 {
-	self endon( "disconnect" );
+	self endon("disconnect");
 	while(1)
 	{
 		self waittill("menuresponse", menu, response );
@@ -129,7 +129,7 @@ onPlayerMenuResponse()
 
 onPlayerWeaponFired()
 {
-	self endon( "disconnect" );
+	self endon("disconnect");
 	while(1)
 	{
 		self waittill("weapon_fired");

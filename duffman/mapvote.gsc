@@ -11,7 +11,6 @@ init()
 	
 	tries = 0;
 	i = 0;
-	
 	while(level.voteablemaps.size < level.maps4vote && tries < 100) 
 	{
 		tries++;
