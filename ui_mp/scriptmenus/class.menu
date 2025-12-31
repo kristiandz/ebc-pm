@@ -139,7 +139,7 @@
 
 		CHOICE_BUTTON( 3, "@MENU_CONTROLS", close self; open main_controls )
 		CHOICE_BUTTON( 4, "@MENU_OPTIONS", close self; open main_options; execnow "set ui_allow_graphic_change 0"; )
-
+		CHOICE_BUTTON( 5, "Prestige / Challenges", close self; open prestige )
 		CHOICE_BUTTON( 6, "@MENU_LEAVE_GAME", open popup_leavegame; )
 		
 		
@@ -148,16 +148,6 @@
 		#define SETUP_ACTION_PRESTIGEMODE \
 	 	exec "statset 267 1";\
 		open prestige_reset1
-		
-		/* prestige mode */		
-		CHOICE_BUTTON_FOCUS_VIS_ADV( 5, "@MPUI_PRESTIGE_MODE", SETUP_ACTION_PRESTIGEMODE, exec "set ui_hint_text @MPUI_DESC_PRESTIGE", CLEARUIHINT, when( PRESTIGE_AVAIL ), PRESTIGE_AVAIL )
-		CHOICE_NEWICON_VIS( 5, "specialty_new", when( PRESTIGE_AVAIL && stat( 267 )==0 ) )
-
-		/* prestige mode locked */
-		//CHOICE_BUTTON_FOCUS_VIS_NOHI( 5, "", ;, exec "set ui_hint_text @MPUI_DESC_PRESTIGE2", CLEARUIHINT, when( PRESTIGE_AVAIL==0 && PRESTIGE_FINISH==0 ) ) //
-		CHOICE_DBUTTON_VIS( 5, "@MPUI_PRESTIGE_MODE", when( PRESTIGE_AVAIL == 0 ) )
-		CHOICE_NEWICON_VIS( 5, "specialty_locked", when( PRESTIGE_AVAIL == 0 && PRESTIGE_FINISH == 0 ) )
-		//CHOICE_BUTTON( 5, "@MENU_PRESTIGE_ENTER", play "enter_prestige"; )
 
 		#include "ui/safearea.menu"
 	}

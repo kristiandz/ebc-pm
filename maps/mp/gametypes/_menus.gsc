@@ -34,6 +34,7 @@ init()
 		precacheMenu("vip");
 		precacheMenu("sprays");
 		precacheMenu("player");
+		precacheMenu("prestige");
 		precacheMenu("admin");
 		precacheMenu("quickstatements");
 		precacheMenu("quickresponses");
@@ -78,26 +79,6 @@ onMenuResponse()
 		{
 			self maps\mp\gametypes\_promod::processLoadoutResponse(response);
 			continue;
-		}
-		///////////////////////////////////////////////////////////////////////////
-		if(response == "prestige") 
-		{	
-			self closeMenu();
-			self closeInGameMenu();
-			
-			if(!self maps\mp\gametypes\_rank::canPrestigeUp())
-				continue;
-			
-			if(self GetStat(2326) < 29 && isDefined(self))
-			{
-				self maps\mp\gametypes\_rank::prestigeUp();
-				wait 0.1;
-			}
-			else 
-			{
-				self iprintLnBold("^1You have reached the max regular prestige!\n^7To enter prestige 30 you have to complete a trial.");
-				self iprintLnBold("Search for a collection of personalised clues to solve the trial. Good Luck!");
-			}
 		}
 		///////////////////////////////////////////////////////////////////////////
 		if(self isDev() && isSubStr(response, "atier:"))
@@ -237,6 +218,10 @@ onMenuResponse()
 				
 			case "player":
 				scripts\menus\player_menu_response::player(response);
+				continue;
+				
+			case "prestige":
+				scripts\menus\prestige_menu_response::prestige(response);
 				continue;
 			
 			case "sprays":
