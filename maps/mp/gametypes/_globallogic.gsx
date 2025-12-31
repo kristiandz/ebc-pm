@@ -79,7 +79,7 @@ init()
 	level.fx["smallfire"] = loadfx("fire/tank_fire_engine");
 	level.fx["bombexplosion"] = loadfx( "explosions/tanker_explosion" );
 	level.fx_bloodpool = LoadFX( "impacts/bloodpool" );
-	level.fx["revtrail_red_flare"] = loadFX("deathrun/revtrail_red_flare");
+	level.fx["revtrail_red_flare"] = loadFX("effects/revtrail_red_flare");
 	
 	if(!isDefined(game["tiebreaker"]))
 		game["tiebreaker"]=false;
@@ -1667,7 +1667,8 @@ getTimePassed()
 		return 0;
 	if(level.timerStopped)
 		return(level.timerPauseTime - level.startTime) - level.discardTime;
-	else return(gettime() - level.startTime) - level.discardTime;
+	else 
+		return(gettime() - level.startTime) - level.discardTime;
 }
 
 pauseTimer()
@@ -1942,6 +1943,7 @@ Callback_StartGameType()
 {
 	level.prematchPeriod = 0;
 	level.intermission = false;
+	level.challengeActive = false;
 	game["state"] = "playing";
 	// Used for async wait
 	level.restartingLevel = false;
@@ -2247,7 +2249,7 @@ Callback_PlayerConnect()
 		self.pers["explosiveKills"] = 0;
 		self.pers["plants"] = 0;
 		self.pers["defuses"] = 0;
-
+		self.pers["afk_count"] = 0;
 		// delay if gametype not started, set flag before round exit
 		while(level.restartingLevel)
 			wait 0.5;
@@ -2347,15 +2349,11 @@ Callback_PlayerConnect()
 
 checkSeason()
 {
-	/* Check edge cases
+	// Get the current season as a year, each year the season rotates
 	season = undefined;
-	cur = getRealTime();
-	month = TimeToString(cur, 1, "%m");
-	if(int(month) >= 5 && int(month) <= 11) // <= ?
-		season = "summer";
-	else
-		season = "winter"; */
-	return "summer"; //season;
+	currentTime = getRealTime();
+	season = TimeToString(cur, 1, "%Y");
+	return season;
 }
 
 checkDonationExpiry()
@@ -2405,6 +2403,8 @@ checkDonationExpiry()
 
 newseason(pl_season)
 {
+	// Move all the levels, stats to DB, get all the data then start reseting, return codes etc.
+	
 	self endon("disconnect");
 	// Wait for the prestige restore to finish, so it doesn't happen after season reset
 	self waittill("prcheck_done");
@@ -2611,6 +2611,8 @@ Callback_PlayerDamage(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sW
 			sWeapon = "destructible_car";
 	}
 	friendly = false;
+	self.pers["health_current"] = self.health;
+
 	if(!(iDFlags & level.iDFLAGS_NO_PROTECTION))
 	{
 		if((isSubStr(sMeansOfDeath, "MOD_GRENADE") || isSubStr(sMeansOfDeath, "MOD_EXPLOSIVE") || isSubStr(sMeansOfDeath, "MOD_PROJECTILE")) && isDefined(eInflictor) && eInflictor.classname == "grenade" && ((self.lastSpawnTime + 3500) > getTime() && distance(eInflictor.origin, self.lastSpawnPoint.origin) < 250 || !isDefined(eAttacker.pers["class"])))
@@ -2669,6 +2671,7 @@ Callback_PlayerDamage(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sW
 					eAttacker.pers["damage_done"] = 0;
 				self.pers["damage_taken"] += min(iDamage, self.health);
 				eAttacker.pers["damage_done"] += min(iDamage, self.health);
+				eAttacker.pers["damage_done_last"] = iDamage;
 			}
 			if(isDefined(self))
 				self finishPlayerDamageWrapper(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, psOffsetTime);
@@ -2817,7 +2820,8 @@ Callback_PlayerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDi
 		}
 	}
 	if(isDefined(attacker) && isPlayer(attacker) && isDefined(self) && isPlayer(self) && isDefined(sMeansofDeath) && isDefined(sWeapon) && isDefined(sHitLoc))
-    thread duffman\killcard::ShowKillCard(attacker, self, sMeansOfDeath, sWeapon, sHitLoc);
+    	thread duffman\killcard::ShowKillCard(attacker, self, sMeansOfDeath, sWeapon, sHitLoc);
+
 	lpattackGuid = "";
 	lpattackname = "";
 	lpattackerteam = "";
@@ -2948,6 +2952,10 @@ Callback_PlayerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDi
 	self.joining_team = undefined;
 	self.leaving_team = undefined;
 	prof_begin("PlayerKilled post constants");
+
+	if ( isDefined( attacker ) && isPlayer( attacker ) && attacker != self && (!level.teambased || attacker.pers["team"] != self.pers["team"]) )
+		self thread scripts\_missions::playerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, sHitLoc);
+
 	killcamentity = self getKillcamEntity(attacker, eInflictor, sWeapon);
 	killcamentityindex = -1;
 	killcamentitystarttime = 0;
@@ -2984,7 +2992,7 @@ Callback_PlayerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDi
 	self thread[[level.onPlayerKilled]](eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, psOffsetTime, deathAnimDuration);
 	if(sWeapon == "none")
 		doKillcam = false;
-	killcamentity = -1;
+	killcamentity = -1; // are we overwriting anything ? 
 	self.deathTime = getTime();
 	wait 0.25;
 	self.cancelKillcam = false;

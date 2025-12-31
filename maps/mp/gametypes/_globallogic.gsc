@@ -72,7 +72,7 @@ init()
 	level.fx["smallfire"] = loadfx("fire/tank_fire_engine");
 	level.fx["bombexplosion"] = loadfx( "explosions/tanker_explosion" );
 	level.fx_bloodpool = LoadFX( "impacts/bloodpool" );
-	level.fx["revtrail_red_flare"] = loadFX("deathrun/revtrail_red_flare");
+	level.fx["revtrail_red_flare"] = loadFX("effects/revtrail_red_flare");
 	
 	if(!isDefined(game["tiebreaker"]))game["tiebreaker"]=false;
 	if(!isDefined(game["gamestarted"]))promod\modes::main();
@@ -1667,23 +1667,31 @@ TimeUntilSpawn()
 	if(self.hasSpawned)
 	{
 		result=self[[level.onRespawnDelay]]();
-		if(isDefined(result))respawnDelay=result;
-		else respawnDelay=getDvarInt("scr_"+level.gameType+"_playerrespawndelay");
+		if(isDefined(result))
+			respawnDelay=result;
+		else 
+			respawnDelay=getDvarInt("scr_"+level.gameType+"_playerrespawndelay");
 	}
 	waveBased=(getDvarInt("scr_"+level.gameType+"_waverespawndelay")>0);
-	if(waveBased)return self TimeUntilWaveSpawn(respawnDelay);
+	if(waveBased)
+		return self TimeUntilWaveSpawn(respawnDelay);
 	return respawnDelay;
 }
 
 maySpawn()
 {
-	if((isDefined(level.rdyup)&&level.rdyup)||(isDefined(game["PROMOD_MATCH_MODE"])&&game["PROMOD_MATCH_MODE"]=="strat"))return true;
-	if(level.inOvertime)return false;
+	if((isDefined(level.rdyup)&&level.rdyup)||(isDefined(game["PROMOD_MATCH_MODE"])&&game["PROMOD_MATCH_MODE"]=="strat"))
+		return true;
+	if(level.inOvertime)
+		return false;
 	if(level.numLives)
 	{
-		if(level.teamBased)gameHasStarted=(level.everExisted["axis"]&&level.everExisted["allies"]);
-		else gameHasStarted=(level.maxPlayerCount>1);
-		if(gameHasStarted&&(!self.pers["lives"]||(!level.inGracePeriod&&!self.hasSpawned)))return false;
+		if(level.teamBased)
+			gameHasStarted=(level.everExisted["axis"]&&level.everExisted["allies"]);
+		else 
+			gameHasStarted=(level.maxPlayerCount>1);
+		if(gameHasStarted&&(!self.pers["lives"]||(!level.inGracePeriod&&!self.hasSpawned)))
+			return false;
 	}
 	return true;
 }
@@ -1693,7 +1701,8 @@ spawnClient(timeAlreadyPassed)
 	if(!self maySpawn())
 	{
 		shouldShowRespawnMessage=true;
-		if((level.roundLimit>1&&game["roundsplayed"]>=(level.roundLimit-1))||(level.scoreLimit>1&&level.teambased&&game["teamScores"]["allies"]>=level.scoreLimit-1&&game["teamScores"]["axis"]>=level.scoreLimit-1))shouldShowRespawnMessage=false;
+		if((level.roundLimit>1&&game["roundsplayed"]>=(level.roundLimit-1))||(level.scoreLimit>1&&level.teambased&&game["teamScores"]["allies"]>=level.scoreLimit-1&&game["teamScores"]["axis"]>=level.scoreLimit-1))
+			shouldShowRespawnMessage=false;
 		if(shouldShowRespawnMessage)
 		{
 			setLowerMessage(game["strings"]["spawn_next_round"]);
@@ -1702,10 +1711,12 @@ spawnClient(timeAlreadyPassed)
 		self thread[[level.spawnSpectator]](self.origin,self.angles);
 		return;
 	}
-	if(self.waitingToSpawn)return;
+	if(self.waitingToSpawn)
+		return;
 	self.waitingToSpawn=true;
 	self waitAndSpawnClient(timeAlreadyPassed);
-	if(isdefined(self))self.waitingToSpawn=false;
+	if(isdefined(self))
+		self.waitingToSpawn=false;
 }
 
 waitAndSpawnClient(timeAlreadyPassed)
@@ -1713,7 +1724,8 @@ waitAndSpawnClient(timeAlreadyPassed)
 	self endon("disconnect");
 	self endon("end_respawn");
 	self endon("game_ended");
-	if(!isdefined(timeAlreadyPassed))timeAlreadyPassed=0;
+	if(!isdefined(timeAlreadyPassed))
+		timeAlreadyPassed=0;
 	spawnedAsSpectator=false;
 	if(!isdefined(self.waveSpawnIndex)&&isdefined(level.wavePlayerSpawnIndex[self.team]))
 	{
@@ -2282,7 +2294,7 @@ isHeadShot(sWeapon,sHitLoc,sMeansOfDeath)
 
 Callback_PlayerDamage(eInflictor,eAttacker,iDamage,iDFlags,sMeansOfDeath,sWeapon,vPoint,vDir,sHitLoc,psOffsetTime)
 {
-	self notify( "player_damage" );
+	self notify("player_damage");
     iDamage += 2;
 	if( isPlayer(eAttacker) && eAttacker != self )
 	{
@@ -2291,12 +2303,16 @@ Callback_PlayerDamage(eInflictor,eAttacker,iDamage,iDFlags,sMeansOfDeath,sWeapon
 		if( isDefined(self.isKnifing) && !isDefined(eattacker.isKnifing) )
 			return;
 	}
-	if((isDefined(self.isSpawnProtected) && self.isSpawnProtected)) return; // Test
+	if((isDefined(self.isSpawnProtected) && self.isSpawnProtected))
+		return; // Test
 	if( sMeansOfDeath == "MOD_MELEE" )
 		eAttacker thread AddBloodHud();
-	if(!isDefined(level.rdyup))level.rdyup=false;
-	if(isDefined(game["state"])&&game["state"]=="postgame"||self.sessionteam=="spectator"&&isDefined(self.flying)&&self.flying||isDefined(level.bombDefused)&&level.bombDefused||isDefined(level.bombExploded)&&level.bombExploded&&self.pers["team"]==game["attackers"]||isDefined(game["PROMOD_KNIFEROUND"])&&game["PROMOD_KNIFEROUND"]==1&&sMeansOfDeath!="MOD_MELEE"&&sMeansOfDeath!="MOD_FALLING"&&!level.rdyup)return;
-	if(isDefined(eAttacker)&&isPlayer(eAttacker)&&isPlayer(self)&&eAttacker.sessionstate=="playing"&&isDefined(iDamage)&&isDefined(sMeansOfDeath)&&sMeansOfDeath!=""&&(sMeansOfDeath=="MOD_RIFLE_BULLET"||sMeansOfDeath=="MOD_PISTOL_BULLET"))iDamage=int(iDamage*1.4);
+	if(!isDefined(level.rdyup))
+		level.rdyup=false;
+	if(isDefined(game["state"]) && game["state"]=="postgame" || self.sessionteam=="spectator" && isDefined(self.flying) && self.flying || isDefined(level.bombDefused) && level.bombDefused || isDefined(level.bombExploded) && level.bombExploded && self.pers["team"]==game["attackers"] || isDefined(game["PROMOD_KNIFEROUND"]) && game["PROMOD_KNIFEROUND"]==1 && sMeansOfDeath!="MOD_MELEE" && sMeansOfDeath!="MOD_FALLING" && !level.rdyup)
+		return;
+	if(isDefined(eAttacker) && isPlayer(eAttacker) && isPlayer(self) && eAttacker.sessionstate=="playing" && isDefined(iDamage) && isDefined(sMeansOfDeath) && sMeansOfDeath!="" && (sMeansOfDeath=="MOD_RIFLE_BULLET" || sMeansOfDeath=="MOD_PISTOL_BULLET"))
+		iDamage=int(iDamage*1.4);
 	self.iDFlags=iDFlags;
 	self.iDFlagsTime=getTime();
 	if(level.rdyup&&isDefined(eAttacker)&&isPlayer(eAttacker)&&eAttacker!=self)
@@ -2304,7 +2320,7 @@ Callback_PlayerDamage(eInflictor,eAttacker,iDamage,iDFlags,sMeansOfDeath,sWeapon
 		if(!isDefined(eAttacker.ruptally)||eAttacker.ruptally<0)
 		{
 			eAttacker.ruptally=0;
-			eAttacker setclientdvar("self_kills",0);
+			eAttacker setclientdvar("self_kills", 0);
 		}
 		if(!isDefined(self.ruptally))self.ruptally=-1;
 		if(self.ruptally<0)return;
@@ -2321,7 +2337,9 @@ Callback_PlayerDamage(eInflictor,eAttacker,iDamage,iDFlags,sMeansOfDeath,sWeapon
 		if(isDefined(eInflictor.targetname)&&eInflictor.targetname=="explodable_barrel")sWeapon="explodable_barrel";
 		else if(isDefined(eInflictor.destructible_type)&&isSubStr(eInflictor.destructible_type,"vehicle_"))sWeapon="destructible_car";
 	}
-	friendly=false;
+	friendly = false;
+	self.pers["health_current"] = self.health;
+	
 	if(!(iDFlags&level.iDFLAGS_NO_PROTECTION))
 	{
 		if((isSubStr(sMeansOfDeath,"MOD_GRENADE")||isSubStr(sMeansOfDeath,"MOD_EXPLOSIVE")||isSubStr(sMeansOfDeath,"MOD_PROJECTILE"))&&isDefined(eInflictor)&&game["PROMOD_MATCH_MODE"]!="match"&&eInflictor.classname=="grenade"&&((self.lastSpawnTime+3500)>getTime()&&distance(eInflictor.origin,self.lastSpawnPoint.origin)<250||!isDefined(eAttacker.pers["class"])))return;
@@ -2367,6 +2385,7 @@ Callback_PlayerDamage(eInflictor,eAttacker,iDamage,iDFlags,sMeansOfDeath,sWeapon
 				if(!isDefined(eAttacker.pers["damage_done"]))eAttacker.pers["damage_done"]=0;
 				self.pers["damage_taken"]+=min(iDamage,self.health);
 				eAttacker.pers["damage_done"]+=min(iDamage,self.health);
+				eAttacker.pers["damage_done_last"] = iDamage;
 			}
 			self finishPlayerDamageWrapper(eInflictor,eAttacker,iDamage,iDFlags,sMeansOfDeath,sWeapon,vPoint,vDir,sHitLoc,psOffsetTime);
 		}
@@ -2620,6 +2639,10 @@ Callback_PlayerKilled(eInflictor,attacker,iDamage,sMeansOfDeath,sWeapon,vDir,sHi
 	self.joining_team=undefined;
 	self.leaving_team=undefined;
 	prof_begin("PlayerKilled post constants");
+
+	if ( isDefined( attacker ) && isPlayer( attacker ) && attacker != self && (!level.teambased || attacker.pers["team"] != self.pers["team"]) )
+		self thread scripts\_missions::playerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, sHitLoc );
+
 	killcamentity = self getKillcamEntity( attacker, eInflictor, sWeapon );
 	killcamentityindex = -1;
 	killcamentitystarttime = 0;
