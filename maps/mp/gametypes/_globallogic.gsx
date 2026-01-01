@@ -2352,7 +2352,7 @@ checkSeason()
 	// Get the current season as a year, each year the season rotates
 	season = undefined;
 	currentTime = getRealTime();
-	season = TimeToString(cur, 1, "%Y");
+	season = TimeToString(currentTime, 1, "%Y");
 	return season;
 }
 
