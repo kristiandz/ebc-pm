@@ -60,6 +60,9 @@ init()
 	precacheItem("briefcase_bomb_mp");
 	precacheItem("briefcase_bomb_defuse_mp");
 	precacheModel("prop_suitcase_bomb");
+
+	precacheShader("gradient_top");
+	precacheShader("gradient_bottom");
 	
 	precacheShader("white");
 	precacheShader("black");

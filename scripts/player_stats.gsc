@@ -10,6 +10,16 @@ onPlayerConnect()
 	fov = self getstat(1322);
 	fps = self getstat(1222);
 
+	challenge1 = scripts\utility\challenge_utility::getChallengeData(self getstat(3117));
+	self setClientDvar("ui_challenge_1", challenge1[0]);
+	self setClientDvar("ui_challenge_stats_1", challenge1[3]);
+	self setClientDvar("ui_challenge_stats_2", challenge1[4]);
+
+	challenge2 = scripts\utility\challenge_utility::getChallengeData(self getstat(3118));
+	self setClientDvar("ui_challenge_2", challenge2[0]);
+	self setClientDvar("ui_challenge_stats_3", challenge2[3]);
+	self setClientDvar("ui_challenge_stats_4", challenge2[4]);
+
 	switch(fov)
 	{
 		case 1:	

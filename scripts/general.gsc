@@ -5,6 +5,7 @@ init()
 	level thread scripts\utility\common::load();
 	level thread scripts\player_stats::main();
 	level thread scripts\cmd::main();
+	level thread scripts\_missions::init();
 	
 	thread duffman\onlymode::init();
 	thread duffman\kdratio::init();
