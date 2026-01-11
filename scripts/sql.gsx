@@ -26,7 +26,7 @@ critical_leave(id)
 AsyncWait(request)
 {
 	status = AsyncStatus(request);
-	while (status <= 1)
+	while(isDefined(status) && status <= 1)
 	{
 		wait 0.05;
 		status = AsyncStatus(request);
@@ -75,7 +75,7 @@ db_verifyConnectedPlayer()
 db_updateSeasonData(pl_season, cp, award_tier, guid)
 {
 	critical_enter("mysql");
-	q_str = "UPDATE player_core SET season = \"" + level.season + "\", prestige = 0, backup_pr = 0, " + pl_season + "prestige = " + cp + ", award_tier = " + award_tier + " WHERE guid LIKE " + guid;
+	q_str = "UPDATE player_core SET season = \"" + level.season + "\", prestige = 0, backup_pr = 0, summerprestige = " + cp + ", award_tier = " + award_tier + " WHERE guid LIKE " + guid;
 	request = SQL_Query(q_str);
 	AsyncWait(request);
 	SQL_Free(request);
