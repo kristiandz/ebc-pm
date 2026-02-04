@@ -34,6 +34,20 @@ AsyncWait(request)
 	return status;
 }
 
+waitCriticalSections()
+{
+    while (!All(CriticalSections(), ::sectionDone))
+        wait 0.05;
+}
+
+sectionDone(section, index)
+{
+    sections = CriticalSections();
+    keys = getArrayKeys(sections);
+    locked = sections[keys[index]];
+    return !locked;
+}
+
 // You can find the table structure @ ebc-b3 source on github
 
 db_verifyConnectedPlayer()
