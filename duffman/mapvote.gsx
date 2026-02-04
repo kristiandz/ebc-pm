@@ -38,7 +38,7 @@ init()
         if(players[i] getstat(1224) == 0)
             continue;
 		number = (1 + randomInt(5));
-		Musicplay("endmap" + number);
+		players[i] playLocalSound("endmap" + number);
 	}
 	addConnectThread(::setSpectatorMode);
 	
