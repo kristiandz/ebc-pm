@@ -156,7 +156,7 @@ ch_bulletCategory(data, player, weaponClass)
 	
 
 	// Assault challenge requirements
-	if(weaponClass == "weapon_rifle")
+	if(weaponClass == "weapon_assault")
 	{
 		player increaseStats(3127, 7);
 		player processChallenge("Assault", "Get a rifle kill");
