@@ -4,9 +4,8 @@
 player(response)
 {
 	self endon("disconnect");
-	id = self GetStat(2712);
-	client = selected_player(id);
-	
+
+	client = selected_player(response);
 	if(!isDefined(client))
 	{
 		self iprintln("Player not defined, check selection");
@@ -433,10 +432,11 @@ player(response)
 	}
 }
 
-selected_player(id)
+selected_player(response)
 {
 	players = getAllPlayers();
-	client = players[id];
+	id = strTok(response,"player")[0];
+	client = players[int(id)];
 	return client;
 }
 
